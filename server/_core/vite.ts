@@ -21,6 +21,11 @@ export async function setupVite(app: Express, server: Server) {
   });
 
   app.use(vite.middlewares);
+  
+  // Serve generated bouquet images from public folder BEFORE catch-all
+  const publicDir = path.resolve(import.meta.dirname, "../..", "public");
+  app.use("/generated-bouquets", express.static(path.join(publicDir, "generated-bouquets")));
+  
   app.use("*", async (req, res, next) => {
     const url = req.originalUrl;
 

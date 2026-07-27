@@ -1,0 +1,1 @@
+ALTER TABLE `orders` MODIFY COLUMN `orderChannel` enum('whatsapp','messenger','phone','email','card','website') DEFAULT 'whatsapp';

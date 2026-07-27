@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Disallow admin panel from indexing
+Disallow: /admin
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://flowers-boutique.example/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1

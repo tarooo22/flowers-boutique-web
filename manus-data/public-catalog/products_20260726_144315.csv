@@ -1,0 +1,256 @@
+id,nameKa,nameEn,descriptionKa,descriptionEn,categoryId,imageUrl,imageKey,isRose,isAvailable,featured,createdAt,updatedAt,priceMin,priceMax,priceOnRequest,unitType,variants,bloomsPerStemMin,bloomsPerStemMax,stemDisplayRule,published
+60001,პიონი,peony,,,210001,/manus-storage/products/img_7342_d834be50.webp,,0,0,0,2026-06-22 20:38:58,2026-07-17 13:47:23,15.00,15.00,0,single stem,[],1,1,1 large peony bloom,1
+60002,რანუნკულუსი,Ranunculus,,,210001,/manus-storage/products/img_7343_65036bf5.webp,,0,0,0,2026-06-22 20:42:38,2026-07-17 13:47:32,12.00,15.00,0,single stem,[],1,1,1 ranunculus bloom,1
+90001,ლილია,Lily,,,210001,/manus-storage/products/img_7368_beb2dc8c.webp,,0,1,0,2026-06-22 20:54:14,2026-07-15 09:18:37,25.00,25.00,0,single stem,[],2,4,2-4 lily blooms and buds,1
+90002,გლადიოლუსი,Gladiolus,,,210001,/manus-storage/products/img_7367_21dd116c.webp,,0,0,0,2026-06-22 20:55:38,2026-07-25 15:51:40,10.00,10.00,0,single stem,[],12,20,12-20 gladiolus blooms,1
+90003,მზესუმზირა,Sunflower,,,210001,/manus-storage/products/img_7366_3dfde00c.webp,,0,0,0,2026-06-22 20:56:40,2026-07-26 09:52:19,10.00,10.00,0,single stem,[],1,1,1 sunflower bloom,1
+90004,ირისი,Iris,,,210001,/manus-storage/products/img_7365_14eabc52.webp,,0,0,0,2026-06-22 20:57:40,2026-07-17 13:47:41,7.00,7.00,0,single stem,[],1,1,1 iris bloom,1
+90005,ერინგიუმი,Blue Thistle,,,210001,/manus-storage/products/img_7364_4c384149.webp,,0,0,0,2026-06-22 20:59:14,2026-07-17 13:47:42,15.00,15.00,0,single stem,[],5,10,5-10 small eryngium blooms,1
+90006,გიფსოფილა,Baby’s Breath,,,210001,/manus-storage/products/img_7363_c02e777c.webp,,0,1,0,2026-06-22 21:00:52,2026-07-15 09:23:30,10.00,10.00,0,single stem,[],15,30,15-30 tiny gypsophila blooms,1
+90007,დელფინიუმი ,Delphinium,,,210001,/manus-storage/products/img_7362_5a261fa8.webp,,0,0,0,2026-06-22 21:02:01,2026-07-17 13:47:45,17.00,17.00,0,single stem,[],8,15,8-15 delphinium blooms,1
+90008,ჰორტენზია,Hydrangea,,,210001,/manus-storage/products/img_7361_694dd6c5.webp,,0,1,0,2026-06-22 21:03:35,2026-07-16 15:56:34,30.00,30.00,0,single stem,[],1,1,1 large hydrangea flower head,1
+90009,ორქიდეა,Orchid,,,210001,/manus-storage/products/img_7360_fdece5d6.webp,,0,1,0,2026-06-22 21:05:08,2026-07-16 15:56:58,80.00,80.00,0,single stem,[],3,8,3-8 orchid blooms per stem,1
+90010,კალა,Calla Lily,,,210001,/manus-storage/products/img_7359_6acb14af.webp,,0,0,0,2026-06-22 21:06:07,2026-07-25 15:51:05,15.00,15.00,0,single stem,[],1,1,1 calla bloom,1
+90011,ალსტრომერია,Alstroemeria,,,210001,/manus-storage/products/img_7357_c9c21a13.webp,,0,1,0,2026-06-22 21:07:19,2026-07-16 15:57:33,4.00,4.00,0,single stem,[],5,10,5-10 small alstroemeria blooms,1
+90012,პროტეა,Protea,,,210001,/manus-storage/products/img_7356_d8c86f08.webp,,0,1,0,2026-06-22 21:08:36,2026-07-16 15:57:56,50.00,50.00,0,single stem,[],1,1,1 large protea bloom,1
+90013,სტრელიცია,Bird of Paradise,,,210001,/manus-storage/products/img_7354_8dec9ac4.webp,,0,1,0,2026-06-22 21:10:31,2026-07-16 15:58:07,25.00,25.00,0,single stem,[],1,1,1 strelitzia bloom,1
+90014,გლორიოზა,Gloriosa Lily,,,210001,/manus-storage/products/img_7353_be69e210.webp,,0,0,0,2026-06-22 21:11:47,2026-07-17 13:48:01,25.00,25.00,0,single stem,[],1,1,,1
+90015,ალიუმი,Allium,,,210001,/manus-storage/products/img_7351_82de3c1f.webp,,0,0,0,2026-06-22 21:14:12,2026-07-17 13:48:03,23.00,23.00,0,single stem,[],1,1,,1
+90016,ვიბურნუმი,Viburnum,,,210001,/manus-storage/products/img_7350_14368a46.webp,,0,0,0,2026-06-22 21:15:14,2026-07-25 15:50:30,15.00,15.00,0,single stem,[],1,1,,1
+90017,მოლუცელა,Moluccella,,,210001,/manus-storage/products/img_7349_5b3e2be1.webp,,0,0,0,2026-06-22 21:16:19,2026-07-25 15:50:33,15.00,15.00,0,single stem,[],1,1,,1
+90018,დიანტუსი,Dianthus,,,210001,/manus-storage/products/img_7348_642de59f.webp,,0,1,0,2026-06-22 21:17:26,2026-07-16 15:59:05,8.00,8.00,0,single stem,[],1,1,,1
+90019,კრასპედია,Craspedia,,,210001,/manus-storage/products/img_7347_8b70b6a5.webp,,0,1,0,2026-06-22 21:18:47,2026-07-16 15:59:16,6.00,6.00,0,single stem,[],1,1,,1
+90020,მიხაკი,Dianthus,,,210001,/manus-storage/products/img_7346_6dc1e00a.webp,,0,1,0,2026-06-22 21:20:33,2026-07-16 15:59:27,5.00,5.00,0,single stem,[],1,1,,1
+90021,ანთურიუმი,Anthurium,,,210001,/manus-storage/products/img_7345_21d3ef2d.webp,,0,1,0,2026-06-22 21:21:39,2026-07-16 15:59:38,25.00,25.00,0,single stem,[],1,1,,1
+90022,გერბერა,Gerbera,,,210001,/manus-storage/products/img_7344_05295024.webp,,0,1,0,2026-06-22 21:22:36,2026-07-16 15:59:51,5.00,5.00,0,single stem,[],1,1,1 gerbera bloom,1
+90023,მატიოლა,Matthiola,,,210001,/manus-storage/products/img_7369_9d34392b.webp,,0,0,0,2026-06-22 21:25:15,2026-07-17 13:48:13,9.00,9.00,0,single stem,[],1,1,,1
+120001,ვაქსფლაუერი,Waxflower,,,210001,/manus-storage/products/img_7377_36f2b925.webp,,0,0,0,2026-06-23 09:02:21,2026-07-17 13:48:15,8.00,8.00,0,single stem,[],1,1,,1
+120002,ქრიზანთემა,Chrysanthemum,,,210001,/manus-storage/products/img_7376_22fe848c.webp,,0,1,0,2026-06-23 09:03:02,2026-07-16 16:00:27,10.00,10.00,0,single stem,[],5,15,5-15 chrysanthemum blooms,1
+120003,ლიმონიუმი,Limonium,,,210001,/manus-storage/products/img_7374_1f173ef8.webp,,0,1,0,2026-06-23 09:04:07,2026-07-16 16:00:35,5.00,5.00,0,single stem,[],1,1,,1
+120004,აქილეა,Achillea,,,210001,/manus-storage/products/img_7372_da6c8acd.webp,,0,0,0,2026-06-23 09:05:52,2026-07-17 13:48:19,8.00,8.00,0,single stem,[],1,1,,1
+150001,ალუბლები🍒,Cherries🍒,7 ტოტი სპრეი ვარდი,7 pieces of spray rose,180001,/manus-storage/products/2a9a4172-cbc2-46ae-b65d-0f311da8f727_af374751.webp,,0,1,0,2026-06-23 11:00:29,2026-07-16 16:00:56,75.00,75.00,0,single stem,[],1,1,,1
+180001,ეუსტომა,Eustoma,,,210001,/manus-storage/products/img_7415_e41ae53c.webp,,0,1,0,2026-06-23 20:01:52,2026-07-16 16:01:05,10.00,10.00,0,single stem,[],1,1,,1
+210001,ორნითოგალუმი,Ornithogalum,,,210001,/manus-storage/products/img_7416_44f27069.webp,,0,0,0,2026-06-23 20:08:53,2026-07-17 13:48:22,12.00,12.00,0,single stem,[],1,1,,1
+240001,ოქსიპეტალუმი,Oxypetalum,,,210001,/manus-storage/products/5c628975-c6d6-465c-9240-eb02c316941e_efb3a44f.webp,,0,0,0,2026-06-23 20:18:35,2026-07-17 13:48:23,10.00,10.00,0,single stem,[],1,1,,1
+240002,ორმაგფურცლიანი ლილია,Roselily,,,210001,/manus-storage/products/img_7418_9c2442c2.webp,,0,0,0,2026-06-23 20:20:15,2026-07-17 13:48:25,30.00,30.00,0,single stem,[],1,1,,1
+240003,გერბერი,Gerbera,,,210001,/manus-storage/products/img_7420_e9550a6e.webp,,0,0,0,2026-06-23 20:22:45,2026-07-25 15:50:22,10.00,10.00,0,single stem,[],1,1,1 gerbera bloom,1
+270001,ჰიპერიკუმის კენკრა,Hypericum,,,210001,/manus-storage/products/img_7421_5eff5e67.webp,,0,1,0,2026-06-23 20:31:35,2026-07-16 16:02:05,12.00,12.00,0,single stem,[],1,1,,1
+270002,ლოტოსი,Lotus Pod ,,,210001,/manus-storage/products/fe3ece29-d0f2-418f-9338-efd9dd5d7a1d_edcaaea0.webp,,0,0,0,2026-06-23 20:35:34,2026-07-17 13:48:30,35.00,35.00,0,single stem,[],1,1,,1
+270003,ჰელიკონია,Heliconia,,,210001,/manus-storage/products/img_7426_b4baed19.webp,,0,0,0,2026-06-23 20:37:09,2026-07-17 13:48:32,30.00,30.00,0,single stem,[],1,1,,1
+270004,ციმბიდიუმი,Cymbidium,,,210001,/manus-storage/products/e3b06e04-ba78-4795-af1b-7b2e77ad564e_6ef75fad.webp,,0,0,0,2026-06-23 20:39:05,2026-07-17 13:48:34,55.00,55.00,0,single stem,[],1,1,,1
+270005,ამარანტუსი,Amaranthus,,,210001,/manus-storage/products/img_7428_fabb84ca.webp,,0,1,0,2026-06-23 20:41:22,2026-07-16 16:03:19,29.00,29.00,0,single stem,[],1,1,,1
+270006,ევკალიპტი,Eucalyptus,,,210001,/manus-storage/products/img_7429_10c193a3.webp,,0,1,0,2026-06-23 20:42:20,2026-07-16 16:03:35,4.00,4.00,0,single stem,[],1,1,,1
+300001,"    კურკუმა","    Curcuma",,,210001,/manus-storage/products/img_7723_9c276fac.webp,,0,1,0,2026-06-25 15:21:03,2026-07-16 16:03:43,20.00,20.00,0,single stem,[],1,1,,1
+300002,“ყაყაჩო”,"    Papaver",,,210001,/manus-storage/products/img_7722_31673563.webp,,0,1,0,2026-06-25 15:24:16,2026-07-16 16:03:53,9.00,9.00,0,single stem,[],1,1,,1
+330001,ლილია ლურჯი,Blue Lily,,,210001,/manus-storage/products/7a89f1ee-7ee1-475c-9b46-c5e3206b555c_62c96cdc.webp,,0,1,0,2026-06-25 15:31:07,2026-07-16 16:04:02,30.00,30.00,0,single stem,[],1,1,,1
+360001,იმპერატორის შროშანი ,Crown Imperial,,,210001,/manus-storage/products/img_7727_f898d6e0.webp,,0,0,0,2026-06-25 15:41:40,2026-07-17 13:48:42,45.00,45.00,0,single stem,[],1,1,,1
+390001,კრემი🍯,Cream🍯,8 ტოტი სპრეი ვარდი,8 pieces of spray rose,180001,/manus-storage/products/a21897f7-a29c-4f2f-99b8-8bf99ae1e2a5_6dc4efa4.webp,,0,1,0,2026-06-27 06:13:06,2026-07-16 16:04:22,85.00,85.00,0,single stem,[],1,1,,1
+420001,სიყვარულის თაიგული,Bouquet of Love❤️,25 ცალი სპრეი ვარდი ,25 Spray Roses ,180001,/manus-storage/products/img_8300_93518ec7.webp,,0,1,1,2026-06-28 18:07:51,2026-07-16 23:18:41,250.00,250.00,0,single stem,[],1,1,,1
+420002,ვარდისფერი ოცნება,Pink Dream,,,180001,/manus-storage/products/img_7902_85c5990a.webp,,0,1,0,2026-06-28 18:10:25,2026-07-26 09:57:49,100.00,100.00,0,single stem,[],1,1,1 large rose bloom,1
+450001,ჟოლო,Raspberry,,,180001,/manus-storage/products/img_7245_757f35e9.webp,,0,1,0,2026-06-28 18:26:29,2026-07-16 16:04:53,105.00,105.00,0,single stem,[],1,1,,1
+450002," მზიანი სიყვარული",Sunny Love,,,180001,/manus-storage/products/939c450b-480a-4700-bb8d-326c50576432_f506599d.webp,,0,1,0,2026-06-28 18:29:33,2026-07-16 16:05:09,80.00,80.00,0,single stem,[],1,1,,1
+480001,ბედნიერების ფერები,Blooming Bliss,,,180001,/manus-storage/products/67a6031d-2f8f-48c8-bfc0-073be550624e_57780b43.webp,,0,1,0,2026-06-28 18:34:39,2026-07-16 16:50:36,75.00,75.00,0,single stem,[],1,1,,1
+480002,"    ვარდების ოკეანე ",Ocean of Roses,,,180001,/manus-storage/products/c57d492e-23de-447c-b930-d57e5f30326b_27519c38.webp,,0,1,0,2026-06-28 18:38:56,2026-07-16 16:05:32,250.00,250.00,0,single stem,[],1,1,,1
+510001,ვარდისფერი ღრუბელი,Pink Cloud ,,,180001,/manus-storage/products/img_7692_a7701270.webp,,0,1,0,2026-06-28 18:53:19,2026-07-16 16:05:42,350.00,350.00,0,single stem,[],1,1,1 large rose bloom,1
+510002,ლოლიპოპ,Lollipop,,,180001,/manus-storage/products/img_7661_a070a888.webp,,0,1,0,2026-06-28 18:56:37,2026-07-16 16:05:52,400.00,400.00,0,single stem,[],1,1,,1
+510003,ლილიები,Lily Bloom ,,,180001,/manus-storage/products/img_7651_f7a36ab0.webp,,0,1,0,2026-06-28 18:58:56,2026-07-16 16:06:08,290.00,290.00,0,single stem,[],1,1,,1
+510004,ბამბის ნაყინი,Cotton Candy ,,,180001,/manus-storage/products/img_7479_564eeb70.webp,,0,1,0,2026-06-28 19:01:47,2026-07-26 09:57:28,75.00,75.00,0,single stem,[],1,1,,1
+510005,ლურჯი,Blue ,4 ცალი ლილია,Lily-4 piece,180001,/manus-storage/products/img_8311_895e574d.webp,,0,1,0,2026-06-28 19:03:25,2026-07-16 16:06:59,100.00,100.00,0,single stem,[],1,1,,1
+510006,მზის სხივი,Sunbeam,,,180001,/manus-storage/products/img_8312_442c568e.webp,,0,0,0,2026-06-28 19:04:52,2026-07-17 13:48:54,100.00,100.00,0,single stem,[],1,1,,1
+510007,ვარდისფერი სიყვარული,pink love,,,180001,/manus-storage/products/img_8313_091e54b2.webp,,0,1,0,2026-06-28 19:05:58,2026-07-16 16:07:23,250.00,250.00,0,single stem,[],1,1,1 large rose bloom,1
+510008,პალიტრა,Palette,,,180001,/manus-storage/products/img_8314_e0595a7e.webp,,0,1,0,2026-06-28 19:07:22,2026-07-16 16:07:35,280.00,280.00,0,single stem,[],1,1,,1
+510009,სიყვარული,Love,,,180001,/manus-storage/products/img_8315_e0473257.webp,,0,1,0,2026-06-28 19:08:15,2026-07-16 16:07:47,400.00,400.00,0,single stem,[],1,1,,1
+510010,შენთვის,baby pink,,,180001,/manus-storage/products/img_8316_dd090461.webp,,0,1,0,2026-06-28 19:09:26,2026-07-16 16:08:00,80.00,80.00,0,single stem,[],1,1,,1
+510011,მზის კოცნა,sun kiss,,,180001,/manus-storage/products/img_8318_785743d7.webp,,0,0,0,2026-06-28 19:10:57,2026-07-17 13:49:03,150.00,150.00,0,single stem,[],1,1,,1
+510012,ქრიზანთემები,just for you,,,180001,/manus-storage/products/img_8319_84b22e68.webp,,0,1,0,2026-06-28 19:12:06,2026-07-16 16:08:25,400.00,400.00,0,single stem,[],1,1,,1
+510013,პაემანი ,pink roses,,,180001,/manus-storage/products/img_8320_94683221.webp,,0,1,0,2026-06-28 19:13:10,2026-07-16 16:08:35,450.00,450.00,0,single stem,[],1,1,,1
+510014,ცეცხლი,Fire,,,180001,/manus-storage/products/img_8321_b0ca16ab.webp,,0,1,0,2026-06-28 19:14:30,2026-07-16 16:09:03,600.00,600.00,0,single stem,[],1,1,,1
+510015,უმიზეზოდ,simple,,,180001,/manus-storage/products/img_8322_f03b0deb.webp,,0,1,0,2026-06-28 19:15:30,2026-07-16 16:09:16,70.00,70.00,0,single stem,[],1,1,,1
+510016,ყვითელი,Yellow,,,180001,/manus-storage/products/img_8323_fdadf2f7.webp,,0,0,0,2026-06-28 19:16:39,2026-07-17 13:49:08,105.00,105.00,0,single stem,[],1,1,,1
+510017,ვარდისფერები,pink flower,,,180001,/manus-storage/products/img_8324_43c05735.webp,,0,1,0,2026-06-28 19:17:38,2026-07-16 16:09:38,85.00,85.00,0,single stem,[],1,1,1 large rose bloom,1
+510018,ვარდები,Mix,,,180001,/manus-storage/products/img_8325_fffed1c4.webp,,0,1,0,2026-06-28 19:18:34,2026-07-16 16:09:49,150.00,150.00,0,single stem,[],1,1,,1
+510019,წითელი ,Red love,,,180001,/manus-storage/products/img_8326_3e54696c.webp,,0,1,0,2026-06-28 19:19:17,2026-07-16 16:09:59,350.00,350.00,0,single stem,[],1,1,,1
+510020,ყოველდღიური,Baby pink,,,180001,/manus-storage/products/img_8327_93f85d5e.webp,,0,1,0,2026-06-28 19:20:05,2026-07-16 16:10:22,60.00,60.00,0,single stem,[],1,1,,1
+510021,მხოლოდ შენთვის,Just For you,,,180001,/manus-storage/products/img_8328_4e1b223b.webp,,0,1,1,2026-06-28 19:20:46,2026-07-16 16:10:35,200.00,200.00,0,single stem,[],1,1,,1
+510022,ალუბალი,Cherry,,,180001,/manus-storage/products/img_8329_b1564015.webp,,0,1,0,2026-06-28 19:21:58,2026-07-16 16:10:45,120.00,120.00,0,single stem,[],1,1,,1
+510023,მზესუმზირა,Sunflower,,,180001,/manus-storage/products/img_8330_8fa95d79.webp,,0,0,0,2026-06-28 19:23:00,2026-07-17 13:49:13,130.00,130.00,0,single stem,[],1,1,1 sunflower bloom,1
+510024,გარგრის ელფერი ,Apricot Glow,,,180001,/manus-storage/products/img_8331_13ccdb05.webp,,0,0,0,2026-06-28 19:24:30,2026-07-17 13:49:15,135.00,135.00,0,single stem,[],1,1,,1
+540001,სიყვარულის ბაღი ,Garden of Love,,,180001,/manus-storage/products/img_8332_629d2bec.webp,,0,1,0,2026-06-28 19:27:54,2026-07-16 16:11:19,170.00,170.00,0,single stem,[],1,1,,1
+540002,გულისცემა,Heartbeat,,,180001,/manus-storage/products/img_8333_be53acf1.webp,,0,1,0,2026-06-28 19:29:27,2026-07-16 16:11:30,250.00,250.00,0,single stem,[],1,1,,1
+540003,შენთვის,You,"თაიგული და დათუნია( დათუნია იცვლება  იგივე ზომის სხვა მოდელში, მარაგების მიხედვით)",,180001,/manus-storage/products/img_8334_a9763ab9.webp,,0,1,0,2026-06-28 19:31:21,2026-07-16 16:11:59,650.00,650.00,0,single stem,[],1,1,,1
+540004,გაიღიმე,Slime,,,180001,/manus-storage/products/img_8335_95f0979c.webp,,0,1,0,2026-06-28 19:33:10,2026-07-16 16:12:12,400.00,400.00,0,single stem,[],1,1,,1
+540005,პუდრისფერი ოცნება ," Blush Dream",,,180001,/manus-storage/products/img_8336_ce74cf03.webp,,0,1,0,2026-06-28 19:34:50,2026-07-16 16:12:24,500.00,500.00,0,single stem,[],1,1,,1
+540006,ნაზი გაზაფხული ,Soft Spring,,,180001,/manus-storage/products/img_8337_e0532a84.webp,,0,1,0,2026-06-28 19:36:23,2026-07-16 16:12:38,300.00,300.00,0,single stem,[],1,1,,1
+540007,პიტნა,Mint 🌿,,,180001,/manus-storage/products/img_8338_172c80b2.webp,,0,1,0,2026-06-28 19:37:46,2026-07-16 16:12:49,90.00,90.00,0,single stem,[],1,1,,1
+540008,ბაღი,Garden,,,180001,/manus-storage/products/img_8339_f509ec65.webp,,0,1,0,2026-06-28 19:38:22,2026-07-16 16:36:00,115.00,115.00,0,single stem,[],1,1,,1
+540009,მიყვარხარ,Love!,"დათუნია  იცვლება იდენტურ ზომაში, არსებული მოდელით , რომელიც მარაგშია.",,180001,/manus-storage/products/img_8340_572f884f.webp,,0,1,0,2026-06-28 19:40:01,2026-07-16 16:13:26,850.00,850.00,0,single stem,[],1,1,,1
+540010,ატმის კრემი ," Peach Cream",,,180001,/manus-storage/products/img_8341_e7068fef.webp,,0,1,0,2026-06-28 19:40:38,2026-07-16 16:13:37,250.00,250.00,0,single stem,[],1,1,,1
+540011,ნაყინი,pink Ice Cream ,,,180001,/manus-storage/products/img_8343_62300c7e.webp,,0,1,0,2026-06-28 19:42:15,2026-07-16 16:13:46,190.00,190.00,0,single stem,[],1,1,,1
+540012,🧸,🧸,"დათუნია იცვლება იდენტური ზომის იმ მოდელში, რომელიც მარაგშია.",,180001,/manus-storage/products/img_8344_a19ff2ea.webp,,0,1,1,2026-06-28 19:43:37,2026-07-16 16:13:58,380.00,380.00,0,single stem,[],1,1,,1
+540013,ვარდისფერი განწყობა ,Blush Mood,,,180001,/manus-storage/products/img_8345_96492d40.webp,,0,1,0,2026-06-28 19:45:21,2026-07-16 16:14:08,100.00,100.00,0,single stem,[],1,1,1 large rose bloom,1
+540014,ვარდისფერი ვალსი,Pink Waltz,,,180001,/manus-storage/products/img_8346_0f4f4685.webp,,0,1,0,2026-06-28 19:47:02,2026-07-16 16:14:22,600.00,600.00,0,single stem,[],1,1,1 large rose bloom,1
+540015,კლასიკა,Classic,50 ჰოლანდიური ვარდი,,180001,/manus-storage/products/img_8347_abae154f.webp,,0,1,0,2026-06-28 19:48:32,2026-07-16 16:14:35,500.00,500.00,0,single stem,[],1,1,,1
+570001,ციტრუსი,Citrus,,,180001,/manus-storage/products/img_8348_de251992.webp,,0,1,1,2026-06-28 19:56:05,2026-07-16 16:14:44,150.00,150.00,0,single stem,[],1,1,,1
+570002,🌅 მზის ჩასვლა,Sunset,,,180001,/manus-storage/products/img_8354_dc316300.webp,,0,1,0,2026-06-28 19:58:12,2026-07-26 09:56:02,650.00,650.00,0,single stem,[],1,1,,1
+570003,უსასრულო სიყვარული ,Endless Love,80 ჰოლანდიური ვარდი,,180001,/manus-storage/products/img_8358_705554b0.webp,,0,1,0,2026-06-28 19:59:48,2026-07-16 16:15:05,800.00,800.00,0,single stem,[],1,1,,1
+600001,ზაფხულის ცა ,Summer Sky,,,180001,/manus-storage/products/29ecd663-ea49-47f5-b048-1f5b8b8fb803_91fcd85f.webp,,0,1,0,2026-06-29 10:25:55,2026-07-26 09:55:28,45.00,45.00,0,single stem,[],1,1,,1
+630001,დილის ნამი ,Morning Dew,,,180001,/manus-storage/products/img_8456_483e5aa3.webp,,0,1,0,2026-06-29 10:42:00,2026-07-16 16:15:31,85.00,85.00,0,single stem,[],1,1,,1
+630002,ვარდისფერი ჰორიზონტი     ,Pink Horizon,,,180001,/manus-storage/products/c5ca5419-8971-4e22-9039-a51e0ae5232a_48581b09.webp,,0,0,1,2026-06-29 10:44:37,2026-07-17 13:49:33,150.00,150.00,0,single stem,[],1,1,1 large rose bloom,1
+630003,ვარდების სიმფონია ,Rose Symphony,100 ვარდი,,180001,/manus-storage/products/img_8455_85995c2a.webp,,0,1,0,2026-06-29 10:46:07,2026-07-16 16:15:53,1000.00,1000.00,0,single stem,[],1,1,,1
+630004,ფორთოხალი,Orange,5 ტოტი სპრეი ვარდი,,180001,/manus-storage/products/img_8452_92306957.webp,,0,1,0,2026-06-29 10:48:36,2026-07-26 09:55:03,60.00,50.00,0,single stem,[],1,1,,1
+630005,ვარდისფერი დესერტი,Pink Dessert,,,180001,/manus-storage/products/img_8441_9067e11c.webp,,0,0,0,2026-06-29 10:50:39,2026-07-17 13:49:37,90.00,90.00,0,single stem,[],1,1,1 large rose bloom,1
+630006,ნაყინის ბურთები ,Ice Cream Scoops 🍨,23 ჰოლანდიური პიონი,,180001,/manus-storage/products/img_8440_7c7301de.webp,,0,0,0,2026-06-29 10:53:20,2026-07-17 13:49:38,350.00,350.00,0,single stem,[],1,1,,1
+630007,მარშმელოუ,Marshmallow,20 ცალი პიონი,,180001,/manus-storage/products/img_8439_ee56f7b2.webp,,0,0,0,2026-06-29 10:55:43,2026-07-17 13:49:40,300.00,300.00,0,single stem,[],1,1,,1
+630008,პატარა ბედნიერება ,Little Happiness,3 ცალი პიონი,,180001,/manus-storage/products/img_8438_940db387.webp,,0,0,0,2026-06-29 10:58:02,2026-07-17 13:49:41,55.00,55.00,0,single stem,[],1,1,,1
+630009,განსაკუთრებული,Favorite,,,180001,/manus-storage/products/img_8437_5b453aaf.webp,,0,1,0,2026-06-29 10:59:31,2026-07-16 16:16:59,700.00,700.00,0,single stem,[],1,1,,1
+630010,ყვავილების ბალეტი,Floral Ballet,,,180001,/manus-storage/products/img_8432_225ed35d.webp,,0,1,0,2026-06-29 11:01:43,2026-07-16 16:17:08,200.00,200.00,0,single stem,[],1,1,,1
+660001,აბრეშუმი,Silk,120 ჰოლანდიური პიონი,,180001,/manus-storage/products/img_8462_22269b79.webp,,0,0,0,2026-06-29 12:27:35,2026-07-17 13:49:47,1800.00,1800.00,0,single stem,[],1,1,,1
+690001,ჰოლანდიური ვარდი,holland rose ,ჰოლანდიური ვარდი 100 სმ ,,210001,/manus-storage/products/img_8463_f4b4557d.webp,,0,1,0,2026-06-29 12:32:37,2026-07-16 16:17:29,10.00,10.00,0,single stem,[],1,1,1 large rose bloom,1
+690002,ვარდი,rose,80-90 სმ,,210001,/manus-storage/products/img_8463_87204441.webp,,0,1,0,2026-06-29 12:33:19,2026-07-16 16:17:38,8.00,8.00,0,single stem,[],1,1,1 large rose bloom,1
+690003,ვარდი,rose,60-70 სმ,,210001,/manus-storage/products/img_8463_f015d035.webp,,0,1,0,2026-06-29 12:33:51,2026-07-16 16:17:46,7.00,7.00,0,single stem,[],1,1,1 large rose bloom,1
+720001,დათუნია თაიგულით ,Teddy bear,,,180001,/manus-storage/products/img_8526_bec709c5.webp,,0,0,0,2026-06-30 09:00:02,2026-07-17 13:49:55,250.00,250.00,0,single stem,[],1,1,,1
+750001,ყვავილების მიქსი,Flower mix,,,180001,/manus-storage/products/img_8583_99f8613d.webp,,0,1,0,2026-06-30 13:21:44,2026-07-16 16:18:06,120.00,120.00,0,single stem,[],1,1,,1
+750002," ვარდი ვარდისფერი",pink rose,60-70 სმ ,,210001,/manus-storage/products/img_8465_543bfc37.webp,,0,0,0,2026-06-30 13:25:34,2026-07-17 13:49:58,7.00,7.00,0,single stem,[],1,1,1 large rose bloom,1
+750003,ვარდი ვარდისფერი,pink rose,80-90 სმ,,210001,/manus-storage/products/img_8465_7068a91d.webp,,0,0,0,2026-06-30 13:26:24,2026-07-17 13:49:59,8.00,8.00,0,single stem,[],1,1,1 large rose bloom,1
+750004,ვარდი ჯუმილია,rose jumilia,60-70 სმ,,210001,/manus-storage/products/53d0ed0d-051b-4459-bece-9962973e7b6f_25843c5b.webp,,0,1,0,2026-06-30 13:28:21,2026-07-16 16:18:43,7.00,7.00,0,single stem,[],1,1,1 large rose bloom,1
+750005,ვარდი ჯუმილია,rose jumilia,80-90 სმ,,210001,/manus-storage/products/53d0ed0d-051b-4459-bece-9962973e7b6f_b17ca3b7.webp,,0,1,0,2026-06-30 13:29:06,2026-07-16 16:18:55,8.00,8.00,0,single stem,[],1,1,1 large rose bloom,1
+780001,მთვარე,moon,,,180001,/manus-storage/products/img_8535_404bfb04.webp,,0,1,0,2026-07-01 09:08:11,2026-07-16 16:19:04,95.00,95.00,0,single stem,[],1,1,,1
+810001,მიხაკი,Dianthus,,,210001,/manus-storage/products/49c9f45c-ccd0-4960-bc22-ace00aa0a7ae_49c574e7.webp,,0,1,0,2026-07-01 10:54:15,2026-07-16 16:19:13,5.00,5.00,0,single stem,[],1,1,,1
+810002,ქრიზანთემა,Chrysanthemum,,,210001,/manus-storage/products/523059ab-1c83-4028-bb19-ea9e5bc4f61f_da82038e.webp,,0,1,0,2026-07-01 10:55:39,2026-07-16 16:19:24,10.00,10.00,0,single stem,[],1,1,,1
+810003,ქრიზანთემა,Chrysanthemum,,,210001,/manus-storage/products/9a7b9fcc-292f-4bcd-8bbc-ef30d968e7c0_44f66f00.webp,,0,1,0,2026-07-01 10:56:32,2026-07-16 16:19:34,10.00,10.00,0,single stem,[],1,1,,1
+810004,ქრიზანთემა,Chrysanthemum,,,210001,/manus-storage/products/8096b659-ffb2-4491-b949-244d9af06153_da56e9ef.webp,,0,1,0,2026-07-01 10:57:39,2026-07-16 16:19:43,10.00,10.00,0,single stem,[],1,1,,1
+840001,მიხაკი,dianthus,,,210001,/manus-storage/products/8803c743-465a-491a-83bd-3740f6664899_89271a12.webp,,0,1,0,2026-07-01 11:06:09,2026-07-16 16:19:53,5.00,5.00,0,single stem,[],1,1,,1
+840002,მიხაკი,dianthus,,,210001,/manus-storage/products/7850e2ee-8689-4ca9-8c29-0794763b80bd_dbb994f6.webp,,0,1,0,2026-07-01 11:06:47,2026-07-16 16:20:03,5.00,5.00,0,single stem,[],1,1,,1
+840003,ქრიზანთემა,chrysanthemum,,,210001,/manus-storage/products/77ee2d98-f100-451f-9e2a-fb326d6ba14f_044413d4.webp,,0,1,0,2026-07-01 11:07:42,2026-07-16 16:20:16,10.00,10.00,0,single stem,[],1,1,,1
+840004,მიხაკი,dianthus,,,210001,/manus-storage/products/4fdc3931-1a04-41de-8341-e0a41e25631e_d7a5f44f.webp,,0,1,0,2026-07-01 11:08:26,2026-07-16 16:20:28,5.00,5.00,0,single stem,[],1,1,,1
+870001,სპრეი ვარდი,spray rose,,,210001,/manus-storage/products/3280ae4c-446d-4e34-9020-6d93d445f588_f9db2c3c.webp,,0,1,0,2026-07-01 11:11:08,2026-07-16 16:20:38,10.00,10.00,0,single stem,[],1,1,,1
+870002,სპრეი ვარდი,spray rose,,,210001,/manus-storage/products/1e054e43-29e7-463b-99a1-b81a5214cb1f_6bcfe6a4.webp,,0,1,0,2026-07-01 11:12:32,2026-07-16 16:20:48,10.00,10.00,0,single stem,[],1,1,,1
+870003,სპრეი ვარდი,spray rose,,,210001,/manus-storage/products/e4a60415-181b-47ab-82ec-9ccc81342eb6_326370c6.webp,,0,1,0,2026-07-01 11:13:58,2026-07-16 16:21:01,10.00,10.00,0,single stem,[],1,1,,1
+870004,სპრეი ვარდი,spray rose,,,210001,/manus-storage/products/59343c47-e561-4ba7-987c-b7ac8e7315a5_0b605922.webp,,0,1,0,2026-07-01 11:14:45,2026-07-16 16:21:14,10.00,10.00,0,single stem,[],1,1,,1
+900001,ოსტინი,Austin,,,210001,/manus-storage/products/b7abe895-addb-490c-8509-9d6749771fee_823a678c.webp,,0,0,0,2026-07-01 11:19:23,2026-07-25 15:47:57,8.00,8.00,0,single stem,[],1,1,,1
+900002,სპრეი ვარდი,spray rose,,,210001,/manus-storage/products/f62960ad-8bc8-4d01-99a5-0c05f6924083_da680cc1.webp,,0,1,0,2026-07-01 11:20:52,2026-07-16 16:21:34,10.00,10.00,0,single stem,[],1,1,,1
+900003,სპრეი ვარდი,spray rose,,,210001,/manus-storage/products/8e487039-2588-4135-aa03-8db399809d26_c2b2ffad.webp,,0,1,0,2026-07-01 11:21:47,2026-07-16 16:21:46,10.00,10.00,0,single stem,[],1,1,,1
+900004,სპრეი ვარდი,spray rose,,,210001,/manus-storage/products/bf40aa7d-33a0-4ab7-a3e1-17bb9e869573_a9a14b42.webp,,0,1,0,2026-07-01 11:22:58,2026-07-16 16:21:54,10.00,10.00,0,single stem,[],1,1,,1
+930001,თეთრი ფიცი,White Vow,"თეთრი მიხაკებისა და ლიზიანთუსის დახვეწილი საპატარძლო თაიგული ევკალიპტის ფოთლებით. კლასიკური, მსუბუქი და ელეგანტური არჩევანი მინიმალისტური ქორწილისთვის.","An elegant bridal bouquet featuring white carnations and lisianthus, complemented by eucalyptus foliage. A classic, light, and refined choice for a minimalist wedding.",150001,/manus-storage/products/757c467d-98ef-433e-8906-909deeeafd98_34acadc6.webp,,0,0,0,2026-07-02 14:51:47,2026-07-17 13:50:40,180.00,180.00,0,single stem,[],1,1,,1
+960001,თეთრი ჰარმონია,White Harmony,"თეთრი გერბერებისგან შექმნილი მინიმალისტური საპატარძლო თაიგული. მისი სისუფთავე, სიმსუბუქე და თანამედროვე სტილი იდეალურია როგორც კლასიკური, ისე თანამედროვე ქორწილისთვის.","A minimalist bridal bouquet featuring elegant white gerbera daisies. Clean, graceful, and timeless, it is a perfect choice for both classic and contemporary weddings.",150001,/manus-storage/products/5ebc6183-dcf4-4580-8f3e-bba29e2ba08a_a5b5c622.webp,,0,0,0,2026-07-02 14:54:25,2026-07-17 13:50:38,90.00,90.00,0,single stem,[],1,1,,1
+990001,თეთრი აბრეშუმი,White Silk,თეთრი გერბერების ჰაეროვანი და თანამედროვე საპატარძლო თაიგული. დახვეწილი ფორმა და უჩვეულო ფურცლები მას გამორჩეულ არჩევანად აქცევს მინიმალისტური და ელეგანტური ქორწილისთვის.,"An elegant bridal bouquet featuring white gerberas. Airy, modern, and distinctive, its unique petals create a refined look for a minimalist and sophisticated wedding.",150001,/manus-storage/products/662d213a-b4ba-4ad1-8f2e-729953a8db8b_ec99affe.webp,,0,0,0,2026-07-02 14:57:18,2026-07-17 13:50:38,100.00,100.00,0,single stem,[],1,1,,1
+1020001,მარადიული ფიცი,Eternal Vow,"თეთრი ვარდების კლასიკური საპატარძლო თაიგული, რომელიც სიწმინდეს, სიყვარულსა და მარადიულ ერთგულებას გამოხატავს. მისი დახვეწილი მრგვალი ფორმა და მინიმალისტური სტილი იდეალური არჩევანია ელეგანტური და რომანტიკული ქორწილისთვის.
+(15 ვარდი)","A timeless bridal bouquet of elegant white roses, symbolizing purity, love, and everlasting devotion. Its refined round shape and minimalist design make it a perfect choice for a romantic and sophisticated wedding.
+(15roses)",150001,/manus-storage/products/img_8789_ec3abf95.webp,,0,0,0,2026-07-02 15:02:36,2026-07-17 13:50:38,150.00,150.00,0,single stem,[],1,1,,1
+1050001,თეთრი სილუეტი,White Silhouette,"დახვეწილი და თანამედროვე საპატარძლო თაიგული თეთრი ანთურიუმებით, ლიზიანთუსით, ვარდებითა და ჩამოშვებული ამარანტუსით. მისი მინიმალისტური დიზაინი განსაკუთრებულ ელეგანტურობასა და სიმსუბუქეს ანიჭებს პატარძლის იერს და იდეალურია როგორც კლასიკური, ისე თანამედროვე ქორწილისთვის.
+
+შემადგენლობა:
+* 3 × თეთრი ანთურიუმი
+* თეთრი ლიზიანთუსი
+* თეთრი ვარდები
+* თეთრი ამარანტუსი
+* ატლასის ლენტი
+","An elegant and modern bridal bouquet featuring white anthuriums, lisianthus, roses, and cascading amaranthus. Its minimalist design creates a sophisticated, timeless look, making it the perfect choice for both classic and contemporary weddings.
+
+Composition:
+* 3 × White Anthuriums
+* White Lisianthus
+* White Roses
+* White Hanging Amaranthus
+* Satin Ribbon Finish",150001,/manus-storage/products/a8445c0b-30c2-4605-a914-72b4105615c7_060cd804.webp,,0,0,0,2026-07-02 15:14:23,2026-07-17 13:50:37,220.00,220.00,0,single stem,[],1,1,,1
+1080001,ჟოლოს ვნება,Crimson Desire,"მინიმალისტური და თამამი საპატარძლო თაიგული, რომელიც შედგება მხოლოდ წითელი ანთურიუმებისგან. მისი თანამედროვე ფორმა, პრიალა ტექსტურა და ღრმა წითელი ფერი ქმნის გამორჩეულ და ელეგანტურ იერს. იდეალური არჩევანია თანამედროვე პატარძლებისთვის, რომლებიც განსხვავებულ სტილს აფასებენ.
+შემადგენლობა
+* 5 × წითელი ანთურიუმი
+* ატლასის ლენტი","A bold, minimalist bridal bouquet composed exclusively of glossy red anthuriums. Its sculptural shape and rich crimson color create a sophisticated, modern statement, making it the perfect choice for brides seeking a unique and elegant look.
+Composition
+* 5 × Red Anthuriums
+* Satin Ribbon Finish",150001,/manus-storage/products/img_8793_7796521b.webp,,0,0,0,2026-07-02 15:17:34,2026-07-17 13:50:33,125.00,125.00,0,single stem,[],1,1,,1
+1110001,ბურგუნდის ელეგანტურობა,Burgundy Elegance,"დახვეწილი საპატარძლო თაიგული ბურგუნდისფერი კალებით, რომელიც აერთიანებს თანამედროვე მინიმალიზმსა და კლასიკურ ელეგანტურობას. ღრმა ღვინისფერი ტონები განსაკუთრებულ ხასიათსა და ფუფუნებას მატებს პატარძლის იერს. იდეალურია შემოდგომის, ზამთრისა და თანამედროვე სტილის ქორწილებისთვის.
+შემადგენლობა
+* 15× ბურგუნდისფერი კალა
+* ატლასის ლენტი","An elegant bridal bouquet featuring rich burgundy calla lilies. Combining modern minimalism with timeless sophistication, its deep wine-colored blooms create a luxurious statement, making it the perfect choice for autumn, winter, and contemporary weddings.
+Composition
+* 15× Burgundy Calla Lilies
+* Satin Ribbon Finish",150001,/manus-storage/products/img_8794_333cf86b.webp,,0,0,0,2026-07-02 15:21:31,2026-07-17 13:50:33,300.00,300.00,0,single stem,[],1,1,,1
+1140001,კოცნა,Kiss,"შთამბეჭდავი საპატარძლო თაიგული, რომელიც აერთიანებს 15 ბურგუნდისფერ კალასა და 15 ფაფუკ პიონს. ღრმა ღვინისფერი და ნაზი ტექსტურების ჰარმონია ქმნის მდიდრულ, ელეგანტურ და დაუვიწყარ კომპოზიციას. იდეალური არჩევანია პატარძლებისთვის, რომლებიც განსაკუთრებულ, თანამედროვე და დახვეწილ სტილს ეძებენ.
+შემადგენლობა
+* 15 × ბურგუნდისფერი კალა
+* 15 × პიონი
+* ატლასის ლენტი","A luxurious bridal bouquet featuring 15 burgundy calla lilies and 15 lush peonies. The rich wine tones and soft textures create an elegant, sophisticated arrangement, making it a perfect choice for brides seeking a timeless yet modern statement.
+Composition
+* 15 × Burgundy Calla Lilies
+* 15 × Peonies
+* Satin Ribbon Finish",150001,/manus-storage/products/img_8795_0be89d59.webp,,0,0,0,2026-07-02 15:26:00,2026-07-17 13:50:32,600.00,600.00,0,single stem,[],1,1,,1
+1170001,კალები,Calla,"დახვეწილი საპატარძლო თაიგული თეთრი კალებით, რომელიც სიმბოლურად გამოხატავს სიწმინდეს, ელეგანტურობასა და მარადიულ სიყვარულს. მინიმალისტური დიზაინი, ატლასის ლენტი და მარგალიტის დეკორი ამ თაიგულს კლასიკურ და თანამედროვე ქორწილებისთვის ერთნაირად იდეალურ არჩევანად აქცევს.
+შემადგენლობა (ქართული)
+* 15თეთრი კალა
+* ატლასის ლენტი
+* მარგალიტის დეკორი","An elegant bridal bouquet crafted from pure white calla lilies, symbolizing purity, sophistication, and everlasting love. Finished with a satin ribbon and pearl detailing, this timeless bouquet is the perfect choice for both classic and modern weddings.
+Composition (English)
+* 15 White Calla Lilies
+* Satin Ribbon
+* Pearl Detail",150001,/manus-storage/products/img_8797_2fb63e3d.webp,,0,0,0,2026-07-02 15:29:13,2026-07-17 13:50:32,300.00,300.00,0,single stem,[],1,1,,1
+1200001,შენ,You,"თანამედროვე და გამორჩეული საპატარძლო თაიგული, სადაც თეთრი კალების სისუფთავე და ანტურიუმის პრიალა მწვანე ფოთლები იდეალურ ბალანსს ქმნის. მინიმალისტური, არქიტექტურული ფორმა ამ თაიგულს ელეგანტურ და განსხვავებულ არჩევანად აქცევს თანამედროვე პატარძლებისთვის.
+
+შემადგენლობა 
+* 10თეთრი კალა
+* 3 მწვანე ანტურიუმი
+* ატლასის ლენტი","
+A modern bridal bouquet combining the timeless elegance of white calla lilies with the glossy green beauty of anthuriums. Its clean, sculptural design creates a sophisticated statement, making it a perfect choice for contemporary weddings.
+Composition 
+* 10White Calla Lilies
+* 3 Green Anthuriums
+* Satin Ribbon",150001,/manus-storage/products/img_8798_55973568.webp,,0,0,0,2026-07-02 15:32:38,2026-07-17 13:50:32,275.00,275.00,0,single stem,[],1,1,,1
+1230001,ტროპიკული შთაგონება,Tropical Grace,"გამორჩეული საპატარძლო თაიგული სტრელიციებით, რომელიც შექმნილია თამამი და თანამედროვე პატარძლებისთვის. ეგზოტიკური ფორმები, ცოცხალი ფერები და მინიმალისტური გაფორმება ამ თაიგულს უნიკალურ ხასიათს სძენს. იდეალური არჩევანია მათთვის, ვისაც კლასიკურის ნაცვლად განსხვავებული და დასამახსოვრებელი სტილი სურს.
+
+შემადგენლობა 
+* 5 სტრელიცია
+* ატლასის ლენტი","A striking bridal bouquet featuring Bird of Paradise flowers, designed for brides who appreciate bold elegance and contemporary style. Its sculptural shape, vibrant colors, and minimalist finish create a unique statement, perfect for unforgettable weddings.
+
+Composition 
+* 5Bird of Paradise (Strelitzia)
+* Satin Ribbon
+",150001,/manus-storage/products/img_8799_1bf92a42.webp,,0,0,0,2026-07-02 15:35:55,2026-07-17 13:50:46,170.00,170.00,0,single stem,[],1,1,,1
+1260001,ოქრო⚜️,Gold,"გამორჩეული საპატარძლო თაიგული, შექმნილი სრულად ოქროსფერი ანტურიუმებით. თამამი, თანამედროვე და ლუქს კლასის დიზაინი ხაზს უსვამს ინდივიდუალობასა და დახვეწილ გემოვნებას. კასკადური თეთრი ამარანტი კომპოზიციას სიმსუბუქესა და მოძრაობას მატებს, რაც თაიგულს მართლაც დაუვიწყარს ხდის.
+
+შემადგენლობა
+* 10 ოქროსფერი ანტურიუმი
+* თეთრი ამარანტი
+* ატლასის ლენტი","A luxurious bridal bouquet crafted entirely from golden anthuriums. Its bold, contemporary design embodies elegance and individuality, while the cascading white amaranthus adds softness and graceful movement. A perfect statement bouquet for modern brides.
+
+Composition 
+* 10 Golden Anthuriums
+* White Amaranthus
+* Satin Ribbon",150001,/manus-storage/products/img_8801_ec9d4140.webp,,0,0,0,2026-07-02 15:39:18,2026-07-17 13:50:46,355.00,355.00,0,single stem,[],1,1,,1
+1260002,თეთრი სიმფონია,White Symphony,"ნაზი და კლასიკური საპატარძლო თაიგული თეთრი ალსტრომერიებით, რომელიც გამოირჩევა ჰაეროვანი ფორმითა და ბუნებრივი ელეგანტურობით. სისუფთავისა და სინაზის სიმბოლო, იდეალური არჩევანია როგორც კლასიკური, ისე თანამედროვე საქორწილო ცერემონიებისთვის.
+
+შემადგენლობა 
+* 10 თეთრი ალსტრომერია
+* ატლასის ლენტი","A delicate bridal bouquet of white alstroemerias, designed with timeless elegance and airy charm. Symbolizing purity and devotion, this bouquet is a beautiful choice for both classic and contemporary weddings.
+
+Composition 
+* 10 White Alstroemeria
+* Satin Ribbon",150001,/manus-storage/products/img_8803_173aba21.webp,,0,0,0,2026-07-02 15:41:40,2026-07-17 13:50:48,65.00,65.00,0,single stem,[],1,1,,1
+1290001,აურა🏹,"  Aura🏹",,,180001,/manus-storage/products/e729b4fb-d349-4873-a68a-204650fe6fc1_9b409473.webp,,0,0,0,2026-07-02 18:47:16,2026-07-25 15:47:43,175.00,175.00,0,single stem,[],1,1,,1
+1320001,ბურბუშელა,burbishela,მინი თაიგული,,180001,/manus-storage/products/img_8987_14328301.webp,,0,1,0,2026-07-04 14:09:28,2026-07-16 16:53:20,45.00,45.00,0,single stem,[],1,1,,1
+1350001,ქენდი,Candy,,,180001,/manus-storage/products/img_8985_65dadb0d.webp,,0,0,0,2026-07-04 14:10:37,2026-07-17 13:50:52,95.00,95.00,0,single stem,[],1,1,,1
+1380001,თეთრი ჰაეროვნება,Baby’s Breath Bliss,"დახვეწილი საპატარძლო თაიგული, რომელიც მთლიანად თეთრი გიფსოფილით არის შექმნილი. მისი მსუბუქი, ჰაეროვანი ფორმა ღრუბელს მოგაგონებთ და გამოხატავს სიწმინდეს, სიყვარულსა და მარადიულ ერთგულებას. მინიმალისტური, ელეგანტური და დროის მიღმა მდგომი არჩევანია როგორც კლასიკური, ისე თანამედროვე ქორწილისთვის. მსუბუქი და კომფორტული დასაჭერად, იდეალურად ავსებს პატარძლის ნაზ და რომანტიკულ იერს.
+
+შემადგენლობა:
+* თეთრი გიფსოფილა
+* თეთრი ატლასის ლენტი","A timeless bridal bouquet crafted entirely from delicate white baby’s breath, creating a soft, airy, cloud-like silhouette. Its minimalist elegance symbolizes everlasting love, purity, and innocence, making it the perfect choice for modern, romantic, or classic weddings. Lightweight and effortlessly graceful, this bouquet beautifully complements any bridal style.
+
+Composition:
+* White Baby’s Breath (Gypsophila)
+* White satin ribbon finish",150001,/manus-storage/products/img_8982_27a09997.webp,,0,0,0,2026-07-04 14:14:39,2026-07-17 13:50:54,160.00,160.00,0,single stem,[],1,1,,1
+1410001,ჩუპაჩუპსი,lolipop,,,180001,/manus-storage/products/img_0215_d491d992.webp,,0,0,0,2026-07-16 16:25:22,2026-07-25 15:47:24,110.00,110.00,0,single stem,,1,1,,1
+1440001,ცისარტყელები,Rainbow,,,180001,/manus-storage/products/0c91fee7-c04a-49a0-ab7a-e4ceb0b5652c_1a80fde6.webp,,0,0,0,2026-07-16 16:27:53,2026-07-25 15:47:20,105.00,105.00,0,single stem,,1,1,,1
+1470001,შინდი,Red,,,180001,/manus-storage/products/img_0150_066207f1.webp,,0,1,0,2026-07-16 16:29:47,2026-07-16 16:29:47,120.00,120.00,0,single stem,,1,1,,1
+1500001,ნაზი,Best,,,180001,/manus-storage/products/img_0140_2cedf40b.webp,,0,1,0,2026-07-16 16:30:55,2026-07-16 16:30:55,220.00,220.00,0,single stem,,1,1,,1
+1500002,პუდრი,Blush,,,180001,/manus-storage/products/d879be8f-b031-4b2f-a0e8-e07311bd7773_ab0bbd96.webp,,0,1,0,2026-07-16 16:31:57,2026-07-26 09:53:43,120.00,120.00,0,single stem,[],1,1,,1
+1530001,ბაფთა,Colourmix,,,180001,/manus-storage/products/eaaaebdc-368c-440f-b33d-0f0a57d51d36_f1317bbe.webp,,0,1,0,2026-07-16 16:34:01,2026-07-26 09:54:06,140.00,140.00,0,single stem,[],1,1,,1
+1560001,"    ბრწყინვალე განწყობა","    Color Symphony",,,180001,/manus-storage/products/img_0275_59ab0efa.webp,,0,0,0,2026-07-17 13:33:25,2026-07-25 15:47:06,170.00,170.00,0,single stem,[],1,1,,1
+1560002,ზაფხული,summer,,,180001,/manus-storage/products/img_0242_ca605af3.webp,,0,1,0,2026-07-17 13:35:04,2026-07-17 13:35:04,170.00,170.00,0,single stem,,1,1,,1
+1590001,იღბლის ბამბუკი ,Lucky Bamboo,,,210001,/manus-storage/products/img_0309_e0bd04d0.webp,,0,1,0,2026-07-17 16:22:53,2026-07-17 16:22:53,22.00,22.00,0,single stem,,1,1,,1
+1620001,ლისიანთუსი,Lisianthus,,,210001,/manus-storage/products/46af9b4c-1ff0-48f0-bc5a-a802feb80cd7_1abb3665.webp,,0,1,0,2026-07-17 16:24:27,2026-07-17 16:24:27,10.00,10.00,0,single stem,,1,1,,1
+1650001,მზესუმზირა,Sunflower,,,210001,/manus-storage/products/32cfcb82-bf66-4ae9-8e05-e9df3bdf67f8_2cc6f297.webp,,0,0,0,2026-07-17 16:26:32,2026-07-25 15:46:47,15.00,15.00,0,single stem,,1,1,,1
+1710001,წითელი ვარდები,roses,25 ცალი,,180001,/manus-storage/products/f3241a38-61ce-481c-9524-458afbfe4752_5debabfe.webp,,0,1,0,2026-07-26 10:24:05,2026-07-26 10:24:05,200.00,200.00,0,single stem,,1,1,,1
+1710002,ნაზი არჩევანი,pink roses,,,180001,/manus-storage/products/img_0644_e43c2280.webp,,0,1,0,2026-07-26 10:25:05,2026-07-26 10:25:05,70.00,70.00,0,single stem,,1,1,,1
+1740001,ვანილი,Vanilla,,,180001,/manus-storage/products/img_0620_18f5fa9a.webp,,0,1,0,2026-07-26 10:27:28,2026-07-26 10:37:28,150.00,150.00,0,single stem,[],1,1,,1
+1740002,საღებავი,roses ,,,180001,/manus-storage/products/img_0629_8649790d.webp,,0,1,0,2026-07-26 10:28:28,2026-07-26 10:28:28,200.00,200.00,0,single stem,,1,1,,1
+1740003,"    აივორი",Ivory,,,180001,/manus-storage/products/img_0701_852a7c93.webp,,0,1,0,2026-07-26 10:29:37,2026-07-26 10:29:37,180.00,180.00,0,single stem,,1,1,,1
