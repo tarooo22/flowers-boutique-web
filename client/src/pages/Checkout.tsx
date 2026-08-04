@@ -265,6 +265,7 @@ export default function Checkout() {
   const [leaveAtDoor, setLeaveAtDoor] = useState(false);
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
+  const [placeId, setPlaceId] = useState<string | null>(null);
   const [isMapOpen, setIsMapOpen] = useState(false);
 
   const [isProcessing, setIsProcessing] = useState(false);
@@ -451,15 +452,11 @@ export default function Checkout() {
 
     setIsProcessing(true);
     try {
-      const productSubtotal = parseFloat(getSubtotal());
-      const total = parseFloat(getTotal());
-
       console.log('[Checkout] Card Payment - Submitting BOG order with:', {
         deliveryType,
         recipientName: recipientName || null,
         recipientPhone: recipientPhone || null,
         address: address || null,
-        total,
       });
 
       const result = await createBOGOrderMutation.mutateAsync({
@@ -471,18 +468,14 @@ export default function Checkout() {
         items: cartItems.map((item) => ({
           productId: item.productId,
           quantity: item.quantity,
-          price: item.price,
-          selectedVariantId: item.selectedVariantId,
-          selectedColorNameKa: item.selectedColorNameKa,
-          selectedColorNameEn: item.selectedColorNameEn,
-          selectedColorHex: item.selectedColorHex,
+          variantId: item.selectedVariantId,
           customData: item.customData,
         })),
-        totalPrice: total,
         notes: courierNotes,
         deliveryAddress: deliveryType === 'pickup' ? undefined : address,
         latitude: deliveryType === 'pickup' ? undefined : (latitude || undefined),
         longitude: deliveryType === 'pickup' ? undefined : (longitude || undefined),
+        placeId: deliveryType === 'pickup' ? undefined : (placeId || undefined),
         building: deliveryType === 'pickup' ? undefined : building,
         entrance: deliveryType === 'pickup' ? undefined : entrance,
         floor: deliveryType === 'pickup' ? undefined : undefined,
@@ -491,17 +484,6 @@ export default function Checkout() {
         deliveryTime: selectedTime,
         giftMessage: cardMessage,
         fulfillmentType: deliveryType,
-        // BOG-specific
-        amount: productSubtotal,
-        currency: 'GEL',
-        description: `Flower’s Boutique Order - ${cartItems.length} items`,
-        basketItems: cartItems.map((item) => ({
-          name: item.name,
-          quantity: item.quantity,
-          unitPrice: item.price,
-          totalPrice: item.price * item.quantity,
-        })),
-        deliveryAmount: deliveryType === 'delivery' ? 10 : 0,
       });
 
       if (result.redirectUrl) {
@@ -533,6 +515,7 @@ export default function Checkout() {
         onConfirm={(lat, lon, addr) => {
           setLatitude(lat);
           setLongitude(lon);
+          setPlaceId(null);
           if (addr) setAddress(addr);
           setIsMapOpen(false);
         }}
@@ -762,6 +745,7 @@ export default function Checkout() {
                           setAddress(option.formatted);
                           setLatitude(option.lat);
                           setLongitude(option.lon);
+                          setPlaceId(option.placeId ?? null);
                         }}
                         placeholder={t.address}
                       />

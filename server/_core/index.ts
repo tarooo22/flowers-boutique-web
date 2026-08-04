@@ -16,7 +16,8 @@ import { isBOGCallbackVerificationAvailable, isBOGConfigured } from "./bog";
 import { validateEnvironment } from "./env";
 import { getDb } from "../db";
 import { eq } from "drizzle-orm";
-import { orders, customerOrders } from "../../drizzle/schema";
+import { orders } from "../../drizzle/schema";
+import { resolveTrustedPaymentStatus, shouldApplyBOGCallbackUpdate } from "../paymentSecurity";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -171,10 +172,15 @@ async function startServer() {
       });
 
       // Step 9: Find local order by BOG order ID
-      const db = getDb();
-      const localOrder = await db.query.orders.findFirst({
-        where: eq(orders.bogExternalOrderId, bogOrderId),
-      });
+      const db = await getDb();
+      if (!db) {
+        throw new Error("Database not available");
+      }
+      const [localOrder] = await db
+        .select()
+        .from(orders)
+        .where(eq(orders.bogExternalOrderId, bogOrderId))
+        .limit(1);
 
       if (!localOrder) {
         console.error(`[BOG Callback ${diagnosticId}] Local order not found for BOG ID:`, bogOrderId);
@@ -190,35 +196,6 @@ async function startServer() {
         orderNumber: (localOrder as any).orderNumber,
       });
 
-      // Step 10: Map BOG status to local payment status
-      let paymentStatus: "pending" | "paid" | "failed" | "refund_pending" | "refunded" | "partially_refunded" | "authorized" = "pending";
-      
-      switch (bogStatus) {
-        case "completed":
-          paymentStatus = "paid";
-          break;
-        case "rejected":
-          paymentStatus = "failed";
-          break;
-        case "refund_requested":
-          paymentStatus = "refund_pending";
-          break;
-        case "refunded":
-          paymentStatus = "refunded";
-          break;
-        case "refunded_partially":
-          paymentStatus = "partially_refunded";
-          break;
-        case "blocked":
-          paymentStatus = "authorized";
-          break;
-        case "created":
-        case "processing":
-        default:
-          paymentStatus = "pending";
-          break;
-      }
-
       // Step 11: Extract additional fields
       const transactionId = payload.body?.transaction_id;
       const paymentMethod = payload.body?.payment_method;
@@ -228,19 +205,10 @@ async function startServer() {
 
       // Step 12: Update order (idempotent - only update if status is changing or if pending)
       const currentStatus = (localOrder as any).paymentStatus;
-      
-      // Idempotency: don't revert paid orders to pending
-      if (currentStatus === "paid" && paymentStatus === "pending") {
-        console.log(`[BOG Callback ${diagnosticId}] Idempotency check: ignoring pending status for already-paid order`);
-        return res.status(200).json({
-          success: true,
-          message: "Callback processed (idempotent - order already paid)",
-          diagnosticId
-        });
-      }
+      const paymentStatus = resolveTrustedPaymentStatus(currentStatus, bogStatus);
 
       // Idempotency: don't create duplicate updates
-      if (currentStatus === paymentStatus && (localOrder as any).bogCallbackReceived) {
+      if (!shouldApplyBOGCallbackUpdate(currentStatus, bogStatus, Boolean(localOrder.bogCallbackReceived))) {
         console.log(`[BOG Callback ${diagnosticId}] Idempotency check: status unchanged and callback already received`);
         return res.status(200).json({
           success: true,

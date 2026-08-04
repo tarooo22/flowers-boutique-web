@@ -1,8 +1,7 @@
-import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 import type { Express, Request, Response } from "express";
 import * as db from "../db";
-import { getSessionCookieOptions } from "./cookies";
 import { sdk } from "./sdk";
+import { issueAuthSession } from "./session";
 
 function getQueryParam(req: Request, key: string): string | undefined {
   const value = req.query[key];
@@ -36,13 +35,12 @@ export function registerOAuthRoutes(app: Express) {
         lastSignedIn: new Date(),
       });
 
-      const sessionToken = await sdk.createSessionToken(userInfo.openId, {
-        name: userInfo.name || "",
-        expiresInMs: ONE_YEAR_MS,
-      });
+      const user = await db.getUserByOpenId(userInfo.openId);
+      if (!user) {
+        throw new Error("OAuth user could not be loaded after synchronization");
+      }
 
-      const cookieOptions = getSessionCookieOptions(req);
-      res.cookie(COOKIE_NAME, sessionToken, { ...cookieOptions, maxAge: ONE_YEAR_MS });
+      await issueAuthSession(req, res, user.id);
 
       res.redirect(302, "/");
     } catch (error) {

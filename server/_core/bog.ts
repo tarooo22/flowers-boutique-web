@@ -14,6 +14,7 @@
  */
 
 import crypto from 'crypto';
+import { fromMinorUnits, toMinorUnits } from '../paymentSecurity';
 
 // Environment variables
 const BOG_ENV = process.env.BOG_ENV || 'sandbox';
@@ -193,7 +194,7 @@ export async function createBOGOrder(params: {
   orderId: string; // external_order_id (e.g., FLR-600016)
   userId?: number; // Authenticated user ID (optional for guest orders)
   localOrderId?: number; // Local order ID for linking
-  amount: number; // in tetri (smallest unit)
+  amount: number; // product subtotal in GEL, per the payload contract below
   currency: string; // GEL
   description: string;
   customerEmail?: string;
@@ -205,7 +206,7 @@ export async function createBOGOrder(params: {
     unitPrice: number;
     totalPrice: number;
   }>;
-  deliveryAmount?: number; // in tetri
+  deliveryAmount?: number; // delivery fee in GEL
 }): Promise<{
   success: boolean;
   redirectUrl?: string;
@@ -250,20 +251,30 @@ export async function createBOGOrder(params: {
     }
 
     // Step 2: Validate payload - amounts must be in GEL
-    const productSubtotal = params.amount;
-    const deliveryFee = params.deliveryAmount || 0;
-    const expectedTotal = productSubtotal + deliveryFee;
-    
-    // Validate product basket total matches product subtotal
-    const productBasketTotal = params.basketItems.reduce((sum, item) => {
-      return sum + (item.unitPrice * item.quantity);
+    const productSubtotalMinor = toMinorUnits(params.amount);
+    const deliveryFeeMinor = toMinorUnits(params.deliveryAmount ?? 0);
+    const expectedTotalMinor = productSubtotalMinor + deliveryFeeMinor;
+    const productBasketTotalMinor = params.basketItems.reduce((sum, item) => {
+      if (!Number.isInteger(item.quantity) || item.quantity < 1) {
+        return Number.NaN;
+      }
+      const unitPriceMinor = toMinorUnits(item.unitPrice);
+      const lineTotalMinor = toMinorUnits(item.totalPrice);
+      if (unitPriceMinor * item.quantity !== lineTotalMinor) {
+        return Number.NaN;
+      }
+      return sum + lineTotalMinor;
     }, 0);
+
+    const productBasketMismatch = productBasketTotalMinor !== productSubtotalMinor;
+    const productSubtotal = fromMinorUnits(productSubtotalMinor);
+    const deliveryFee = fromMinorUnits(deliveryFeeMinor);
+    const expectedTotal = fromMinorUnits(expectedTotalMinor);
+    const productBasketTotal = Number.isFinite(productBasketTotalMinor)
+      ? fromMinorUnits(productBasketTotalMinor)
+      : Number.NaN;
     
-    // Correct validation: productBasketTotal should match productSubtotal
-    // Allow maximum 0.01 GEL rounding difference
-    const productBasketMismatch = Math.abs(productBasketTotal - productSubtotal) > 0.01;
-    
-    if (expectedTotal <= 0 || productBasketMismatch) {
+    if (expectedTotalMinor <= 0 || productBasketMismatch) {
       const diagnostic: BOGDiagnosticResult = {
         stage: 'PAYLOAD_VALIDATION',
         success: false,
