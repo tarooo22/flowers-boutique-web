@@ -8,6 +8,5 @@ CREATE TABLE `authSessions` (
 	CONSTRAINT `authSessions_tokenHash` PRIMARY KEY(`tokenHash`)
 );
 --> statement-breakpoint
-CREATE INDEX `authSessions_userId_idx` ON `authSessions` (`userId`);
---> statement-breakpoint
+CREATE INDEX `authSessions_userId_idx` ON `authSessions` (`userId`);--> statement-breakpoint
 CREATE INDEX `authSessions_expiresAt_idx` ON `authSessions` (`expiresAt`);
