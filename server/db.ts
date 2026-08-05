@@ -1,5 +1,5 @@
 import { drizzle } from "drizzle-orm/mysql2";
-import { sql, eq, desc, isNull } from "drizzle-orm";
+import { sql, eq, desc, isNull, and } from "drizzle-orm";
 import { InsertUser, users, products, categories, banners, orders, InsertOrder, productImages, customerAddresses, customerOrders, Order } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -328,16 +328,35 @@ export async function createCustomerAddress(address: any) {
   return result;
 }
 
-export async function updateCustomerAddress(id: number, updates: any) {
+export async function updateCustomerAddress(userId: number, id: number, updates: any): Promise<boolean> {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-  await db.update(customerAddresses).set(updates).where(eq(customerAddresses.id, id));
+  const owned = await db
+    .select({ id: customerAddresses.id })
+    .from(customerAddresses)
+    .where(and(eq(customerAddresses.id, id), eq(customerAddresses.userId, userId)))
+    .limit(1);
+  if (!owned[0]) return false;
+  await db
+    .update(customerAddresses)
+    .set(updates)
+    .where(and(eq(customerAddresses.id, id), eq(customerAddresses.userId, userId)));
+  return true;
 }
 
-export async function deleteCustomerAddress(id: number) {
+export async function deleteCustomerAddress(userId: number, id: number): Promise<boolean> {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-  await db.delete(customerAddresses).where(eq(customerAddresses.id, id));
+  const owned = await db
+    .select({ id: customerAddresses.id })
+    .from(customerAddresses)
+    .where(and(eq(customerAddresses.id, id), eq(customerAddresses.userId, userId)))
+    .limit(1);
+  if (!owned[0]) return false;
+  await db
+    .delete(customerAddresses)
+    .where(and(eq(customerAddresses.id, id), eq(customerAddresses.userId, userId)));
+  return true;
 }
 
 // Customer orders

@@ -11,10 +11,7 @@ import multer from "multer";
 import type { FileFilterCallback } from "multer";
 import sharp from "sharp";
 import { storagePut } from "./storage";
-import { getDb } from "./db";
-import { users } from "../drizzle/schema";
-import { eq } from "drizzle-orm";
-import { parse as parseCookie } from "cookie";
+import { sdk } from "./_core/sdk";
 
 const ALLOWED_MIME = ["image/jpeg", "image/png", "image/webp"];
 const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
@@ -34,25 +31,14 @@ const upload = multer({
 
 async function requireAdmin(req: Request, res: Response): Promise<boolean> {
   try {
-    const cookies = parseCookie(req.headers.cookie || "");
-    const userId = cookies.userId;
-    if (!userId) {
-      res.status(401).json({ error: "Not authenticated" });
-      return false;
-    }
-    const db = await getDb();
-    if (!db) {
-      res.status(500).json({ error: "Database unavailable" });
-      return false;
-    }
-    const user = await db.select().from(users).where(eq(users.id, Number(userId))).limit(1);
-    if (!user[0] || user[0].role !== "admin") {
+    const user = await sdk.authenticateRequest(req);
+    if (user.role !== "admin") {
       res.status(403).json({ error: "Admin access required" });
       return false;
     }
     return true;
   } catch {
-    res.status(500).json({ error: "Auth check failed" });
+    res.status(401).json({ error: "Not authenticated" });
     return false;
   }
 }

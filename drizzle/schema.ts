@@ -1,4 +1,4 @@
-import { mysqlTable, int, varchar, text, timestamp, mysqlEnum, decimal, boolean, json, uniqueIndex } from "drizzle-orm/mysql-core";
+import { mysqlTable, int, varchar, text, timestamp, mysqlEnum, decimal, boolean, json, uniqueIndex, index } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -26,6 +26,27 @@ export const users = mysqlTable("users", {
 
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
+
+// Opaque authentication sessions. Only a SHA-256 hash of the browser token is
+// persisted, so a database read cannot be used to replay an active session.
+export const authSessions = mysqlTable(
+  "authSessions",
+  {
+    tokenHash: varchar("tokenHash", { length: 64 }).primaryKey(),
+    userId: int("userId").notNull(),
+    expiresAt: timestamp("expiresAt").notNull(),
+    revokedAt: timestamp("revokedAt"),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    lastUsedAt: timestamp("lastUsedAt").defaultNow().notNull(),
+  },
+  table => [
+    index("authSessions_userId_idx").on(table.userId),
+    index("authSessions_expiresAt_idx").on(table.expiresAt),
+  ],
+);
+
+export type AuthSession = typeof authSessions.$inferSelect;
+export type InsertAuthSession = typeof authSessions.$inferInsert;
 
 // Categories table
 export const categories = mysqlTable("categories", {

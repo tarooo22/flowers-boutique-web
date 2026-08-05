@@ -1,12 +1,12 @@
-import { AXIOS_TIMEOUT_MS, COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
-import { ForbiddenError } from "@shared/_core/errors";
+import { AXIOS_TIMEOUT_MS, COOKIE_NAME, ONE_YEAR_MS } from "../../shared/const";
+import { ForbiddenError } from "../../shared/_core/errors";
 import axios, { type AxiosInstance } from "axios";
 import { parse as parseCookieHeader } from "cookie";
 import type { Request } from "express";
 import { SignJWT, jwtVerify } from "jose";
 import type { User } from "../../drizzle/schema";
-import * as db from "../db";
 import { ENV } from "./env";
+import { authenticateSessionToken, isValidSessionTokenFormat } from "./session";
 import type {
   ExchangeTokenRequest,
   ExchangeTokenResponse,
@@ -156,6 +156,9 @@ class SDKServer {
 
   private getSessionSecret() {
     const secret = ENV.cookieSecret;
+    if (!secret) {
+      throw new Error("JWT_SECRET is required for signed internal sessions");
+    }
     return new TextEncoder().encode(secret);
   }
 
@@ -206,6 +209,10 @@ class SDKServer {
     }
 
     try {
+      if (!ENV.cookieSecret) {
+        console.warn("[Auth] JWT_SECRET is not configured");
+        return null;
+      }
       const secretKey = this.getSessionSecret();
       const { payload } = await jwtVerify(cookieValue, secretKey, {
         algorithms: ["HS256"],
@@ -257,32 +264,22 @@ class SDKServer {
   }
 
   async authenticateRequest(req: Request): Promise<AuthenticatedUser> {
-    // Check for native userId cookie first (customer auth)
     const cookies = this.parseCookies(req.headers.cookie);
-    const userIdCookie = cookies.get("userId");
-    
-    if (userIdCookie) {
-      try {
-        const userId = parseInt(userIdCookie, 10);
-        if (!isNaN(userId)) {
-          const { getDb } = await import("../db");
-          const db = await getDb();
-          if (db) {
-            const { users } = await import("../../drizzle/schema");
-            const { eq } = await import("drizzle-orm");
-            const result = await db.select().from(users).where(eq(users.id, userId)).limit(1);
-            if (result.length > 0) {
-              return result[0];
-            }
-          }
-        }
-      } catch (error) {
-        console.error("[Auth] Failed to read native userId cookie:", error);
-      }
+    const sessionCookie = cookies.get(COOKIE_NAME);
+
+    // Native login and normal OAuth callbacks both issue an opaque token. The
+    // current user and role are loaded from the database for every request.
+    const sessionUser = await authenticateSessionToken(sessionCookie);
+    if (sessionUser) return sessionUser;
+
+    // An opaque token that failed database verification is invalid, expired or
+    // revoked. Never reinterpret it as another credential type.
+    if (isValidSessionTokenFormat(sessionCookie)) {
+      throw ForbiddenError("Invalid session cookie");
     }
 
-    // Fall back to Manus OAuth session
-    const sessionCookie = cookies.get(COOKIE_NAME);
+    // Keep signed JWT support only for verified Manus cron callbacks. Browser
+    // OAuth logins are converted to opaque sessions in oauth.ts.
     const session = await this.verifySession(sessionCookie);
 
     if (!session) {
@@ -298,38 +295,7 @@ class SDKServer {
       return buildCronUser(userInfo);
     }
 
-    const sessionUserId = session.openId;
-    const signedInAt = new Date();
-    let user = await db.getUserByOpenId(sessionUserId);
-
-    // If user not in DB, sync from OAuth server automatically
-    if (!user) {
-      try {
-        const userInfo = await this.getUserInfoWithJwt(sessionCookie ?? "");
-        await db.upsertUser({
-          openId: userInfo.openId,
-          name: userInfo.name || null,
-          email: userInfo.email ?? null,
-          loginMethod: userInfo.loginMethod ?? userInfo.platform ?? null,
-          lastSignedIn: signedInAt,
-        });
-        user = await db.getUserByOpenId(userInfo.openId);
-      } catch (error) {
-        console.error("[Auth] Failed to sync user from OAuth:", error);
-        throw ForbiddenError("Failed to sync user info");
-      }
-    }
-
-    if (!user) {
-      throw ForbiddenError("User not found");
-    }
-
-    await db.upsertUser({
-      openId: user.openId,
-      lastSignedIn: signedInAt,
-    });
-
-    return user;
+    throw ForbiddenError("Legacy browser session is no longer accepted");
   }
 }
 

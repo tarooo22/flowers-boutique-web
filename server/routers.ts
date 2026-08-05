@@ -1,12 +1,12 @@
-import { COOKIE_NAME } from "@shared/const";
 import { TRPCError } from "@trpc/server";
-import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, router, protectedProcedure } from "./_core/trpc";
+import { publicProcedure, router, protectedProcedure, adminProcedure } from "./_core/trpc";
+import { destroyAuthSession, issueAuthSession } from "./_core/session";
 import { z } from "zod";
-import { getProducts, getAllProducts, getFeaturedProducts, getProductById, getCategories, getActiveBanners, createOrder, getOrders, createProduct, updateProduct, deleteProduct, createCategory, deleteCategory, createBanner, updateBanner, deleteBanner, getAllBanners, getCustomerById, updateCustomerProfile, getCustomerAddresses, createCustomerAddress, updateCustomerAddress, deleteCustomerAddress, getCustomerOrders, createCustomerOrder, getAllCustomerOrders, getCustomerOrderById, getOrderStats, getMyOrders, getAdminOrders, updateOrderDeliveryStatus, updateOrderPaymentStatus, createCanonicalOrder } from "./db";
+import { getProducts, getAllProducts, getFeaturedProducts, getProductById, getCategories, getActiveBanners, createOrder, getOrders, createProduct, updateProduct, deleteProduct, createCategory, deleteCategory, createBanner, updateBanner, deleteBanner, getAllBanners, getCustomerById, updateCustomerProfile, getCustomerAddresses, createCustomerAddress, getCustomerOrders, createCustomerOrder, getAllCustomerOrders, getCustomerOrderById, getOrderStats, getMyOrders, getAdminOrders, updateOrderDeliveryStatus, updateOrderPaymentStatus, createCanonicalOrder } from "./db";
+import { deleteAddressForUser, updateAddressForUser } from "./addressAuthorization";
 import { getDb } from "./db";
-import { customerOrders, orders, type Product } from "../drizzle/schema";
+import { customerOrders, orders } from "../drizzle/schema";
 import { desc } from "drizzle-orm";
 import { eq } from "drizzle-orm";
 import { notifyOwner } from "./_core/notification";
@@ -14,15 +14,15 @@ import { generateImage } from "./_core/imageGeneration";
 import { registerCustomer, loginCustomer, getUserById, changePassword } from "./auth";
 import { sendConversionsAPIEvent, getClientIP, getUserAgent, getFBPCookie, getFBCCookie, generateFBCFromFbclid, getFbclidFromUrl, getStableSessionId, generateStableExternalId } from "./_core/metaConversionsAPI";
 import { getLatestRankings, calculateRankingTrends, getRankingHistory, generateWeeklyReport } from "./seoRankingTracker";
-import { createBOGOrder, isBOGConfigured, isBOGCallbackVerificationAvailable } from "./_core/bog";
-import { getBogCardPaymentMode } from "./_core/env";
+import { calculateCanonicalPayment, publicPaymentStatus } from "./paymentSecurity";
+import { rejectCardPaymentRequest } from "./paymentAvailability";
 
 const orderItemSchema = z.object({
   productId: z.number().int().positive(),
   quantity: z.number().int().min(1).max(99),
   // Recalculated from the product record on the server; retained for carts
   // created before this validation was introduced.
-  price: z.number().nonnegative(),
+  price: z.number().nonnegative().optional(),
   selectedVariantId: z.string().optional(),
   selectedColorNameKa: z.string().optional(),
   selectedColorNameEn: z.string().optional(),
@@ -30,46 +30,18 @@ const orderItemSchema = z.object({
   customData: z.unknown().optional(),
 });
 
-function priceFromProduct(product: Product, variantId?: string): number | null {
-  const variant = variantId
-    ? product.variants?.find((candidate) => candidate?.id === variantId)
-    : undefined;
-  const price = Number(variant?.priceMin ?? product.priceMin);
-  return Number.isFinite(price) && price >= 0 ? price : null;
-}
-
 async function canonicalizeOrderItems(items: Array<z.infer<typeof orderItemSchema>>) {
-  const canonicalItems = [];
-
-  for (const item of items) {
-    const product = await getProductById(item.productId);
-    if (!product) throw new TRPCError({ code: "NOT_FOUND", message: "Product not found" });
-    if (!product.isAvailable) throw new TRPCError({ code: "BAD_REQUEST", message: "Product is unavailable" });
-
-    const price = priceFromProduct(product, item.selectedVariantId);
-    if (price === null || product.priceOnRequest) {
-      throw new TRPCError({ code: "BAD_REQUEST", message: "Product price is unavailable" });
-    }
-
-    const variant = item.selectedVariantId
-      ? product.variants?.find((candidate) => candidate?.id === item.selectedVariantId)
-      : undefined;
-    canonicalItems.push({
-      productId: product.id,
-      productNameKa: product.nameKa,
-      productNameEn: product.nameEn,
-      productImageUrl: variant?.imageUrl ?? product.imageUrl ?? null,
+  const payment = await calculateCanonicalPayment(
+    items.map(item => ({
+      productId: item.productId,
+      variantId: item.selectedVariantId,
       quantity: item.quantity,
-      price,
-      selectedVariantId: item.selectedVariantId,
-      selectedColorNameKa: variant?.colorNameKa ?? item.selectedColorNameKa,
-      selectedColorNameEn: variant?.colorNameEn ?? item.selectedColorNameEn,
-      selectedColorHex: variant?.colorHex ?? item.selectedColorHex,
       customData: item.customData,
-    });
-  }
-
-  return canonicalItems;
+    })),
+    "pickup",
+    getProductById,
+  );
+  return payment.items;
 }
 
 export const appRouter = router({
@@ -115,9 +87,7 @@ export const appRouter = router({
       .mutation(async ({ input, ctx }) => {
         try {
           const user = await loginCustomer(input.email, input.password);
-          // Set session cookie
-          const cookieOptions = getSessionCookieOptions(ctx.req);
-          ctx.res.cookie("userId", String(user.id), { ...cookieOptions, maxAge: 7 * 24 * 60 * 60 * 1000 });
+          await issueAuthSession(ctx.req, ctx.res, user.id);
           return {
             success: true,
             user: {
@@ -135,10 +105,8 @@ export const appRouter = router({
           });
         }
       }),
-    logout: publicProcedure.mutation(({ ctx }) => {
-      const cookieOptions = getSessionCookieOptions(ctx.req);
-      ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
-      ctx.res.clearCookie("userId", { ...cookieOptions, maxAge: -1 });
+    logout: publicProcedure.mutation(async ({ ctx }) => {
+      await destroyAuthSession(ctx.req, ctx.res);
       return {
         success: true,
       } as const;
@@ -148,10 +116,7 @@ export const appRouter = router({
   // Product routers
   products: router({
     list: publicProcedure.query(() => getProducts()),
-    listAll: protectedProcedure.query(async ({ ctx }) => {
-      if (ctx.user?.role !== "admin") throw new TRPCError({ code: "FORBIDDEN" });
-      return getAllProducts();
-    }),
+    listAll: adminProcedure.query(() => getAllProducts()),
     featured: publicProcedure.query(() => getFeaturedProducts()),
     // tRPC query procedures must return null rather than undefined when a
     // product is missing; React Query treats undefined as a failed response.
@@ -178,7 +143,7 @@ export const appRouter = router({
         category: row.category,
       }));
     }),
-    create: protectedProcedure
+    create: adminProcedure
       .input(z.object({
         nameEn: z.string(),
         nameKa: z.string(),
@@ -194,8 +159,7 @@ export const appRouter = router({
         featured: z.boolean().optional(),
         variants: z.any().optional(),
       }))
-      .mutation(async ({ ctx, input }) => {
-        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+      .mutation(async ({ input }) => {
         const { variants, ...productData } = input;
         const result = await createProduct(productData);
         if (variants && result.id) {
@@ -208,7 +172,7 @@ export const appRouter = router({
         }
         return result;
       }),
-    update: protectedProcedure
+    update: adminProcedure
       .input(z.object({
         id: z.number(),
         nameEn: z.string().optional(),
@@ -225,8 +189,7 @@ export const appRouter = router({
         featured: z.boolean().optional(),
         variants: z.any().optional(),
       }))
-      .mutation(async ({ ctx, input }) => {
-        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+      .mutation(async ({ input }) => {
         const { id, variants, ...updates } = input;
         const result = await updateProduct(id, updates);
         if (variants !== undefined) {
@@ -239,17 +202,16 @@ export const appRouter = router({
         }
         return result;
       }),
-    delete: protectedProcedure
+    delete: adminProcedure
       .input(z.object({ id: z.number() }))
-      .mutation(async ({ ctx, input }) => {
-        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+      .mutation(async ({ input }) => {
         return await deleteProduct(input.id);
       }),
   }),
 
   // Product variants management
   variants: router({
-    addVariant: protectedProcedure
+    addVariant: adminProcedure
       .input(z.object({
         productId: z.number(),
         colorNameKa: z.string(),
@@ -261,13 +223,12 @@ export const appRouter = router({
         available: z.boolean().default(true),
         isDefault: z.boolean().default(false),
       }))
-      .mutation(async ({ ctx, input }) => {
-        if (ctx.user?.role !== "admin") throw new TRPCError({ code: "FORBIDDEN" });
+      .mutation(async ({ input }) => {
         const { productId, ...variant } = input;
         const result = await (await import("./db")).addProductVariant(productId, variant);
         return { success: !!result };
       }),
-    updateVariant: protectedProcedure
+    updateVariant: adminProcedure
       .input(z.object({
         productId: z.number(),
         variantId: z.string(),
@@ -280,19 +241,17 @@ export const appRouter = router({
         available: z.boolean().optional(),
         isDefault: z.boolean().optional(),
       }))
-      .mutation(async ({ ctx, input }) => {
-        if (ctx.user?.role !== "admin") throw new TRPCError({ code: "FORBIDDEN" });
+      .mutation(async ({ input }) => {
         const { productId, variantId, ...updates } = input;
         const result = await (await import("./db")).updateProductVariant(productId, variantId, updates);
         return { success: !!result };
       }),
-    deleteVariant: protectedProcedure
+    deleteVariant: adminProcedure
       .input(z.object({
         productId: z.number(),
         variantId: z.string(),
       }))
-      .mutation(async ({ ctx, input }) => {
-        if (ctx.user?.role !== "admin") throw new TRPCError({ code: "FORBIDDEN" });
+      .mutation(async ({ input }) => {
         const result = await (await import("./db")).deleteProductVariant(input.productId, input.variantId);
         return { success: !!result };
       }),
@@ -301,20 +260,18 @@ export const appRouter = router({
   // Category routers
   categories: router({
     list: publicProcedure.query(() => getCategories()),
-    create: protectedProcedure
+    create: adminProcedure
       .input(z.object({
         nameEn: z.string(),
         nameKa: z.string(),
         slug: z.string(),
       }))
-      .mutation(async ({ ctx, input }) => {
-        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+      .mutation(async ({ input }) => {
         return await createCategory(input);
       }),
-    delete: protectedProcedure
+    delete: adminProcedure
       .input(z.object({ id: z.number() }))
-      .mutation(async ({ ctx, input }) => {
-        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+      .mutation(async ({ input }) => {
         return await deleteCategory(input.id);
       }),
   }),
@@ -322,11 +279,8 @@ export const appRouter = router({
   // Banner routers
   banners: router({
     list: publicProcedure.query(() => getActiveBanners()),
-    all: protectedProcedure.query(({ ctx }) => {
-      if (ctx.user?.role !== 'admin') throw new TRPCError({ code: 'FORBIDDEN' });
-      return getAllBanners();
-    }),
-    create: protectedProcedure
+    all: adminProcedure.query(() => getAllBanners()),
+    create: adminProcedure
       .input(z.object({
         titleEn: z.string(),
         titleKa: z.string(),
@@ -337,14 +291,12 @@ export const appRouter = router({
         isActive: z.boolean(),
         sortOrder: z.number(),
       }))
-      .mutation(async ({ ctx, input }) => {
-        if (ctx.user?.role !== 'admin') throw new TRPCError({ code: 'FORBIDDEN' });
+      .mutation(async ({ input }) => {
         return await createBanner(input);
       }),
-    delete: protectedProcedure
+    delete: adminProcedure
       .input(z.object({ id: z.number() }))
-      .mutation(async ({ ctx, input }) => {
-        if (ctx.user?.role !== 'admin') throw new TRPCError({ code: 'FORBIDDEN' });
+      .mutation(async ({ input }) => {
         return await deleteBanner(input.id);
       }),
   }),
@@ -513,36 +465,27 @@ export const appRouter = router({
         
         return order;
       }),
-    list: protectedProcedure.query(({ ctx }) => {
-      if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
-      return getOrders();
-    }),
-    stats: protectedProcedure.query(({ ctx }) => {
-      if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
-      return getOrderStats();
-    }),
-    detail: protectedProcedure
+    list: adminProcedure.query(() => getOrders()),
+    stats: adminProcedure.query(() => getOrderStats()),
+    detail: adminProcedure
       .input(z.object({ id: z.number() }))
-      .query(({ ctx, input }) => {
-        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+      .query(({ input }) => {
         return getCustomerOrderById(input.id);
       }),
-    updateStatus: protectedProcedure
+    updateStatus: adminProcedure
       .input(z.object({
         id: z.number(),
         status: z.enum(["pending", "confirmed", "preparing", "delivered", "cancelled"]),
       }))
-      .mutation(async ({ ctx, input }) => {
-        if (ctx.user?.role !== "admin") throw new TRPCError({ code: 'FORBIDDEN' });
+      .mutation(async ({ input }) => {
         const db = await getDb();
         if (!db) throw new Error("Database not available");
         await db.update(orders).set({ status: input.status }).where(eq(orders.id, input.id));
         return { success: true };
       }),
-    deleteOrder: protectedProcedure
+    deleteOrder: adminProcedure
       .input(z.object({ id: z.number() }))
-      .mutation(async ({ ctx, input }) => {
-        if (ctx.user?.role !== "admin") throw new TRPCError({ code: 'FORBIDDEN' });
+      .mutation(async ({ input }) => {
         const db = await getDb();
         if (!db) throw new Error("Database not available");
         await db.delete(orders).where(eq(orders.id, input.id));
@@ -623,16 +566,14 @@ export const appRouter = router({
         postalCode: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
-        if (!ctx.user) throw new TRPCError({ code: 'UNAUTHORIZED' });
         const { id, ...updates } = input;
-        await updateCustomerAddress(id, updates);
+        await updateAddressForUser(ctx.user.id, id, updates);
         return { success: true };
       }),
     delete: protectedProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ ctx, input }) => {
-        if (!ctx.user) throw new TRPCError({ code: 'UNAUTHORIZED' });
-        await deleteCustomerAddress(input.id);
+        await deleteAddressForUser(ctx.user.id, input.id);
         return { success: true };
       }),
   }),
@@ -898,7 +839,7 @@ export const appRouter = router({
       }),
   }),
   seo: router({
-    getLatestRankings: protectedProcedure
+    getLatestRankings: adminProcedure
       .query(async () => {
         try {
           const rankings = await getLatestRankings();
@@ -910,7 +851,7 @@ export const appRouter = router({
           });
         }
       }),
-    getRankingTrends: protectedProcedure
+    getRankingTrends: adminProcedure
       .query(async () => {
         try {
           const trends = await calculateRankingTrends();
@@ -922,7 +863,7 @@ export const appRouter = router({
           });
         }
       }),
-    getRankingHistory: protectedProcedure
+    getRankingHistory: adminProcedure
       .input(z.object({
         keywordId: z.number(),
         days: z.number().optional().default(30),
@@ -938,7 +879,7 @@ export const appRouter = router({
           });
         }
       }),
-    getWeeklyReport: protectedProcedure
+    getWeeklyReport: adminProcedure
       .query(async () => {
         try {
           const report = await generateWeeklyReport();
@@ -956,241 +897,110 @@ export const appRouter = router({
   payments: router({
     createBOGOrder: protectedProcedure
       .input(z.object({
-        // Full order data for local creation
-        customerName: z.string(),
-        customerEmail: z.string().optional(),
-        customerPhone: z.string().optional(),
-        recipientName: z.string().optional(),
-        recipientPhone: z.string().optional(),
+        customerName: z.string().min(2).max(255),
+        customerEmail: z.string().email().max(320).optional(),
+        customerPhone: z.string().min(9).max(20).optional(),
+        recipientName: z.string().max(255).optional(),
+        recipientPhone: z.string().max(20).optional(),
         items: z.array(z.object({
-          productId: z.number(),
-          quantity: z.number(),
-          price: z.number(),
-          selectedVariantId: z.string().optional(),
-          selectedColorNameKa: z.string().optional(),
-          selectedColorNameEn: z.string().optional(),
-          selectedColorHex: z.string().optional(),
-          customData: z.any().optional(),
-        })),
-        totalPrice: z.number(),
-        notes: z.string().optional(),
-        deliveryAddress: z.string().optional(),
+          productId: z.number().int().positive(),
+          variantId: z.string().min(1).max(255).optional(),
+          quantity: z.number().int().min(1).max(99),
+          customData: z.unknown().optional(),
+        })).min(1).max(99),
+        notes: z.string().max(2_000).optional(),
+        deliveryAddress: z.string().max(2_000).optional(),
         latitude: z.number().optional(),
         longitude: z.number().optional(),
-        building: z.string().optional(),
-        entrance: z.string().optional(),
-        floor: z.string().optional(),
-        apartment: z.string().optional(),
-        deliveryDate: z.string().optional(),
-        deliveryTime: z.string().optional(),
-        giftMessage: z.string().optional(),
+        placeId: z.string().max(255).optional(),
+        building: z.string().max(50).optional(),
+        entrance: z.string().max(50).optional(),
+        floor: z.string().max(50).optional(),
+        apartment: z.string().max(50).optional(),
+        deliveryDate: z.string().max(20).optional(),
+        deliveryTime: z.string().max(20).optional(),
+        giftMessage: z.string().max(2_000).optional(),
         fulfillmentType: z.enum(['delivery', 'pickup']).default('delivery'),
-        // BOG-specific
-        amount: z.number(), // product subtotal in GEL
-        currency: z.string().default('GEL'),
-        description: z.string(),
-        basketItems: z.array(z.object({
-          name: z.string(),
-          quantity: z.number(),
-          unitPrice: z.number(),
-          totalPrice: z.number(),
-        })),
-        deliveryAmount: z.number().optional(), // delivery fee in GEL
       }))
-      .mutation(async ({ ctx, input }) => {
-        // Check BOG card payment mode BEFORE creating any orders
-        const mode = getBogCardPaymentMode();
-        
-        if (mode === 'disabled') {
-          throw new TRPCError({
-            code: 'SERVICE_UNAVAILABLE',
-            message: 'CARD_PAYMENT_DISABLED',
-          });
+      .mutation(() => {
+        // Hard fail before DB access, OAuth, or any external BOG request.
+        return rejectCardPaymentRequest();
+      }),
+    getPaymentStatus: protectedProcedure
+      .input(z.object({ orderId: z.string().regex(/^FLR-\d{6,}$/) }))
+      .query(async ({ ctx, input }) => {
+        const { findOrderByBOGExternalId } = await import('./db');
+        const order = await findOrderByBOGExternalId(input.orderId);
+        if (!order) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Payment order not found' });
         }
-        
-        if (mode === 'admin_only') {
-          if (!ctx.user) {
-            throw new TRPCError({
-              code: 'UNAUTHORIZED',
-              message: 'CARD_PAYMENT_ADMIN_ONLY',
-            });
-          }
-          
-          if (ctx.user.role !== 'admin') {
-            throw new TRPCError({
-              code: 'FORBIDDEN',
-              message: 'CARD_PAYMENT_ADMIN_ONLY',
-            });
-          }
-        }
-        
-        if (!isBOGConfigured()) {
-          throw new TRPCError({
-            code: 'INTERNAL_SERVER_ERROR',
-            message: 'BOG payment is not configured',
-          });
-        }
-
-        // Create local order first, get order number
-        let localOrder;
-        try {
-          console.log('[BOG Order] Creating local order with:', {
-            fulfillmentType: input.fulfillmentType,
-            customerName: input.customerName,
-            recipientName: input.fulfillmentType === 'pickup' ? 'N/A (Pickup)' : input.recipientName || 'empty',
-            deliveryAddress: input.fulfillmentType === 'pickup' ? 'N/A (Pickup)' : input.deliveryAddress || 'empty',
-          });
-          
-          // Calculate deliveryFee based on fulfillmentType
-          const deliveryFee = input.fulfillmentType === 'pickup' ? 0 : (input.deliveryAmount || 10);
-          
-          localOrder = await createCanonicalOrder({
-            userId: ctx.user?.id,
-            customerName: input.customerName,
-            customerEmail: input.customerEmail,
-            customerPhone: input.customerPhone,
-            recipientName: input.fulfillmentType === 'pickup' ? undefined : input.recipientName,
-            recipientPhone: input.fulfillmentType === 'pickup' ? undefined : input.recipientPhone,
-            items: input.items,
-            totalPrice: input.totalPrice,
-            notes: input.notes,
-            orderChannel: 'website',
-            paymentMethod: 'card',
-            deliveryAddress: input.fulfillmentType === 'pickup' ? undefined : input.deliveryAddress,
-            building: input.fulfillmentType === 'pickup' ? undefined : input.building,
-            entrance: input.fulfillmentType === 'pickup' ? undefined : input.entrance,
-            floor: input.fulfillmentType === 'pickup' ? undefined : input.floor,
-            apartment: input.fulfillmentType === 'pickup' ? undefined : input.apartment,
-            deliveryDate: input.deliveryDate,
-            deliveryTime: input.deliveryTime,
-            giftMessage: input.giftMessage,
-            latitude: input.fulfillmentType === 'pickup' ? undefined : input.latitude,
-            longitude: input.fulfillmentType === 'pickup' ? undefined : input.longitude,
-            placeId: input.fulfillmentType === 'pickup' ? undefined : input.placeId,
-            fulfillmentType: input.fulfillmentType,
-            deliveryFee: deliveryFee,
-            metaFbc: null,
-            metaFbp: null,
-          });
-        } catch (dbError) {
-          console.error('[BOG Order] Database error creating order:', dbError);
-          throw new TRPCError({
-            code: 'INTERNAL_SERVER_ERROR',
-            message: `Failed to create local order: ${dbError instanceof Error ? dbError.message : 'Unknown error'}`,
-          });
-        }
-
-        if (!localOrder || !localOrder.orderNumber) {
-          console.error('[BOG Order] Invalid local order:', { localOrder });
-          throw new TRPCError({
-            code: 'INTERNAL_SERVER_ERROR',
-            message: 'Failed to create local order: No order number generated',
-          });
-        }
-
-        // Use order number as external ID for BOG
-        const externalOrderId = `FLR-${localOrder.orderNumber}`;
-
-        const result = await createBOGOrder({
-          orderId: externalOrderId,
-          amount: input.amount,
-          currency: input.currency,
-          description: input.description,
-          customerEmail: input.customerEmail,
-          customerPhone: input.customerPhone,
-          customerName: input.customerName,
-          basketItems: input.basketItems,
-          deliveryAmount: input.deliveryAmount,
-          userId: ctx.user?.id,
-          localOrderId: localOrder.id, // Pass local order ID for linking
-        });
-        
-        if (!result.success) {
-          return {
-            success: false,
-            redirectUrl: undefined,
-            orderId: undefined,
-            error: result.userMessage || 'Failed to create BOG order',
-            errorCode: result.errorCode,
-            diagnostic: result.diagnostic,
-          };
+        if (ctx.user.role !== 'admin' && order.userId !== ctx.user.id) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Payment order not found' });
         }
 
         return {
-          success: true,
-          redirectUrl: result.redirectUrl,
-          orderId: externalOrderId,
-          bogOrderId: result.bogOrderId,
-          bogExternalOrderId: result.bogExternalOrderId,
-          error: undefined,
+          orderNumber: order.orderNumber,
+          orderId: order.bogExternalOrderId,
+          status: publicPaymentStatus(order.paymentStatus, order.bogPaymentStatus),
+          updatedAt: order.updatedAt,
         };
       }),
   }),
   // Admin order management
   admin: router({
     orders: router({
-      list: protectedProcedure
+      list: adminProcedure
         .input(z.object({
           paymentStatus: z.string().optional(),
           deliveryStatus: z.string().optional(),
           searchTerm: z.string().optional(),
         }))
-        .query(async ({ ctx, input }) => {
-          if (ctx.user?.role !== 'admin') {
-            throw new TRPCError({ code: 'FORBIDDEN' });
-          }
+        .query(async ({ input }) => {
           const { getAdminOrders } = await import('./db');
           return getAdminOrders(input);
         }),
-      getById: protectedProcedure
+      getById: adminProcedure
         .input(z.object({ id: z.number() }))
-        .query(async ({ ctx, input }) => {
-          if (ctx.user?.role !== 'admin') {
-            throw new TRPCError({ code: 'FORBIDDEN' });
-          }
+        .query(async ({ input }) => {
           const { getOrderById } = await import('./db');
           return getOrderById(input.id);
         }),
-      updateDeliveryStatus: protectedProcedure
+      updateDeliveryStatus: adminProcedure
         .input(z.object({
           orderId: z.number(),
           deliveryStatus: z.enum(['new', 'processing', 'preparing', 'courier', 'delivered', 'cancelled']),
           additionalComment: z.string().optional(),
         }))
-        .mutation(async ({ ctx, input }) => {
-          if (ctx.user?.role !== 'admin') {
-            throw new TRPCError({ code: 'FORBIDDEN' });
-          }
+        .mutation(async ({ input }) => {
           const { updateOrderDeliveryStatus } = await import('./db');
           return updateOrderDeliveryStatus(input.orderId, input.deliveryStatus, input.additionalComment);
         }),
-      updatePaymentStatus: protectedProcedure
+      updatePaymentStatus: adminProcedure
         .input(z.object({
           orderId: z.number(),
           paymentStatus: z.enum(['pending_payment', 'paid', 'failed', 'cancelled', 'refunded']),
-          bogData: z.object({
-            bogOrderId: z.string().optional(),
-            bogTransactionId: z.string().optional(),
-            bogPaymentStatus: z.string().optional(),
-            bogCallbackReceived: z.boolean().optional(),
-            bogPaymentDate: z.date().optional(),
-          }).optional(),
         }))
-        .mutation(async ({ ctx, input }) => {
-          if (ctx.user?.role !== 'admin') {
-            throw new TRPCError({ code: 'FORBIDDEN' });
+        .mutation(async ({ input }) => {
+          const db = await getDb();
+          if (!db) throw new Error('Database not available');
+          const [order] = await db.select().from(orders).where(eq(orders.id, input.orderId)).limit(1);
+          if (!order) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Order not found' });
+          }
+          if (order.paymentMethod === 'card' && input.paymentStatus === 'paid') {
+            throw new TRPCError({
+              code: 'FORBIDDEN',
+              message: 'CARD_PAYMENT_STATUS_REQUIRES_VERIFIED_BOG_RESPONSE',
+            });
           }
           const { updateOrderPaymentStatus } = await import('./db');
-          return updateOrderPaymentStatus(input.orderId, input.paymentStatus, input.bogData);
+          return updateOrderPaymentStatus(input.orderId, input.paymentStatus);
         }),
-      cancelOrder: protectedProcedure
+      cancelOrder: adminProcedure
         .input(z.object({
           orderId: z.number(),
         }))
-        .mutation(async ({ ctx, input }) => {
-          if (ctx.user?.role !== 'admin') {
-            throw new TRPCError({ code: 'FORBIDDEN' });
-          }
+        .mutation(async ({ input }) => {
           const db = await getDb();
           if (!db) throw new Error('Database not available');
           
@@ -1213,14 +1023,11 @@ export const appRouter = router({
           
           return { success: true };
         }),
-      deleteOrder: protectedProcedure
+      deleteOrder: adminProcedure
         .input(z.object({
           orderId: z.number(),
         }))
-        .mutation(async ({ ctx, input }) => {
-          if (ctx.user?.role !== 'admin') {
-            throw new TRPCError({ code: 'FORBIDDEN' });
-          }
+        .mutation(async ({ input }) => {
           const db = await getDb();
           if (!db) throw new Error('Database not available');
           
@@ -1229,69 +1036,18 @@ export const appRouter = router({
           
           return { success: true };
         }),
-      stats: protectedProcedure
-        .query(async ({ ctx }) => {
-          if (ctx.user?.role !== 'admin') {
-            throw new TRPCError({ code: 'FORBIDDEN' });
-          }
+      stats: adminProcedure
+        .query(async () => {
           const { getAdminOrderStats } = await import('./db');
           return getAdminOrderStats();
         }),
-      reconcileFromBOG: protectedProcedure
+      reconcileFromBOG: adminProcedure
         .input(z.object({
           orderId: z.number(),
         }))
-        .mutation(async ({ ctx, input }) => {
-          if (ctx.user?.role !== 'admin') {
-            throw new TRPCError({ code: 'FORBIDDEN' });
-          }
-          
-          const db = await getDb();
-          if (!db) throw new Error('Database not available');
-          
-          // Get the order from new orders table
-          const orderList = await db.select().from(orders).where(eq(orders.id, input.orderId)).limit(1);
-          const order = orderList.length > 0 ? orderList[0] : null;
-          
-          if (!order) {
-            throw new TRPCError({ code: 'NOT_FOUND', message: 'Order not found' });
-          }
-          
-          if (!order.bogExternalOrderId) {
-            throw new TRPCError({ code: 'BAD_REQUEST', message: 'Order does not have a BOG external order ID' });
-          }
-          
-          // Query BOG for current payment status
-          const { getBOGOrderStatus } = await import('./_core/bog');
-          const bogStatus = await getBOGOrderStatus(order.bogExternalOrderId);
-          
-          if (!bogStatus.success) {
-            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: bogStatus.error || 'Failed to get BOG status' });
-          }
-          
-          // Update local order with latest BOG status
-          const { updateOrderBOGPayment } = await import('./db');
-          let paymentStatus: 'pending' | 'paid' | 'failed' | 'cancelled' | 'refunded' = 'pending';
-          if (bogStatus.status === 'completed') {
-            paymentStatus = 'paid';
-          } else if (bogStatus.status === 'failed' || bogStatus.status === 'cancelled') {
-            paymentStatus = 'failed';
-          }
-          
-          const updated = await updateOrderBOGPayment(input.orderId, {
-            bogOrderId: bogStatus.bogOrderId,
-            bogPaymentStatus: bogStatus.status,
-            paymentLastCheckedAt: new Date(),
-            paymentStatus: paymentStatus,
-            paidAt: bogStatus.status === 'completed' ? new Date() : undefined,
-          });
-          
-          return {
-            success: true,
-            order: updated,
-            bogStatus: bogStatus.status,
-            paymentStatus: paymentStatus,
-          };
+        .mutation(() => {
+          // Reconciliation is unavailable until BOG's official contract is validated.
+          return rejectCardPaymentRequest();
         }),
     }),
   }),

@@ -1,133 +1,132 @@
-import { useEffect, useState } from "react";
+import { useRef } from "react";
 import { useLocation } from "wouter";
+import { AlertCircle, CheckCircle2, Clock3, Loader2, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { CheckCircle2, AlertCircle } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { trpc } from "@/lib/trpc";
-import { toast } from "sonner";
+
+const FINAL_STATUSES = new Set(["paid", "failed"]);
+const POLL_WINDOW_MS = 60_000;
 
 export default function PaymentSuccess() {
   const [, navigate] = useLocation();
   const { language } = useLanguage();
-  const [paymentUpdated, setPaymentUpdated] = useState(false);
-  const orderId = new URLSearchParams(window.location.search).get("orderId");
-  const numericOrderId = parseInt(orderId || "0");
-  
-  const { data: order, refetch } = trpc.admin.orders.getById.useQuery(
-    { id: numericOrderId },
-    { enabled: !!orderId }
+  const pollingStartedAt = useRef(Date.now());
+  const orderId = new URLSearchParams(window.location.search).get("orderId") ?? "";
+  const validOrderId = /^FLR-\d{6,}$/.test(orderId);
+
+  const paymentQuery = trpc.payments.getPaymentStatus.useQuery(
+    { orderId },
+    {
+      enabled: validOrderId,
+      retry: 1,
+      refetchInterval: query => {
+        const status = query.state.data?.status;
+        if (status && FINAL_STATUSES.has(status)) return false;
+        if (Date.now() - pollingStartedAt.current >= POLL_WINDOW_MS) return false;
+        return 3_000;
+      },
+    },
   );
-  
-  // Update payment status mutation
-  const updatePaymentMutation = trpc.admin.orders.updatePaymentStatus.useMutation({
-    onSuccess: () => {
-      setPaymentUpdated(true);
-      refetch();
-    },
-    onError: (error) => {
-      console.error('Failed to update payment status:', error);
-      toast.error(language === 'ka' ? 'გადახდის სტატუსი ვერ განახლდა' : 'Failed to update payment status');
-    },
-  });
 
-  useEffect(() => {
-    // Auto-update payment status to paid if not already paid
-    if (order && order.paymentStatus !== "paid" && !paymentUpdated) {
-      updatePaymentMutation.mutate({
-        orderId: numericOrderId,
-        paymentStatus: "paid",
-        bogData: {
-          bogCallbackReceived: true,
-          bogPaymentStatus: "completed",
-          bogPaymentDate: new Date(),
-        },
-      });
-    }
-  }, [order, paymentUpdated, numericOrderId]);
-
-  useEffect(() => {
-    // Fire Meta Purchase event ONLY if order is confirmed as paid
-    if (order && order.paymentStatus === "paid" && (window as any).fbq) {
-      const items = Array.isArray(order.items) ? order.items : [];
-      (window as any).fbq("track", "Purchase", {
-        value: parseFloat(order.totalPrice || "0"),
-        currency: "GEL",
-        content_name: "Flower Order",
-        content_type: "product",
-        content_ids: items.map((item: any) => item.productId) || [],
-      });
-    }
-  }, [order]);
-
-  const content = {
-    en: {
-      title: "Payment Successful",
-      message: "Your payment has been processed successfully.",
-      orderNumber: "Order Number",
-      thankYou: "Thank you for your purchase!",
-      viewOrders: "View My Orders",
-      continueShopping: "Continue Shopping",
+  const status = paymentQuery.data?.status ?? "pending";
+  const ka = language === "ka";
+  const copy = {
+    pending: {
+      title: ka ? "გადახდა მოწმდება" : "Payment is being verified",
+      message: ka
+        ? "ბანკის საბოლოო პასუხს ველოდებით. ეს გვერდი გადახდის სტატუსს მხოლოდ კითხულობს."
+        : "We are waiting for the bank's final response. This page only reads payment status.",
     },
-    ka: {
-      title: "გადახდა წარმატებული",
-      message: "თქვენი გადახდა წარმატებით დამუშავდა.",
-      orderNumber: "შეკვეთის ნომერი",
-      thankYou: "გმადლობთ თქვენი ყიდვისთვის!",
-      viewOrders: "ჩემი შეკვეთები",
-      continueShopping: "ყიდვის გაგრძელება",
+    processing: {
+      title: ka ? "გადახდა მუშავდება" : "Payment is processing",
+      message: ka
+        ? "ბანკმა გადახდა მიიღო და ამუშავებს. სტატუსი ავტომატურად განახლდება."
+        : "The bank received the payment and is processing it. The status will refresh automatically.",
     },
-  };
+    paid: {
+      title: ka ? "გადახდა დადასტურებულია" : "Payment confirmed",
+      message: ka
+        ? "გადახდა ბანკის სანდო პასუხით დადასტურდა. მადლობა შეკვეთისთვის."
+        : "The payment was confirmed by the bank. Thank you for your order.",
+    },
+    failed: {
+      title: ka ? "გადახდა ვერ დადასტურდა" : "Payment was not confirmed",
+      message: ka
+        ? "გადახდა უარყოფილია ან ვერ დასრულდა. შეგიძლიათ სტატუსი ხელახლა შეამოწმოთ."
+        : "The payment was rejected or could not be completed. You can refresh the status.",
+    },
+  }[status];
 
-  const t = content[language as keyof typeof content] || content.en;
+  const invalidOrUnavailable = !validOrderId || paymentQuery.isError;
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-amber-50 to-white">
       <Navbar />
       <div className="flex-1 flex items-center justify-center px-4 py-16">
         <Card className="w-full max-w-md p-8 text-center border-gold/20 shadow-lg">
-          <div className="flex justify-center mb-6">
-            {updatePaymentMutation.isPending ? (
-              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-amber-600"></div>
-            ) : order?.paymentStatus === "paid" ? (
-              <CheckCircle2 className="w-16 h-16 text-green-500" />
+          <div className="flex justify-center mb-6" aria-live="polite">
+            {paymentQuery.isLoading || paymentQuery.isFetching ? (
+              <Loader2 className="w-16 h-16 animate-spin text-amber-700" aria-hidden="true" />
+            ) : invalidOrUnavailable || status === "failed" ? (
+              <AlertCircle className="w-16 h-16 text-red-600" aria-hidden="true" />
+            ) : status === "paid" ? (
+              <CheckCircle2 className="w-16 h-16 text-green-600" aria-hidden="true" />
             ) : (
-              <AlertCircle className="w-16 h-16 text-red-500" />
+              <Clock3 className="w-16 h-16 text-amber-700" aria-hidden="true" />
             )}
           </div>
-          <h1 className="text-3xl font-bold text-amber-900 mb-4">{t.title}</h1>
-          <p className="text-gray-600 mb-6">
-            {updatePaymentMutation.isPending
-              ? language === 'ka' ? 'გადახდის დამუშავება...' : 'Processing payment...'
-              : t.message}
+
+          <h1 className="text-3xl font-bold text-amber-900 mb-4">
+            {invalidOrUnavailable
+              ? ka ? "სტატუსი ვერ მოიძებნა" : "Status unavailable"
+              : copy.title}
+          </h1>
+          <p className="text-gray-700 mb-6">
+            {invalidOrUnavailable
+              ? ka
+                ? "შეკვეთის ნომერი არასწორია ან ამ შეკვეთაზე წვდომა არ გაქვთ."
+                : "The order number is invalid or you do not have access to this order."
+              : copy.message}
           </p>
 
           {orderId && (
             <div className="bg-amber-50 rounded-lg p-4 mb-6">
-              <p className="text-sm text-gray-600 mb-1">{t.orderNumber}</p>
-              <p className="text-lg font-mono font-bold text-amber-900">
-                {orderId}
-              </p>
+              <p className="text-sm text-gray-600 mb-1">{ka ? "შეკვეთის ნომერი" : "Order number"}</p>
+              <p className="text-lg font-mono font-bold text-amber-900">{orderId}</p>
             </div>
           )}
 
-          <p className="text-amber-800 font-semibold mb-8">{t.thankYou}</p>
-
           <div className="flex flex-col gap-3">
+            {validOrderId && status !== "paid" && (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => void paymentQuery.refetch()}
+                disabled={paymentQuery.isFetching}
+                className="w-full border-amber-300 text-amber-900 hover:bg-amber-50"
+              >
+                <RefreshCw className="w-4 h-4 mr-2" aria-hidden="true" />
+                {ka ? "სტატუსის განახლება" : "Refresh status"}
+              </Button>
+            )}
             <Button
+              type="button"
               onClick={() => navigate("/profile")}
               className="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white"
             >
-              {t.viewOrders}
+              {ka ? "ჩემი შეკვეთები" : "View my orders"}
             </Button>
             <Button
+              type="button"
               onClick={() => navigate("/")}
               variant="outline"
               className="w-full border-amber-300 text-amber-900 hover:bg-amber-50"
             >
-              {t.continueShopping}
+              {ka ? "მთავარ გვერდზე დაბრუნება" : "Return to shop"}
             </Button>
           </div>
         </Card>

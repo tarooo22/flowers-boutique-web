@@ -10,7 +10,8 @@
     "check": "tsc --noEmit",
     "format": "prettier --write .",
     "test": "vitest run",
-    "db:push": "drizzle-kit generate && drizzle-kit migrate",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
     "db:migrate:local": "tsx --env-file=.env scripts/migrate-local.ts",
     "db:seed:local": "tsx --env-file=.env scripts/seed-local.ts",
     "db:reset:local": "tsx --env-file=.env scripts/reset-local-seed.ts"
