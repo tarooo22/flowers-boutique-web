@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
-import { ArrowLeft, Truck, MapPin, Calendar as CalendarIcon, Clock, Gift, MessageSquare, Check, MessageCircle, CreditCard, Loader2, CheckCircle2, ChevronRight } from "lucide-react";
+import { ArrowLeft, Truck, MapPin, Calendar as CalendarIcon, Clock, Gift, MessageSquare, Check, MessageCircle, CheckCircle2, ChevronRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { getCart, getTotalPrice, clearCart } from "@/lib/cartUtils";
@@ -14,7 +14,6 @@ import { MapPinSelector } from "@/components/MapPinSelector";
 import { CompactGeorgianCalendar } from "@/components/CompactGeorgianCalendar";
 import { DeliveryTimeSlots } from "@/components/DeliveryTimeSlots";
 import { SelectedDateSummary } from "@/components/SelectedDateSummary";
-import { useAuth } from '@/_core/hooks/useAuth';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useSEO } from "@/hooks/useSEO";
@@ -61,15 +60,11 @@ const translations = {
     total: "Total",
     whatsapp: "WhatsApp",
     messenger: "Messenger",
-    cardPayment: "Card Payment",
-    processing: "Processing",
     placeOrder: "Place Order",
     backToCart: "Back to Cart",
     requiredField: "Required field",
     selectDeliveryDate: "Please select a delivery date",
     selectDeliveryTime: "Please select a delivery time",
-    securePayment: "Secure payment via TBC",
-    receiptAfterPayment: "Receipt emailed after payment",
     willCallIfNeeded: "We'll call if needed",
   },
   ka: {
@@ -113,15 +108,11 @@ const translations = {
     total: "სულ",
     whatsapp: "WhatsApp",
     messenger: "Messenger",
-    cardPayment: "ბარათი",
-    processing: "დამუშავება",
     placeOrder: "შეკვეთის გაფორმება",
     backToCart: "კალათაში დაბრუნება",
     requiredField: "აუცილებელი ველი",
     selectDeliveryDate: "აირჩიეთ მიწოდების თარიღი",
     selectDeliveryTime: "აირჩიეთ მიწოდების დრო",
-    securePayment: "უსაფრთხო გადახდა TBC-ის მეშვეობით",
-    receiptAfterPayment: "ქვითარი გაიგზავნება გადახდის შემდეგ",
     willCallIfNeeded: "საჭიროების შემთხვევაში დავიკვებით",
   },
 };
@@ -232,13 +223,6 @@ export default function Checkout() {
   const [, navigate] = useLocation();
   const { language } = useLanguage();
   const t = translations[language];
-  const { user } = useAuth();
-  
-  // Check if card payment is admin-only and user is not admin
-  const isAdminOnly = import.meta.env.VITE_BOG_CARD_PAYMENT_MODE === 'admin_only';
-  const isAdmin = user?.role === 'admin';
-  const showCardPayment = !isAdminOnly || isAdmin;
-
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [deliveryType, setDeliveryType] = useState<"delivery" | "pickup">("delivery");
   const [selectedDate, setSelectedDate] = useState("");
@@ -271,7 +255,6 @@ export default function Checkout() {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const createOrderMutation = trpc.orders.create.useMutation();
-  const createBOGOrderMutation = trpc.payments.createBOGOrder.useMutation();
 
   useSEO({
     titleKa: "შეკვეთის გაფორმება | Flower's Boutique",
@@ -434,68 +417,6 @@ export default function Checkout() {
     } catch (error) {
       console.error('Messenger order failed:', error);
       toast.error(language === 'ka' ? 'შეკვეთა ვერ დამუშავდა' : 'Order failed');
-    } finally {
-      setIsProcessing(false);
-    }
-  };
-
-  const handleCardPayment = async () => {
-    console.log('[Checkout] Card Payment - deliveryType:', deliveryType);
-    console.log('[Checkout] Card Payment - recipientName:', recipientName || 'empty');
-    console.log('[Checkout] Card Payment - recipientPhone:', recipientPhone ? 'filled' : 'empty');
-    console.log('[Checkout] Card Payment - address:', address || 'empty');
-    
-    if (!validateForm()) {
-      console.log('[Checkout] Card Payment - validateForm returned false');
-      return;
-    }
-
-    setIsProcessing(true);
-    try {
-      console.log('[Checkout] Card Payment - Submitting BOG order with:', {
-        deliveryType,
-        recipientName: recipientName || null,
-        recipientPhone: recipientPhone || null,
-        address: address || null,
-      });
-
-      const result = await createBOGOrderMutation.mutateAsync({
-        customerName,
-        customerPhone,
-        customerEmail: customerEmail || undefined,
-        recipientName: deliveryType === 'pickup' ? undefined : recipientName,
-        recipientPhone: deliveryType === 'pickup' ? undefined : recipientPhone,
-        items: cartItems.map((item) => ({
-          productId: item.productId,
-          quantity: item.quantity,
-          variantId: item.selectedVariantId,
-          customData: item.customData,
-        })),
-        notes: courierNotes,
-        deliveryAddress: deliveryType === 'pickup' ? undefined : address,
-        latitude: deliveryType === 'pickup' ? undefined : (latitude || undefined),
-        longitude: deliveryType === 'pickup' ? undefined : (longitude || undefined),
-        placeId: deliveryType === 'pickup' ? undefined : (placeId || undefined),
-        building: deliveryType === 'pickup' ? undefined : building,
-        entrance: deliveryType === 'pickup' ? undefined : entrance,
-        floor: deliveryType === 'pickup' ? undefined : undefined,
-        apartment: deliveryType === 'pickup' ? undefined : apartment,
-        deliveryDate: selectedDate,
-        deliveryTime: selectedTime,
-        giftMessage: cardMessage,
-        fulfillmentType: deliveryType,
-      });
-
-      if (result.redirectUrl) {
-        clearCart();
-        window.location.href = result.redirectUrl;
-      } else if (result.error) {
-        const errorMessage = result.error || (language === 'ka' ? 'გადახდის შეცდომა' : 'Payment error');
-        toast.error(errorMessage);
-      }
-    } catch (error) {
-      console.error('Card payment failed:', error);
-      toast.error(language === 'ka' ? 'გადახდის შეცდომა' : 'Payment error');
     } finally {
       setIsProcessing(false);
     }
@@ -904,14 +825,6 @@ export default function Checkout() {
               <div className="space-y-2 mb-6 text-xs text-[#8B7B6F]">
                 <div className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-[#C4603A] flex-shrink-0 mt-0.5" />
-                  <span>{t.securePayment}</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-[#C4603A] flex-shrink-0 mt-0.5" />
-                  <span>{t.receiptAfterPayment}</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-[#C4603A] flex-shrink-0 mt-0.5" />
                   <span>{t.willCallIfNeeded}</span>
                 </div>
               </div>
@@ -934,32 +847,6 @@ export default function Checkout() {
                   <MessageSquare className="w-4 h-4 mr-2" />
                   {t.messenger}
                 </Button>
-                {showCardPayment ? (
-                  <div className="w-full">
-                    {isAdminOnly && isAdmin && (
-                      <div className="mb-2 text-center text-xs text-[#C4603A] font-medium">
-                        ტესტური რეჟიმი — მხოლოდ ადმინისტრატორისთვის
-                      </div>
-                    )}
-                    <Button
-                      onClick={handleCardPayment}
-                      disabled={isProcessing}
-                      className="w-full bg-[#C4603A] hover:bg-[#B04D2A] text-white font-medium py-3 rounded-lg transition-all"
-                    >
-                      {isProcessing ? (
-                        <>
-                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                          {t.processing}
-                        </>
-                      ) : (
-                        <>
-                          <CreditCard className="w-4 h-4 mr-2" />
-                          {t.cardPayment}
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                ) : null}
               </div>
             </div>
           </div>

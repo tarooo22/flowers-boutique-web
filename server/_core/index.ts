@@ -1,7 +1,6 @@
 import express from "express";
 import { createServer } from "http";
 import net from "net";
-import crypto from "crypto";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerOAuthRoutes } from "./oauth";
 import { registerUploadRoutes } from "../uploadRouter";
@@ -12,12 +11,8 @@ import { handleSeoMonitoring } from "../handlers/seoMonitoringHandler";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
-import { isBOGCallbackVerificationAvailable, isBOGConfigured } from "./bog";
 import { validateEnvironment } from "./env";
-import { getDb } from "../db";
-import { eq } from "drizzle-orm";
-import { orders } from "../../drizzle/schema";
-import { resolveTrustedPaymentStatus, shouldApplyBOGCallbackUpdate } from "../paymentSecurity";
+import { disabledBOGCallbackHandler } from "../paymentAvailability";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -42,239 +37,21 @@ async function startServer() {
   validateEnvironment();
   const app = express();
   const server = createServer(app);
-  
-  // ============================================================
-  // BOG Payment Callback Handler
-  // Must be registered BEFORE express.json() to capture raw body
-  // ============================================================
-  const BOG_CALLBACK_PATH = "/api/payments/bog/callback";
-  
-  app.post(BOG_CALLBACK_PATH, express.raw({ type: "application/json" }), async (req, res) => {
-    const diagnosticId = crypto.randomUUID().substring(0, 8);
-    const receivedAt = new Date().toISOString();
-    
-    try {
-      // Step 1: Verify raw body is a Buffer
-      if (!Buffer.isBuffer(req.body)) {
-        console.error(`[BOG Callback ${diagnosticId}] Raw body is not a Buffer:`, typeof req.body);
-        return res.status(400).json({
-          success: false,
-          error: "BOG_CALLBACK_RAW_BODY_MISSING",
-          diagnosticId
-        });
-      }
 
-      const rawBody = req.body as Buffer;
-      const contentType = req.get("content-type");
-      
-      // Step 2: Get signature header
-      const signature = req.get("Callback-Signature");
-      
-      console.log(`[BOG Callback ${diagnosticId}] Received:`, {
-        timestamp: receivedAt,
-        contentType,
-        rawBodyLength: rawBody.length,
-        signaturePresent: !!signature,
-      });
+  // Reserved callback path. BOG is intentionally disabled until official
+  // merchant credentials and a verified callback fixture are available.
+  app.post("/api/payments/bog/callback", disabledBOGCallbackHandler);
 
-      // Step 3: Verify signature is present
-      if (!signature) {
-        console.error(`[BOG Callback ${diagnosticId}] Missing Callback-Signature header`);
-        return res.status(401).json({
-          success: false,
-          error: "BOG_CALLBACK_SIGNATURE_MISSING",
-          diagnosticId
-        });
-      }
-
-      // Step 4: Check if verification is available
-      if (!isBOGCallbackVerificationAvailable()) {
-        console.error(`[BOG Callback ${diagnosticId}] BOG_PUBLIC_KEY not configured - rejecting unverified callback`);
-        return res.status(500).json({
-          success: false,
-          error: "BOG_CALLBACK_VERIFICATION_NOT_CONFIGURED",
-          diagnosticId
-        });
-      }
-
-      // Step 5: Verify signature using RSA-SHA256
-      const verifier = crypto.createVerify("RSA-SHA256");
-      verifier.update(rawBody);
-      verifier.end();
-
-      const isSignatureValid = verifier.verify(
-        process.env.BOG_PUBLIC_KEY!,
-        signature,
-        "base64"
-      );
-
-      console.log(`[BOG Callback ${diagnosticId}] Signature verification:`, {
-        valid: isSignatureValid,
-        signatureLength: signature.length,
-      });
-
-      if (!isSignatureValid) {
-        console.error(`[BOG Callback ${diagnosticId}] Signature verification failed`);
-        return res.status(401).json({
-          success: false,
-          error: "BOG_CALLBACK_SIGNATURE_INVALID",
-          diagnosticId
-        });
-      }
-
-      // Step 6: Parse verified JSON
-      let payload: any;
-      try {
-        payload = JSON.parse(rawBody.toString("utf8"));
-      } catch (parseError) {
-        console.error(`[BOG Callback ${diagnosticId}] JSON parse error:`, parseError);
-        return res.status(400).json({
-          success: false,
-          error: "BOG_CALLBACK_JSON_INVALID",
-          diagnosticId
-        });
-      }
-
-      // Step 7: Validate event type
-      if (payload.event !== "order_payment") {
-        console.warn(`[BOG Callback ${diagnosticId}] Unexpected event type:`, payload.event);
-        return res.status(400).json({
-          success: false,
-          error: "BOG_CALLBACK_UNEXPECTED_EVENT",
-          diagnosticId
-        });
-      }
-
-      // Step 8: Extract order ID
-      const bogOrderId = payload.body?.order_id;
-      if (!bogOrderId) {
-        console.error(`[BOG Callback ${diagnosticId}] Missing order_id in payload`);
-        return res.status(400).json({
-          success: false,
-          error: "BOG_CALLBACK_MISSING_ORDER_ID",
-          diagnosticId
-        });
-      }
-
-      const bogStatus = payload.body?.status;
-      if (!bogStatus) {
-        console.error(`[BOG Callback ${diagnosticId}] Missing status in payload`);
-        return res.status(400).json({
-          success: false,
-          error: "BOG_CALLBACK_MISSING_STATUS",
-          diagnosticId
-        });
-      }
-
-      console.log(`[BOG Callback ${diagnosticId}] Payload validated:`, {
-        bogOrderId: bogOrderId.substring(0, 10) + "...",
-        bogStatus,
-      });
-
-      // Step 9: Find local order by BOG order ID
-      const db = await getDb();
-      if (!db) {
-        throw new Error("Database not available");
-      }
-      const [localOrder] = await db
-        .select()
-        .from(orders)
-        .where(eq(orders.bogExternalOrderId, bogOrderId))
-        .limit(1);
-
-      if (!localOrder) {
-        console.error(`[BOG Callback ${diagnosticId}] Local order not found for BOG ID:`, bogOrderId);
-        return res.status(404).json({
-          success: false,
-          error: "BOG_CALLBACK_ORDER_NOT_FOUND",
-          diagnosticId
-        });
-      }
-
-      console.log(`[BOG Callback ${diagnosticId}] Local order matched:`, {
-        localOrderId: localOrder.id,
-        orderNumber: (localOrder as any).orderNumber,
-      });
-
-      // Step 11: Extract additional fields
-      const transactionId = payload.body?.transaction_id;
-      const paymentMethod = payload.body?.payment_method;
-      const authorizationCode = payload.body?.authorization_code;
-      const rejectReason = payload.body?.reject_reason;
-      const paidAt = payload.body?.paid_at ? new Date(payload.body.paid_at) : undefined;
-
-      // Step 12: Update order (idempotent - only update if status is changing or if pending)
-      const currentStatus = (localOrder as any).paymentStatus;
-      const paymentStatus = resolveTrustedPaymentStatus(currentStatus, bogStatus);
-
-      // Idempotency: don't create duplicate updates
-      if (!shouldApplyBOGCallbackUpdate(currentStatus, bogStatus, Boolean(localOrder.bogCallbackReceived))) {
-        console.log(`[BOG Callback ${diagnosticId}] Idempotency check: status unchanged and callback already received`);
-        return res.status(200).json({
-          success: true,
-          message: "Callback processed (idempotent - no change)",
-          diagnosticId
-        });
-      }
-
-      // Update order in database
-      await db.update(orders).set({
-        bogOrderId: transactionId,
-        bogExternalOrderId: bogOrderId,
-        bogPaymentStatus: bogStatus,
-        bogCallbackReceived: true,
-        paidAt: paymentStatus === "paid" ? (paidAt || new Date()) : undefined,
-        paymentLastCheckedAt: new Date(),
-        paymentStatus: paymentStatus,
-        paymentFailureReason: rejectReason || null,
-      }).where(eq(orders.id, localOrder.id));
-
-      console.log(`[BOG Callback ${diagnosticId}] ✓ Order updated:`, {
-        orderNumber: (localOrder as any).orderNumber,
-        paymentStatus,
-        bogStatus,
-        httpStatus: 200,
-      });
-
-      res.status(200).json({
-        success: true,
-        message: "Callback processed successfully",
-        diagnosticId
-      });
-
-    } catch (error) {
-      console.error(`[BOG Callback ${diagnosticId}] Unexpected error:`, error);
-      res.status(500).json({
-        success: false,
-        error: "BOG_CALLBACK_INTERNAL_ERROR",
-        diagnosticId
-      });
-    }
-  });
-  
-  // Configure body parser with larger size limit for file uploads
-  // This runs AFTER the BOG callback route, so it doesn't affect it
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
-  
+
   registerStorageProxy(app);
   registerOAuthRoutes(app);
   registerUploadRoutes(app);
   registerSitemapRoute(app);
-  
-  // Log BOG configuration status
-  if (isBOGConfigured()) {
-    console.log('[BOG] Payment integration configured');
-    if (isBOGCallbackVerificationAvailable()) {
-      console.log('[BOG] Callback signature verification enabled');
-    } else {
-      console.warn('[BOG] Callback signature verification disabled (BOG_PUBLIC_KEY not configured)');
-    }
-  } else {
-    console.warn('[BOG] Payment integration not fully configured');
-  }
 
-  // tRPC middleware
+  console.warn("[BOG] Card payments are intentionally disabled pending merchant configuration");
+
   app.use(
     "/api/trpc",
     createExpressMiddleware({
@@ -292,10 +69,7 @@ async function startServer() {
     serveStatic(app);
   }
 
-  // Handle product not found
   app.use(handleProductRoute);
-
-  // Handle SEO monitoring
   app.use(handleSeoMonitoring);
 
   const preferredPort = parseInt(process.env.PORT || "3000");

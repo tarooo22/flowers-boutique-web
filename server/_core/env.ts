@@ -44,15 +44,10 @@ export function validateEnvironment(): void {
 }
 
 /**
- * Get the current BOG card payment mode with safe defaults.
- * Safe default is "admin_only" - never defaults to "public"
+ * BOG card payments are intentionally hard-disabled until the official
+ * merchant configuration and callback contract have been validated.
+ * Environment variables cannot enable the incomplete integration.
  */
-export function getBogCardPaymentMode(): "public" | "admin_only" | "disabled" {
-  const mode = process.env.BOG_CARD_PAYMENT_MODE;
-  
-  if (mode === "public") return "public";
-  if (mode === "disabled") return "disabled";
-  
-  // Safe default: admin_only
-  return "admin_only";
+export function getBogCardPaymentMode(): "disabled" {
+  return "disabled";
 }

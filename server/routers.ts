@@ -14,15 +14,8 @@ import { generateImage } from "./_core/imageGeneration";
 import { registerCustomer, loginCustomer, getUserById, changePassword } from "./auth";
 import { sendConversionsAPIEvent, getClientIP, getUserAgent, getFBPCookie, getFBCCookie, generateFBCFromFbclid, getFbclidFromUrl, getStableSessionId, generateStableExternalId } from "./_core/metaConversionsAPI";
 import { getLatestRankings, calculateRankingTrends, getRankingHistory, generateWeeklyReport } from "./seoRankingTracker";
-import { createBOGOrder, isBOGConfigured, isBOGCallbackVerificationAvailable } from "./_core/bog";
-import { getBogCardPaymentMode } from "./_core/env";
-import {
-  calculateCanonicalPayment,
-  canonicalBOGAmounts,
-  publicPaymentStatus,
-  resolveTrustedPaymentStatus,
-  type PaymentItemSelection,
-} from "./paymentSecurity";
+import { calculateCanonicalPayment, publicPaymentStatus } from "./paymentSecurity";
+import { rejectCardPaymentRequest } from "./paymentAvailability";
 
 const orderItemSchema = z.object({
   productId: z.number().int().positive(),
@@ -929,137 +922,9 @@ export const appRouter = router({
         giftMessage: z.string().max(2_000).optional(),
         fulfillmentType: z.enum(['delivery', 'pickup']).default('delivery'),
       }))
-      .mutation(async ({ ctx, input }) => {
-        // Check BOG card payment mode BEFORE creating any orders
-        const mode = getBogCardPaymentMode();
-        
-        if (mode === 'disabled') {
-          throw new TRPCError({
-            code: 'SERVICE_UNAVAILABLE',
-            message: 'CARD_PAYMENT_DISABLED',
-          });
-        }
-        
-        if (mode === 'admin_only') {
-          if (!ctx.user) {
-            throw new TRPCError({
-              code: 'UNAUTHORIZED',
-              message: 'CARD_PAYMENT_ADMIN_ONLY',
-            });
-          }
-          
-          if (ctx.user.role !== 'admin') {
-            throw new TRPCError({
-              code: 'FORBIDDEN',
-              message: 'CARD_PAYMENT_ADMIN_ONLY',
-            });
-          }
-        }
-        
-        if (!isBOGConfigured()) {
-          throw new TRPCError({
-            code: 'INTERNAL_SERVER_ERROR',
-            message: 'BOG payment is not configured',
-          });
-        }
-
-        const selections: PaymentItemSelection[] = input.items.map(item => ({
-          productId: item.productId,
-          variantId: item.variantId,
-          quantity: item.quantity,
-          customData: item.customData,
-        }));
-        const canonicalPayment = await calculateCanonicalPayment(
-          selections,
-          input.fulfillmentType,
-          getProductById,
-        );
-        const bogAmounts = canonicalBOGAmounts(canonicalPayment);
-
-        // Create local order first, get order number
-        let localOrder;
-        try {
-          localOrder = await createCanonicalOrder({
-            userId: ctx.user.id,
-            customerName: input.customerName,
-            customerEmail: input.customerEmail,
-            customerPhone: input.customerPhone,
-            recipientName: input.fulfillmentType === 'pickup' ? undefined : input.recipientName,
-            recipientPhone: input.fulfillmentType === 'pickup' ? undefined : input.recipientPhone,
-            items: canonicalPayment.items,
-            totalPrice: canonicalPayment.finalTotal,
-            notes: input.notes,
-            orderChannel: 'website',
-            paymentMethod: 'card',
-            deliveryAddress: input.fulfillmentType === 'pickup' ? undefined : input.deliveryAddress,
-            building: input.fulfillmentType === 'pickup' ? undefined : input.building,
-            entrance: input.fulfillmentType === 'pickup' ? undefined : input.entrance,
-            floor: input.fulfillmentType === 'pickup' ? undefined : input.floor,
-            apartment: input.fulfillmentType === 'pickup' ? undefined : input.apartment,
-            deliveryDate: input.deliveryDate,
-            deliveryTime: input.deliveryTime,
-            giftMessage: input.giftMessage,
-            latitude: input.fulfillmentType === 'pickup' ? undefined : input.latitude,
-            longitude: input.fulfillmentType === 'pickup' ? undefined : input.longitude,
-            placeId: input.fulfillmentType === 'pickup' ? undefined : input.placeId,
-            fulfillmentType: input.fulfillmentType,
-            deliveryFee: canonicalPayment.deliveryFee,
-            paymentStatus: 'pending',
-            metaFbc: null,
-            metaFbp: null,
-          });
-        } catch (dbError) {
-          console.error('[BOG Order] Database error creating order:', dbError);
-          throw new TRPCError({
-            code: 'INTERNAL_SERVER_ERROR',
-            message: `Failed to create local order: ${dbError instanceof Error ? dbError.message : 'Unknown error'}`,
-          });
-        }
-
-        if (!localOrder || !localOrder.orderNumber) {
-          console.error('[BOG Order] Invalid local order:', { localOrder });
-          throw new TRPCError({
-            code: 'INTERNAL_SERVER_ERROR',
-            message: 'Failed to create local order: No order number generated',
-          });
-        }
-
-        // Use order number as external ID for BOG
-        const externalOrderId = `FLR-${localOrder.orderNumber}`;
-
-        const result = await createBOGOrder({
-          orderId: externalOrderId,
-          amount: bogAmounts.amount,
-          currency: 'GEL',
-          description: `Flower's Boutique Order ${localOrder.orderNumber}`,
-          customerEmail: input.customerEmail,
-          customerPhone: input.customerPhone,
-          customerName: input.customerName,
-          basketItems: bogAmounts.basketItems,
-          deliveryAmount: bogAmounts.deliveryAmount,
-          userId: ctx.user.id,
-          localOrderId: localOrder.id, // Pass local order ID for linking
-        });
-        
-        if (!result.success) {
-          return {
-            success: false,
-            redirectUrl: undefined,
-            orderId: undefined,
-            error: result.userMessage || 'Failed to create BOG order',
-            errorCode: result.errorCode,
-            diagnostic: result.diagnostic,
-          };
-        }
-
-        return {
-          success: true,
-          redirectUrl: result.redirectUrl,
-          orderId: externalOrderId,
-          bogOrderId: result.bogOrderId,
-          bogExternalOrderId: result.bogExternalOrderId,
-          error: undefined,
-        };
+      .mutation(() => {
+        // Hard fail before DB access, OAuth, or any external BOG request.
+        return rejectCardPaymentRequest();
       }),
     getPaymentStatus: protectedProcedure
       .input(z.object({ orderId: z.string().regex(/^FLR-\d{6,}$/) }))
@@ -1180,49 +1045,9 @@ export const appRouter = router({
         .input(z.object({
           orderId: z.number(),
         }))
-        .mutation(async ({ input }) => {
-          
-          const db = await getDb();
-          if (!db) throw new Error('Database not available');
-          
-          // Get the order from new orders table
-          const orderList = await db.select().from(orders).where(eq(orders.id, input.orderId)).limit(1);
-          const order = orderList.length > 0 ? orderList[0] : null;
-          
-          if (!order) {
-            throw new TRPCError({ code: 'NOT_FOUND', message: 'Order not found' });
-          }
-          
-          if (!order.bogExternalOrderId) {
-            throw new TRPCError({ code: 'BAD_REQUEST', message: 'Order does not have a BOG external order ID' });
-          }
-          
-          // Query BOG for current payment status
-          const { getBOGOrderStatus } = await import('./_core/bog');
-          const bogStatus = await getBOGOrderStatus(order.bogExternalOrderId);
-          
-          if (!bogStatus.success) {
-            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: bogStatus.error || 'Failed to get BOG status' });
-          }
-          
-          // Reconciliation is a trusted server-to-server status authority.
-          const { updateOrderBOGPayment } = await import('./db');
-          const paymentStatus = resolveTrustedPaymentStatus(order.paymentStatus, bogStatus.status);
-          
-          const updated = await updateOrderBOGPayment(input.orderId, {
-            bogOrderId: bogStatus.bogOrderId,
-            bogPaymentStatus: bogStatus.status,
-            paymentLastCheckedAt: new Date(),
-            paymentStatus: paymentStatus,
-            paidAt: bogStatus.status === 'completed' ? (order.paidAt ?? new Date()) : undefined,
-          });
-          
-          return {
-            success: true,
-            order: updated,
-            bogStatus: bogStatus.status,
-            paymentStatus: paymentStatus,
-          };
+        .mutation(() => {
+          // Reconciliation is unavailable until BOG's official contract is validated.
+          return rejectCardPaymentRequest();
         }),
     }),
   }),
