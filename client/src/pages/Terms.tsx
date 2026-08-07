@@ -261,7 +261,7 @@ export default function Terms() {
   const currentContent = language === "ka" ? content.ka : content.en;
 
   return (
-    <div className="fb-secondary-page min-h-screen">
+    <div className="fb-secondary-page p2-legal-page min-h-screen">
       <Navbar />
       <main className="fb-legal-page px-4 py-8 sm:py-12">
       <div className="max-w-4xl mx-auto">

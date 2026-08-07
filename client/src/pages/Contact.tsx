@@ -98,7 +98,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="fb-secondary-page fb-contact-page min-h-screen">
+    <div className="fb-secondary-page fb-contact-page p2-contact-page min-h-screen">
       <Navbar />
 
       <main id="main-content">
@@ -230,7 +230,7 @@ export default function Contact() {
               aria-labelledby="location-title"
             >
               <img
-                src="/flower-assets/editorial/mixed-bouquet.webp"
+                src="/flower-assets/editorial/new-collection.webp"
                 alt={
                   ka
                     ? "Flower’s Boutique-ის ყვავილების სივრცე"

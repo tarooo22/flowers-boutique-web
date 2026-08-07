@@ -38,11 +38,11 @@ export default function AIBouquetBuilder() {
   }, [categories, products]);
 
   return (
-    <div className="min-h-screen bg-[#faf7f2]">
+    <div className="p2-builder-page min-h-screen bg-[#faf7f2]">
       <Navbar />
 
       <main className="mx-auto max-w-[1460px] px-4 py-6 sm:px-6 sm:py-8">
-        <section className="mb-6 grid gap-4 rounded-2xl border border-[#eadfce] bg-[#171717] p-5 text-[#f7f2e9] sm:grid-cols-[1fr_auto] sm:items-center sm:p-6" aria-label={language === "ka" ? "ნაბიჯები" : "Builder steps"}>
+        <section className="p2-builder-intro mb-6 grid gap-4 rounded-2xl border border-[#eadfce] bg-[#171717] p-5 text-[#f7f2e9] sm:grid-cols-[1fr_auto] sm:items-center sm:p-6" aria-label={language === "ka" ? "ნაბიჯები" : "Builder steps"}>
           <div><p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#e2c58b]">01 · {language === "ka" ? "აირჩიეთ ყვავილები" : "Choose flowers first"}</p><p className="mt-2 max-w-2xl text-sm leading-6 text-white/70">{language === "ka" ? "შემდეგ აირჩიეთ შეფუთვა და ლენტი, გადაამოწმეთ ფასი და დაამატეთ თაიგული კალათაში." : "Then choose wrapping and ribbon, review the price, and add your bouquet to cart."}</p></div>
           <div className="flex items-center gap-2 text-xs text-white/55"><span className="rounded-full bg-[#c9a86a] px-3 py-1.5 font-semibold text-[#171717]">1 {language === "ka" ? "ყვავილები" : "Flowers"}</span><span>→</span><span>2 {language === "ka" ? "შეფუთვა" : "Wrap"}</span><span>→</span><span>3 {language === "ka" ? "კალათა" : "Cart"}</span></div>
         </section>
@@ -51,7 +51,7 @@ export default function AIBouquetBuilder() {
           onValueChange={value => setMode(value as "visual" | "ai")}
           className="w-full"
         >
-          <TabsList className="mb-6 grid h-auto w-full grid-cols-2 rounded-2xl border border-[#eadfce] bg-white p-1.5 shadow-[0_10px_30px_rgba(83,61,40,0.05)] sm:mb-8">
+          <TabsList className="p2-builder-tabs mb-6 grid h-auto w-full grid-cols-2 rounded-2xl border border-[#eadfce] bg-white p-1.5 shadow-[0_10px_30px_rgba(83,61,40,0.05)] sm:mb-8">
             <TabsTrigger
               value="visual"
               className="min-h-12 gap-2 rounded-xl text-sm font-semibold text-[#74685c] data-[state=active]:bg-[#f2e7d7] data-[state=active]:text-[#8c6030] data-[state=active]:shadow-none"

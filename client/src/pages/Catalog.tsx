@@ -5,10 +5,8 @@ import {
   Check,
   ChevronDown,
   ChevronRight,
-  Heart,
   RotateCcw,
   Search,
-  ShoppingBag,
   SlidersHorizontal,
   X,
 } from "lucide-react";
@@ -21,7 +19,7 @@ import { useSEO } from "@/hooks/useSEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
-import FlowerImage from "@/components/FlowerImage";
+import ProductCard from "@/components/product/ProductCard";
 import { cleanProductName, getProductName } from "@/lib/productPresentation";
 
 type SortOption = "featured" | "priceAsc" | "priceDesc" | "name";
@@ -34,142 +32,6 @@ const catalogSchema = {
   description: "Fresh bouquets and considered floral arrangements in Tbilisi.",
   url: "/catalog",
 };
-
-const money = (value: unknown) => {
-  const amount = Number(value);
-  return Number.isFinite(amount)
-    ? `₾${amount.toLocaleString("ka-GE", { maximumFractionDigits: 0 })}`
-    : "";
-};
-
-function ProductCard({
-  product,
-  language,
-  onAdd,
-  index,
-}: {
-  product: any;
-  language: string;
-  onAdd: (product: any) => void;
-  index: number;
-}) {
-  const name = getProductName(product, language);
-  const salePrice = product.salePrice ?? product.discountPrice;
-  const basePrice = product.priceMin ?? product.price;
-  const price = product.priceOnRequest
-    ? language === "ka"
-      ? "ფასი მოთხოვნით"
-      : "Price on request"
-    : product.priceMin !== product.priceMax && product.priceMax
-      ? `${money(product.priceMin)}–${money(product.priceMax)}`
-      : money(salePrice ?? basePrice);
-
-  return (
-    <article
-      className={`fb-catalog-card ${product.isAvailable ? "" : "is-unavailable"} ${product.featured && index === 0 ? "fb-catalog-card--featured" : ""}`}
-    >
-      <Link
-        href={`/product/${product.id}`}
-        className="fb-catalog-card__visual"
-        aria-label={name}
-      >
-        <FlowerImage
-          src={product.imageUrl}
-          alt={`${name} — Flower's Boutique`}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-        />
-        <div className="fb-catalog-card__badges">
-          {product.featured && (
-            <span className="fb-catalog-badge fb-catalog-badge--gold">
-              რჩეული
-            </span>
-          )}
-          <span
-            className={`fb-catalog-badge ${product.isAvailable ? "fb-catalog-badge--stock" : "fb-catalog-badge--out"}`}
-          >
-            {product.isAvailable ? "მარაგშია" : "ამოიწურა"}
-          </span>
-        </div>
-      </Link>
-      <div className="fb-catalog-card__body">
-        <div className="flex min-w-0 items-start justify-between gap-3">
-          <div className="min-w-0">
-            <Link
-              href={`/product/${product.id}`}
-              className="fb-catalog-card__title line-clamp-2"
-            >
-              {name}
-            </Link>
-            {product.unitType && (
-              <p className="fb-catalog-card__meta">{product.unitType}</p>
-            )}
-          </div>
-          <button
-            type="button"
-            className="fb-catalog-card__wish"
-            aria-label={
-              language === "ka"
-                ? `${name} რჩეულებში`
-                : `Add ${name} to wishlist`
-            }
-            onClick={() => {
-              const wishlist = JSON.parse(
-                localStorage.getItem("flowers-boutique-wishlist") || "[]"
-              );
-              if (!wishlist.some((item: any) => item.id === product.id)) {
-                localStorage.setItem(
-                  "flowers-boutique-wishlist",
-                  JSON.stringify([...wishlist, product])
-                );
-                toast.success(
-                  language === "ka" ? "რჩეულებში დაემატა" : "Added to wishlist"
-                );
-              }
-            }}
-          >
-            <Heart size={17} strokeWidth={1.7} />
-          </button>
-        </div>
-        <div className="fb-catalog-card__footer">
-          <div className="flex flex-wrap items-baseline gap-2">
-            <span className="fb-catalog-card__price">{price}</span>
-            {salePrice && basePrice && (
-              <del className="fb-catalog-card__old-price">
-                {money(basePrice)}
-              </del>
-            )}
-          </div>
-          <button
-            type="button"
-            className="fb-catalog-card__add"
-            disabled={!product.isAvailable}
-            aria-label={
-              product.isAvailable
-                ? language === "ka"
-                  ? `${name} კალათაში`
-                  : `Add ${name} to cart`
-                : language === "ka"
-                  ? "მარაგი არ არის"
-                  : "Unavailable"
-            }
-            onClick={() => onAdd(product)}
-          >
-            <ShoppingBag size={17} />
-            <span>
-              {product.isAvailable
-                ? language === "ka"
-                  ? "დამატება"
-                  : "Add"
-                : language === "ka"
-                  ? "არ არის"
-                  : "Unavailable"}
-            </span>
-          </button>
-        </div>
-      </div>
-    </article>
-  );
-}
 
 export default function Catalog() {
   const { language, t } = useLanguage();
@@ -287,7 +149,7 @@ export default function Catalog() {
   const ka = language === "ka";
 
   return (
-    <div className="min-h-screen bg-[#f7f2e9] text-[#181614]">
+    <div className="p1-site p2-catalog-page min-h-screen">
       <Navbar />
       <main>
         <section className="fb-catalog-intro">
@@ -300,13 +162,11 @@ export default function Catalog() {
             <div className="fb-catalog-intro__row">
               <div>
                 <p className="fb-eyebrow">FLOWER'S BOUTIQUE · COLLECTION</p>
-                <h1 className="fb-display">
-                  {ka ? "აირჩიეთ თქვენი მომენტი" : "Choose your moment"}
-                </h1>
+                <h1 className="fb-display">{ka ? "თაიგულები" : "Bouquets"}</h1>
                 <p>
                   {ka
-                    ? "თაიგულები, რომლებიც სათქმელს თქვენს მაგივრად ამბობენ."
-                    : "Bouquets that say what words cannot."}
+                    ? "ჩვენი კოლექცია თქვენი მნიშვნელოვანი მომენტებისთვის."
+                    : "A considered collection for your meaningful moments."}
                 </p>
               </div>
               <button
@@ -319,6 +179,33 @@ export default function Catalog() {
                 {hasFilters && <span aria-label="Active filters" />}
               </button>
             </div>
+            <nav
+              className="fb-catalog-collection-nav"
+              aria-label={ka ? "კატალოგის კატეგორიები" : "Catalog categories"}
+            >
+              <button
+                type="button"
+                className={selectedCategoryId === null ? "is-selected" : ""}
+                onClick={() => setSelectedCategoryId(null)}
+              >
+                {ka ? "ყველა" : "All"}
+              </button>
+              {categories.map((category: any) => (
+                <button
+                  type="button"
+                  key={category.id}
+                  className={
+                    selectedCategoryId === category.id ? "is-selected" : ""
+                  }
+                  onClick={() => setSelectedCategoryId(category.id)}
+                >
+                  {cleanProductName(
+                    ka ? category.nameKa : category.nameEn,
+                    ka ? "კატეგორია" : "Category"
+                  )}
+                </button>
+              ))}
+            </nav>
           </div>
         </section>
 
@@ -544,11 +431,10 @@ export default function Catalog() {
               </div>
             ) : (
               <div className="fb-catalog-grid">
-                {filteredProducts.map((product: any, index: number) => (
+                {filteredProducts.map((product: any) => (
                   <ProductCard
                     key={product.id}
                     product={product}
-                    index={index}
                     language={language}
                     onAdd={addProduct}
                   />

@@ -184,7 +184,7 @@ export default function Admin() {
   };
 
   return (
-    <div className="admin-page min-h-screen bg-gradient-to-br from-[#FAF8F5] to-[#F5F0E8]">
+    <div className="admin-page p2-admin-page min-h-screen bg-gradient-to-br from-[#FAF8F5] to-[#F5F0E8]">
       <div className="max-w-7xl mx-auto px-4 py-8 sm:py-12">
         <div className="fb-admin-header">
           <div className="fb-admin-header__identity">
