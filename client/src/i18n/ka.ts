@@ -182,6 +182,55 @@ export const ka = {
   "home.hoursAgo": "%d საათი წინ",
   "home.minutesAgo": "%d წუთი წინ",
 
+  // Light storefront homepage
+  "home.cartAdded": "პროდუქტი კალათაში დაემატა",
+  "home.simpleHero.title": "ყვავილები განსაკუთრებული მომენტებისთვის",
+  "home.simpleHero.copy":
+    "შეარჩიე მზა თაიგული ან შექმენი შენთვის სასურველი კომპოზიცია.",
+  "home.simpleHero.primary": "კატალოგის ნახვა",
+  "home.simpleHero.secondary": "შექმენი თაიგული",
+  "home.simpleHero.imageAlt":
+    "Flower’s Boutique-ის ნაზი, ხელით შეკრული თაიგული",
+  "home.categories.eyebrow": "კატეგორიები",
+  "home.categories.title": "იპოვე სასურველი თაიგული",
+  "home.categories.label": "თაიგულების კატეგორიები",
+  "home.categories.all": "ყველა თაიგული",
+  "home.products.eyebrow": "შერჩეული კოლექცია",
+  "home.products.title": "ახალი თაიგულები",
+  "home.products.all": "ყველა თაიგულის ნახვა",
+  "home.products.errorTitle": "კატალოგის ჩატვირთვა ვერ მოხერხდა",
+  "home.products.errorCopy": "გთხოვთ, სცადოთ თავიდან.",
+  "home.products.retry": "თავიდან ცდა",
+  "home.products.emptyTitle": "კოლექცია მალე განახლდება",
+  "home.products.emptyCopy": "ინდივიდუალური შეკვეთისთვის დაგვიკავშირდით.",
+  "home.builder.eyebrow": "შენი კომპოზიცია",
+  "home.builder.title": "შექმენი შენი თაიგული",
+  "home.builder.copy":
+    "აირჩიე ყვავილები, შეფუთვა და დეტალები შენს გემოზე — დანარჩენს კონსტრუქტორი ეტაპობრივად გაჩვენებს.",
+  "home.builder.cta": "დაიწყე შექმნა",
+  "home.builder.imageAlt": "ვარდების კომპოზიცია ნათელ ინტერიერში",
+  "home.delivery.eyebrow": "შეკვეთის პროცესი",
+  "home.delivery.title": "სამი მარტივი ნაბიჯი",
+  "home.delivery.step1Title": "შეარჩიე თაიგული",
+  "home.delivery.step1Copy":
+    "აირჩიე კატალოგიდან ან შექმენი საკუთარი კომპოზიცია.",
+  "home.delivery.step2Title": "მიუთითე დეტალები",
+  "home.delivery.step2Copy":
+    "შეავსე მიმღების, მისამართისა და მიწოდების ინფორმაცია.",
+  "home.delivery.step3Title": "დაადასტურე შეკვეთა",
+  "home.delivery.step3Copy":
+    "გადაამოწმე შეკვეთის შეჯამება და დაადასტურე მონაცემები.",
+  "home.delivery.link": "მიწოდების ინფორმაციის ნახვა",
+  "home.brand.title":
+    "თითოეული თაიგული იქმნება იმისთვის, რომ მნიშვნელოვან მომენტს მეტი სითბო შემატოს.",
+  "home.brand.copy":
+    "ვმუშაობთ ნამდვილ ყვავილებთან და თითოეულ კომპოზიციას ყურადღებით, ხელით ვაწყობთ.",
+  "home.brand.link": "გაიგე მეტი ჩვენ შესახებ",
+  "home.brand.imageAlt": "Flower’s Boutique-ის ნამდვილი ყვავილების არჩევანი",
+  "home.contact.eyebrow": "სწრაფი კონტაქტი",
+  "home.contact.title": "დაგვიკავშირდი",
+  "home.contact.copy": "თუ არჩევაში დახმარება გჭირდება, მოგვწერე ან დაგვირეკე.",
+
   // Rose 3D Builder
   "rose.quantity": "ვარდების რაოდენობა",
   "rose.preview": "წინასწარი ნახვა",

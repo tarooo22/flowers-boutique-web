@@ -99,24 +99,25 @@ export default function Login() {
   };
 
   return (
-    <div className="auth-page auth-page--login min-h-screen">
+    <div className="auth-page auth-page--login p2-account-page min-h-screen">
       <Navbar />
 
       {/* Main Content */}
-      <div className="auth-main flex items-center justify-center px-4 py-12 md:py-20">
+      <main className="auth-main flex items-center justify-center px-4 py-12 md:py-20">
         <Card className="auth-card w-full max-w-md">
           <div className="p-8 md:p-10">
             <p className="auth-kicker">Flower's Boutique / Account</p>
             <h1 className="auth-title text-3xl md:text-4xl font-semibold text-center mb-2">
               {t.login}
             </h1>
-            <p className="auth-subtitle text-center mb-8">
-              {t.welcomeBack}
-            </p>
+            <p className="auth-subtitle text-center mb-8">{t.welcomeBack}</p>
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                  <label htmlFor="login-email" className="auth-label block text-sm font-semibold mb-2">
+                <label
+                  htmlFor="login-email"
+                  className="auth-label block text-sm font-semibold mb-2"
+                >
                   {t.email}
                 </label>
                 <Input
@@ -131,14 +132,20 @@ export default function Login() {
                   className={`auth-input rounded-lg ${errors.email ? "border-red-500" : ""}`}
                 />
                 {errors.email && (
-                  <p className="text-red-600 text-sm mt-1 font-medium" role="alert">
+                  <p
+                    className="text-red-600 text-sm mt-1 font-medium"
+                    role="alert"
+                  >
                     {errors.email}
                   </p>
                 )}
               </div>
 
               <div>
-                  <label htmlFor="login-password" className="auth-label block text-sm font-semibold mb-2">
+                <label
+                  htmlFor="login-password"
+                  className="auth-label block text-sm font-semibold mb-2"
+                >
                   {t.password}
                 </label>
                 <div className="auth-password-field">
@@ -153,10 +160,27 @@ export default function Login() {
                     placeholder="••••••••"
                     className={`auth-input rounded-lg ${errors.password ? "border-red-500" : ""}`}
                   />
-                  <button type="button" onClick={() => setShowPassword(value => !value)} aria-label={showPassword ? (language === "ka" ? "პაროლის დამალვა" : "Hide password") : (language === "ka" ? "პაროლის ჩვენება" : "Show password")}>{showPassword ? <EyeOff size={18} /> : <Eye size={18} />}</button>
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(value => !value)}
+                    aria-label={
+                      showPassword
+                        ? language === "ka"
+                          ? "პაროლის დამალვა"
+                          : "Hide password"
+                        : language === "ka"
+                          ? "პაროლის ჩვენება"
+                          : "Show password"
+                    }
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
                 </div>
                 {errors.password && (
-                  <p className="text-red-600 text-sm mt-1 font-medium" role="alert">
+                  <p
+                    className="text-red-600 text-sm mt-1 font-medium"
+                    role="alert"
+                  >
                     {errors.password}
                   </p>
                 )}
@@ -182,7 +206,7 @@ export default function Login() {
             </p>
           </div>
         </Card>
-      </div>
+      </main>
     </div>
   );
 }

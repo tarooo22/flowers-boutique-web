@@ -81,7 +81,7 @@ export default function Cart() {
   if (items.length === 0) return <div className="min-h-screen bg-[#f7f2e9] text-[#181614]"><Navbar /><main className="fb-cart-empty"><ShoppingBag size={32} /><p className="fb-eyebrow">FLOWER'S BOUTIQUE · CART</p><h1 className="fb-display">{ka ? "თქვენი კალათა ცარიელია" : "Your cart is waiting"}</h1><p>{ka ? "დაამატეთ თაიგული, რომ განსაკუთრებული მომენტი შექმნათ." : "Add a bouquet to begin creating a special moment."}</p><Link href="/catalog" className="fb-cart-primary">{ka ? "კოლექციის ნახვა" : "View collection"}<ChevronRight size={16} /></Link></main><Footer /></div>;
 
   return (
-    <div className="min-h-screen bg-[#f7f2e9] text-[#181614]">
+    <div className="p2-cart-page min-h-screen bg-[#f7f2e9] text-[#181614]">
       <Navbar />
       <main className="fb-page-shell fb-cart-page">
         <div className="fb-breadcrumbs"><Link href="/">{ka ? "მთავარი" : "Home"}</Link><ChevronRight size={14} /><span>{ka ? "კალათა" : "Cart"}</span></div>

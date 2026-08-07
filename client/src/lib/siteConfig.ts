@@ -6,6 +6,7 @@ const publicContactDefaults = {
   phone: "+995 511 55 56 50",
   email: "info.flowersboutique@gmail.com",
   whatsapp: "https://wa.me/995511555650",
+  messenger: "https://m.me/flowersboutiques",
   instagram: "https://www.instagram.com/myflowersboutique/",
   facebook: "https://www.facebook.com/flowersboutiques/",
 };
@@ -23,6 +24,7 @@ export const siteContact = {
   whatsapp:
     readPublicValue(import.meta.env.VITE_WHATSAPP_URL) ||
     publicContactDefaults.whatsapp,
+  messenger: publicContactDefaults.messenger,
   instagram:
     readPublicValue(import.meta.env.VITE_INSTAGRAM_URL) ||
     publicContactDefaults.instagram,

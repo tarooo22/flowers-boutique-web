@@ -5,6 +5,10 @@ interface FlowerImageProps {
   alt?: string;
   className?: string;
   style?: React.CSSProperties;
+  loading?: "eager" | "lazy";
+  fetchPriority?: "high" | "low" | "auto";
+  width?: number;
+  height?: number;
 }
 
 /**
@@ -12,7 +16,16 @@ interface FlowerImageProps {
  * - Never shows alt text on the page (role="presentation" on fallback).
  * - Falls back gracefully if the src URL fails to load.
  */
-export default function FlowerImage({ src, alt = "", className = "", style }: FlowerImageProps) {
+export default function FlowerImage({
+  src,
+  alt = "",
+  className = "",
+  style,
+  loading = "lazy",
+  fetchPriority = "auto",
+  width,
+  height,
+}: FlowerImageProps) {
   const [failed, setFailed] = useState(false);
 
   if (!src || failed) {
@@ -79,7 +92,10 @@ export default function FlowerImage({ src, alt = "", className = "", style }: Fl
       className={className}
       style={style}
       onError={() => setFailed(true)}
-      loading="lazy"
+      loading={loading}
+      fetchPriority={fetchPriority}
+      width={width}
+      height={height}
     />
   );
 }

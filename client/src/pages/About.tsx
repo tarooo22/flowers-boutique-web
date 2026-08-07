@@ -18,7 +18,7 @@ export default function About() {
     titleKa: "Flower’s Boutique-ის შესახებ | ყვავილების ბუტიკი თბილისში",
     titleEn: "About Flower’s Boutique | Premium Flower Boutique in Tbilisi",
     descriptionKa: "Flower’s Boutique — პრემიუმ ყვავილების ბუტიკი თბილისში. გაიცანით ჩვენი ისტორია, გუნდი, ღირებულებები და მიდგომა თითოეული თაიგულის შექმნისადმი.",
-    descriptionEn: "Flower’s Boutique is Tbilisi's premium flower boutique. Learn our story, values, and why we are the city's most trusted flower shop.",
+    descriptionEn: "Flower’s Boutique is a Tbilisi flower boutique. Learn about our story, values, and approach to thoughtful floral gifting.",
     canonical: "/about",
     lang: language as "ka" | "en",
   });
@@ -54,22 +54,22 @@ export default function About() {
     },
   ];
 
-  const stats = [
-    { value: '5+', labelKa: 'წელი ბაზარზე', labelEn: 'Years in business' },
-    { value: '1000+', labelKa: 'ბედნიერი მომხმარებელი', labelEn: 'Happy customers' },
-    { value: '50+', labelKa: 'ყვავილის სახეობა', labelEn: 'Flower varieties' },
-    { value: '5.0', labelKa: 'Google შეფასება', labelEn: 'Google rating' },
+  const valuesAtAGlance = [
+    { value: 'ხელით', labelKa: 'აწყობილი კომპოზიციები', labelEn: 'Hand-arranged compositions' },
+    { value: 'თქვენთვის', labelKa: 'ინდივიდუალური არჩევანი', labelEn: 'A considered personal choice' },
+    { value: 'ყოველდღე', labelKa: 'საკონტაქტო მხარდაჭერა', labelEn: 'Everyday contact support' },
+    { value: 'თბილისი', labelKa: 'ჩვენი ბუტიკის ქალაქი', labelEn: 'Our boutique city' },
   ];
 
   return (
-    <div className="fb-secondary-page fb-about-page min-h-screen" style={{ background: '#f7f2e9' }}>
+    <div className="fb-secondary-page fb-about-page p2-about-page min-h-screen" style={{ background: '#f7f2e9' }}>
       <Navbar />
 
       {/* Hero */}
-      <div className="fb-about-hero relative overflow-hidden">
+      <div className="fb-about-hero p2-about-hero relative overflow-hidden">
         <img
-          src="/flower-assets/editorial/pink-roses.webp"
-          alt="Pink roses arrangement — Flower’s Boutique flower boutique Tbilisi"
+          src="/flower-assets/hero/light-studio-desktop.webp"
+          alt="Flower’s Boutique seasonal flower arrangement"
           className="fb-about-hero__image absolute inset-0 w-full h-full object-cover"
         />
         <div className="fb-about-hero__shade absolute inset-0" />
@@ -96,10 +96,10 @@ export default function About() {
       </div>
 
       {/* Stats */}
-      <div style={{ background: 'linear-gradient(135deg, #1C1917 0%, #2D2520 100%)' }}>
+      <section className="p2-about-values-strip">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
-            {stats.map((stat, i) => (
+            {valuesAtAGlance.map((stat, i) => (
               <div key={i} className="group">
                 <p className="text-4xl sm:text-5xl font-light text-[#D4AF37] mb-2 group-hover:text-[#E8C547] transition-colors" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                   {stat.value}
@@ -111,7 +111,7 @@ export default function About() {
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Story */}
       <section className="py-20 px-4 sm:px-6">
@@ -157,16 +157,13 @@ export default function About() {
                 alt={language === 'ka' ? 'Flower’s Boutique-ის ყვავილების სივრცე თბილისში' : 'Flower’s Boutique floral studio in Tbilisi'}
                 className="fb-about-story-image relative rounded-3xl w-full aspect-[4/5] object-cover shadow-2xl border border-[#D4AF37]/20"
               />
-              <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-6 shadow-2xl border border-[#D4AF37]/20 backdrop-blur-sm">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="flex gap-1">
-                    {[1,2,3,4,5].map(s => (
-                      <Star key={s} className="w-4 h-4 fill-[#D4AF37] text-[#D4AF37]" />
-                    ))}
-                  </div>
-                  <span className="text-sm font-semibold text-[#1C1917]">5.0</span>
-                </div>
-                <p className="text-xs text-[#888]">18 Google reviews</p>
+              <div className="p2-about-story-note absolute -bottom-6 -left-6 bg-white rounded-2xl p-6 shadow-2xl border border-[#D4AF37]/20">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#A16207]">
+                  {language === 'ka' ? 'ყვავილები განსაკუთრებული მომენტებისთვის' : 'Flowers for remarkable moments'}
+                </p>
+                <p className="mt-2 text-sm text-[#555]">
+                  {language === 'ka' ? 'ინდივიდუალურად აწყობილი კომპოზიციები' : 'Individually arranged compositions'}
+                </p>
               </div>
             </div>
           </div>
