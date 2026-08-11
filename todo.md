@@ -91,4 +91,4 @@
 - [x] Build the login-session fix — Production build succeeds
 - [x] Test native login end-to-end and verify a secure session cookie is issued — Login reached the authenticated profile view
 - [x] Confirm login creates an authSessions row and logout revokes that row — Active count changed from 1 to 0 and revoked count changed to 1; no token or customer record was exposed
-- [ ] Checkpoint and verify the published login fix
+- [x] Checkpoint and verify the published login fix — Auto-published checkpoint 3bd87c57; production login created a session and production logout revoked it without exposing tokens or customer data
