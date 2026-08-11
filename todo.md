@@ -92,3 +92,16 @@
 - [x] Test native login end-to-end and verify a secure session cookie is issued — Login reached the authenticated profile view
 - [x] Confirm login creates an authSessions row and logout revokes that row — Active count changed from 1 to 0 and revoked count changed to 1; no token or customer record was exposed
 - [x] Checkpoint and verify the published login fix — Auto-published checkpoint 3bd87c57; production login created a session and production logout revoked it without exposing tokens or customer data
+
+## Boutique Refinement & Catalog Completion — 2026-08-12
+- [ ] Record the current build, type-check, test, route, visual, accessibility, and security baseline
+- [ ] Capture explicit baseline evidence for build, type-check, tests, accessibility checks, and security constraints in audit-baseline.md
+- [ ] Audit the component architecture, route surface, data schema, API contracts, authentication, cart, order, payment, and admin flows
+- [ ] Reconcile public catalog CSV data with persistent product-image mappings and import every supplied public catalog product without resetting customer or order data
+- [ ] Repair real product-image resolution and ensure the catalog, cards, product detail, wishlist, cart, and checkout never show a false missing-image state when a mapped image exists
+- [ ] Consolidate the public design tokens, loaded Georgian/English typography, responsive typography wordmark, header, mobile menu, footer, and reusable product card without changing protected business logic
+- [ ] Refine the homepage, catalog, product detail, cart, checkout, account, bouquet builder, about, contact, and admin experiences using actual configured data only
+- [ ] Preserve Georgian as the default language, existing SEO routes/content, secure authorization, server-side pricing, and disabled BOG card payment behaviour
+- [ ] Add or update focused Vitest coverage for every repaired server-side or shared utility behaviour
+- [ ] Validate desktop and mobile journeys, browser/network errors, build, type-check, tests, and all affected routes; distinguish pre-existing from new failures
+- [ ] Prepare a concise audit, implementation report, and verified running-application screenshots before requesting release approval
