@@ -73,3 +73,9 @@
 - [x] Document deployment details and live URL
 - [x] Test remaining routes (register, product detail, checkout, profile, admin) — All routes functional
 - [x] Publish final checkpoint to production (bc17bec6)
+
+## Registration Fix — 2026-08-10
+- [ ] Remove duplicate bcryptjs import and confirm native registration compiles cleanly
+- [ ] Validate native registration insert with generated openId and role=user
+- [ ] Build and publish the registration fix
+- [ ] Verify registration succeeds without exposing credentials or customer data

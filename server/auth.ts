@@ -5,6 +5,7 @@ import { getDb } from "./db";
 
 const SALT_ROUNDS = 10;
 
+
 /**
  * Hash a password using bcryptjs
  */
@@ -47,14 +48,18 @@ export async function registerCustomer(
   // Hash password
   const passwordHash = await hashPassword(password);
 
-  // Create user
+  // Generate unique openId for native registration
+  const openId = `native_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+  // Create user with valid enum role ('user')
   const result = await db.insert(users).values({
+    openId,
     name,
     email,
     phone,
     passwordHash,
     loginMethod: "native",
-    role: "customer",
+    role: "user",
     lastSignedIn: new Date(),
   });
 
