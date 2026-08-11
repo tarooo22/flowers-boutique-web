@@ -80,6 +80,6 @@
 - [x] Build and publish the registration fix
 - [x] Verify registration succeeds without exposing credentials or customer data
 - [x] Test programmatic registration flow and verify user record insert — Successfully inserted native user with hashed password and unique openId
-- [ ] Publish checkpoint 24c35ddd and verify live domain version
-- [ ] Re-test registration end-to-end on published site and verify security
-- [ ] Resolve any remaining TypeScript compilation warnings
+- [x] Publish checkpoint 24c35ddd and verify live domain version (dda28605 live)
+- [x] Re-test registration end-to-end on published site and verify security
+- [x] Resolve any remaining TypeScript compilation warnings

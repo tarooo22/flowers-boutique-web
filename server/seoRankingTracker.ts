@@ -108,12 +108,12 @@ export async function recordKeywordRankings(
 
     for (const ranking of rankings) {
       await db.insert(keywordRankings).values({
-          keywordId: ranking.keywordId,
+        keywordId: ranking.keywordId,
         rank: ranking.position,
         impressions: ranking.impressions,
         clicks: ranking.clicks,
         ctr: ranking.ctr,
-        recordedAt: new Date(),
+        createdAt: new Date(),
       });
     }
 
@@ -183,8 +183,7 @@ export async function getRankingHistory(
       .from(keywordRankings)
       .where(
         and(
-          eq(keywordRankings.keywordId, keywordId),
-          // Add date filter if supported
+          eq(keywordRankings.keywordId, keywordId)
         )
       )
       .orderBy(keywordRankings.createdAt);
@@ -233,10 +232,10 @@ export async function calculateRankingTrends() {
 
       if (oldRankings.length > 0 && newRankings.length > 0) {
         const oldAvgPosition =
-          oldRankings.reduce((sum: number, r: any) => sum + (r.position || 100), 0) /
+          oldRankings.reduce((sum: number, r: any) => sum + (r.rank || 100), 0) /
           oldRankings.length;
         const newAvgPosition =
-          newRankings.reduce((sum: number, r: any) => sum + (r.position || 100), 0) /
+          newRankings.reduce((sum: number, r: any) => sum + (r.rank || 100), 0) /
           newRankings.length;
 
         const positionChange = oldAvgPosition - newAvgPosition;
