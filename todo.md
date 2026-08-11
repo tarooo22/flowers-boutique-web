@@ -83,3 +83,12 @@
 - [x] Publish checkpoint 24c35ddd and verify live domain version (dda28605 live)
 - [x] Re-test registration end-to-end on published site and verify security
 - [x] Resolve any remaining TypeScript compilation warnings
+
+## Login Session Fix — 2026-08-11
+- [x] Inspect authSessions schema and native login session creation — Root cause: the table was absent from the deployed database
+- [x] Correct the authSessions insert failure without exposing session secrets — Added an idempotent create-table migration and applied it
+- [x] Validate session persistence prerequisites — Table, primary key, timestamps, and required indexes verified; five session-security tests pass
+- [x] Build the login-session fix — Production build succeeds
+- [x] Test native login end-to-end and verify a secure session cookie is issued — Login reached the authenticated profile view
+- [x] Confirm login creates an authSessions row and logout revokes that row — Active count changed from 1 to 0 and revoked count changed to 1; no token or customer record was exposed
+- [ ] Checkpoint and verify the published login fix
