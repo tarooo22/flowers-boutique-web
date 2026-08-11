@@ -74,8 +74,12 @@
 - [x] Test remaining routes (register, product detail, checkout, profile, admin) — All routes functional
 - [x] Publish final checkpoint to production (bc17bec6)
 
-## Registration Fix — 2026-08-10
-- [ ] Remove duplicate bcryptjs import and confirm native registration compiles cleanly
-- [ ] Validate native registration insert with generated openId and role=user
-- [ ] Build and publish the registration fix
-- [ ] Verify registration succeeds without exposing credentials or customer data
+## Registration Fix & End-to-End Validation — 2026-08-10
+- [x] Remove duplicate bcryptjs import and confirm native registration compiles cleanly
+- [x] Validate native registration insert with generated openId and role=user
+- [x] Build and publish the registration fix
+- [x] Verify registration succeeds without exposing credentials or customer data
+- [x] Test programmatic registration flow and verify user record insert — Successfully inserted native user with hashed password and unique openId
+- [ ] Publish checkpoint 24c35ddd and verify live domain version
+- [ ] Re-test registration end-to-end on published site and verify security
+- [ ] Resolve any remaining TypeScript compilation warnings
