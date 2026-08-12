@@ -3,7 +3,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router, protectedProcedure, adminProcedure } from "./_core/trpc";
 import { destroyAuthSession, issueAuthSession } from "./_core/session";
 import { z } from "zod";
-import { getProducts, getAllProducts, getFeaturedProducts, getProductById, getCategories, getActiveBanners, createOrder, getOrders, createProduct, updateProduct, deleteProduct, createCategory, deleteCategory, createBanner, updateBanner, deleteBanner, getAllBanners, getCustomerById, updateCustomerProfile, getCustomerAddresses, createCustomerAddress, getCustomerOrders, createCustomerOrder, getAllCustomerOrders, getCustomerOrderById, getOrderStats, getMyOrders, getAdminOrders, updateOrderDeliveryStatus, updateOrderPaymentStatus, createCanonicalOrder } from "./db";
+import { getProducts, getCatalogProducts, getAllProducts, getFeaturedProducts, getProductById, getCategories, getActiveBanners, createOrder, getOrders, createProduct, updateProduct, deleteProduct, createCategory, deleteCategory, createBanner, updateBanner, deleteBanner, getAllBanners, getCustomerById, updateCustomerProfile, getCustomerAddresses, createCustomerAddress, getCustomerOrders, createCustomerOrder, getAllCustomerOrders, getCustomerOrderById, getOrderStats, getMyOrders, getAdminOrders, updateOrderDeliveryStatus, updateOrderPaymentStatus, createCanonicalOrder } from "./db";
 import { deleteAddressForUser, updateAddressForUser } from "./addressAuthorization";
 import { getDb } from "./db";
 import { customerOrders, orders } from "../drizzle/schema";
@@ -30,18 +30,20 @@ const orderItemSchema = z.object({
   customData: z.unknown().optional(),
 });
 
-async function canonicalizeOrderItems(items: Array<z.infer<typeof orderItemSchema>>) {
-  const payment = await calculateCanonicalPayment(
+async function canonicalizeOrderItems(
+  items: Array<z.infer<typeof orderItemSchema>>,
+  fulfillmentType: "delivery" | "pickup",
+) {
+  return calculateCanonicalPayment(
     items.map(item => ({
       productId: item.productId,
       variantId: item.selectedVariantId,
       quantity: item.quantity,
       customData: item.customData,
     })),
-    "pickup",
+    fulfillmentType,
     getProductById,
   );
-  return payment.items;
 }
 
 export const appRouter = router({
@@ -116,6 +118,20 @@ export const appRouter = router({
   // Product routers
   products: router({
     list: publicProcedure.query(() => getProducts()),
+    catalog: publicProcedure
+      .input(
+        z.object({
+          page: z.number().int().min(1).default(1),
+          pageSize: z.number().int().min(1).max(24).default(24),
+          search: z.string().trim().max(100).optional(),
+          categoryId: z.number().int().positive().optional(),
+          availability: z.enum(["all", "available", "unavailable"]).default("all"),
+          minPrice: z.number().min(0).optional(),
+          maxPrice: z.number().min(0).optional(),
+          sort: z.enum(["featured", "priceAsc", "priceDesc", "name"]).default("featured"),
+        })
+      )
+      .query(({ input }) => getCatalogProducts(input)),
     listAll: adminProcedure.query(() => getAllProducts()),
     featured: publicProcedure.query(() => getFeaturedProducts()),
     // tRPC query procedures must return null rather than undefined when a
@@ -323,10 +339,12 @@ export const appRouter = router({
         deliveryDate: z.string().optional(),
         deliveryTime: z.string().optional(),
         giftMessage: z.string().optional(),
+        fulfillmentType: z.enum(["delivery", "pickup"]).default("delivery"),
       }))
       .mutation(async ({ input }) => {
-        const items = await canonicalizeOrderItems(input.items);
-        const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        const payment = await canonicalizeOrderItems(input.items, input.fulfillmentType);
+        const items = payment.items;
+        const totalPrice = payment.finalTotal;
         
         // Determine payment status and method based on order channel
         let paymentStatus: 'pending_payment' | 'paid' | 'failed' | 'cancelled' | 'refunded' = 'pending_payment';
@@ -367,6 +385,8 @@ export const appRouter = router({
           giftMessage: input.giftMessage,
           items,
           totalPrice,
+          fulfillmentType: input.fulfillmentType,
+          deliveryFee: payment.deliveryFee,
           paymentStatus,
           paymentMethod,
           deliveryStatus: 'new',
@@ -384,7 +404,7 @@ export const appRouter = router({
         try {
           await notifyOwner({
             title: `New Order from ${input.customerName}`,
-            content: `Order via ${input.orderChannel}\n\nItems: ${itemsDetails}\n\nTotal: ₾${totalPrice}\n\nCustomer: ${input.customerName}\nPhone: ${input.customerPhone || 'N/A'}\nEmail: ${input.customerEmail || 'N/A'}`,
+            content: `Order via ${input.orderChannel}\n\nItems: ${itemsDetails}\n\nTotal: ₾${payment.finalTotal}\n\nCustomer: ${input.customerName}\nPhone: ${input.customerPhone || 'N/A'}\nEmail: ${input.customerEmail || 'N/A'}`,
           });
         } catch (error) {
           console.warn("[Orders] Order saved, but owner notification was not sent:", error instanceof Error ? error.message : "unknown error");
@@ -419,8 +439,10 @@ export const appRouter = router({
         // Support both authenticated users and guests
         const userId = ctx.user?.id || null;
         
-        const items = await canonicalizeOrderItems(input.items);
-        const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        const fulfillmentType = input.fulfillmentType ?? "delivery";
+        const payment = await canonicalizeOrderItems(input.items, fulfillmentType);
+        const items = payment.items;
+        const totalPrice = payment.finalTotal;
         
         const order = await createCanonicalOrder({
           userId: userId,
@@ -429,6 +451,8 @@ export const appRouter = router({
           customerPhone: input.customerPhone || input.recipientPhone,
           items,
           totalPrice,
+          fulfillmentType,
+          deliveryFee: payment.deliveryFee,
           recipientName: input.recipientName,
           recipientPhone: input.recipientPhone,
           deliveryAddress: input.deliveryAddress,
@@ -450,14 +474,14 @@ export const appRouter = router({
         });
         
         // Notify owner
-        const itemsDetails = items.map(item => {
+        const itemsDetails = payment.items.map(item => {
           const colorText = item.selectedColorNameEn ? ` (${item.selectedColorNameEn})` : '';
           return `Product #${item.productId}${colorText}: ${item.quantity} x ₾${item.price}`;
         }).join(', ');
         try {
           await notifyOwner({
             title: `New Order from ${input.recipientName}`,
-            content: `Order via checkout\n\nItems: ${itemsDetails}\n\nTotal: ₾${totalPrice}\n\nRecipient: ${input.recipientName}\nPhone: ${input.recipientPhone}\nDelivery: ${input.deliveryDate} ${input.deliveryTime || ''}\nAddress: ${input.deliveryAddress}\nPayment: ${input.paymentMethod}`,
+            content: `Order via checkout\n\nItems: ${itemsDetails}\n\nTotal: ₾${payment.finalTotal}\n\nRecipient: ${input.recipientName}\nPhone: ${input.recipientPhone}\nDelivery: ${input.deliveryDate} ${input.deliveryTime || ''}\nAddress: ${input.deliveryAddress}\nPayment: ${input.paymentMethod}`,
           });
         } catch (error) {
           console.warn("[Orders] Order saved, but owner notification was not sent:", error instanceof Error ? error.message : "unknown error");

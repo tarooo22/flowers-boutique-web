@@ -14,6 +14,7 @@ import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import FlowerImage from "@/components/FlowerImage";
 import { cleanProductText, getProductName } from "@/lib/productPresentation";
+import { ProductDetailLoadingState, ProductDetailNotFoundState, RelatedProductsErrorState, RelatedProductsLoadingState } from "@/components/ProductDetailStates";
 
 const priceText = (min: unknown, max: unknown, onRequest: boolean, ka: boolean) => {
   if (onRequest) return ka ? "ფასი მოთხოვნით" : "Price on request";
@@ -31,8 +32,21 @@ export default function ProductDetail() {
   const ka = language === "ka";
   const productId = Number(id || 0);
   const productQuery = trpc.products.byId.useQuery({ id: productId });
-  const productsQuery = trpc.products.list.useQuery();
   const product = productQuery.data;
+  const relatedInput = useMemo(
+    () => ({
+      page: 1,
+      pageSize: 5,
+      categoryId: product?.categoryId ?? 1,
+      availability: "all" as const,
+      sort: "featured" as const,
+    }),
+    [product?.categoryId]
+  );
+  const relatedQuery = trpc.products.catalog.useQuery(relatedInput, {
+    enabled: Boolean(product?.categoryId),
+    staleTime: 60_000,
+  });
   const variants: any[] = product?.variants ?? [];
   const [quantity, setQuantity] = useState(1);
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null);
@@ -67,9 +81,9 @@ export default function ProductDetail() {
     lang: language as "ka" | "en",
   });
 
-  if (productQuery.isLoading) return <div className="min-h-screen bg-[#f7f2e9]"><Navbar /><div className="fb-product-loading"><div className="fb-product-loading__image" /><div className="fb-product-loading__copy" /></div></div>;
+  if (productQuery.isLoading) return <div className="min-h-screen bg-[#f7f2e9]"><Navbar /><ProductDetailLoadingState ka={ka} /></div>;
 
-  if (productQuery.isError || !product) return <div className="min-h-screen bg-[#f7f2e9]"><Navbar /><main className="fb-product-state"><AlertCircle size={30} /><h1>{ka ? "პროდუქტი ვერ მოიძებნა" : "Product not found"}</h1><p>{ka ? "ეს თაიგული ამჟამად ხელმისაწვდომი არ არის." : "This bouquet is no longer available."}</p><Link href="/catalog" className="fb-product-state__link">{ka ? "კატალოგში დაბრუნება" : "Back to catalog"}</Link></main><Footer /></div>;
+  if (productQuery.isError || !product) return <div className="min-h-screen bg-[#f7f2e9]"><Navbar /><ProductDetailNotFoundState ka={ka} /><Footer /></div>;
 
   const addProduct = () => {
     if (!product.isAvailable || selectedVariant?.available === false) {
@@ -102,7 +116,7 @@ export default function ProductDetail() {
     trackLead([{ productId: product.id, quantity, price: Number(displayMin) || 0 }], (Number(displayMin) || 0) * quantity);
   };
 
-  const related = productsQuery.data?.filter((item: any) => item.categoryId === product.categoryId && item.id !== product.id).slice(0, 4) || [];
+  const related = relatedQuery.data?.items.filter((item: any) => item.id !== product.id).slice(0, 4) || [];
 
   return (
     <div className="min-h-screen bg-[#f7f2e9] text-[#181614]">
@@ -111,7 +125,7 @@ export default function ProductDetail() {
         <div className="fb-page-shell fb-breadcrumbs fb-product-breadcrumbs"><Link href="/">{ka ? "მთავარი" : "Home"}</Link><ChevronRight size={14} /><Link href="/catalog">{ka ? "კატალოგი" : "Catalog"}</Link><ChevronRight size={14} /><span>{name}</span></div>
         <section className="fb-page-shell fb-product-layout">
           <div className="fb-product-gallery">
-            <div className="fb-product-gallery__main"><FlowerImage src={displayImage} alt={`${name} — Flower's Boutique`} className="h-full w-full object-cover" /><button type="button" className={`fb-product-gallery__wish ${wishlisted ? "is-active" : ""}`} onClick={addWishlist} aria-label={ka ? "რჩეულებში დამატება" : "Add to wishlist"}><Heart size={20} fill={wishlisted ? "currentColor" : "none"} /></button></div>
+            <div className="fb-product-gallery__main"><FlowerImage src={displayImage} alt={`${name} — Flower's Boutique`} className="h-full w-full object-cover" loading="eager" fetchPriority="high" width={900} height={900} /><button type="button" className={`fb-product-gallery__wish ${wishlisted ? "is-active" : ""}`} onClick={addWishlist} aria-label={ka ? "რჩეულებში დამატება" : "Add to wishlist"}><Heart size={20} fill={wishlisted ? "currentColor" : "none"} /></button></div>
             {gallery.length > 1 && <div className="fb-product-gallery__thumbs">{gallery.map((image) => <button type="button" key={image} className={displayImage === image ? "is-active" : ""} onClick={() => setSelectedImage(image)} aria-label={ka ? "სურათის არჩევა" : "Select product image"}><FlowerImage src={image} alt="" className="h-full w-full object-cover" /></button>)}</div>}
           </div>
           <div className="fb-product-copy">
@@ -128,6 +142,8 @@ export default function ProductDetail() {
           </div>
         </section>
         <section className="fb-page-shell fb-product-information"><div><p className="fb-eyebrow">DETAILS</p><h2 className="fb-display">{ka ? "მეტი, ვიდრე თაიგული" : "More than a bouquet"}</h2></div><div className="fb-product-information__grid"><article><h3>{ka ? "შემადგენლობა" : "Composition"}</h3><p>{cleanProductText(product.stemDisplayRule, ka ? "სეზონური ყვავილები, შერჩეული ფლორისტის მიერ." : "Seasonal stems, selected by our florist.")}</p></article><article><h3>{ka ? "მიწოდება" : "Delivery"}</h3><p>{ka ? "შეკვეთა მზადდება იმავე დღეს ხელმისაწვდომობის მიხედვით. ზუსტი დრო შეკვეთისას შეთანხმდება." : "Orders are prepared the same day when available. We confirm the delivery window at checkout."}</p></article><article><h3>{ka ? "მოვლა" : "Care"}</h3><p>{ka ? "მოათავსეთ სუფთა წყალში, შეცვალეთ წყალი ყოველ მეორე დღეს და შეინახეთ მზის პირდაპირი სხივებისგან მოშორებით." : "Place in clean water, refresh it every other day, and keep the arrangement away from direct sun."}</p></article></div></section>
+        {relatedQuery.isLoading && <RelatedProductsLoadingState ka={ka} />}
+        {relatedQuery.isError && !relatedQuery.isLoading && <RelatedProductsErrorState ka={ka} />}
         {related.length > 0 && <section className="fb-page-shell fb-related"><div className="fb-section-heading"><div><p className="fb-eyebrow">YOU MAY ALSO LIKE</p><h2 className="fb-display">{ka ? "სხვა რჩეული თაიგულები" : "More from the collection"}</h2></div><Link href="/catalog">{ka ? "ყველას ნახვა" : "View all"}<ChevronRight size={15} /></Link></div><div className="fb-related-grid">{related.map((item: any) => { const relatedName = getProductName(item, language); return <Link key={item.id} href={`/product/${item.id}`} className="fb-related-card"><FlowerImage src={item.imageUrl} alt={relatedName} className="h-full w-full object-cover" /><div><h3>{relatedName}</h3><span>{priceText(item.priceMin, item.priceMax, Boolean(item.priceOnRequest), ka)}</span></div></Link>; })}</div></section>}
       </main>
       <div className="fb-product-sticky"><span>{price}</span><button type="button" onClick={addProduct} disabled={!product.isAvailable}><ShoppingBag size={17} /> {ka ? "დამატება" : "Add"}</button></div>

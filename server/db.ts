@@ -1,5 +1,5 @@
 import { drizzle } from "drizzle-orm/mysql2";
-import { sql, eq, desc, isNull, and, like, or } from "drizzle-orm";
+import { sql, eq, desc, asc, isNull, and, like, or, count } from "drizzle-orm";
 import { InsertUser, users, products, categories, banners, orders, InsertOrder, productImages, customerAddresses, customerOrders, Order } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -90,6 +90,75 @@ export async function getUserByOpenId(openId: string) {
 }
 
 // Product queries - get published products (for catalog and sitemap)
+export type CatalogSort = "featured" | "priceAsc" | "priceDesc" | "name";
+export type CatalogAvailability = "all" | "available" | "unavailable";
+
+export interface CatalogQueryInput {
+  page?: number;
+  pageSize?: number;
+  search?: string;
+  categoryId?: number;
+  availability?: CatalogAvailability;
+  minPrice?: number;
+  maxPrice?: number;
+  sort?: CatalogSort;
+}
+
+export async function getCatalogProducts(input: CatalogQueryInput = {}) {
+  const db = await getDb();
+  const page = Math.max(1, Math.floor(input.page ?? 1));
+  const pageSize = Math.min(24, Math.max(1, Math.floor(input.pageSize ?? 24)));
+  const search = input.search?.trim();
+  const filters = [eq(products.published, true)];
+
+  if (input.categoryId !== undefined) {
+    filters.push(eq(products.categoryId, input.categoryId));
+  }
+  if (input.availability === "available") {
+    filters.push(eq(products.isAvailable, true));
+  } else if (input.availability === "unavailable") {
+    filters.push(eq(products.isAvailable, false));
+  }
+  if (search) {
+    const searchLike = `%${search}%`;
+    filters.push(or(like(products.nameKa, searchLike), like(products.nameEn, searchLike))!);
+  }
+  if (input.minPrice !== undefined) {
+    filters.push(sql`${products.priceMin} >= ${input.minPrice}`);
+  }
+  if (input.maxPrice !== undefined) {
+    filters.push(sql`${products.priceMin} <= ${input.maxPrice}`);
+  }
+
+  if (!db) {
+    return { items: [], total: 0, page, pageSize, hasMore: false, categoryCounts: {} };
+  }
+
+  const where = and(...filters);
+  const sort = input.sort ?? "featured";
+  const orderBy =
+    sort === "priceAsc"
+      ? [asc(products.priceMin), asc(products.id)]
+      : sort === "priceDesc"
+        ? [desc(products.priceMin), asc(products.id)]
+        : sort === "name"
+          ? [asc(products.nameKa), asc(products.id)]
+          : [desc(products.featured), desc(products.isAvailable), asc(products.id)];
+  const [items, totalRows, categoryRows] = await Promise.all([
+    db.select().from(products).where(where).orderBy(...orderBy).limit(pageSize).offset((page - 1) * pageSize),
+    db.select({ total: count(products.id) }).from(products).where(where),
+    db.select({ categoryId: products.categoryId, total: count(products.id) })
+      .from(products)
+      .where(eq(products.published, true))
+      .groupBy(products.categoryId),
+  ]);
+  const total = Number(totalRows[0]?.total ?? 0);
+  const categoryCounts = Object.fromEntries(
+    categoryRows.map(row => [String(row.categoryId), Number(row.total)])
+  );
+  return { items, total, page, pageSize, hasMore: page * pageSize < total, categoryCounts };
+}
+
 export async function getProducts(limit?: number) {
   const db = await getDb();
   if (!db) return [];

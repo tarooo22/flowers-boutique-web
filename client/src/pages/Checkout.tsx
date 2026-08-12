@@ -17,6 +17,7 @@ import { SelectedDateSummary } from "@/components/SelectedDateSummary";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useSEO } from "@/hooks/useSEO";
+import { getDeliveryFeeGEL } from "@shared/checkoutPolicy";
 
 const translations = {
   en: {
@@ -28,8 +29,8 @@ const translations = {
     email: "Email (for receipt & updates)",
     howWouldYouLike: "How would you like it?",
     delivery: "Delivery",
-    acrossTbilisi: "Across Tbilisi - 10 ₾",
-    deliveryFee: "10 ₾",
+    acrossTbilisi: "Across Tbilisi - 5 ₾ / free over 150 ₾",
+    deliveryFee: "5 ₾",
     pickup: "Pickup",
     collectFromStore: "Collect from our store - Free",
     free: "Free",
@@ -76,8 +77,8 @@ const translations = {
     email: "ელფოსტა (ქვითრისა და განახლებებისთვის)",
     howWouldYouLike: "როგორ მოგინდებათ?",
     delivery: "მიწოდება",
-    acrossTbilisi: "თბილისის მასშტაბით - 10 ₾",
-    deliveryFee: "10 ₾",
+    acrossTbilisi: "თბილისის მასშტაბით - 5 ₾ / 150 ₾-დან უფასო",
+    deliveryFee: "5 ₾",
     pickup: "თვითმომსახურება",
     collectFromStore: "მაღაზიაში აღება - უფასო",
     free: "უფასო",
@@ -275,7 +276,12 @@ export default function Checkout() {
   }, [navigate]);
 
   const getSubtotal = () => getTotalPrice(cartItems);
-  const getDeliveryFee = () => deliveryType === "delivery" ? "10" : "0";
+  const getDeliveryFee = () =>
+    getDeliveryFeeGEL(deliveryType, Number(getSubtotal()) || 0).toFixed(2);
+  const getDeliveryFeeLabel = () => {
+    const fee = getDeliveryFeeGEL(deliveryType, Number(getSubtotal()) || 0);
+    return fee === 0 ? t.free : `₾${fee.toFixed(2)}`;
+  };
   const getTotal = () => {
     const subtotal = parseFloat(getSubtotal());
     const fee = parseFloat(getDeliveryFee());
@@ -521,7 +527,7 @@ export default function Checkout() {
                   icon={<Truck className="w-5 h-5" />}
                   title={t.delivery}
                   subtitle={t.acrossTbilisi}
-                  price={t.deliveryFee}
+                  price={getDeliveryFeeLabel()}
                   onClick={() => setDeliveryType("delivery")}
                 />
                 <DeliveryOptionCard
@@ -812,7 +818,7 @@ export default function Checkout() {
                 {deliveryType === "delivery" && (
                   <div className="flex justify-between text-sm">
                     <span className="text-[#8B7B6F]">{t.deliveryFeeLabel}</span>
-                    <span className="font-medium text-[#1C1C1C]">₾{getDeliveryFee()}</span>
+                    <span className="font-medium text-[#1C1C1C]">{getDeliveryFeeLabel()}</span>
                   </div>
                 )}
                 <div className="flex justify-between pt-2">

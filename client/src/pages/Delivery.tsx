@@ -4,6 +4,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Card } from "@/components/ui/card";
 import { Truck, MapPin, Clock, Phone } from "lucide-react";
 import { contactFallback, siteContact } from "@/lib/siteConfig";
+import { DELIVERY_FEE_GEL, FREE_DELIVERY_THRESHOLD_GEL } from "@shared/checkoutPolicy";
 
 export default function Delivery() {
   const { language } = useLanguage();
@@ -20,7 +21,7 @@ export default function Delivery() {
       section2Text: "Standard delivery: 2-4 hours\nExpress delivery: 1-2 hours\nScheduled delivery: Choose your preferred date and time",
       
       section3Title: "Delivery Cost",
-      section3Text: "Free delivery for orders over 150 GEL\nDelivery fee: 5 GEL for orders under 150 GEL",
+      section3Text: `Free delivery for orders at or above ${FREE_DELIVERY_THRESHOLD_GEL} GEL\nDelivery fee: ${DELIVERY_FEE_GEL} GEL for orders under ${FREE_DELIVERY_THRESHOLD_GEL} GEL`,
       
       section4Title: "How to Order",
       step1: "1. Browse our catalog and select flowers",
@@ -49,7 +50,7 @@ export default function Delivery() {
       section2Text: "სტანდარტული მიტანა: 2-4 საათი\nექსპრეს მიტანა: 1-2 საათი\nგეგმიური მიტანა: აირჩიეთ სასურველი თარიღი და დრო",
       
       section3Title: "მიტანის ღირებულება",
-      section3Text: "უფასო მიტანა 150 ლარზე მეტი შეკვეთებისთვის\nმიტანის ტარიფი: 5 ლარი 150 ლარზე ნაკლები შეკვეთებისთვის",
+      section3Text: `უფასო მიტანა ${FREE_DELIVERY_THRESHOLD_GEL} ლარის ან მეტი შეკვეთებისთვის\nმიტანის ტარიფი: ${DELIVERY_FEE_GEL} ლარი ${FREE_DELIVERY_THRESHOLD_GEL} ლარზე ნაკლები შეკვეთებისთვის`,
       
       section4Title: "როგორ შეკვეთოთ",
       step1: "1. დათვალიერეთ ჩვენი კატალოგი და აირჩიეთ ყვავილები",

@@ -102,6 +102,7 @@
 - [x] Align the SEO tracking schema, additive database migration, server mapping, and admin monitor contract to remove the pre-existing type errors
 - [x] Consolidate the public design tokens, loaded Georgian/English typography, responsive typography wordmark, header, mobile menu, footer, and reusable product card without changing protected business logic
 - [ ] Refine the homepage, catalog, product detail, cart, checkout, account, bouquet builder, about, contact, and admin experiences using actual configured data only; preserve approved layouts where no defect was found
+- [x] Investigate the `/product/6` development-preview “product not found” state using read-only route and catalog evidence; correct only a confirmed published-product routing defect
 - [x] Preserve Georgian as the default language, existing SEO routes/content, secure authorization, server-side pricing, and disabled BOG card payment behaviour
 - [x] Add or update focused Vitest coverage for every repaired server-side or shared utility behaviour
 - [x] Validate desktop and mobile journeys, browser/network errors, build, type-check, tests, and all affected routes; distinguish pre-existing from new failures
@@ -137,3 +138,39 @@
 - [x] Verify the deployed admin language value and header fallback path so the live Georgian control-room label matches the tested source behavior
 - [x] Use the same Georgian-first category label fallback in admin product table and mobile cards, preserving data, filters, and responsive layout
 - [ ] Perform an authenticated 375px read-only validation of the admin overview, filters, mobile product cards, and visible actions; document only non-sensitive layout evidence
+
+## Master Implementation Prompt Integration (pasted_content_3.txt) — 2026-08-12
+- [x] Implement server-side pagination, sorting, and availability filtering for the catalog (rendering initial 18-24 items with load more / pagination)
+- [x] Repair or verify homepage editorial image paths (/flower-assets/editorial/pink-roses.webp, /flower-assets/editorial/mixed-bouquet.webp) with robust fallbacks
+- [x] Optimize product detail page loading states and performance
+- [ ] Formalize checkout as a robust transactional flow or explicitly labelled Order Request with complete validation and server-side fee calculation
+- [ ] Unify delivery fees and policies (consistent ₾5 / free above ₾150, verified hours, single source of truth)
+- [ ] Standardize SEO base URL (flowers-boutique.manus.space), robots.txt, sitemap.xml, canonicals, and Open Graph metadata
+- [ ] Enhance Bouquet Builder with H1, page meta, footer, larger quantity controls, responsive QA, and inventory-safe cart integration
+- [ ] Ensure semantic `main` landmarks across all pages (About, Delivery, Returns, Checkout, etc.)
+- [ ] Replace contact mailto with robust server-side contact workflow
+- [ ] Audit and enforce 44x44px minimum touch targets across catalog, bouquet builder, and navigation
+- [ ] Resolve Made with Manus badge overlap with fixed mobile navigation / form CTAs
+- [ ] Review Georgian copy on checkout, delivery, and returns for native accuracy and owner alignment
+- [ ] Run comprehensive staging-style validation and publish final verified checkpoint
+
+- [x] Preserve a valid `?page=N` catalog deep link on first mount and reset to page 1 only after an actual filter or sort change
+- [x] Add focused contract coverage proving initial URL page stability and filter/sort pagination reset behavior
+
+- [x] Keep homepage editorial URLs as the primary rendered sources and switch to a persistent catalog image only after an actual image load error
+- [x] Extend homepage media coverage to prove primary editorial sources and error-only fallback semantics
+
+- [x] Make homepage editorial-image fallback recover when product data arrives after an early editorial image failure
+- [x] Add runtime-level coverage proving editorial images render first and replace their source only after an `onError` event
+
+- [x] Add a component-level homepage editorial-image test that renders the actual media surface, fires `onError`, and verifies fallback source replacement after the event
+
+- [x] Improve ProductDetail loading-state behavior with evidence-backed skeleton/related-section handling for initial load, error, and partial-data states
+- [x] Add focused test coverage proving the ProductDetail loading-state contract, not just source-string performance hints
+
+- [x] Add a component/render-level ProductDetail test that mounts the page or extracted stateful subcomponents and verifies initial loading, product-not-found/error, related-loading skeleton, and related-error/partial-data UI behavior
+- [x] Re-mark the ProductDetail optimization item complete only after loading-state behavior is validated with behavioral evidence beyond source-string assertions
+
+- [x] Centralize the GEL 5 / GEL 150 threshold delivery fee in a shared checkout policy used by Checkout, Delivery copy, and canonical server payment calculation
+- [x] Make both active order mutations persist server-authoritative fulfillment type, delivery fee, subtotal, and final total without trusting client totals
+- [x] Add focused contract coverage for delivery/pickup fee parity and server-authoritative order payloads while keeping BOG sandbox/disabled behavior unchanged

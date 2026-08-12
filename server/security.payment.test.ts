@@ -8,6 +8,7 @@ import {
   resolveTrustedPaymentStatus,
   shouldApplyBOGCallbackUpdate,
 } from "./paymentSecurity";
+import { getDeliveryFeeGEL } from "../shared/checkoutPolicy";
 
 const product: Product = {
   id: 42,
@@ -70,14 +71,36 @@ describe("canonical BOG payment pricing", () => {
       itemType: "bouquet",
     });
     expect(result.subtotal).toBe(300.5);
-    expect(result.deliveryFee).toBe(10);
-    expect(result.finalTotal).toBe(310.5);
+    expect(result.deliveryFee).toBe(0);
+    expect(result.finalTotal).toBe(300.5);
     expect(result.basketItems[0]?.totalPrice).toBe(300.5);
     expect(canonicalBOGAmounts(result)).toEqual({
       amount: 300.5,
-      deliveryAmount: 10,
+      deliveryAmount: 0,
       basketItems: result.basketItems,
     });
+  });
+
+  it("applies the same delivery policy to delivery, free-threshold delivery, and pickup", async () => {
+    expect(getDeliveryFeeGEL("delivery", 149.99)).toBe(5);
+    expect(getDeliveryFeeGEL("delivery", 150)).toBe(0);
+    expect(getDeliveryFeeGEL("pickup", 999)).toBe(0);
+
+    const belowThreshold = await calculateCanonicalPayment(
+      [{ productId: 42, quantity: 1 }],
+      "delivery",
+      async () => ({ ...product, priceMin: "125.50", priceMax: "125.50" }),
+    );
+    expect(belowThreshold.deliveryFee).toBe(5);
+    expect(belowThreshold.finalTotal).toBe(130.5);
+
+    const pickup = await calculateCanonicalPayment(
+      [{ productId: 42, quantity: 1 }],
+      "pickup",
+      async () => ({ ...product, priceMin: "125.50", priceMax: "125.50" }),
+    );
+    expect(pickup.deliveryFee).toBe(0);
+    expect(pickup.finalTotal).toBe(125.5);
   });
 
   it("rejects an invalid variant and unavailable product", async () => {

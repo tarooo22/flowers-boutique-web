@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   ArrowRight,
   CheckCircle2,
@@ -19,6 +20,7 @@ import {
   generateOrganizationSchema,
 } from "@/lib/jsonLd";
 import { cleanProductName } from "@/lib/productPresentation";
+import EditorialImage from "@/components/EditorialImage";
 import { phoneHref, siteContact } from "@/lib/siteConfig";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -39,7 +41,13 @@ export default function Home() {
         product.published && (product.featured || product.isAvailable)
     )
     .slice(0, 8);
-
+  const persistentEditorialImages = useMemo(
+    () =>
+      products
+        .map((product: any) => product.imageUrl)
+        .filter((imageUrl: unknown): imageUrl is string => Boolean(imageUrl)),
+    [products]
+  );
   useSEO({
     titleKa: "Flower’s Boutique | ყვავილები განსაკუთრებული მომენტებისთვის",
     titleEn: "Flower’s Boutique | Flowers for meaningful moments",
@@ -200,11 +208,12 @@ export default function Home() {
           aria-labelledby="p1-builder-title"
         >
           <div className="p1-builder-promo__media">
-            <img
-              src="/flower-assets/editorial/pink-roses.webp"
+            <EditorialImage
+              slot="builder"
+              fallbackImages={persistentEditorialImages}
               alt={t("home.builder.imageAlt")}
-              width="1000"
-              height="1000"
+              width={1000}
+              height={1000}
               loading="lazy"
             />
           </div>
@@ -261,11 +270,12 @@ export default function Home() {
               <ArrowRight aria-hidden="true" />
             </Link>
           </div>
-          <img
-            src="/flower-assets/editorial/mixed-bouquet.webp"
+          <EditorialImage
+            slot="brand"
+            fallbackImages={persistentEditorialImages}
             alt={t("home.brand.imageAlt")}
-            width="1200"
-            height="1346"
+            width={1200}
+            height={1346}
             loading="lazy"
           />
         </section>

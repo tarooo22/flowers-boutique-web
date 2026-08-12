@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import {
   AlertCircle,
@@ -50,10 +50,24 @@ export default function Catalog() {
       ? ""
       : (new URLSearchParams(window.location.search).get("search") ?? "")
   );
-  const [sort, setSort] = useState<SortOption>("featured");
-  const [availability, setAvailability] = useState<Availability>("all");
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
+  const [sort, setSort] = useState<SortOption>(() => {
+    const value = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("sort") : null;
+    return value === "priceAsc" || value === "priceDesc" || value === "name" ? value : "featured";
+  });
+  const [availability, setAvailability] = useState<Availability>(() => {
+    const value = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("availability") : null;
+    return value === "available" || value === "unavailable" ? value : "all";
+  });
+  const [minPrice, setMinPrice] = useState(() =>
+    typeof window === "undefined" ? "" : new URLSearchParams(window.location.search).get("minPrice") ?? ""
+  );
+  const [maxPrice, setMaxPrice] = useState(() =>
+    typeof window === "undefined" ? "" : new URLSearchParams(window.location.search).get("maxPrice") ?? ""
+  );
+  const [page, setPage] = useState(() => {
+    const value = typeof window !== "undefined" ? Number(new URLSearchParams(window.location.search).get("page")) : 1;
+    return Number.isInteger(value) && value > 0 ? value : 1;
+  });
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   useSEO({
@@ -67,56 +81,56 @@ export default function Catalog() {
     lang: language as "ka" | "en",
   });
 
-  const productsQuery = trpc.products.list.useQuery();
+  const catalogInput = useMemo(
+    () => ({
+      page,
+      pageSize: 24,
+      search: searchTerm.trim() || undefined,
+      categoryId: selectedCategoryId ?? undefined,
+      availability,
+      minPrice: minPrice ? Number(minPrice) : undefined,
+      maxPrice: maxPrice ? Number(maxPrice) : undefined,
+      sort,
+    }),
+    [availability, maxPrice, minPrice, page, searchTerm, selectedCategoryId, sort]
+  );
+  const productsQuery = trpc.products.catalog.useQuery(catalogInput);
   const categoriesQuery = trpc.categories.list.useQuery();
-  const products = productsQuery.data ?? [];
+  const products = productsQuery.data?.items ?? [];
+  const totalProducts = productsQuery.data?.total ?? 0;
+  const categoryCounts = productsQuery.data?.categoryCounts ?? {};
   const categories = categoriesQuery.data ?? [];
 
-  const filteredProducts = useMemo(() => {
-    const query = searchTerm.trim().toLocaleLowerCase();
-    const min = minPrice ? Number(minPrice) : null;
-    const max = maxPrice ? Number(maxPrice) : null;
-    return [...products]
-      .filter((product: any) => {
-        const name =
-          (language === "ka" ? product.nameKa : product.nameEn) || "";
-        const numericPrice = Number(product.priceMin ?? 0);
-        return (
-          (!selectedCategoryId || product.categoryId === selectedCategoryId) &&
-          (!query || name.toLocaleLowerCase().includes(query)) &&
-          (min === null || numericPrice >= min) &&
-          (max === null || numericPrice <= max) &&
-          (availability === "all" ||
-            (availability === "available"
-              ? product.isAvailable
-              : !product.isAvailable))
-        );
-      })
-      .sort((a: any, b: any) => {
-        if (sort === "name")
-          return String(language === "ka" ? a.nameKa : a.nameEn).localeCompare(
-            String(language === "ka" ? b.nameKa : b.nameEn),
-            language
-          );
-        if (sort === "priceAsc")
-          return (
-            Number(a.priceMin ?? Number.MAX_SAFE_INTEGER) -
-            Number(b.priceMin ?? Number.MAX_SAFE_INTEGER)
-          );
-        if (sort === "priceDesc")
-          return Number(b.priceMin ?? 0) - Number(a.priceMin ?? 0);
-        return Number(b.featured) - Number(a.featured);
-      });
-  }, [
+  const filterKey = [
     availability,
-    language,
     maxPrice,
     minPrice,
-    products,
     searchTerm,
-    selectedCategoryId,
+    selectedCategoryId ?? "",
     sort,
-  ]);
+  ].join("\u001f");
+  const initialFilterKey = useRef(filterKey);
+
+  useEffect(() => {
+    if (initialFilterKey.current !== filterKey) {
+      setPage(1);
+      initialFilterKey.current = filterKey;
+    }
+  }, [filterKey]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams();
+    if (selectedCategoryId) params.set("category", String(selectedCategoryId));
+    if (searchTerm.trim()) params.set("search", searchTerm.trim());
+    if (sort !== "featured") params.set("sort", sort);
+    if (availability !== "all") params.set("availability", availability);
+    if (minPrice) params.set("minPrice", minPrice);
+    if (maxPrice) params.set("maxPrice", maxPrice);
+    if (page > 1) params.set("page", String(page));
+    const query = params.toString();
+    window.history.replaceState(null, "", query ? `/catalog?${query}` : "/catalog");
+  }, [availability, maxPrice, minPrice, page, searchTerm, selectedCategoryId, sort]);
 
   const clearFilters = () => {
     setSelectedCategoryId(null);
@@ -254,7 +268,7 @@ export default function Catalog() {
                   onClick={() => setSelectedCategoryId(null)}
                 >
                   <span>{ka ? "ყველა კოლექცია" : "All collections"}</span>
-                  <small>{products.length}</small>
+                  <small>{totalProducts}</small>
                 </button>
                 {categories.map((category: any) => (
                   <button
@@ -273,9 +287,7 @@ export default function Catalog() {
                     </span>
                     <small>
                       {
-                        products.filter(
-                          (product: any) => product.categoryId === category.id
-                        ).length
+                        categoryCounts[String(category.id)] ?? 0
                       }
                     </small>
                   </button>
@@ -361,7 +373,7 @@ export default function Catalog() {
               <p>
                 {productsQuery.isLoading
                   ? "—"
-                  : `${filteredProducts.length} ${ka ? "თაიგული" : "bouquets"}`}
+                  : `${totalProducts} ${ka ? "თაიგული" : "bouquets"}`}
               </p>
               <label>
                 {ka ? "დალაგება" : "Sort by"}
@@ -414,7 +426,7 @@ export default function Catalog() {
                   <RotateCcw size={15} /> {ka ? "თავიდან ცდა" : "Try again"}
                 </button>
               </div>
-            ) : filteredProducts.length === 0 ? (
+            ) : products.length === 0 ? (
               <div className="fb-catalog-state">
                 <Search size={28} />
                 <h2>{ka ? "თაიგული ვერ მოიძებნა" : "No bouquets found"}</h2>
@@ -431,7 +443,7 @@ export default function Catalog() {
               </div>
             ) : (
               <div className="fb-catalog-grid">
-                {filteredProducts.map((product: any) => (
+                {products.map((product: any) => (
                   <ProductCard
                     key={product.id}
                     product={product}
@@ -440,6 +452,30 @@ export default function Catalog() {
                   />
                 ))}
               </div>
+            )}
+            {!productsQuery.isLoading && !productsQuery.isError && products.length > 0 && (
+              <nav
+                className="fb-catalog-pagination"
+                aria-label={ka ? "კატალოგის გვერდები" : "Catalog pages"}
+              >
+                <button
+                  type="button"
+                  onClick={() => setPage(current => Math.max(1, current - 1))}
+                  disabled={page === 1}
+                >
+                  {ka ? "წინა" : "Previous"}
+                </button>
+                <span aria-live="polite">
+                  {ka ? `გვერდი ${page}` : `Page ${page}`}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setPage(current => current + 1)}
+                  disabled={!productsQuery.data?.hasMore}
+                >
+                  {ka ? "შემდეგი" : "Next"}
+                </button>
+              </nav>
             )}
           </div>
         </section>

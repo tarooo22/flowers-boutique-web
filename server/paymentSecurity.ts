@@ -1,7 +1,9 @@
 import { TRPCError } from "@trpc/server";
 import type { Product } from "../drizzle/schema";
+import { DELIVERY_FEE_GEL, getDeliveryFeeGEL } from "../shared/checkoutPolicy";
 
-export const DELIVERY_FEE_MINOR = 1_000; // GEL 10.00
+export { DELIVERY_FEE_GEL };
+export const DELIVERY_FEE_MINOR = DELIVERY_FEE_GEL * 100;
 
 export type PaymentItemSelection = {
   productId: number;
@@ -164,7 +166,7 @@ export async function calculateCanonicalPayment(
     });
   }
 
-  const deliveryFeeMinor = fulfillmentType === "delivery" ? DELIVERY_FEE_MINOR : 0;
+  const deliveryFeeMinor = getDeliveryFeeGEL(fulfillmentType, fromMinorUnits(subtotalMinor)) * 100;
   const finalTotalMinor = subtotalMinor + deliveryFeeMinor;
   if (!Number.isSafeInteger(finalTotalMinor) || finalTotalMinor <= 0) {
     throw new TRPCError({ code: "BAD_REQUEST", message: "Order total is invalid" });
