@@ -13,6 +13,7 @@ import { Link } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { phoneHref, siteContact } from "@/lib/siteConfig";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { BrandWordmark } from "@/components/BrandWordmark";
 
 export default function Footer() {
   const { language } = useLanguage();
@@ -83,10 +84,9 @@ export default function Footer() {
       <div className="p1-footer__shell">
         <div className="p1-footer__grid">
           <div className="p1-footer__brand">
-            <Link href="/" aria-label="Flower’s Boutique home">
-              <strong className="p1-footer__wordmark">
-                <span>Flower’s</span>
-                <em>Boutique</em>
+            <Link href="/" aria-label={ka ? "ყვავილების ბუტიკი და ივენთები — მთავარი" : "Flower’s Boutique & Events home"}>
+              <strong>
+                <BrandWordmark language={language} className="p1-footer__wordmark" />
               </strong>
             </Link>
             <p>
@@ -155,7 +155,7 @@ export default function Footer() {
         </div>
         <div className="p1-footer__bottom">
           <span>
-            © {new Date().getFullYear()} Flower’s Boutique ·{" "}
+            © {new Date().getFullYear()} {ka ? "ყვავილების ბუტიკი & ივენთები" : "Flower’s Boutique & Events"} ·{" "}
             {ka ? "ყველა უფლება დაცულია" : "All rights reserved"}
           </span>
           <div>

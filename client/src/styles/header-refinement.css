@@ -23,6 +23,19 @@
   font-style: italic;
 }
 
+.p1-brand__wordmark small {
+  font-size: 0.76em;
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: -0.025em;
+}
+
+.p1-brand__wordmark[lang="ka"] em {
+  font-size: 0.78em;
+  font-style: normal;
+  letter-spacing: -0.03em;
+}
+
 .p1-footer__brand > a {
   gap: 0;
   text-decoration: none;
@@ -43,6 +56,19 @@
 .p1-footer__wordmark em {
   font-weight: 500;
   font-style: italic;
+}
+
+.p1-footer__wordmark small {
+  font-size: 0.76em;
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: -0.025em;
+}
+
+.p1-footer__wordmark[lang="ka"] em {
+  font-size: 0.78em;
+  font-style: normal;
+  letter-spacing: -0.03em;
 }
 
 .p1-header__nav a {
@@ -83,6 +109,11 @@
 
 @media (max-width: 767px) {
   .p1-brand {
-    font-size: clamp(15px, 5vw, 18px);
+    font-size: clamp(12px, 3.55vw, 16px);
+  }
+
+  .p1-brand__wordmark {
+    gap: 0.14em;
+    letter-spacing: -0.055em;
   }
 }

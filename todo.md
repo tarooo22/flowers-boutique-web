@@ -174,3 +174,6 @@
 - [x] Centralize the GEL 5 / GEL 150 threshold delivery fee in a shared checkout policy used by Checkout, Delivery copy, and canonical server payment calculation
 - [x] Make both active order mutations persist server-authoritative fulfillment type, delivery fee, subtotal, and final total without trusting client totals
 - [x] Add focused contract coverage for delivery/pickup fee parity and server-authoritative order payloads while keeping BOG sandbox/disabled behavior unchanged
+
+## Brand localization refinement — 2026-08-12
+- [x] Update Header and Footer wordmarks to show “Flower’s Boutique & Events” in English and “ყვავილების ბუტიკი & ივენთები” in Georgian, preserving responsive design and accessibility.

@@ -19,6 +19,7 @@ import { useCartDrawer } from "@/contexts/CartDrawerContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getCart } from "@/lib/cartUtils";
 import { phoneHref, siteContact } from "@/lib/siteConfig";
+import { BrandWordmark } from "@/components/BrandWordmark";
 import ContactSheet from "@/components/mobile/ContactSheet";
 import MobileBottomNav from "@/components/mobile/MobileBottomNav";
 import {
@@ -134,12 +135,9 @@ export default function Navbar() {
           <Link
             href="/"
             className="p1-brand"
-            aria-label="Flower’s Boutique home"
+            aria-label={ka ? "ყვავილების ბუტიკი და ივენთები — მთავარი" : "Flower’s Boutique & Events home"}
           >
-            <span className="p1-brand__wordmark">
-              <span>Flower’s</span>
-              <em>Boutique</em>
-            </span>
+            <BrandWordmark language={language} className="p1-brand__wordmark" />
           </Link>
 
           <div className="p1-header__actions">

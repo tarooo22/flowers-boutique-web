@@ -36,8 +36,8 @@ describe("storefront header contract", () => {
     const navbar = await readFile(navbarPath, "utf8");
 
     expect(navbar).toContain('className="p1-brand__wordmark"');
-    expect(navbar).toContain("Flower’s");
-    expect(navbar).toContain("<em>Boutique</em>");
+    expect(navbar).toContain('import { BrandWordmark } from "@/components/BrandWordmark"');
+    expect(navbar).toContain("BrandWordmark");
     expect(navbar).not.toContain("p1-brand__mark");
     expect(navbar).toContain('["/catalog", ka ? "კატალოგი" : "Catalog"]');
     expect(navbar).toContain('href="/wishlist"');
