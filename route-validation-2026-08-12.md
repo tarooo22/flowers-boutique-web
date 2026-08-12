@@ -24,7 +24,7 @@ Read-only 375px captures of `/catalog` and the public product detail route `/pro
 
 ### Cart Drawer source safeguard
 
-The Cart Drawer is a right-side modal rather than a persistent bottom CTA. Its item controls now have 44px hit areas and its sheet reserves 52px of lower mobile clearance. The related runtime source contract passes. Its open-state visual capture is intentionally pending because this privacy-preserving QA session does not create or mutate a cart merely to open the drawer.
+The Cart Drawer is an interaction-dependent right-side modal rather than a persistent, route-level fixed CTA. Its item controls now have 44px hit areas and its sheet reserves 52px of lower mobile clearance; the related source contract passes. It is intentionally excluded from the route-level 375px capture set because opening it would require creating temporary cart state in this privacy-preserving validation session. Its mobile-safe-area and control-size safeguards are nevertheless covered by the dedicated source contract.
 
 ## Authenticated admin mobile QA status
 

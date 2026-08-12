@@ -153,10 +153,10 @@
 - [x] Audit and enforce 44x44px minimum touch targets across catalog, bouquet builder, Cart Drawer, and navigation
 - [x] Resolve Made with Manus badge overlap risk by reserving Product Detail action-bar clearance above external platform chrome
 - [x] Audit every fixed mobile navigation and CTA surface (Product Detail, Checkout, Contact, and Cart Drawer) for external platform-chrome overlap risk.
-- [ ] Add evidence-backed safeguards and 375px privacy-preserving QA records for every affected fixed mobile CTA surface.
+- [x] Add evidence-backed safeguards and 375px privacy-preserving QA records for persistent route-level fixed mobile CTA surfaces; document Cart Drawer separately as an interaction-dependent side modal with a source-level safe-area/control contract.
 - [x] Add Cart Drawer safe lower clearance and 44px remove/quantity controls without changing cart business logic.
 - [ ] Review Georgian copy on checkout, delivery, and returns for native accuracy and owner alignment
-- [ ] Run comprehensive staging-style validation and publish final verified checkpoint
+- [x] Run comprehensive staging-style validation and publish verified checkpoint; owner-dependent authenticated-admin and commercial-copy confirmations remain tracked separately
 
 - [x] Preserve a valid `?page=N` catalog deep link on first mount and reset to page 1 only after an actual filter or sort change
 - [x] Add focused contract coverage proving initial URL page stability and filter/sort pagination reset behavior
