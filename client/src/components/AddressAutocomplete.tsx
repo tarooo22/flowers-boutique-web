@@ -46,7 +46,7 @@ export function AddressAutocomplete({
   const [suggestions, setSuggestions] = useState<AddressOption[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
-  const searchTimeout = useRef<NodeJS.Timeout>();
+  const searchTimeout = useRef<NodeJS.Timeout | null>(null);
   const utils = trpc.useUtils();
 
   // Search addresses with debounce

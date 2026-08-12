@@ -49,11 +49,11 @@ export function SEOMonitoring() {
     );
   };
 
-  const getPositionColor = (position: number | null) => {
-    if (!position) return "text-gray-500";
-    if (position <= 3) return "text-green-600 font-bold";
-    if (position <= 10) return "text-blue-600";
-    if (position <= 20) return "text-yellow-600";
+  const getPositionColor = (rank: number | null) => {
+    if (!rank) return "text-gray-500";
+    if (rank <= 3) return "text-green-600 font-bold";
+    if (rank <= 10) return "text-blue-600";
+    if (rank <= 20) return "text-yellow-600";
     return "text-gray-500";
   };
 
@@ -90,22 +90,14 @@ export function SEOMonitoring() {
                       <th className="text-left py-2 px-3">
                         {language === "ka" ? "საკვანძო სიტყვა" : "Keyword"}
                       </th>
-                      <th className="text-left py-2 px-3">
-                        {language === "ka"
-                          ? "საკვანძო სიტყვა (ქართულად)"
-                          : "Keyword (KA)"}
-                      </th>
                       <th className="text-center py-2 px-3">
                         {language === "ka" ? "პოზიცია" : "Position"}
                       </th>
                       <th className="text-center py-2 px-3">
-                        {language === "ka" ? "ჩვენებები" : "Impressions"}
+                        {language === "ka" ? "საძიებო მოცულობა" : "Search volume"}
                       </th>
                       <th className="text-center py-2 px-3">
-                        {language === "ka" ? "დაწკაპუნებები" : "Clicks"}
-                      </th>
-                      <th className="text-center py-2 px-3">
-                        {language === "ka" ? "CTR" : "CTR"}
+                        {language === "ka" ? "სირთულე" : "Difficulty"}
                       </th>
                     </tr>
                   </thead>
@@ -117,29 +109,25 @@ export function SEOMonitoring() {
                           className="border-b hover:bg-gray-50"
                         >
                           <td className="py-3 px-3">{ranking.keyword}</td>
-                          <td className="py-3 px-3">{ranking.keywordKa}</td>
                           <td
                             className={`py-3 px-3 text-center font-semibold ${getPositionColor(
-                              ranking.position
+                              ranking.rank
                             )}`}
                           >
-                            {ranking.position ? `#${ranking.position}` : "N/A"}
+                            {ranking.rank ? `#${ranking.rank}` : "N/A"}
                           </td>
                           <td className="py-3 px-3 text-center">
-                            {ranking.impressions}
+                            {ranking.searchVolume ?? "—"}
                           </td>
                           <td className="py-3 px-3 text-center">
-                            {ranking.clicks}
-                          </td>
-                          <td className="py-3 px-3 text-center">
-                            {ranking.ctr}%
+                            {ranking.difficulty ?? "—"}
                           </td>
                         </tr>
                       ))
                     ) : (
                       <tr>
                         <td
-                          colSpan={6}
+                          colSpan={4}
                           className="py-4 text-center text-gray-500"
                         >
                           {language === "ka"
@@ -173,9 +161,6 @@ export function SEOMonitoring() {
                     >
                       <div>
                         <p className="font-semibold">{trend.keyword}</p>
-                        <p className="text-sm text-gray-600">
-                          {trend.keywordKa}
-                        </p>
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="text-right">
@@ -240,27 +225,27 @@ export function SEOMonitoring() {
                     </div>
                     <div className="p-3 bg-purple-50 rounded-lg">
                       <p className="text-sm text-gray-600">
-                        {language === "ka" ? "საშუალო CTR" : "Avg CTR"}
+                        {language === "ka" ? "საშუალო სირთულე" : "Avg difficulty"}
                       </p>
-                      <p className="text-2xl font-bold">{report.averageCTR}%</p>
+                      <p className="text-2xl font-bold">{report.averageDifficulty}</p>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="p-3 bg-gray-50 rounded-lg">
                       <p className="text-sm text-gray-600">
-                        {language === "ka" ? "ჩვენებები" : "Impressions"}
+                        {language === "ka" ? "საძიებო მოცულობა" : "Search volume"}
                       </p>
                       <p className="text-2xl font-bold">
-                        {report.totalImpressions.toLocaleString()}
+                        {report.totalSearchVolume.toLocaleString()}
                       </p>
                     </div>
                     <div className="p-3 bg-gray-50 rounded-lg">
                       <p className="text-sm text-gray-600">
-                        {language === "ka" ? "დაწკაპუნებები" : "Clicks"}
+                        {language === "ka" ? "პოზიციების დინამიკა" : "Ranking trends"}
                       </p>
                       <p className="text-2xl font-bold">
-                        {report.totalClicks.toLocaleString()}
+                        {report.trends.length}
                       </p>
                     </div>
                   </div>

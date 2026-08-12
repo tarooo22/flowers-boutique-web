@@ -82,8 +82,8 @@ export default function AdminOrderDetail() {
   const [, navigate] = useLocation();
   const { user } = useAuth();
   const { language } = useLanguage();
-  const params = useParams();
-  const orderId = parseInt(params?.id || '0');
+  const params = useParams<{ id: string }>();
+  const orderId = parseInt(params.id || '0');
 
   const [newDeliveryStatus, setNewDeliveryStatus] = useState<string>('');
   const [adminComment, setAdminComment] = useState('');
@@ -745,10 +745,10 @@ export default function AdminOrderDetail() {
                 </div>
 
                 {/* Previous Notes */}
-                {order.additionalComment && (
+                {order.courierNotes && (
                   <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mt-4">
                     <p className="text-xs text-amber-800 font-medium uppercase tracking-wide mb-2.5">📝 {t.adminNotes}</p>
-                    <p className="text-gray-900 text-sm leading-relaxed">{order.additionalComment}</p>
+                    <p className="text-gray-900 text-sm leading-relaxed">{order.courierNotes}</p>
                   </div>
                 )}
               </CardContent>

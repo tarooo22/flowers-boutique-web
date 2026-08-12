@@ -26,6 +26,8 @@ The first canonical `/manus-storage/products/...` reference from the supplied pu
 
 The original user-supplied deployment archive contains 186 files under its product-media directory. Of the 163 distinct image basenames referenced by the supplied public product CSV, 143 match a basename in that archive exactly. This gives a high-confidence, non-synthetic source for most catalogue images, while 20 distinct CSV references need a deliberate reconcile path before import. The importer must emit a structured unmatched-media report and must not silently substitute one product's photograph for another.
 
+Media reconciliation was repeated with a quoted-CSV parser and the ZIP's actual `uploaded-assets/photos/products` directory. The supplied public catalog contains 165 products: 160 have a unique exact archive-photo match, and 5 have no matching original file (`1710001`, `1710002`, `1740001`, `1740002`, `1740003`). The 160 matched image files were successfully extracted from the user-provided archive to `/home/ubuntu/webdev-static-assets/flowers-boutique-catalog/products` (13,517,528 bytes total). The five unmatched records are preserved in the external reconciliation report and will remain explicitly image-unavailable until the user supplies their canonical original files; no substitute image will be assigned.
+
 ## Uploaded Homepage Screenshot: First Verified Findings
 
 The desktop homepage screenshot shows a light, editorial layout with a dark utility strip, a navigation header, a split hero and an image-led composition. The existing hero image renders correctly and supports the intended warm floral direction. The visible header already contains catalogue, bouquet builder, about and contact links, language controls, account, favourites and cart actions.
@@ -86,3 +88,57 @@ The cart drawer opens over the catalogue with an accessible-looking close afford
 | `flower-shop-jx9auvvz.manus.space_(12).webp` | Authenticated profile tabs and account actions (visual review only; no personal data retained) |
 | `flower-shop-jx9auvvz.manus.space_(13).webp` | Product-detail media, pricing, quantity, cart and related-product section |
 | `flower-shop-jx9auvvz.manus.space_(14).webp` | Cart drawer, quantity/delete controls and checkout action |
+
+## Catalog Recovery Implementation — 2026-08-11
+
+The supplied public-catalog import was applied as a single explicit transaction. It upserted the 3 supplied categories and 165 supplied public products, with no customer, authentication, order, payment, or address table writes. The earlier five sample products were preserved but unpublished rather than deleted. Legacy-only categories remain in the database for referential safety and are now excluded from the public category feed because they have no published products.
+
+Of the 165 public products, 160 have a verified one-to-one persistent media URL extracted from the supplied project archive and uploaded to project storage. Current preview screenshots confirm that those genuine images load on the homepage and catalog. The source archive contains no canonical asset for product IDs `1710001`, `1710002`, `1740001`, `1740002`, and `1740003`; these records deliberately remain image-unavailable and no unrelated flower photograph has been assigned.
+
+## Post-Recovery Preview Validation — 2026-08-12
+
+The desktop homepage, catalog, canonical product detail (`/product/60001`), bouquet builder, cart, login, and registration routes rendered successfully in the current preview after the public-catalog import. The detail route resolved its verified persistent source image while retaining existing pricing, availability, cart, wishlist, and related-product behaviour.
+
+The catalog’s full-page capture shows genuine images in the initially visible cards. The lower cards retain native lazy loading; because a full-page capture does not scroll every card into its loading threshold, an empty tile below the initial viewport alone is not evidence that the persistent image URL is unavailable. The shared `FlowerImage` fallback now explicitly distinguishes the five source-unavailable records without assigning them misleading imagery.
+
+## Header Refinement Validation — 2026-08-12
+
+The live desktop homepage at 1280px now presents Flower’s Boutique as a modest, typography-led serif/italic wordmark rather than an image-led primary mark. The original four Georgian navigation destinations, search, language selector, account control, wishlist, and cart control remain visible and retain their existing destinations and behavior.
+
+The live 375px viewport confirms the required compact mobile arrangement: the hamburger occupies the left grid column, the wordmark remains centered at a readable scale, and the cart stays isolated on the right. Neither visual capture showed overlap, clipped text, or displaced header actions. Keyboard-visible focus treatment and responsive sizing are protected by the focused `ui.header-contract` Vitest specification.
+
+Full-page desktop and 375px mobile captures also confirm that the footer now uses the same typography-first Flower’s Boutique treatment. Existing social, contact, policy, account, and conditional admin destinations remain in their original footer groups; the mobile accordion hierarchy remains compact and visible without a duplicated image-led mark.
+
+## Public Route Validation — 2026-08-12
+
+Current 1280px preview captures verified the homepage, catalog, public product `60001`, visual bouquet builder, empty cart, login, registration, and wishlist routes. The catalog and product detail use persistent `/manus-storage/` product media; the sampled peony detail correctly renders its source image, price, availability, related-products section, wishlist control, and cart action. The bouquet builder still preserves its existing visual and AI modes, live selection controls, wrapping controls, and disabled empty cart action.
+
+The empty-cart page displays its explicit Georgian empty state and collection recovery action, without exposing any customer data. The login and registration pages retain their existing form labels, password controls, and account-switch actions. The wishlist empty-state rendering and footer routes are also visually intact. These screenshot checks do not substitute for a live BOG payment submission, authenticated profile edit, or protected-admin authorization test; those checks remain intentionally separate and must use no real payment credentials or private order/customer data.
+
+## Accessibility, Media, and SEO Contract Validation — 2026-08-12
+
+The focused Vitest validation passed seven assertions across the header/footer, cart media, and SEO schema contracts. It verifies that the shared `FlowerImage` renderer handles catalog-derived media in the cart, cart drawer, and wishlist; that a persistent mapped `/manus-storage/` URL survives cart normalization; and that the explicit Georgian unavailable-image treatment only applies where a source image is unavailable. The visual-bouquet thumbnail path remains isolated from the ordinary product-image path.
+
+The storefront has a keyboard-targetable skip link, a route-time `main-content` landmark target, labelled desktop and mobile navigation, labelled menu controls, and an explicit `:focus-visible` accent outline. Desktop and 375px screenshots recorded above confirm that the refined header/footer controls retain readable spacing and do not overlap. The full Vitest suite, a zero-error TypeScript check, and a production build passed after the refinements; the only build output was Vite’s informational large-chunk warning, not a compile failure.
+
+The deployed database initially had none of the three canonical SEO tracking tables. A read-only schema inspection confirmed this gap, after which an idempotent additive migration created empty `seoKeywords`, `keywordRankings`, and `seoMonitoringTasks` tables without modifying customer, order, payment, catalogue, or authentication rows. A follow-up schema inspection confirmed all three tables and the canonical `rank`, `searchVolume`, and `difficulty` fields. Drizzle’s generated draft proposed only an unrelated `users.role` alteration, so it was reviewed and deliberately removed rather than executed; the applied migration is the dedicated, reviewed `drizzle/migrations/create_seo_tracking_tables.sql` file.
+
+## Touch-Target and Checkout Media Validation — 2026-08-12
+
+The refined header now enforces 44px minimum inline and block dimensions for icon, account, and language controls, while preserving the existing actions and desktop/mobile grid hierarchy. Fresh desktop (1280px) captures of the homepage and catalog, plus 375px captures of both routes, show no overlap, clipping, or displacement of the wordmark, menu trigger, language controls, or cart action. The design continues to use high-contrast dark text/icons on a warm light surface and a visible accent-colour keyboard outline.
+
+Checkout order summaries are intentionally non-visual: cart line items retain their mapped persistent image URL as optional data, but the checkout summary renders name, quantity, and price without an image element. The focused tests verify both the URL-preservation contract and this no-image summary policy, so a valid product image cannot turn into a broken image or false unavailable state in checkout. No cart submission, BOG payment operation, customer lookup, or private order data was created during this validation.
+
+## WCAG Contrast Contract Validation — 2026-08-12
+
+The warm storefront accent token was refined from `#9c727a` to `#8b5f68` so the same brand colour satisfies **WCAG AA (4.5:1)** for normal interactive text on the actual white `#ffffff` and page `#faf9f7` surfaces. The new `accessibility.contrast` Vitest contract calculates relative luminance from the real CSS tokens and verifies AA contrast for primary text, secondary navigation text, accent text, and white-on-accent controls; it separately verifies the visible focus ring at the required 3:1 non-text threshold.
+
+Fresh 1280px and 375px captures of the homepage and catalogue show the revised accent in its practical CTA, active navigation, and language-control contexts. The desktop and mobile grids remain free of overlap or clipped controls, while 44px header touch targets remain visually aligned with the existing quiet, product-focused design.
+
+The measured contrast ratios are: primary ink `#282828` on white `#ffffff` **14.74:1**; secondary ink `#44413f` on white **10.13:1**; accent/focus `#8b5f68` on white **5.34:1**; accent on page surface `#faf9f7` **5.07:1**; and white on the accent control **5.34:1**. These exceed the 4.5:1 AA threshold for normal text and the 3:1 threshold for the focus indicator.
+
+## Critical Route Regression Capture — 2026-08-12
+
+Fresh 1280px captures confirm that the public product detail, visual/AI bouquet builder, empty cart, checkout, wishlist, login, and registration routes continue to render after the shared header, media, and contrast refinements. The sampled peony detail shows its persistent product image and existing unavailable/add-to-cart state; the bouquet builder retains both modes and product availability markers; empty cart and wishlist states retain their recovery actions. Login and registration retain their labelled account forms without exposing any real customer information.
+
+An unauthenticated visit to `/admin` renders the existing Georgian access-denied state and a return action, confirming that the protected admin route remains gated. Checkout was observed as a non-submitting presentation only; no BOG request, payment attempt, customer lookup, profile modification, cart submission, or order creation was initiated by this audit.

@@ -1,0 +1,88 @@
+.p1-brand {
+  min-width: 0;
+  gap: 0;
+  font-size: clamp(19px, 1.55vw, 23px);
+  letter-spacing: -0.045em;
+  text-decoration: none;
+}
+
+.p1-brand__wordmark {
+  display: inline-flex;
+  min-width: 0;
+  align-items: baseline;
+  gap: 0.18em;
+  white-space: nowrap;
+}
+
+.p1-brand__wordmark > span {
+  font-weight: 600;
+}
+
+.p1-brand__wordmark em {
+  font-weight: 500;
+  font-style: italic;
+}
+
+.p1-footer__brand > a {
+  gap: 0;
+  text-decoration: none;
+}
+
+.p1-footer__wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.18em;
+  font-size: clamp(21px, 1.65vw, 25px);
+  letter-spacing: -0.045em;
+}
+
+.p1-footer__wordmark > span {
+  font-weight: 600;
+}
+
+.p1-footer__wordmark em {
+  font-weight: 500;
+  font-style: italic;
+}
+
+.p1-header__nav a {
+  font-size: 11px;
+  letter-spacing: 0.055em;
+}
+
+.p1-header__nav a:focus-visible,
+.p1-brand:focus-visible,
+.p1-icon-button:focus-visible,
+.p1-account-button:focus-visible,
+.p1-language button:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 3px;
+}
+
+.p1-icon-button,
+.p1-account-button {
+  min-inline-size: 44px;
+  min-block-size: 44px;
+}
+
+.p1-language {
+  min-block-size: 44px;
+  align-items: stretch;
+}
+
+.p1-language button {
+  min-inline-size: 44px;
+  min-block-size: 44px;
+}
+
+@media (max-width: 960px) {
+  .p1-brand {
+    font-size: clamp(17px, 3.8vw, 20px);
+  }
+}
+
+@media (max-width: 767px) {
+  .p1-brand {
+    font-size: clamp(15px, 5vw, 18px);
+  }
+}

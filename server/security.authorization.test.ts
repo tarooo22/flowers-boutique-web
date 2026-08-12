@@ -8,7 +8,7 @@ const securityRouter = router({
   admin: adminProcedure.query(({ ctx }) => ({ userId: ctx.user.id })),
 });
 
-function user(role: "customer" | "admin", id: number): User {
+function user(role: "user" | "admin", id: number): User {
   return {
     id,
     openId: null,
@@ -36,13 +36,13 @@ describe("canonical tRPC authorization", () => {
   });
 
   it("allows a normal user to access their protected profile", async () => {
-    await expect(securityRouter.createCaller(context(user("customer", 10))).profile()).resolves.toEqual({
+    await expect(securityRouter.createCaller(context(user("user", 10))).profile()).resolves.toEqual({
       userId: 10,
     });
   });
 
   it("forbids a normal user from admin procedures", async () => {
-    await expect(securityRouter.createCaller(context(user("customer", 10))).admin()).rejects.toMatchObject({
+    await expect(securityRouter.createCaller(context(user("user", 10))).admin()).rejects.toMatchObject({
       code: "FORBIDDEN",
     });
   });

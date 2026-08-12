@@ -12,9 +12,9 @@ interface FlowerImageProps {
 }
 
 /**
- * FlowerImage — renders a product image with a branded Flower’s Boutique SVG fallback.
- * - Never shows alt text on the page (role="presentation" on fallback).
- * - Falls back gracefully if the src URL fails to load.
+ * FlowerImage — renders a product image with a branded Flower’s Boutique fallback.
+ * - Uses the supplied persistent image source whenever it is available.
+ * - Clearly marks source-unavailable products without substituting a different flower image.
  */
 export default function FlowerImage({
   src,
@@ -40,8 +40,8 @@ export default function FlowerImage({
           justifyContent: "center",
           ...style,
         }}
-        role="presentation"
-        aria-hidden="true"
+        role="img"
+        aria-label={alt ? `${alt} — სურათი მიუწვდომელია` : "პროდუქტის სურათი მიუწვდომელია"}
       >
         <svg
           width="64"
@@ -79,7 +79,7 @@ export default function FlowerImage({
             opacity: 0.7,
           }}
         >
-          Flower’s Boutique
+          სურათი მიუწვდომელია
         </span>
       </div>
     );

@@ -94,14 +94,31 @@
 - [x] Checkpoint and verify the published login fix — Auto-published checkpoint 3bd87c57; production login created a session and production logout revoked it without exposing tokens or customer data
 
 ## Boutique Refinement & Catalog Completion — 2026-08-12
-- [ ] Record the current build, type-check, test, route, visual, accessibility, and security baseline
-- [ ] Capture explicit baseline evidence for build, type-check, tests, accessibility checks, and security constraints in audit-baseline.md
-- [ ] Audit the component architecture, route surface, data schema, API contracts, authentication, cart, order, payment, and admin flows
-- [ ] Reconcile public catalog CSV data with persistent product-image mappings and import every supplied public catalog product without resetting customer or order data
-- [ ] Repair real product-image resolution and ensure the catalog, cards, product detail, wishlist, cart, and checkout never show a false missing-image state when a mapped image exists
+- [x] Record the current build, type-check, test, route, visual, accessibility, and security baseline
+- [x] Capture explicit baseline evidence for build, type-check, tests, accessibility checks, and security constraints in audit-baseline.md
+- [x] Audit the component architecture, route surface, data schema, API contracts, authentication, cart, order, payment, and admin flows
+- [x] Reconcile public catalog CSV data with persistent product-image mappings and import every supplied public catalog product without resetting customer or order data
+- [x] Repair real product-image resolution and ensure the catalog, cards, product detail, wishlist, cart, and checkout never show a false missing-image state when a mapped image exists
+- [x] Align the SEO tracking schema, additive database migration, server mapping, and admin monitor contract to remove the pre-existing type errors
 - [ ] Consolidate the public design tokens, loaded Georgian/English typography, responsive typography wordmark, header, mobile menu, footer, and reusable product card without changing protected business logic
 - [ ] Refine the homepage, catalog, product detail, cart, checkout, account, bouquet builder, about, contact, and admin experiences using actual configured data only
 - [ ] Preserve Georgian as the default language, existing SEO routes/content, secure authorization, server-side pricing, and disabled BOG card payment behaviour
 - [ ] Add or update focused Vitest coverage for every repaired server-side or shared utility behaviour
 - [ ] Validate desktop and mobile journeys, browser/network errors, build, type-check, tests, and all affected routes; distinguish pre-existing from new failures
 - [ ] Prepare a concise audit, implementation report, and verified running-application screenshots before requesting release approval
+- [x] Replace the header's image-led primary mark with an accessible typography-led Flower’s Boutique wordmark while preserving all existing navigation and user actions
+- [x] Refine the responsive header grid, action controls, mobile menu hierarchy, and desktop navigation sizing without changing routes, state, checkout, or authentication behavior
+- [x] Verify the refined desktop and mobile header through focused Vitest coverage, production build, and visual screenshots
+- [x] Apply the same typography-first brand hierarchy to the footer while preserving all existing contact, social, policy, account, and admin links
+- [x] Run and record an explicit accessibility baseline covering landmarks, keyboard focus, touch-target visibility, and contrast-sensitive controls
+- [x] Add the existing skip-link target ID to all public storefront main landmarks without changing page structure or route content
+- [x] Verify the shared product media state in wishlist, cart, and checkout with a mapped image URL, without placing an order or exposing customer data
+- [x] Replace the cart page raw product image element with the shared FlowerImage renderer so mapped URLs load and source-unavailable records get the explicit Georgian fallback
+- [x] Replace the cart drawer's generic non-visual bouquet image placeholder with the shared FlowerImage renderer while retaining the visual-bouquet preview path
+- [x] Confirm whether the deployed SEO tables already match the canonical schema; apply only an additive migration if a verified gap exists
+- [x] Add focused Vitest coverage for the repaired SEO mapping and shared FlowerImage fallback behavior
+- [x] Run and record explicit contrast and touch-target checks for the refined storefront controls
+- [x] Ensure header icon, account, and language controls meet a 44px minimum touch target without changing their actions or layout hierarchy
+- [x] Verify checkout line-item media handling with a real mapped product URL without creating an order or disclosing customer data
+- [x] Calculate and record WCAG contrast ratios for header/footer interactive text and icon tokens against their actual surfaces
+- [x] Add focused automated contrast-contract coverage for the storefront control tokens

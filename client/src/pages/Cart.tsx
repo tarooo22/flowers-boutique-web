@@ -11,6 +11,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FlowerImage from "@/components/FlowerImage";
 
 const imageForItem = (item: any) => item.selectedVariantImage || item.imageUrl || item.previewImage || item.generatedImageUrl || "";
 
@@ -89,7 +90,7 @@ export default function Cart() {
         <div className="fb-cart-layout">
           <section className="fb-cart-items" aria-label={ka ? "კალათის ნივთები" : "Cart items"}>
             {items.map((item) => <article className="fb-cart-item" key={`${item.productId}-${item.selectedVariantId || "default"}`}>
-              <div className="fb-cart-item__image"><img src={imageForItem(item)} alt={item.name} /></div>
+              <div className="fb-cart-item__image"><FlowerImage src={imageForItem(item)} alt={item.name} className="h-full w-full object-cover" /></div>
               <div className="fb-cart-item__content"><div className="flex items-start justify-between gap-3"><div><Link href={`/product/${item.productId}`} className="fb-cart-item__name">{item.name}</Link>{item.unitType && <p className="fb-cart-item__meta">{item.unitType}</p>}{item.selectedColorNameKa && <p className="fb-cart-item__meta flex items-center gap-2"><i style={{ backgroundColor: item.selectedColorHex || "#d6cec1" }} />{ka ? item.selectedColorNameKa : item.selectedColorNameEn}</p>}</div><button type="button" className="fb-cart-item__remove" onClick={() => removeItem(item)} aria-label={ka ? `${item.name} წაშლა` : `Remove ${item.name}`}><Trash2 size={17} /></button></div>{item.customData?.type === "visual-bouquet" && <p className="fb-cart-item__custom">{ka ? "ინდივიდუალური კომპოზიცია" : "Custom composition"}</p>}<div className="fb-cart-item__bottom"><div className="fb-cart-quantity"><button type="button" onClick={() => updateQuantity(item, item.quantity - 1)} aria-label={ka ? "რაოდენობის შემცირება" : "Decrease quantity"}><Minus size={15} /></button><output>{item.quantity}</output><button type="button" onClick={() => updateQuantity(item, item.quantity + 1)} aria-label={ka ? "რაოდენობის გაზრდა" : "Increase quantity"}><Plus size={15} /></button></div><strong>₾{(Number(item.price) * Number(item.quantity)).toFixed(0)}</strong></div></div>
             </article>)}
             <Link href="/catalog" className="fb-cart-continue"><ChevronRight size={15} className="rotate-180" />{ka ? "შოპინგის გაგრძელება" : "Continue shopping"}</Link>

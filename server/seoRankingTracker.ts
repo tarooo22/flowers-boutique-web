@@ -5,14 +5,13 @@
 
 import { getDb } from "./db";
 import { seoKeywords, keywordRankings, seoMonitoringTasks } from "../drizzle/schema";
-import { eq, and } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
 interface RankingRecord {
   keywordId: number;
   position: number | null;
-  impressions: number;
-  clicks: number;
-  ctr: string;
+  searchVolume?: number | null;
+  difficulty?: number | null;
 }
 
 /**
@@ -26,45 +25,27 @@ export async function initializeDefaultKeywords() {
   const defaultKeywords = [
     {
       keyword: "Flower delivery Tbilisi",
-      keywordKa: "ყვავილების მიტანა თბილისში",
-      landingPageUrl: "/flower-delivery-tbilisi",
-      targetPosition: 5,
-      priority: "high",
+      targetUrl: "/flower-delivery-tbilisi",
     },
     {
       keyword: "Flower shop Tbilisi",
-      keywordKa: "ყვავილების მაღაზია თბილისში",
-      landingPageUrl: "/flower-shop-tbilisi",
-      targetPosition: 5,
-      priority: "high",
+      targetUrl: "/flower-shop-tbilisi",
     },
     {
       keyword: "Rose bouquets",
-      keywordKa: "ვარდების თაიგულები",
-      landingPageUrl: "/rose-bouquets",
-      targetPosition: 10,
-      priority: "medium",
+      targetUrl: "/rose-bouquets",
     },
     {
       keyword: "Lily bouquets",
-      keywordKa: "ლილიების თაიგულები",
-      landingPageUrl: "/lily-bouquets",
-      targetPosition: 10,
-      priority: "medium",
+      targetUrl: "/lily-bouquets",
     },
     {
       keyword: "Spray roses",
-      keywordKa: "სპრეი ვარდები",
-      landingPageUrl: "/spray-roses",
-      targetPosition: 10,
-      priority: "medium",
+      targetUrl: "/spray-roses",
     },
     {
       keyword: "Birthday flowers",
-      keywordKa: "დაბადების დღის ყვავილები",
-      landingPageUrl: "/birthday-flowers",
-      targetPosition: 10,
-      priority: "medium",
+      targetUrl: "/birthday-flowers",
     },
   ];
 
@@ -80,10 +61,7 @@ export async function initializeDefaultKeywords() {
       if (existing.length === 0) {
         await db.insert(seoKeywords).values({
           keyword: kw.keyword,
-          keywordKa: kw.keywordKa,
-          landingPageUrl: kw.landingPageUrl,
-          targetPosition: kw.targetPosition,
-          priority: kw.priority as "high" | "medium" | "low",
+          targetUrl: kw.targetUrl,
           isActive: true,
         });
       }
@@ -110,9 +88,8 @@ export async function recordKeywordRankings(
       await db.insert(keywordRankings).values({
         keywordId: ranking.keywordId,
         rank: ranking.position,
-        impressions: ranking.impressions,
-        clicks: ranking.clicks,
-        ctr: ranking.ctr,
+        searchVolume: ranking.searchVolume,
+        difficulty: ranking.difficulty,
         createdAt: new Date(),
       });
     }
@@ -181,11 +158,7 @@ export async function getRankingHistory(
     const history = await db
       .select()
       .from(keywordRankings)
-      .where(
-        and(
-          eq(keywordRankings.keywordId, keywordId)
-        )
-      )
+      .where(eq(keywordRankings.keywordId, keywordId))
       .orderBy(keywordRankings.createdAt);
 
     return history.filter(
@@ -273,14 +246,18 @@ export async function generateWeeklyReport() {
         .length,
       keywordsInTop20: rankings.filter((r) => r.rank && r.rank <= 20)
         .length,
-      totalImpressions: rankings.reduce((sum: number, r: any) => sum + r.impressions, 0),
-      totalClicks: rankings.reduce((sum: number, r: any) => sum + r.clicks, 0),
-      averageCTR:
-        Math.round(
-          (rankings.reduce((sum: number, r: any) => sum + parseFloat(r.ctr), 0) /
-            rankings.length) *
-            100
-        ) / 100,
+      totalSearchVolume: rankings.reduce(
+        (sum: number, r) => sum + (r.searchVolume ?? 0),
+        0
+      ),
+      averageDifficulty:
+        rankings.length > 0
+          ? Math.round(
+              (rankings.reduce((sum: number, r) => sum + (r.difficulty ?? 0), 0) /
+                rankings.length) *
+                100
+            ) / 100
+          : 0,
       rankings,
       trends,
     };

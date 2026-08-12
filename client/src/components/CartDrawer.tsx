@@ -13,8 +13,19 @@ import type { CartItem } from "@/lib/cartUtils";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { BouquetCartPreview } from "@/components/BouquetCartPreview";
+import FlowerImage from "@/components/FlowerImage";
 import { useLocation } from "wouter";
 import { useCartDrawer } from "@/contexts/CartDrawerContext";
+
+function imageForItem(item: CartItem) {
+  return (
+    item.selectedVariantImage ||
+    item.imageUrl ||
+    item.previewImage ||
+    item.generatedImageUrl ||
+    ""
+  );
+}
 
 function getVisualBouquetData(item: CartItem) {
   return item.customData?.type === "visual-bouquet"
@@ -168,9 +179,11 @@ export default function CartDrawer() {
                       {item.customData?.type === "visual-bouquet" ? (
                         <BouquetCartPreview bouquetData={item.customData} />
                       ) : (
-                        <div className="w-full h-full bg-[#F5F2EE] flex items-center justify-center text-[#999] text-xs">
-                          {language === 'ka' ? 'სურათი' : 'Image'}
-                        </div>
+                        <FlowerImage
+                          src={imageForItem(item)}
+                          alt={item.name}
+                          className="h-full w-full object-cover"
+                        />
                       )}
                     </div>
 

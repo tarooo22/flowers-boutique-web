@@ -84,15 +84,9 @@ export default function Footer() {
         <div className="p1-footer__grid">
           <div className="p1-footer__brand">
             <Link href="/" aria-label="Flower’s Boutique home">
-              <img
-                src="/brand/flowers-boutique-logo-192.webp"
-                alt=""
-                width="52"
-                height="52"
-                loading="lazy"
-              />
-              <strong>
-                Flower’s <em>Boutique</em>
+              <strong className="p1-footer__wordmark">
+                <span>Flower’s</span>
+                <em>Boutique</em>
               </strong>
             </Link>
             <p>

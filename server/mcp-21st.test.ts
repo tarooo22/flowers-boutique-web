@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, expect } from 'vitest';
 
 /**
  * Test 21st.dev MCP integration
@@ -9,19 +9,15 @@ const API_KEY = process.env.TWENTYFIRST_API_KEY;
 const MCP_URL = 'https://21st.dev/api/mcp';
 
 describe('21st.dev MCP Integration', () => {
-  beforeAll(() => {
-    if (!API_KEY) {
-      throw new Error('TWENTYFIRST_API_KEY environment variable is not set');
-    }
-  });
+  const integrationIt = process.env.RUN_EXTERNAL_INTEGRATION_TESTS === 'true' && API_KEY ? it : it.skip;
 
-  it('should have valid API key format', () => {
+  integrationIt('has a valid configured API key format', () => {
     expect(API_KEY).toBeDefined();
     expect(API_KEY).toMatch(/^21st_sk_/);
     expect(API_KEY.length).toBeGreaterThan(20);
   });
 
-  it('should connect to 21st.dev MCP server with valid credentials', async () => {
+  integrationIt('connects to 21st.dev MCP server with valid credentials', async () => {
     const response = await fetch(MCP_URL, {
       method: 'POST',
       headers: {
@@ -43,7 +39,7 @@ describe('21st.dev MCP Integration', () => {
     expect(data.result || data.tools).toBeDefined();
   });
 
-  it('should list available tools from 21st.dev', async () => {
+  integrationIt('lists available tools from 21st.dev', async () => {
     const response = await fetch(MCP_URL, {
       method: 'POST',
       headers: {
@@ -65,7 +61,7 @@ describe('21st.dev MCP Integration', () => {
     expect(response.status).toBe(200);
   });
 
-  it('should search for components using 21st.dev MCP', async () => {
+  integrationIt('searches for components using 21st.dev MCP', async () => {
     const response = await fetch(MCP_URL, {
       method: 'POST',
       headers: {

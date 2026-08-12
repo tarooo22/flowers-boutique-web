@@ -10,7 +10,7 @@ import {
   disabledBOGCallbackHandler,
 } from "./paymentAvailability";
 
-function user(role: "customer" | "admin", id: number): User {
+function user(role: "user" | "admin", id: number): User {
   return {
     id,
     openId: null,
@@ -61,7 +61,7 @@ describe("disabled BOG payment paths", () => {
   });
 
   it.each([
-    ["customer", user("customer", 10)],
+    ["user", user("user", 10)],
     ["admin", user("admin", 1)],
   ])("rejects an authenticated %s without DB or HTTP work", async (_label, currentUser) => {
     const fetchSpy = vi.spyOn(globalThis, "fetch");

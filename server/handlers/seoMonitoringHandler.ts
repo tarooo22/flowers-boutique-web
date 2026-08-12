@@ -33,9 +33,8 @@ export async function handleSeoMonitoring(req: Request, res: Response) {
       totalKeywords: report.totalKeywords,
       keywordsInTop10: report.keywordsInTop10,
       keywordsInTop20: report.keywordsInTop20,
-      totalImpressions: report.totalImpressions,
-      totalClicks: report.totalClicks,
-      averageCTR: report.averageCTR,
+      totalSearchVolume: report.totalSearchVolume,
+      averageDifficulty: report.averageDifficulty,
     });
 
     // Format report for email
@@ -62,9 +61,8 @@ export async function handleSeoMonitoring(req: Request, res: Response) {
         totalKeywords: report.totalKeywords,
         keywordsInTop10: report.keywordsInTop10,
         keywordsInTop20: report.keywordsInTop20,
-        totalImpressions: report.totalImpressions,
-        totalClicks: report.totalClicks,
-        averageCTR: report.averageCTR,
+        totalSearchVolume: report.totalSearchVolume,
+        averageDifficulty: report.averageDifficulty,
       },
     });
   } catch (error) {
@@ -93,9 +91,8 @@ function formatReportForEmail(report: any): string {
     `• Total Keywords Tracked: ${report.totalKeywords}`,
     `• Keywords in Top 10: ${report.keywordsInTop10}`,
     `• Keywords in Top 20: ${report.keywordsInTop20}`,
-    `• Total Impressions: ${report.totalImpressions.toLocaleString()}`,
-    `• Total Clicks: ${report.totalClicks.toLocaleString()}`,
-    `• Average CTR: ${report.averageCTR}%`,
+    `• Total Search Volume: ${report.totalSearchVolume.toLocaleString()}`,
+    `• Average Difficulty: ${report.averageDifficulty}`,
     "",
     "**Top Performing Keywords:**",
   ];
@@ -103,14 +100,14 @@ function formatReportForEmail(report: any): string {
   // Add top 5 keywords by position
   if (report.rankings && report.rankings.length > 0) {
     const topKeywords = report.rankings
-      .filter((r: any) => r.position && r.position <= 20)
-      .sort((a: any, b: any) => (a.position || 100) - (b.position || 100))
+      .filter((r: any) => r.rank && r.rank <= 20)
+      .sort((a: any, b: any) => (a.rank || 100) - (b.rank || 100))
       .slice(0, 5);
 
     if (topKeywords.length > 0) {
       topKeywords.forEach((kw: any) => {
         lines.push(
-          `• "${kw.keyword}" (${kw.keywordKa}) - Position #${kw.position} | ${kw.impressions} impressions | ${kw.clicks} clicks`
+          `• "${kw.keyword}" - Position #${kw.rank} | Search volume: ${kw.searchVolume ?? "—"} | Difficulty: ${kw.difficulty ?? "—"}`
         );
       });
     } else {

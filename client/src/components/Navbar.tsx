@@ -136,16 +136,9 @@ export default function Navbar() {
             className="p1-brand"
             aria-label="Flower’s Boutique home"
           >
-            <span className="p1-brand__mark">
-              <img
-                src="/brand/flowers-boutique-logo-192.webp"
-                alt=""
-                width="42"
-                height="42"
-              />
-            </span>
-            <span>
-              Flower’s <em>Boutique</em>
+            <span className="p1-brand__wordmark">
+              <span>Flower’s</span>
+              <em>Boutique</em>
             </span>
           </Link>
 

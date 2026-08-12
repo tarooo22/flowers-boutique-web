@@ -1,12 +1,10 @@
 import { describe, it, expect } from "vitest";
 
 describe("Geoapify API Key Validation", () => {
-  it("should validate Geoapify API key with a test request", async () => {
+  const integrationIt = process.env.VITE_GEOAPIFY_API_KEY ? it : it.skip;
+
+  integrationIt("validates the configured key with a reverse-geocoding request", async () => {
     const apiKey = process.env.VITE_GEOAPIFY_API_KEY;
-    
-    if (!apiKey) {
-      throw new Error("VITE_GEOAPIFY_API_KEY is not set");
-    }
 
     // Test with a simple reverse geocoding request (Tbilisi coordinates)
     const response = await fetch(
@@ -20,12 +18,8 @@ describe("Geoapify API Key Validation", () => {
     expect(data.features.length).toBeGreaterThan(0);
   });
 
-  it("should validate Geoapify API key with autocomplete request", async () => {
+  integrationIt("validates the configured key with an autocomplete request", async () => {
     const apiKey = process.env.VITE_GEOAPIFY_API_KEY;
-    
-    if (!apiKey) {
-      throw new Error("VITE_GEOAPIFY_API_KEY is not set");
-    }
 
     // Test autocomplete with Tbilisi
     const response = await fetch(

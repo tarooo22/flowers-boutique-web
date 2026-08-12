@@ -18,7 +18,7 @@ export const users = mysqlTable("users", {
   phone: varchar("phone", { length: 20 }),
   passwordHash: varchar("passwordHash", { length: 255 }), // For native auth
   loginMethod: varchar("loginMethod", { length: 64 }), // 'oauth' or 'native'
-  role: mysqlEnum("role", ["customer", "admin"]).default("customer").notNull(),
+  role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),

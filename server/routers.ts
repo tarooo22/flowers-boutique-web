@@ -342,7 +342,7 @@ export const appRouter = router({
           paymentStatus = 'pending_payment';
           paymentMethod = 'cash';
         } else if (input.orderChannel === 'card' || input.orderChannel === 'website') {
-          paymentStatus = 'pending';
+          paymentStatus = 'pending_payment';
           paymentMethod = 'card';
         }
         

@@ -1,5 +1,5 @@
 import { drizzle } from "drizzle-orm/mysql2";
-import { sql, eq, desc, isNull, and } from "drizzle-orm";
+import { sql, eq, desc, isNull, and, like, or } from "drizzle-orm";
 import { InsertUser, users, products, categories, banners, orders, InsertOrder, productImages, customerAddresses, customerOrders, Order } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -151,13 +151,28 @@ export async function getProductByName(nameEn: string, nameKa?: string) {
 export async function getCategories() {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(categories);
+  return db
+    .select()
+    .from(categories)
+    .where(
+      sql`EXISTS (SELECT 1 FROM ${products} WHERE ${products.categoryId} = ${categories.id} AND ${products.published} = true)`
+    )
+    .orderBy(categories.id);
 }
 
 export async function getCategoryBySlug(slug: string) {
   const db = await getDb();
   if (!db) return undefined;
-  const result = await db.select().from(categories).where(eq(categories.slug, slug)).limit(1);
+  const result = await db
+    .select()
+    .from(categories)
+    .where(
+      and(
+        eq(categories.slug, slug),
+        sql`EXISTS (SELECT 1 FROM ${products} WHERE ${products.categoryId} = ${categories.id} AND ${products.published} = true)`
+      )
+    )
+    .limit(1);
   return result.length > 0 ? result[0] : undefined;
 }
 
@@ -274,24 +289,22 @@ export async function getOrderById(id: number) {
 export async function getAdminOrders(filters?: { paymentStatus?: string; deliveryStatus?: string; searchTerm?: string }) {
   const db = await getDb();
   if (!db) return [];
-  
-  let query = db.select().from(orders);
-  
-  if (filters?.paymentStatus) {
-    query = query.where(eq(orders.paymentStatus, filters.paymentStatus as any));
-  }
-  if (filters?.deliveryStatus) {
-    query = query.where(eq(orders.deliveryStatus, filters.deliveryStatus as any));
-  }
-  if (filters?.searchTerm) {
-    // Search by customer name, email, phone, or recipient name
-    const searchLike = `%${filters.searchTerm}%`;
-    query = query.where(
-      filters.searchTerm ? undefined : undefined
-    );
-  }
-  
-  return query.orderBy(desc(orders.createdAt));
+
+  const searchLike = filters?.searchTerm ? `%${filters.searchTerm}%` : undefined;
+  return db
+    .select()
+    .from(orders)
+    .where(and(
+      filters?.paymentStatus ? eq(orders.paymentStatus, filters.paymentStatus as any) : undefined,
+      filters?.deliveryStatus ? eq(orders.deliveryStatus, filters.deliveryStatus as any) : undefined,
+      searchLike ? or(
+        like(orders.customerName, searchLike),
+        like(orders.customerEmail, searchLike),
+        like(orders.customerPhone, searchLike),
+        like(orders.recipientName, searchLike),
+      ) : undefined,
+    ))
+    .orderBy(desc(orders.createdAt));
 }
 
 // Profile management functions
@@ -555,7 +568,7 @@ export async function getAdminOrderStats() {
     refunded: allOrders.filter(o => o.paymentStatus === 'refunded').length,
     totalRevenue: allOrders
       .filter(o => o.paymentStatus === 'paid')
-      .reduce((sum, o) => sum + (o.totalPrice || 0), 0),
+      .reduce((sum, o) => sum + Number(o.totalPrice ?? 0), 0),
     deliveryStats: {
       new: allOrders.filter(o => o.deliveryStatus === 'new').length,
       processing: allOrders.filter(o => o.deliveryStatus === 'processing').length,
@@ -631,7 +644,7 @@ export async function createOrderWithPayment(data: {
       customerEmail: data.customerEmail || null,
       customerPhone: data.customerPhone || null,
       items: data.items,
-      totalPrice: data.totalPrice,
+      totalPrice: String(data.totalPrice),
       recipientName: data.recipientName || null,
       recipientPhone: data.recipientPhone || null,
       deliveryAddress: data.deliveryAddress || null,
@@ -642,7 +655,7 @@ export async function createOrderWithPayment(data: {
       orderChannel: (data.orderChannel as any) || 'card',
       paymentMethod: (data.paymentMethod as any) || 'card',
       deliveryStatus: 'new',
-      paymentStatus: 'pending',
+      paymentStatus: 'pending_payment',
       orderNumber: orderNumber,
       building: data.building || null,
       entrance: data.entrance || null,
@@ -651,24 +664,23 @@ export async function createOrderWithPayment(data: {
       giftMessage: data.giftMessage || null,
     };
     
-    const result = await db.insert(orders).values(insertData);
-    
-    const insertId = Array.isArray(result) ? result[0]?.insertId : result?.insertId;
-    console.log('[Database] Insert result (payment):', { insertId, orderNumber });
-    
-    if (insertId) {
-      const newOrder = await db.select().from(orders).where(eq(orders.id, Number(insertId))).limit(1);
-      if (newOrder.length > 0) {
-        const order = newOrder[0];
-        console.log('[Database] Retrieved order (payment):', { id: order.id, orderNumber: order.orderNumber });
-        if (!order.orderNumber) {
-          console.error('[Database] WARNING: Order created but has no orderNumber (payment):', { id: order.id, orderNumber: order.orderNumber });
-        }
-        return order;
+    await db.insert(orders).values(insertData);
+
+    const newOrder = await db
+      .select()
+      .from(orders)
+      .where(eq(orders.orderNumber, orderNumber))
+      .limit(1);
+    if (newOrder.length > 0) {
+      const order = newOrder[0];
+      console.log('[Database] Retrieved order (payment):', { id: order.id, orderNumber: order.orderNumber });
+      if (!order.orderNumber) {
+        console.error('[Database] WARNING: Order created but has no orderNumber (payment):', { id: order.id, orderNumber: order.orderNumber });
       }
+      return order;
     }
-    
-    console.error('[Database] WARNING: No insertId returned from insert operation (payment)');
+
+    console.error('[Database] WARNING: Order write succeeded but the record could not be reloaded by order number (payment)');
     return null;
   } catch (error) {
     console.error("[Database] Error creating order with payment:", error);
@@ -729,7 +741,7 @@ export async function createCanonicalOrder(data: {
       customerEmail: data.customerEmail || null,
       customerPhone: data.customerPhone || null,
       items: data.items,
-      totalPrice: totalPriceNum,
+      totalPrice: String(totalPriceNum),
       recipientName: data.recipientName || null,
       recipientPhone: data.recipientPhone || null,
       deliveryAddress: data.deliveryAddress || null,
@@ -747,30 +759,35 @@ export async function createCanonicalOrder(data: {
       floor: data.floor || null,
       apartment: data.apartment || null,
       giftMessage: data.giftMessage || null,
-      latitude: data.latitude || null,
-      longitude: data.longitude || null,
+      latitude:
+        data.latitude === undefined || data.latitude === null
+          ? null
+          : String(data.latitude),
+      longitude:
+        data.longitude === undefined || data.longitude === null
+          ? null
+          : String(data.longitude),
       placeId: data.placeId || null,
       fulfillmentType: (data.fulfillmentType as any) || 'delivery',
-      deliveryFee: typeof data.deliveryFee === 'string' ? parseFloat(data.deliveryFee) : (data.deliveryFee || 0),
+      deliveryFee: String(data.deliveryFee ?? 0),
       metaFbc: data.metaFbc || null,
       metaFbp: data.metaFbp || null,
     };
     
-    const result = await db.insert(orders).values(insertData);
-    
-    const insertId = Array.isArray(result) ? result[0]?.insertId : result?.insertId;
-    console.log('[Database] Insert result:', { insertId, orderNumber });
-    
-    if (insertId) {
-      const newOrder = await db.select().from(orders).where(eq(orders.id, Number(insertId))).limit(1);
-      if (newOrder.length > 0) {
-        const order = newOrder[0];
-        console.log('[Database] Retrieved order:', { id: order.id, orderNumber: order.orderNumber });
-        if (!order.orderNumber) {
-          console.error('[Database] WARNING: Order created but has no orderNumber:', { id: order.id, orderNumber: order.orderNumber });
-        }
-        return order;
+    await db.insert(orders).values(insertData);
+
+    const newOrder = await db
+      .select()
+      .from(orders)
+      .where(eq(orders.orderNumber, orderNumber))
+      .limit(1);
+    if (newOrder.length > 0) {
+      const order = newOrder[0];
+      console.log('[Database] Retrieved order:', { id: order.id, orderNumber: order.orderNumber });
+      if (!order.orderNumber) {
+        console.error('[Database] WARNING: Order created but has no orderNumber:', { id: order.id, orderNumber: order.orderNumber });
       }
+      return order;
     }
     
     console.error('[Database] WARNING: No insertId returned from insert operation');

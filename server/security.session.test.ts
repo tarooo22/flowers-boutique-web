@@ -20,7 +20,7 @@ const customer: User = {
   phone: null,
   passwordHash: null,
   loginMethod: "native",
-  role: "customer",
+  role: "user",
   createdAt: new Date(0),
   updatedAt: new Date(0),
   lastSignedIn: new Date(0),
