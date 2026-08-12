@@ -8601,6 +8601,22 @@ select:focus-visible {
   border-color: var(--border-default) !important;
   background: var(--surface-soft) !important;
 }
+.p1-app--account .fb-profile-page .fb-profile-info-card {
+  padding: 1rem;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  background: var(--surface-soft);
+}
+.p1-app--account .fb-profile-page .fb-profile-info-card__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--accent-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
 
 /* The bouquet builder stays functional, but gets the same restrained polish. */
 .p1-app--builder > div {

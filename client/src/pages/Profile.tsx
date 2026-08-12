@@ -488,27 +488,27 @@ export default function Profile() {
                       {t.profileInfo}
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                      <div className="p-4 rounded-xl bg-[#D4AF37]/5 border border-[#D4AF37]/10">
-                        <label className="block text-xs font-semibold uppercase tracking-wider text-[#A16207] mb-2">
+                      <div className="fb-profile-info-card">
+                        <label className="fb-profile-info-card__label">
                           {t.fullName}
                         </label>
                         <p className="text-lg font-medium text-[#1C1917]">
                           {user.name}
                         </p>
                       </div>
-                      <div className="p-4 rounded-xl bg-[#D4AF37]/5 border border-[#D4AF37]/10">
-                        <label className="block text-xs font-semibold uppercase tracking-wider text-[#A16207] mb-2">
+                      <div className="fb-profile-info-card">
+                        <label className="fb-profile-info-card__label">
                           {t.email}
                         </label>
                         <p className="text-lg font-medium text-[#1C1917]">
                           {user.email}
                         </p>
                       </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <div className="fb-profile-info-card">
+                        <label className="fb-profile-info-card__label">
                           {t.phone}
                         </label>
-                        <p className="text-lg text-gray-900">
+                        <p className="text-lg font-medium text-[#1C1917]">
                           {user.phone || "—"}
                         </p>
                       </div>

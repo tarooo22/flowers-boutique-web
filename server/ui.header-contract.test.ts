@@ -16,6 +16,12 @@ const cartDrawerPath = path.join(
 );
 const wishlistPath = path.join(projectRoot, "client/src/pages/Wishlist.tsx");
 const checkoutPath = path.join(projectRoot, "client/src/pages/Checkout.tsx");
+const adminPath = path.join(projectRoot, "client/src/pages/Admin.tsx");
+const profilePath = path.join(projectRoot, "client/src/pages/Profile.tsx");
+const productCardPath = path.join(
+  projectRoot,
+  "client/src/components/product/ProductCard.tsx"
+);
 const flowerImagePath = path.join(
   projectRoot,
   "client/src/components/FlowerImage.tsx"
@@ -107,6 +113,18 @@ describe("storefront header contract", () => {
     expect(flowerImage).toContain("სურათი მიუწვდომელია");
   });
 
+  it("keeps the reusable product card localised, media-safe, and action-complete", async () => {
+    const productCard = await readFile(productCardPath, "utf8");
+
+    expect(productCard).toContain('import FlowerImage from "@/components/FlowerImage"');
+    expect(productCard).toContain('className={`p1-product-card ${isAvailable ? "" : "is-unavailable"}`}');
+    expect(productCard).toContain("src={product.imageUrl}");
+    expect(productCard).toContain('₾${amount.toLocaleString("ka-GE"');
+    expect(productCard).toContain('href={`/product/${product.id}`}');
+    expect(productCard).toContain('className="p1-product-card__wish"');
+    expect(productCard).toContain('className="p1-product-card__action"');
+  });
+
   it("keeps checkout order summaries non-visual, so a mapped product URL cannot create an image fallback there", async () => {
     const checkout = await readFile(checkoutPath, "utf8");
 
@@ -116,5 +134,28 @@ describe("storefront header contract", () => {
     expect(checkout).toContain("{item.name} × {item.quantity}");
     expect(checkout).not.toContain("<img");
     expect(checkout).not.toContain("FlowerImage");
+  });
+
+  it("keeps the unauthenticated admin state readable at mobile widths without weakening access control", async () => {
+    const admin = await readFile(adminPath, "utf8");
+
+    expect(admin).toContain('if (!isAuthenticated || user?.role !== "admin")');
+    expect(admin).toContain("w-full overflow-x-hidden px-5 py-10");
+    expect(admin).toContain("max-w-full break-words");
+    expect(admin).toContain("max-w-md text-[#666]");
+  });
+
+  it("uses the restrained shared surface for profile information without changing account actions", async () => {
+    const [profile, styles] = await Promise.all([
+      readFile(profilePath, "utf8"),
+      readFile(path.join(projectRoot, "client/src/index.css"), "utf8"),
+    ]);
+
+    expect(profile).toContain('className="fb-profile-info-card"');
+    expect(profile).toContain('className="fb-profile-info-card__label"');
+    expect(profile).not.toContain('bg-[#D4AF37]/5');
+    expect(profile).toContain("setIsEditing(true)");
+    expect(styles).toContain(".fb-profile-info-card {");
+    expect(styles).toContain("background: var(--surface-soft);");
   });
 });

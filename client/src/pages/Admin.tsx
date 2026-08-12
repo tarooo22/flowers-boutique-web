@@ -140,11 +140,11 @@ export default function Admin() {
 
   if (!isAuthenticated || user?.role !== "admin") {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-gradient-to-br from-[#FAF8F5] to-[#F5F0E8]">
-        <h1 className="text-3xl font-serif font-bold text-[#1C1917]">
+      <div className="min-h-screen w-full overflow-x-hidden px-5 py-10 flex flex-col items-center justify-center gap-4 text-center bg-gradient-to-br from-[#FAF8F5] to-[#F5F0E8]">
+        <h1 className="max-w-full break-words text-3xl font-serif font-bold leading-tight text-[#1C1917]">
           {language === "ka" ? "ადმინისტრირების პანელი" : "Admin Panel"}
         </h1>
-        <p className="text-[#666]">
+        <p className="max-w-md text-[#666]">
           {language === "ka"
             ? "ამ გვერდზე წვდომა შეზღუდულია"
             : "Access to this page is restricted"}

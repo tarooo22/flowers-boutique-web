@@ -100,12 +100,13 @@
 - [x] Reconcile public catalog CSV data with persistent product-image mappings and import every supplied public catalog product without resetting customer or order data
 - [x] Repair real product-image resolution and ensure the catalog, cards, product detail, wishlist, cart, and checkout never show a false missing-image state when a mapped image exists
 - [x] Align the SEO tracking schema, additive database migration, server mapping, and admin monitor contract to remove the pre-existing type errors
-- [ ] Consolidate the public design tokens, loaded Georgian/English typography, responsive typography wordmark, header, mobile menu, footer, and reusable product card without changing protected business logic
-- [ ] Refine the homepage, catalog, product detail, cart, checkout, account, bouquet builder, about, contact, and admin experiences using actual configured data only
-- [ ] Preserve Georgian as the default language, existing SEO routes/content, secure authorization, server-side pricing, and disabled BOG card payment behaviour
-- [ ] Add or update focused Vitest coverage for every repaired server-side or shared utility behaviour
-- [ ] Validate desktop and mobile journeys, browser/network errors, build, type-check, tests, and all affected routes; distinguish pre-existing from new failures
-- [ ] Prepare a concise audit, implementation report, and verified running-application screenshots before requesting release approval
+- [x] Consolidate the public design tokens, loaded Georgian/English typography, responsive typography wordmark, header, mobile menu, footer, and reusable product card without changing protected business logic
+- [ ] Refine the homepage, catalog, product detail, cart, checkout, account, bouquet builder, about, contact, and admin experiences using actual configured data only; preserve approved layouts where no defect was found
+- [x] Preserve Georgian as the default language, existing SEO routes/content, secure authorization, server-side pricing, and disabled BOG card payment behaviour
+- [x] Add or update focused Vitest coverage for every repaired server-side or shared utility behaviour
+- [x] Validate desktop and mobile journeys, browser/network errors, build, type-check, tests, and all affected routes; distinguish pre-existing from new failures
+- [x] Fix the `/admin` access-denied view at 375px so its Georgian heading and action remain centered and fully visible without changing authorization behavior
+- [x] Prepare a concise audit, implementation report, and verified running-application screenshots before requesting release approval
 - [x] Replace the header's image-led primary mark with an accessible typography-led Flower’s Boutique wordmark while preserving all existing navigation and user actions
 - [x] Refine the responsive header grid, action controls, mobile menu hierarchy, and desktop navigation sizing without changing routes, state, checkout, or authentication behavior
 - [x] Verify the refined desktop and mobile header through focused Vitest coverage, production build, and visual screenshots
@@ -122,3 +123,10 @@
 - [x] Verify checkout line-item media handling with a real mapped product URL without creating an order or disclosing customer data
 - [x] Calculate and record WCAG contrast ratios for header/footer interactive text and icon tokens against their actual surfaces
 - [x] Add focused automated contrast-contract coverage for the storefront control tokens
+- [x] Record page-specific visual/functional validation for the homepage, product detail, checkout, account, bouquet builder, about, contact, and administrator surfaces before closing the cross-page refinement sweep
+- [x] With user-authorized existing sessions only, validate the authenticated profile surface without exposing or modifying private customer data
+- [x] With user-authorized existing sessions only, validate an authenticated admin dashboard shell without accessing or mutating private commerce data
+- [x] Investigate the 170-item admin catalog count against the supplied 165-product public import; do not delete, unpublish, or alter any product without explicit user confirmation
+- [ ] Complete an authorized, read-only account-surface audit of the actual profile tabs and cards; correct only confirmed visual or accessibility defects without recording private data
+- [ ] Complete an authorized, non-destructive admin dashboard refinement/validation pass beyond the access-denied shell; document an evidence-backed no-change finding where no defect exists
+- [x] Replace the authenticated profile’s overly saturated gold information-card fill with an approved restrained surface treatment while preserving labels, fields, tabs, and account actions

@@ -142,3 +142,47 @@ The measured contrast ratios are: primary ink `#282828` on white `#ffffff` **14.
 Fresh 1280px captures confirm that the public product detail, visual/AI bouquet builder, empty cart, checkout, wishlist, login, and registration routes continue to render after the shared header, media, and contrast refinements. The sampled peony detail shows its persistent product image and existing unavailable/add-to-cart state; the bouquet builder retains both modes and product availability markers; empty cart and wishlist states retain their recovery actions. Login and registration retain their labelled account forms without exposing any real customer information.
 
 An unauthenticated visit to `/admin` renders the existing Georgian access-denied state and a return action, confirming that the protected admin route remains gated. Checkout was observed as a non-submitting presentation only; no BOG request, payment attempt, customer lookup, profile modification, cart submission, or order creation was initiated by this audit.
+
+## Reusable Product Card Validation — 2026-08-12
+
+The shared `ProductCard` component is used by both the homepage featured collection and the catalog grid. Its contract now confirms the persistent-media `FlowerImage` renderer, Georgian-aware price formatting, detail navigation, wishlist action, and quick add/options action remain present in one component rather than diverging across surfaces.
+
+Fresh `/catalog` captures show the 165-item public feed with real product media at both 1280px and 375px. At desktop size, the existing filter rail, category count, product grid, and header hierarchy are intact. At 375px, the condensed navigation, filter trigger, category row, count/sort controls, and two-column product media grid remain readable with no visual overlap. This validation did not add products to cart, write wishlist data, or change the supplied Georgian catalog content.
+
+## Protected Profile Route Check — 2026-08-12
+
+The `/profile` capture request did not return an image, so the route was checked directly in the browser instead. When unauthenticated, `/profile` redirects to the existing Georgian login page. The resulting page retains the global skip link, labeled email/password controls, language controls, and registration link. No credentials were entered and no account or customer data was accessed.
+
+## Public and Account Mobile Route Validation — 2026-08-12
+
+At a 375px viewport, `/about`, `/contact`, `/delivery`, `/returns`, `/cart`, `/checkout`, `/wishlist`, and `/login` all rendered successfully. The global mobile header and bottom navigation remained visible without overlap. Georgian headings, card content, account form labels, empty cart/wishlist states, delivery information, return terms, and checkout’s pre-submission view remained legible. No cart item was added, no checkout was submitted, and no credentials were supplied during this visual inspection.
+
+## Admin Access-Denied Mobile Refinement — 2026-08-12
+
+The unauthenticated `/admin` state initially clipped its Georgian heading at 375px. The fallback container now has a constrained, centered mobile layout with horizontal overflow prevention, responsive padding, wrapping headline text, and a bounded explanatory line. Its authorization condition remains unchanged: unauthenticated visitors and non-admin users see the access-denied state only. A focused contract test, complete type-check, production build, and a repeat 375px screenshot verified the corrected result. No admin data or privileged action was accessed.
+
+## Cross-Page Refinement Sweep — 2026-08-12
+
+| Surface | Evidence and outcome |
+| --- | --- |
+| Homepage | Desktop and mobile captures confirmed the typography-led header/footer, real featured-product media, Georgian navigation, and existing hero/category/order-process composition. No homepage layout rewrite was required after the shared header, card, media, and contrast corrections. |
+| Catalog and product detail | Desktop and 375px captures confirmed the responsive catalog rail/grid and a public product detail route with mapped persistent image, localized price, availability, wishlist, quantity, and cart controls. The only source-unavailable products retain the explicit Georgian fallback rather than substituted imagery. |
+| Bouquet builder | Desktop captures confirmed the existing visual and AI modes, selection/wrapping controls, live summary, and disabled empty-state action remain intact. The audit did not request a live LLM generation or add an order. |
+| Cart and checkout | The cart and drawer now consume `FlowerImage` for ordinary products, while checkout intentionally retains a non-visual summary. Empty cart/checkout captures, media-contract tests, and no-submission inspection confirmed no image error, order creation, BOG request, or payment operation. |
+| Account surfaces | Login, registration, wishlist, and unauthenticated `/profile` redirects were captured at desktop/mobile widths. Labels, recovery links, and Georgian content remain intact. No credentials were entered and no existing profile was opened or modified. |
+| About, contact, delivery, returns | 375px captures confirmed readable Georgian content, existing configured contact information, headers, footer, and bottom navigation without overlap. No editorial copy, business data, or SEO route changed. |
+| Administrator surface | The unauthenticated fallback was corrected and recaptured at 375px; the protected route continues to redirect/gate access. Existing authorization/security coverage passed; no private admin data or mutation was accessed during the audit. |
+
+Where no defect was observed, the approved layout and Georgian SEO-sensitive content were intentionally left unchanged. This preserves the user’s request for refinement rather than a redesign while documenting the route-specific validation boundary.
+
+## Authorized Shell and Catalog-Count Validation — 2026-08-12
+
+With the user-authorized browser session, the existing `/profile` shell loaded read-only and the existing `/admin` dashboard shell loaded without an authorization error. The audit did not open addresses, orders, account edits, or administrator mutation controls, and it does not retain any profile fields, order data, or other personal information. This confirms the authenticated shell boundary only; it is not a substitute for testing private-data workflows.
+
+The dashboard reports **170 total** product records while the public storefront reports **165 published** products. Read-only inspection confirms the five-record difference is the earlier legacy sample set (`id` 1–5): each record is already unpublished and therefore excluded from the public catalog. These legacy records retain historical placeholder URLs in the admin database only; no deletion, unpublishing, image mutation, or other destructive action was performed. The supplied 165-product public import remains intact.
+
+## Authenticated Account Surface Refinement
+
+An authorized, read-only profile inspection confirmed the account information tab preserved its existing labels, tab structure, edit action, and account controls. The three summary fields no longer rely on the previous saturated gold-tinted boxes: they now share a restrained neutral surface, standard border, and the existing warm-gold accent only for the compact label. This keeps the account surface consistent with the approved warm editorial palette without changing session handling, profile data, navigation, or account actions.
+
+The implementation is guarded by the `ui.header-contract` profile-surface assertion and was checked with a clean TypeScript run, production build, and full Vitest suite (**18 files passed, 94 tests passed; 3 opt-in integration files skipped**). Private addresses, order history, favourites, and account values were not inspected, exported, or recorded during this visual review.
