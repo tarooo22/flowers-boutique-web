@@ -130,3 +130,7 @@
 - [ ] Complete an authorized, read-only account-surface audit of the actual profile tabs and cards; correct only confirmed visual or accessibility defects without recording private data
 - [ ] Complete an authorized, non-destructive admin dashboard refinement/validation pass beyond the access-denied shell; document an evidence-backed no-change finding where no defect exists
 - [x] Replace the authenticated profile’s overly saturated gold information-card fill with an approved restrained surface treatment while preserving labels, fields, tabs, and account actions
+- [x] Display Georgian category names in the admin category filter when the active language is Georgian, while retaining the English fallback and existing filter behavior
+- [ ] Perform and document section-by-section, read-only validation of the authenticated admin dashboard overview, filters, product list, key controls, and responsive behavior
+- [ ] Capture focused post-fix evidence that the Georgian category-label update preserves the broader authenticated admin dashboard surface
+- [ ] Localize the admin header’s secondary control-room label for the active Georgian interface while preserving the Flower’s Boutique brand name and dashboard layout

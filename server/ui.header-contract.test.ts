@@ -145,6 +145,23 @@ describe("storefront header contract", () => {
     expect(admin).toContain("max-w-md text-[#666]");
   });
 
+  it("uses Georgian category names in the admin filter when Georgian is active", async () => {
+    const admin = await readFile(adminPath, "utf8");
+
+    expect(admin).toContain(
+      'language === "ka" ? cat.nameKa || cat.nameEn : cat.nameEn || cat.nameKa'
+    );
+    expect(admin).toContain("setFilterCategory(");
+  });
+
+  it("localises the admin header secondary label while retaining the Flower’s Boutique brand", async () => {
+    const admin = await readFile(adminPath, "utf8");
+
+    expect(admin).toContain("FLOWER’S BOUTIQUE · მართვის ცენტრი");
+    expect(admin).toContain("FLOWER’S BOUTIQUE · CONTROL ROOM");
+    expect(admin).toContain('language === "ka"');
+  });
+
   it("uses the restrained shared surface for profile information without changing account actions", async () => {
     const [profile, styles] = await Promise.all([
       readFile(profilePath, "utf8"),

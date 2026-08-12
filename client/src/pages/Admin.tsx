@@ -190,7 +190,11 @@ export default function Admin() {
           <div className="fb-admin-header__identity">
             <span><ShieldCheck size={23} /></span>
             <div>
-              <p>FLOWER’S BOUTIQUE · CONTROL ROOM</p>
+              <p>
+                {language === "ka"
+                  ? "FLOWER’S BOUTIQUE · მართვის ცენტრი"
+                  : "FLOWER’S BOUTIQUE · CONTROL ROOM"}
+              </p>
               <h1>{language === "ka" ? "ადმინისტრირების პანელი" : "Admin Panel"}</h1>
               <small>{language === "ka" ? "პროდუქტების, შეკვეთებისა და storefront-ის მართვა" : "Manage products, orders and storefront content"}</small>
             </div>
@@ -312,7 +316,7 @@ export default function Admin() {
                   </option>
                   {categories?.map((cat: any) => (
                     <option key={cat.id} value={cat.id}>
-                      {cat.nameEn}
+                      {language === "ka" ? cat.nameKa || cat.nameEn : cat.nameEn || cat.nameKa}
                     </option>
                   ))}
                 </select>
