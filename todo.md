@@ -186,3 +186,7 @@
 - [x] Present checkout truthfully as an Order Request flow while retaining its validated server-side order persistence and sandbox-only payment status.
 - [x] Replace Delivery page's stale phone, unsupported delivery cutoff/time promises, and payment-confirmation copy with shared public contact and verified policy information.
 - [x] Route WhatsApp and Messenger order requests through the shared public contact configuration; do not use placeholder messaging URLs.
+
+## Admin orders query repair — 2026-08-12
+- [x] Diagnose the failed `orders` list query with read-only schema and migration inspection; do not expose or alter order/customer/payment records.
+- [x] Apply only the verified non-destructive schema or query compatibility repair, and add regression coverage for the protected admin orders list.

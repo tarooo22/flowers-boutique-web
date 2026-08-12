@@ -25,3 +25,7 @@ Read-only 375px captures of `/catalog` and the public product detail route `/pro
 ### Cart Drawer source safeguard
 
 The Cart Drawer is a right-side modal rather than a persistent bottom CTA. Its item controls now have 44px hit areas and its sheet reserves 52px of lower mobile clearance. The related runtime source contract passes. Its open-state visual capture is intentionally pending because this privacy-preserving QA session does not create or mutate a cart merely to open the drawer.
+
+## Authenticated admin mobile QA status
+
+The connected browser session was checked at the development `/admin` route without submitting credentials or opening any private records. The server correctly rendered the localized access-denied surface, confirming that no authenticated administrator session is available for the outstanding 375px dashboard inspection. The protected dashboard, orders, customer data, and product-management controls were not accessed. This evidence is intentionally recorded as a blocker rather than inferred as authenticated-admin validation.

@@ -1,0 +1,43 @@
+-- Repairs a legacy orders table that lacks the columns selected by the active
+-- Drizzle schema. This migration is additive only: it does not read, update,
+-- delete, or seed any order, customer, or payment record.
+
+ALTER TABLE `orders`
+  ADD COLUMN IF NOT EXISTS `customerName` varchar(255) NULL,
+  ADD COLUMN IF NOT EXISTS `customerEmail` varchar(320) NULL,
+  ADD COLUMN IF NOT EXISTS `customerPhone` varchar(20) NULL,
+  ADD COLUMN IF NOT EXISTS `deliveryAddress` text NULL,
+  ADD COLUMN IF NOT EXISTS `latitude` decimal(10,6) NULL,
+  ADD COLUMN IF NOT EXISTS `longitude` decimal(10,6) NULL,
+  ADD COLUMN IF NOT EXISTS `placeId` varchar(255) NULL,
+  ADD COLUMN IF NOT EXISTS `building` varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS `entrance` varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS `floor` varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS `apartment` varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS `deliveryTime` varchar(20) NULL,
+  ADD COLUMN IF NOT EXISTS `giftMessage` text NULL,
+  ADD COLUMN IF NOT EXISTS `courierNotes` text NULL,
+  ADD COLUMN IF NOT EXISTS `orderChannel` enum('whatsapp','messenger','phone','email','card','website') DEFAULT 'whatsapp',
+  ADD COLUMN IF NOT EXISTS `deliveryStatus` enum('new','awaiting_confirmation','processing','preparing','courier','delivered','cancelled') DEFAULT 'new',
+  ADD COLUMN IF NOT EXISTS `orderNumber` int NULL,
+  ADD COLUMN IF NOT EXISTS `fulfillmentType` enum('delivery','pickup') DEFAULT 'delivery',
+  ADD COLUMN IF NOT EXISTS `deliveryFee` decimal(10,2) DEFAULT '0',
+  ADD COLUMN IF NOT EXISTS `bogOrderId` varchar(255) NULL,
+  ADD COLUMN IF NOT EXISTS `bogExternalOrderId` varchar(25) NULL,
+  ADD COLUMN IF NOT EXISTS `bogTransactionId` varchar(255) NULL,
+  ADD COLUMN IF NOT EXISTS `bogAuthCode` varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS `bogPayerIdentifier` varchar(255) NULL,
+  ADD COLUMN IF NOT EXISTS `bogPaymentMethod` varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS `bogPaymentStatus` varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS `bogCallbackReceived` boolean DEFAULT false,
+  ADD COLUMN IF NOT EXISTS `paidAt` timestamp NULL,
+  ADD COLUMN IF NOT EXISTS `paymentLastCheckedAt` timestamp NULL,
+  ADD COLUMN IF NOT EXISTS `paymentFailureReason` text NULL,
+  ADD COLUMN IF NOT EXISTS `status` enum('pending','pending_payment','paid','failed','confirmed','preparing','delivered','cancelled') DEFAULT 'pending',
+  ADD COLUMN IF NOT EXISTS `metaFbc` varchar(500) NULL,
+  ADD COLUMN IF NOT EXISTS `metaFbp` varchar(500) NULL,
+  ADD COLUMN IF NOT EXISTS `deletedAt` timestamp NULL,
+  ADD COLUMN IF NOT EXISTS `deletedByUserId` int NULL,
+  ADD COLUMN IF NOT EXISTS `deletionReason` text NULL;
+
+CREATE UNIQUE INDEX IF NOT EXISTS `orders_orderNumber_unique` ON `orders` (`orderNumber`);
