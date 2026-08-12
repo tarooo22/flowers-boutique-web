@@ -143,14 +143,18 @@
 - [x] Implement server-side pagination, sorting, and availability filtering for the catalog (rendering initial 18-24 items with load more / pagination)
 - [x] Repair or verify homepage editorial image paths (/flower-assets/editorial/pink-roses.webp, /flower-assets/editorial/mixed-bouquet.webp) with robust fallbacks
 - [x] Optimize product detail page loading states and performance
-- [ ] Formalize checkout as a robust transactional flow or explicitly labelled Order Request with complete validation and server-side fee calculation
-- [ ] Unify delivery fees and policies (consistent ₾5 / free above ₾150, verified hours, single source of truth)
-- [ ] Standardize SEO base URL (flowers-boutique.manus.space), robots.txt, sitemap.xml, canonicals, and Open Graph metadata
-- [ ] Enhance Bouquet Builder with H1, page meta, footer, larger quantity controls, responsive QA, and inventory-safe cart integration
-- [ ] Ensure semantic `main` landmarks across all pages (About, Delivery, Returns, Checkout, etc.)
-- [ ] Replace contact mailto with robust server-side contact workflow
-- [ ] Audit and enforce 44x44px minimum touch targets across catalog, bouquet builder, and navigation
-- [ ] Resolve Made with Manus badge overlap with fixed mobile navigation / form CTAs
+- [x] Formalize checkout as a robust transactional flow or explicitly labelled Order Request with complete validation and server-side fee calculation
+- [x] Unify delivery fees and policies (consistent ₾5 / free above ₾150, verified hours, single source of truth)
+- [x] Standardize SEO base URL to the active Manus production domain, robots.txt, sitemap.xml, canonicals, and Open Graph metadata
+- [x] Enhance Bouquet Builder with H1, page meta, footer, larger quantity controls, responsive QA, and inventory-safe cart integration
+- [x] Enforce and test server-side revalidation of nested Visual and AI bouquet flower inventory at order submission, alongside client-side cart guards.
+- [x] Ensure semantic `main` landmarks across key public information and transactional pages (About, Delivery, Returns, Checkout, PaymentSuccess, Contact, and Bouquet Builder)
+- [x] Replace contact mailto with robust server-side contact workflow
+- [x] Audit and enforce 44x44px minimum touch targets across catalog, bouquet builder, Cart Drawer, and navigation
+- [x] Resolve Made with Manus badge overlap risk by reserving Product Detail action-bar clearance above external platform chrome
+- [x] Audit every fixed mobile navigation and CTA surface (Product Detail, Checkout, Contact, and Cart Drawer) for external platform-chrome overlap risk.
+- [ ] Add evidence-backed safeguards and 375px privacy-preserving QA records for every affected fixed mobile CTA surface.
+- [x] Add Cart Drawer safe lower clearance and 44px remove/quantity controls without changing cart business logic.
 - [ ] Review Georgian copy on checkout, delivery, and returns for native accuracy and owner alignment
 - [ ] Run comprehensive staging-style validation and publish final verified checkpoint
 
@@ -177,3 +181,8 @@
 
 ## Brand localization refinement — 2026-08-12
 - [x] Update Header and Footer wordmarks to show “Flower’s Boutique & Events” in English and “ყვავილების ბუტიკი & ივენთები” in Georgian, preserving responsive design and accessibility.
+
+## Checkout and delivery consistency refinement — 2026-08-12
+- [x] Present checkout truthfully as an Order Request flow while retaining its validated server-side order persistence and sandbox-only payment status.
+- [x] Replace Delivery page's stale phone, unsupported delivery cutoff/time promises, and payment-confirmation copy with shared public contact and verified policy information.
+- [x] Route WhatsApp and Messenger order requests through the shared public contact configuration; do not use placeholder messaging URLs.

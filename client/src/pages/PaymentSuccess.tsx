@@ -66,7 +66,7 @@ export default function PaymentSuccess() {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-amber-50 to-white">
       <Navbar />
-      <div className="flex-1 flex items-center justify-center px-4 py-16">
+      <main id="main-content" className="flex-1 flex items-center justify-center px-4 py-16">
         <Card className="w-full max-w-md p-8 text-center border-gold/20 shadow-lg">
           <div className="flex justify-center mb-6" aria-live="polite">
             {paymentQuery.isLoading || paymentQuery.isFetching ? (
@@ -130,7 +130,7 @@ export default function PaymentSuccess() {
             </Button>
           </div>
         </Card>
-      </div>
+      </main>
       <Footer />
     </div>
   );

@@ -65,6 +65,8 @@ export default function About() {
     <div className="fb-secondary-page fb-about-page p2-about-page min-h-screen" style={{ background: '#f7f2e9' }}>
       <Navbar />
 
+      <main id="main-content">
+
       {/* Hero */}
       <div className="fb-about-hero p2-about-hero relative overflow-hidden">
         <img
@@ -219,6 +221,7 @@ export default function About() {
         </div>
       </section>
 
+      </main>
       <Footer />
       <CartDrawer />
     </div>

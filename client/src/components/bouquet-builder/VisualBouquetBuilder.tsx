@@ -71,6 +71,9 @@ export function VisualBouquetBuilder({
     (sum, item) => sum + item.quantity,
     0
   );
+  const hasUnavailableSelection = selectedFlowers.some(
+    item => item.product.isAvailable === false
+  );
   const total = selectedFlowers.reduce(
     (sum, item) => sum + item.unitPrice * item.quantity,
     0
@@ -89,6 +92,15 @@ export function VisualBouquetBuilder({
     if (selectedStemCount === 0) {
       toast.error(
         language === "ka" ? "გთხოვთ, აირჩიოთ ყვავილები" : "Choose your flowers"
+      );
+      return;
+    }
+
+    if (hasUnavailableSelection) {
+      toast.error(
+        language === "ka"
+          ? "არჩეულ თაიგულში ერთ-ერთი ყვავილი აღარ არის მარაგში. გთხოვთ, განაახლოთ არჩევანი."
+          : "One of the selected flowers is no longer in stock. Please update your bouquet."
       );
       return;
     }
@@ -454,6 +466,12 @@ export function VisualBouquetBuilder({
                     onQuantityChange={quantity =>
                       setQuantities(current => {
                         const currentQuantity = current[product.id] ?? 0;
+                        if (
+                          product.isAvailable === false &&
+                          quantity > currentQuantity
+                        ) {
+                          return current;
+                        }
                         if (
                           quantity > currentQuantity &&
                           selectedStemCount >= MAX_BOUQUET_STEMS

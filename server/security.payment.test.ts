@@ -121,6 +121,35 @@ describe("canonical BOG payment pricing", () => {
     ).rejects.toMatchObject({ code: "BAD_REQUEST" });
   });
 
+  it("revalidates nested Visual and AI bouquet flowers at checkout submission", async () => {
+    const visualBouquet = {
+      type: "visual-bouquet",
+      flowers: [{ productId: 101, quantity: 3 }],
+    };
+    const aiBouquet = JSON.stringify({
+      type: "custom-ai-bouquet",
+      flowers: [{ productId: 101, quantity: 2 }],
+    });
+    const loadProduct = async (id: number) =>
+      id === 42 ? product : { ...product, id, isAvailable: false };
+
+    await expect(
+      calculateCanonicalPayment(
+        [{ productId: 42, quantity: 1, customData: visualBouquet }],
+        "pickup",
+        loadProduct,
+      ),
+    ).rejects.toMatchObject({ code: "BAD_REQUEST", message: "Custom bouquet flower is unavailable" });
+
+    await expect(
+      calculateCanonicalPayment(
+        [{ productId: 42, quantity: 1, customData: aiBouquet }],
+        "pickup",
+        loadProduct,
+      ),
+    ).rejects.toMatchObject({ code: "BAD_REQUEST", message: "Custom bouquet flower is unavailable" });
+  });
+
   it("maps trusted BOG statuses and keeps duplicate transitions stable", () => {
     expect(mapBOGStatus("completed")).toMatchObject({ localStatus: "paid", publicStatus: "paid" });
     expect(mapBOGStatus("rejected")).toMatchObject({ localStatus: "failed", publicStatus: "failed" });

@@ -6,7 +6,7 @@ Disallow: /admin
 Disallow: /api/
 
 # Sitemap location
-Sitemap: https://flowers-boutique.example/sitemap.xml
+Sitemap: https://flower-shop-jx9auvvz.manus.space/sitemap.xml
 
 # Crawl-delay for polite crawling
 Crawl-delay: 1

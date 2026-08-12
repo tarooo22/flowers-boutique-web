@@ -17,7 +17,9 @@
 
 import { useEffect } from "react";
 
-const BASE_URL = import.meta.env.VITE_SITE_URL || "https://flowers-boutique.example";
+const BASE_URL = (
+  import.meta.env.VITE_SITE_URL || "https://flower-shop-jx9auvvz.manus.space"
+).replace(/\/$/, "");
 const DEFAULT_OG_IMAGE = `${BASE_URL}/flowers-boutique-hero-placeholder.svg`;
 
 interface SEOProps {
@@ -94,12 +96,15 @@ export function useSEO({
     setMeta("og:description", description, "property");
     setMeta("og:url", canonicalUrl, "property");
     setMeta("og:image", image, "property");
+    setMeta("og:type", "website", "property");
+    setMeta("og:site_name", "Flower’s Boutique & Events", "property");
     setMeta("og:locale", lang === "ka" ? "ka_GE" : "en_US", "property");
 
     // Twitter
     setMeta("twitter:title", lang === "ka" ? titleKa : titleEn);
     setMeta("twitter:description", lang === "ka" ? descriptionKa : descriptionEn);
     setMeta("twitter:image", image);
+    setMeta("twitter:card", "summary_large_image");
 
     // Canonical
     setLink("canonical", canonicalUrl);

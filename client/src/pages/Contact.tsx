@@ -19,6 +19,7 @@ import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSEO } from "@/hooks/useSEO";
 import { contactFallback, phoneHref, siteContact } from "@/lib/siteConfig";
+import { trpc } from "@/lib/trpc";
 
 type ContactForm = {
   name: string;
@@ -34,6 +35,32 @@ export default function Contact() {
     name: "",
     email: "",
     message: "",
+  });
+  const contactMutation = trpc.contact.submit.useMutation({
+    onSuccess: ({ delivered }) => {
+      if (delivered) {
+        toast.success(
+          ka
+            ? "თქვენი შეტყობინება მიღებულია. მალე დაგიკავშირდებით."
+            : "Your message has been received. We’ll be in touch soon."
+        );
+        setForm({ name: "", email: "", message: "" });
+        return;
+      }
+
+      toast.info(
+        ka
+          ? "შეტყობინების სერვისი დროებით მიუწვდომელია. გამოიყენეთ სწრაფი კავშირის არხები."
+          : "Messaging is temporarily unavailable. Please use a quick contact option."
+      );
+    },
+    onError: () => {
+      toast.error(
+        ka
+          ? "შეტყობინება ვერ გაიგზავნა. სცადეთ სწრაფი კავშირის არხი."
+          : "We could not send the message. Please use a quick contact option."
+      );
+    },
   });
 
   useSEO({
@@ -70,7 +97,7 @@ export default function Contact() {
       icon: Mail,
       label: ka ? "ელ-ფოსტა" : "Email",
       value: siteContact.email || fallback,
-      href: siteContact.email ? `mailto:${siteContact.email}` : "",
+      href: "",
     },
     {
       icon: Clock3,
@@ -82,19 +109,7 @@ export default function Contact() {
 
   const submitContact = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!siteContact.email) {
-      toast.info(
-        ka
-          ? "შეტყობინებისთვის გამოიყენეთ სწრაფი კავშირი ან შეკვეთის კომენტარი."
-          : "Use quick contact or the order note for messages."
-      );
-      return;
-    }
-    const subject = encodeURIComponent(`Flower's Boutique — ${form.name}`);
-    const body = encodeURIComponent(
-      `${form.message}\n\n${form.name}\n${form.email}`
-    );
-    window.location.href = `mailto:${siteContact.email}?subject=${subject}&body=${body}`;
+    contactMutation.mutate(form);
   };
 
   return (
@@ -289,6 +304,7 @@ export default function Contact() {
                     name="name"
                     autoComplete="name"
                     required
+                    maxLength={80}
                     value={form.name}
                     onChange={event =>
                       setForm({ ...form, name: event.target.value })
@@ -303,6 +319,7 @@ export default function Contact() {
                     type="email"
                     autoComplete="email"
                     required
+                    maxLength={254}
                     value={form.email}
                     onChange={event =>
                       setForm({ ...form, email: event.target.value })
@@ -319,30 +336,28 @@ export default function Contact() {
                     name="message"
                     rows={5}
                     required
+                    minLength={10}
+                    maxLength={1800}
                     value={form.message}
                     onChange={event =>
                       setForm({ ...form, message: event.target.value })
                     }
                   />
                 </label>
-                <button type="submit">
+                <button type="submit" disabled={contactMutation.isPending}>
                   <Send size={17} />
-                  {siteContact.email
+                  {contactMutation.isPending
                     ? ka
-                      ? "ელ-ფოსტით გაგზავნა"
-                      : "Send by email"
+                      ? "იგზავნება..."
+                      : "Sending..."
                     : ka
-                      ? "კავშირის ვარიანტების ნახვა"
-                      : "View contact options"}
+                      ? "შეტყობინების გაგზავნა"
+                      : "Send message"}
                 </button>
-                <p>
-                  {siteContact.email
-                    ? ka
-                      ? "გაიხსნება თქვენი ელ-ფოსტის აპი შევსებული შეტყობინებით."
-                      : "Your email app will open with the message prepared."
-                    : ka
-                      ? "ელ-ფოსტის დამატებამდე გამოიყენეთ ზემოთ მოცემული სწრაფი კავშირის არხები."
-                      : "Until email is configured, use one of the quick contact options above."}
+                <p aria-live="polite">
+                  {ka
+                    ? "შეტყობინება გადაეგზავნება ჩვენს გუნდს და ამ ფორმიდან არ შეინახება. თუ სერვისი მიუწვდომელია, გამოიყენეთ ზემოთ მოცემული სწრაფი კავშირის არხები."
+                    : "Your message is forwarded to our team and is not stored from this form. If the service is unavailable, use one of the quick contact options above."}
                 </p>
               </form>
             </section>

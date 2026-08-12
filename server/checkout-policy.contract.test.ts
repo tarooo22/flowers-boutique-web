@@ -32,6 +32,23 @@ describe("shared checkout and delivery policy", () => {
     expect(paymentSecurity).not.toMatch(/deliveryFeeMinor\s*=\s*1000/);
   });
 
+  it("keeps the messaging-based checkout honest and config-driven", () => {
+    const checkout = read("../client/src/pages/Checkout.tsx");
+    const delivery = read("../client/src/pages/Delivery.tsx");
+
+    expect(checkout).toContain('import { siteContact } from "@/lib/siteConfig"');
+    expect(checkout).toContain("Order Request");
+    expect(checkout).toContain("შეკვეთის მოთხოვნა");
+    expect(checkout.match(/fulfillmentType: deliveryType/g)).toHaveLength(2);
+    expect(checkout).toContain("siteContact.whatsapp");
+    expect(checkout).toContain("siteContact.messenger");
+    expect(checkout).not.toContain("995555555555");
+    expect(delivery).toContain("siteContact.hoursKa");
+    expect(delivery).toContain("siteContact.hoursEn");
+    expect(delivery).not.toContain("+995 32 2 123 456");
+    expect(delivery).not.toContain("before 2 PM");
+  });
+
   it("persists only canonical payment fields in both order mutations", () => {
     const routers = read("./routers.ts");
 

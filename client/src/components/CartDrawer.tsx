@@ -138,7 +138,7 @@ export default function CartDrawer() {
         closeDrawer();
       }
     }}>
-      <SheetContent side="right" className="w-full sm:w-[450px] flex flex-col p-0 bg-[#FAF8F5] overflow-hidden">
+      <SheetContent side="right" className="w-full sm:w-[450px] flex flex-col p-0 pb-[52px] sm:pb-0 bg-[#FAF8F5] overflow-hidden">
         {/* Header */}
         <SheetHeader className="px-6 pt-6 pb-4 bg-white/50 backdrop-blur-sm border-b border-[#E8DCC8]">
           <div className="flex items-center justify-between">
@@ -204,7 +204,8 @@ export default function CartDrawer() {
                     {/* Remove Button */}
                     <button
                       onClick={() => handleRemoveItem(item.productId, item.selectedVariantId)}
-                      className="text-[#999] hover:text-[#E74C3C] transition-colors flex-shrink-0 mt-1"
+                      className="flex h-11 w-11 shrink-0 items-center justify-center text-[#999] transition-colors hover:text-[#E74C3C]"
+                      aria-label={language === 'ka' ? `${item.name} კალათიდან წაშლა` : `Remove ${item.name} from cart`}
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -217,7 +218,8 @@ export default function CartDrawer() {
                   <div className="flex items-center gap-2 mt-3 bg-[#F5F2EE] rounded-lg p-1.5 w-fit">
                     <button
                       onClick={() => handleUpdateQuantity(item.productId, Math.max(1, item.quantity - 1), item.selectedVariantId)}
-                      className="p-1 hover:bg-white rounded transition-colors"
+                      className="flex h-11 w-11 items-center justify-center rounded transition-colors hover:bg-white"
+                      aria-label={language === 'ka' ? `${item.name} რაოდენობის შემცირება` : `Decrease ${item.name} quantity`}
                     >
                       <Minus className="w-3.5 h-3.5 text-[#8B6F47]" />
                     </button>
@@ -226,7 +228,8 @@ export default function CartDrawer() {
                     </span>
                     <button
                       onClick={() => handleUpdateQuantity(item.productId, item.quantity + 1, item.selectedVariantId)}
-                      className="p-1 hover:bg-white rounded transition-colors"
+                      className="flex h-11 w-11 items-center justify-center rounded transition-colors hover:bg-white"
+                      aria-label={language === 'ka' ? `${item.name} რაოდენობის გაზრდა` : `Increase ${item.name} quantity`}
                     >
                       <Plus className="w-3.5 h-3.5 text-[#8B6F47]" />
                     </button>

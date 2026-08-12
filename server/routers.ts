@@ -30,6 +30,12 @@ const orderItemSchema = z.object({
   customData: z.unknown().optional(),
 });
 
+const contactSubmissionSchema = z.object({
+  name: z.string().trim().min(2).max(80),
+  email: z.string().trim().email().max(254),
+  message: z.string().trim().min(10).max(1800),
+});
+
 async function canonicalizeOrderItems(
   items: Array<z.infer<typeof orderItemSchema>>,
   fulfillmentType: "delivery" | "pickup",
@@ -113,6 +119,32 @@ export const appRouter = router({
         success: true,
       } as const;
     }),
+  }),
+
+  contact: router({
+    submit: publicProcedure
+      .input(contactSubmissionSchema)
+      .mutation(async ({ input }) => {
+        const content = [
+          `Name: ${input.name}`,
+          `Email: ${input.email}`,
+          "",
+          input.message,
+        ].join("\n");
+
+        try {
+          const delivered = await notifyOwner({
+            title: "Flower’s Boutique contact request",
+            content,
+          });
+
+          return { accepted: true, delivered } as const;
+        } catch {
+          // Requests are intentionally not persisted. Do not log form contents.
+          console.warn("[Contact] Owner notification service unavailable");
+          return { accepted: true, delivered: false } as const;
+        }
+      }),
   }),
 
   // Product routers

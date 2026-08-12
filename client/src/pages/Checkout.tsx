@@ -18,11 +18,12 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useSEO } from "@/hooks/useSEO";
 import { getDeliveryFeeGEL } from "@shared/checkoutPolicy";
+import { siteContact } from "@/lib/siteConfig";
 
 const translations = {
   en: {
-    checkout: "Checkout",
-    pickDeliveryDate: "Pick a delivery date and we'll take it from there.",
+    checkout: "Order Request",
+    pickDeliveryDate: "Share the order details below. Our team will confirm the request with you.",
     customerDetails: "Your details",
     fullName: "Your name",
     phone: "Your phone",
@@ -59,9 +60,9 @@ const translations = {
     subtotal: "Subtotal",
     deliveryFeeLabel: "Delivery",
     total: "Total",
-    whatsapp: "WhatsApp",
-    messenger: "Messenger",
-    placeOrder: "Place Order",
+    whatsapp: "Send request via WhatsApp",
+    messenger: "Send request via Messenger",
+    placeOrder: "Send order request",
     backToCart: "Back to Cart",
     requiredField: "Required field",
     selectDeliveryDate: "Please select a delivery date",
@@ -69,8 +70,8 @@ const translations = {
     willCallIfNeeded: "We'll call if needed",
   },
   ka: {
-    checkout: "შეკვეთის გაფორმება",
-    pickDeliveryDate: "აირჩიეთ მიწოდების თარიღი და ჩვენ დავიკვებით.",
+    checkout: "შეკვეთის მოთხოვნა",
+    pickDeliveryDate: "შეავსეთ შეკვეთის დეტალები. ჩვენი გუნდი მოთხოვნას თქვენთან დაადასტურებს.",
     customerDetails: "თქვენი დეტალები",
     fullName: "თქვენი სახელი",
     phone: "თქვენი ტელეფონი",
@@ -107,9 +108,9 @@ const translations = {
     subtotal: "ჯამი",
     deliveryFeeLabel: "მიწოდება",
     total: "სულ",
-    whatsapp: "WhatsApp",
-    messenger: "Messenger",
-    placeOrder: "შეკვეთის გაფორმება",
+    whatsapp: "მოთხოვნის გაგზავნა WhatsApp-ით",
+    messenger: "მოთხოვნის გაგზავნა Messenger-ით",
+    placeOrder: "შეკვეთის მოთხოვნის გაგზავნა",
     backToCart: "კალათაში დაბრუნება",
     requiredField: "აუცილებელი ველი",
     selectDeliveryDate: "აირჩიეთ მიწოდების თარიღი",
@@ -367,10 +368,11 @@ export default function Checkout() {
         deliveryTime: selectedTime,
         giftMessage: cardMessage,
         orderChannel: 'whatsapp',
+        fulfillmentType: deliveryType,
       });
 
       clearCart();
-      const whatsappUrl = `https://wa.me/995555555555?text=${encodeURIComponent(message)}`;
+      const whatsappUrl = `${siteContact.whatsapp}?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
       navigate("/");
     } catch (error) {
@@ -415,10 +417,11 @@ export default function Checkout() {
         deliveryTime: selectedTime,
         giftMessage: cardMessage,
         orderChannel: 'messenger',
+        fulfillmentType: deliveryType,
       });
 
       clearCart();
-      window.open('https://m.me/flowers-boutique', '_blank');
+      window.open(siteContact.messenger, '_blank');
       navigate("/");
     } catch (error) {
       console.error('Messenger order failed:', error);
@@ -449,7 +452,7 @@ export default function Checkout() {
         onCancel={() => setIsMapOpen(false)}
       />
 
-      <div className="fb-checkout-shell max-w-7xl mx-auto px-4 py-6 md:py-8">
+      <main id="main-content" className="fb-checkout-shell max-w-7xl mx-auto px-4 py-6 md:py-8">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <button
@@ -857,7 +860,7 @@ export default function Checkout() {
             </div>
           </div>
         </div>
-      </div>
+      </main>
       <Footer />
     </div>
   );

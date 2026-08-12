@@ -62,6 +62,84 @@ export function canonicalBOGAmounts(payment: CanonicalPayment) {
 
 export type LoadProduct = (productId: number) => Promise<Product | null | undefined>;
 
+type NestedBouquetFlower = {
+  productId: number;
+  quantity: number;
+};
+
+function getNestedBouquetFlowers(customData: unknown): NestedBouquetFlower[] {
+  const parsed =
+    typeof customData === "string"
+      ? (() => {
+          try {
+            return JSON.parse(customData) as unknown;
+          } catch {
+            throw new TRPCError({
+              code: "BAD_REQUEST",
+              message: "Custom bouquet data is invalid",
+            });
+          }
+        })()
+      : customData;
+
+  if (!parsed || typeof parsed !== "object") return [];
+
+  const record = parsed as { type?: unknown; flowers?: unknown };
+  if (record.type !== "visual-bouquet" && record.type !== "custom-ai-bouquet") {
+    return [];
+  }
+  if (!Array.isArray(record.flowers) || record.flowers.length === 0) {
+    throw new TRPCError({
+      code: "BAD_REQUEST",
+      message: "Custom bouquet flowers are required",
+    });
+  }
+
+  return record.flowers.map((flower): NestedBouquetFlower => {
+    if (!flower || typeof flower !== "object") {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "Custom bouquet flower is invalid",
+      });
+    }
+
+    const candidate = flower as { productId?: unknown; quantity?: unknown };
+    if (
+      !Number.isInteger(candidate.productId) ||
+      typeof candidate.productId !== "number" ||
+      !Number.isInteger(candidate.quantity) ||
+      typeof candidate.quantity !== "number" ||
+      candidate.productId <= 0 ||
+      candidate.quantity < 1 ||
+      candidate.quantity > 99
+    ) {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "Custom bouquet flower is invalid",
+      });
+    }
+
+    return { productId: candidate.productId, quantity: candidate.quantity };
+  });
+}
+
+async function validateNestedBouquetAvailability(
+  customData: unknown,
+  loadProduct: LoadProduct,
+): Promise<void> {
+  const flowers = getNestedBouquetFlowers(customData);
+
+  for (const flower of flowers) {
+    const product = await loadProduct(flower.productId);
+    if (!product) {
+      throw new TRPCError({ code: "NOT_FOUND", message: "Custom bouquet flower not found" });
+    }
+    if (!product.isAvailable || product.published === false) {
+      throw new TRPCError({ code: "BAD_REQUEST", message: "Custom bouquet flower is unavailable" });
+    }
+  }
+}
+
 export function toMinorUnits(value: string | number | null | undefined): number {
   if (value === null || value === undefined) {
     throw new TRPCError({ code: "BAD_REQUEST", message: "Product price is unavailable" });
@@ -129,6 +207,8 @@ export async function calculateCanonicalPayment(
     if (variant && variant.available === false) {
       throw new TRPCError({ code: "BAD_REQUEST", message: "Selected product variant is unavailable" });
     }
+
+    await validateNestedBouquetAvailability(selection.customData, loadProduct);
 
     const unitPriceMinor = toMinorUnits(variant?.priceMin ?? product.priceMin);
     const lineTotalMinor = unitPriceMinor * selection.quantity;

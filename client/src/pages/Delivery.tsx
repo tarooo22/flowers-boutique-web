@@ -12,61 +12,59 @@ export default function Delivery() {
   const content = {
     en: {
       title: "Delivery Information",
-      subtitle: "Fast and reliable flower delivery across Tbilisi",
+      subtitle: "Provide your preferred delivery details and our team will confirm the request with you.",
       
       section1Title: "Delivery Areas",
-      section1Text: "We deliver flowers throughout Tbilisi and surrounding areas. Same-day delivery is available for orders placed before 2 PM.",
+      section1Text: "Add the recipient address to your order request. We will confirm the delivery details with you before fulfilment.",
       
       section2Title: "Delivery Times",
-      section2Text: "Standard delivery: 2-4 hours\nExpress delivery: 1-2 hours\nScheduled delivery: Choose your preferred date and time",
+      section2Text: "Select your preferred delivery date and time window in the order request. The final time is confirmed directly with you.",
       
       section3Title: "Delivery Cost",
       section3Text: `Free delivery for orders at or above ${FREE_DELIVERY_THRESHOLD_GEL} GEL\nDelivery fee: ${DELIVERY_FEE_GEL} GEL for orders under ${FREE_DELIVERY_THRESHOLD_GEL} GEL`,
       
       section4Title: "How to Order",
       step1: "1. Browse our catalog and select flowers",
-      step2: "2. Add items to cart and proceed to checkout",
+      step2: "2. Add items to cart and open the order request",
       step3: "3. Enter delivery address and preferred time",
-      step4: "4. Choose payment method and confirm",
-      step5: "5. Our team will prepare and deliver your flowers",
+      step4: "4. Send the request through WhatsApp or Messenger",
+      step5: "5. Our team will confirm the order details with you",
       
       section5Title: "Contact Us",
-      contactText: "For delivery inquiries, call us at +995 32 2 123 456 or message us on WhatsApp",
+      contactText: "For delivery questions, use the verified phone number or WhatsApp contact below.",
       
       contactInfo: "Contact Information",
       phone: "Phone",
       email: "Email",
       hours: "Working Hours",
-      hoursText: "Monday - Sunday: 9:00 AM - 8:00 PM",
     },
     ka: {
       title: "მიტანის ინფორმაცია",
-      subtitle: "სწრაფი და საიმედო ყვავილების მიტანა თბილისის მასშტაბით",
+      subtitle: "მიუთითეთ სასურველი მიტანის დეტალები და ჩვენი გუნდი მოთხოვნას თქვენთან დაადასტურებს.",
       
       section1Title: "მიტანის ტერიტორია",
-      section1Text: "ჩვენ ვიტანთ ყვავილებს თბილისის მთელ ტერიტორიაზე და მის გარშემო. იმავე დღის მიტანა ხელმისაწვდომია 14:00-მდე შეკვეთილი შეკვეთებისთვის.",
+      section1Text: "შეკვეთის მოთხოვნაში მიუთითეთ მიმღების მისამართი. შესრულებამდე მიტანის დეტალებს თქვენთან დავადასტურებთ.",
       
       section2Title: "მიტანის დრო",
-      section2Text: "სტანდარტული მიტანა: 2-4 საათი\nექსპრეს მიტანა: 1-2 საათი\nგეგმიური მიტანა: აირჩიეთ სასურველი თარიღი და დრო",
+      section2Text: "შეკვეთის მოთხოვნაში აირჩიეთ სასურველი თარიღი და დროის მონაკვეთი. საბოლოო დრო თქვენთან პირდაპირ დადასტურდება.",
       
       section3Title: "მიტანის ღირებულება",
       section3Text: `უფასო მიტანა ${FREE_DELIVERY_THRESHOLD_GEL} ლარის ან მეტი შეკვეთებისთვის\nმიტანის ტარიფი: ${DELIVERY_FEE_GEL} ლარი ${FREE_DELIVERY_THRESHOLD_GEL} ლარზე ნაკლები შეკვეთებისთვის`,
       
       section4Title: "როგორ შეკვეთოთ",
       step1: "1. დათვალიერეთ ჩვენი კატალოგი და აირჩიეთ ყვავილები",
-      step2: "2. დაამატეთ ნივხი კალათაში და გადაიდით გადახდაზე",
+      step2: "2. დაამატეთ ნივთები კალათაში და გახსენით შეკვეთის მოთხოვნა",
       step3: "3. შეიყვანეთ მიტანის მისამართი და სასურველი დრო",
-      step4: "4. აირჩიეთ გადახდის მეთოდი და დაადასტურეთ",
-      step5: "5. ჩვენი გუნდი მოამზადებს და მიტანს თქვენი ყვავილებს",
+      step4: "4. გააგზავნეთ მოთხოვნა WhatsApp-ით ან Messenger-ით",
+      step5: "5. ჩვენი გუნდი შეკვეთის დეტალებს თქვენთან დაადასტურებს",
       
       section5Title: "დაკონტაქტეთ ჩვენ",
-      contactText: "მიტანის შესახებ ინფორმაციისთვის, დაგვირეკეთ +995 32 2 123 456 ან მოწერეთ WhatsApp-ზე",
+      contactText: "მიტანის შესახებ ინფორმაციისთვის გამოიყენეთ ქვემოთ მითითებული დადასტურებული ტელეფონი ან WhatsApp.",
       
       contactInfo: "საკონტაქტო ინფორმაცია",
       phone: "ტელეფონი",
       email: "ელ-ფოსტა",
       hours: "სამუშაო საათები",
-      hoursText: "ორშაბათი - კვირა: 09:00 - 20:00",
     },
   };
 
@@ -75,7 +73,7 @@ export default function Delivery() {
   return (
     <div className="fb-delivery-page min-h-screen flex flex-col bg-[#f7f2e9]">
       <Navbar />
-      <div className="flex-1 container max-w-4xl mx-auto px-4 py-16">
+      <main id="main-content" className="flex-1 container max-w-4xl mx-auto px-4 py-16">
         <div className="mb-12">
           <h1 className="text-4xl font-bold text-amber-900 mb-2">{t.title}</h1>
           <p className="text-lg text-amber-700">{t.subtitle}</p>
@@ -171,11 +169,13 @@ export default function Delivery() {
               <p className="text-sm text-amber-700 font-semibold mb-1">
                 {t.hours}
               </p>
-              <p className="text-lg text-amber-900 font-bold">{t.hoursText}</p>
+              <p className="text-lg text-amber-900 font-bold">
+                {language === "ka" ? siteContact.hoursKa : siteContact.hoursEn}
+              </p>
             </div>
           </div>
         </Card>
-      </div>
+      </main>
       <Footer />
     </div>
   );

@@ -71,6 +71,9 @@ export function AIBouquetMode({
     () => selectedFlowers.reduce((sum, item) => sum + item.quantity, 0),
     [selectedFlowers]
   );
+  const hasUnavailableSelection = selectedFlowers.some(
+    item => item.product.isAvailable === false
+  );
 
   const selectedProductIds = useMemo(
     () => new Set(selectedFlowers.map(item => item.product.id)),
@@ -252,6 +255,15 @@ export function AIBouquetMode({
         language === "ka"
           ? "კალათაში დამატებისთვის აირჩიეთ მინიმუმ ერთი ყვავილი."
           : "Please select at least one flower to add to cart"
+      );
+      return;
+    }
+
+    if (hasUnavailableSelection) {
+      toast.error(
+        language === "ka"
+          ? "არჩეულ თაიგულში ერთ-ერთი ყვავილი აღარ არის მარაგში. გთხოვთ, განაახლოთ არჩევანი."
+          : "One of the selected flowers is no longer in stock. Please update your bouquet."
       );
       return;
     }
@@ -631,7 +643,7 @@ export function AIBouquetMode({
                             type="button"
                             onClick={() => updateQuantity(product, -1)}
                             disabled={!selected || isGenerating}
-                            className="grid h-10 w-10 place-items-center rounded-full border border-[#ddcdb9] bg-white text-[#6f6256] transition hover:border-[#b99568] hover:bg-[#faf4eb] disabled:cursor-not-allowed disabled:opacity-30"
+                            className="grid h-11 w-11 place-items-center rounded-full border border-[#ddcdb9] bg-white text-[#6f6256] transition hover:border-[#b99568] hover:bg-[#faf4eb] disabled:cursor-not-allowed disabled:opacity-30"
                             aria-label={
                               language === "ka"
                                 ? `${productName} — რაოდენობის შემცირება`
@@ -656,7 +668,7 @@ export function AIBouquetMode({
                               (!selected &&
                                 selectedFlowers.length >= MAX_AI_FLOWER_TYPES)
                             }
-                            className="grid h-10 w-10 place-items-center rounded-full border border-[#c9a77a] bg-[#f6ead9] text-[#8e602e] transition hover:bg-[#eed9bc] disabled:cursor-not-allowed disabled:opacity-30"
+                            className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a77a] bg-[#f6ead9] text-[#8e602e] transition hover:bg-[#eed9bc] disabled:cursor-not-allowed disabled:opacity-30"
                             aria-label={
                               language === "ka"
                                 ? `${productName} — რაოდენობის გაზრდა`

@@ -717,12 +717,16 @@ a:focus-visible {
   background: transparent;
   min-width: 0;
   width: 100%;
-  height: 42px;
+  height: 44px;
   outline: 0;
   font-size: 14px;
   color: #211e1b;
 }
 .fb-search-field button {
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
   color: #8e8475;
 }
 .fb-catalog-filters fieldset {
@@ -742,7 +746,7 @@ a:focus-visible {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  min-height: 40px;
+  min-height: 44px;
   text-align: left;
   padding: 0 9px;
   color: #5f5a53;
@@ -774,7 +778,7 @@ a:focus-visible {
 }
 .fb-price-fields input {
   width: 100%;
-  height: 40px;
+  height: 44px;
   border: 1px solid #d9cfc0;
   background: #fff;
   padding: 0 9px;
@@ -790,6 +794,7 @@ a:focus-visible {
   display: flex;
   align-items: center;
   gap: 7px;
+  min-height: 44px;
   color: #9c7b42;
   font-size: 12px;
 }
@@ -825,7 +830,7 @@ a:focus-visible {
   appearance: none;
   border: 0;
   background: transparent;
-  height: 32px;
+  height: 44px;
   outline: 0;
   font: inherit;
   color: #26221e;
@@ -916,8 +921,8 @@ a:focus-visible {
   display: grid;
   place-items: center;
   flex: 0 0 auto;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border: 1px solid #ddd2c3;
   color: #857661;
   transition:
@@ -950,7 +955,7 @@ a:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 7px;
-  min-height: 42px;
+  min-height: 44px;
   padding: 0 11px;
   background: #171717;
   color: #f7f2e9;
@@ -1604,7 +1609,7 @@ a:focus-visible {
     z-index: 60;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: max(52px, env(safe-area-inset-bottom));
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -6692,7 +6697,7 @@ select:focus-visible {
     align-items: flex-start;
     flex-direction: column;
     justify-content: center;
-    padding: 20px 0 96px;
+    padding: 20px 0 148px;
   }
   .p1-footer__bottom > div {
     flex-wrap: wrap;
@@ -6701,7 +6706,7 @@ select:focus-visible {
     position: fixed;
     z-index: 68;
     right: 0;
-    bottom: 0;
+    bottom: max(52px, env(safe-area-inset-bottom));
     left: 0;
     display: grid;
     grid-template-columns: repeat(4, 1fr);

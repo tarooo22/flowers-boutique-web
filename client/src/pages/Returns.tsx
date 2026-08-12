@@ -4,9 +4,19 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Card } from "@/components/ui/card";
 import { AlertCircle, CheckCircle2, Clock } from "lucide-react";
 import { contactFallback, siteContact } from "@/lib/siteConfig";
+import { useSEO } from "@/hooks/useSEO";
 
 export default function Returns() {
   const { language } = useLanguage();
+
+  useSEO({
+    titleKa: "დაბრუნება და თანხის ანაზღაურება | ყვავილების ბუტიკი & ივენთები",
+    titleEn: "Returns & Refunds | Flower’s Boutique & Events",
+    descriptionKa: "გაეცანით Flower’s Boutique & Events-ის დაბრუნებისა და თანხის ანაზღაურების პირობებს.",
+    descriptionEn: "Review the Flower’s Boutique & Events returns and refunds information.",
+    canonical: "/returns",
+    lang: language as "ka" | "en",
+  });
 
   const content = {
     en: {
@@ -96,7 +106,7 @@ export default function Returns() {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-amber-50 to-white">
       <Navbar />
-      <div className="flex-1 container max-w-4xl mx-auto px-4 py-16">
+      <main id="main-content" className="flex-1 container max-w-4xl mx-auto px-4 py-16">
         <div className="mb-12">
           <h1 className="text-4xl font-bold text-amber-900 mb-2">{t.title}</h1>
           <p className="text-lg text-amber-700">{t.subtitle}</p>
@@ -213,7 +223,7 @@ export default function Returns() {
             </div>
           </div>
         </Card>
-      </div>
+      </main>
       <Footer />
     </div>
   );

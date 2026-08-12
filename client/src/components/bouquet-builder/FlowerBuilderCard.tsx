@@ -121,12 +121,12 @@ export function FlowerBuilderCard({
                 : "Out of stock"}
           </span>
 
-          <div className="flex items-center rounded-full border border-[#dfd1bd] bg-[#fffdf9] p-0.5">
+          <div className="flex min-h-11 items-center rounded-full border border-[#dfd1bd] bg-[#fffdf9] p-0.5">
             <button
               type="button"
               onClick={() => onQuantityChange(Math.max(0, quantity - 1))}
               disabled={!available || quantity === 0}
-              className="grid h-7 w-7 place-items-center rounded-full text-[#77695d] transition hover:bg-[#f2eadf] disabled:cursor-not-allowed disabled:opacity-30"
+              className="grid h-11 w-11 place-items-center rounded-full text-[#77695d] transition hover:bg-[#f2eadf] disabled:cursor-not-allowed disabled:opacity-30"
               aria-label={
                 language === "ka"
                   ? `${product.nameKa}: რაოდენობის შემცირება`
@@ -135,14 +135,14 @@ export function FlowerBuilderCard({
             >
               <Minus className="h-3.5 w-3.5" />
             </button>
-            <span className="min-w-7 text-center text-xs font-semibold tabular-nums text-[#2c2925]">
+            <span className="min-w-8 text-center text-sm font-semibold tabular-nums text-[#2c2925]">
               {quantity}
             </span>
             <button
               type="button"
               onClick={() => onQuantityChange(Math.min(24, quantity + 1))}
               disabled={!available || quantity >= 24 || !canIncrement}
-              className="grid h-7 w-7 place-items-center rounded-full text-[#8f6535] transition hover:bg-[#f2eadf] disabled:cursor-not-allowed disabled:opacity-30"
+              className="grid h-11 w-11 place-items-center rounded-full text-[#8f6535] transition hover:bg-[#f2eadf] disabled:cursor-not-allowed disabled:opacity-30"
               aria-label={
                 language === "ka"
                   ? `${product.nameKa}: რაოდენობის გაზრდა`
