@@ -127,10 +127,13 @@
 - [x] With user-authorized existing sessions only, validate the authenticated profile surface without exposing or modifying private customer data
 - [x] With user-authorized existing sessions only, validate an authenticated admin dashboard shell without accessing or mutating private commerce data
 - [x] Investigate the 170-item admin catalog count against the supplied 165-product public import; do not delete, unpublish, or alter any product without explicit user confirmation
-- [ ] Complete an authorized, read-only account-surface audit of the actual profile tabs and cards; correct only confirmed visual or accessibility defects without recording private data
-- [ ] Complete an authorized, non-destructive admin dashboard refinement/validation pass beyond the access-denied shell; document an evidence-backed no-change finding where no defect exists
+- [x] Complete an authorized, read-only account-surface audit of the actual profile tabs and cards; correct only confirmed visual or accessibility defects without recording private data
+- [x] Complete an authorized, non-destructive admin dashboard refinement/validation pass beyond the access-denied shell; document an evidence-backed no-change finding where no defect exists
 - [x] Replace the authenticated profile’s overly saturated gold information-card fill with an approved restrained surface treatment while preserving labels, fields, tabs, and account actions
 - [x] Display Georgian category names in the admin category filter when the active language is Georgian, while retaining the English fallback and existing filter behavior
-- [ ] Perform and document section-by-section, read-only validation of the authenticated admin dashboard overview, filters, product list, key controls, and responsive behavior
-- [ ] Capture focused post-fix evidence that the Georgian category-label update preserves the broader authenticated admin dashboard surface
-- [ ] Localize the admin header’s secondary control-room label for the active Georgian interface while preserving the Flower’s Boutique brand name and dashboard layout
+- [x] Perform and document section-by-section, read-only validation of the authenticated admin dashboard overview, filters, product list, key controls, and responsive behavior
+- [x] Capture focused post-fix evidence that the Georgian category-label update preserves the broader authenticated admin dashboard surface
+- [x] Localize the admin header’s secondary control-room label for the active Georgian interface while preserving the Flower’s Boutique brand name and dashboard layout
+- [x] Verify the deployed admin language value and header fallback path so the live Georgian control-room label matches the tested source behavior
+- [x] Use the same Georgian-first category label fallback in admin product table and mobile cards, preserving data, filters, and responsive layout
+- [ ] Perform an authenticated 375px read-only validation of the admin overview, filters, mobile product cards, and visible actions; document only non-sensitive layout evidence

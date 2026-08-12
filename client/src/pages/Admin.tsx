@@ -464,7 +464,9 @@ export default function Admin() {
                               : product.nameEn}
                           </td>
                           <td className="px-4 py-3 text-sm text-[#666]">
-                            {product.category?.nameEn}
+                            {language === "ka"
+                              ? product.category?.nameKa || product.category?.nameEn
+                              : product.category?.nameEn || product.category?.nameKa}
                           </td>
                           <td className="px-4 py-3 text-sm text-[#C4603A] font-medium">
                             {product.priceOnRequest
@@ -627,7 +629,9 @@ export default function Admin() {
 
                     {/* Category */}
                     <p className="text-xs text-[#666] mb-2">
-                      {product.category?.nameEn}
+                      {language === "ka"
+                        ? product.category?.nameKa || product.category?.nameEn
+                        : product.category?.nameEn || product.category?.nameKa}
                     </p>
 
                     {/* Price */}

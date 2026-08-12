@@ -154,6 +154,28 @@ describe("storefront header contract", () => {
     expect(admin).toContain("setFilterCategory(");
   });
 
+  it("uses the same Georgian-first category fallback in admin table and mobile cards", async () => {
+    const admin = await readFile(adminPath, "utf8");
+
+    expect(
+      admin.split("product.category?.nameKa || product.category?.nameEn")
+    ).toHaveLength(3);
+    expect(
+      admin.split("product.category?.nameEn || product.category?.nameKa")
+    ).toHaveLength(3);
+  });
+
+  it("retains distinct responsive product table and mobile-card layouts", async () => {
+    const admin = await readFile(adminPath, "utf8");
+
+    expect(admin).toContain('className="hidden md:block bg-white rounded-xl');
+    expect(admin).toContain('className="md:hidden grid grid-cols-1 gap-4"');
+    expect(admin).toContain('className="flex gap-2 flex-wrap"');
+    expect(admin).toContain("min-w-[120px]");
+    expect(admin).toContain("min-w-[100px]");
+    expect(admin).toContain("min-w-[80px]");
+  });
+
   it("localises the admin header secondary label while retaining the Flower’s Boutique brand", async () => {
     const admin = await readFile(adminPath, "utf8");
 
