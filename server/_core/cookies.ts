@@ -16,15 +16,22 @@ function isSecureRequest(req: Request) {
 
 export function getSessionCookieOptions(
   req: Request
-): Pick<CookieOptions, "domain" | "httpOnly" | "path" | "sameSite" | "secure"> {
+): Pick<
+  CookieOptions,
+  "domain" | "httpOnly" | "partitioned" | "path" | "sameSite" | "secure"
+> {
   const secure = ENV.isProduction || isSecureRequest(req);
 
   return {
     httpOnly: true,
     path: "/",
-    // Authentication happens on the same site. Lax blocks cross-site POSTs
-    // while still allowing normal top-level navigation back to the shop.
-    sameSite: "lax",
+    // Manus preview can be embedded in a host application. A Lax cookie is
+    // not reliably retained in that cross-site storage context after the
+    // native login mutation. Partitioned cookies preserve isolation by the
+    // top-level site while allowing the HTTPS preview to retain its own
+    // HttpOnly session.
+    sameSite: secure ? "none" : "lax",
     secure,
+    ...(secure ? { partitioned: true } : {}),
   };
 }

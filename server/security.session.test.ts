@@ -75,7 +75,7 @@ describe("opaque authentication sessions", () => {
     ).resolves.toBeNull();
   });
 
-  it("login session issuance creates a secure HttpOnly cookie", async () => {
+  it("login session issuance creates a secure partitioned HttpOnly cookie", async () => {
     const store = new MemorySessionStore();
     const cookieCalls: Array<{ name: string; value: string; options: Record<string, unknown> }> = [];
     const request = { protocol: "https", headers: {} } as Request;
@@ -98,12 +98,38 @@ describe("opaque authentication sessions", () => {
       options: {
         httpOnly: true,
         secure: true,
-        sameSite: "lax",
+        sameSite: "none",
+        partitioned: true,
         path: "/",
       },
     });
     expect(cookieCalls[0]?.options.maxAge).toBeGreaterThan(0);
     await expect(authenticateSessionToken(token, { store })).resolves.toMatchObject({ id: customer.id });
+  });
+
+  it("recognizes HTTPS forwarded through the Manus preview proxy", async () => {
+    const store = new MemorySessionStore();
+    const cookieCalls: Array<{ name: string; value: string; options: Record<string, unknown> }> = [];
+    const request = {
+      protocol: "http",
+      headers: { "x-forwarded-proto": "https" },
+    } as unknown as Request;
+    const response = {
+      cookie: (name: string, value: string, options: Record<string, unknown>) => {
+        cookieCalls.push({ name, value, options });
+      },
+    } as unknown as Response;
+
+    await issueAuthSession(request, response, customer.id, {
+      store,
+      tokenFactory: () => fixedToken,
+    });
+
+    expect(cookieCalls[0]?.options).toMatchObject({
+      secure: true,
+      sameSite: "none",
+      partitioned: true,
+    });
   });
 
   it("logout revokes the server-side session and clears the cookie", async () => {

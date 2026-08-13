@@ -67,3 +67,13 @@ No public route required a further visual refinement. No product, cart, wishlist
 ### Release dependencies retained for owner confirmation — 2026-08-13
 
 Exactly two owner-dependent confirmations remain before the audit record can be described as fully closed. First, the role-gated `/admin` **375px** mobile layout must be viewed in a real authenticated session; this task’s sandbox preview session cannot supply or reproduce that cookie, and the check will not be simulated. Second, the owner should confirm that the public commercial copy reflects the intended business terms: **₾5 delivery**, **free delivery from ₾150**, **free pickup**, and the displayed **10:00–20:00** business hours. The code and source copy already use the stated values; this is a business-owner confirmation, not a request to alter policy.
+
+### Owner commercial-copy confirmation — 2026-08-13
+
+The owner confirmed the final commercial-copy conditions in chat. Source verification matches that confirmation: `shared/checkoutPolicy.ts` defines a **₾5** delivery fee, waives delivery at a subtotal of **₾150** or more, and returns **₾0** for pickup; `siteConfig.ts` supplies public hours of **ყოველდღე · 10:00–20:00**. No commercial rule, contact, payment setting, or text was changed as part of this confirmation.
+
+### Native login session-persistence correction — 2026-08-13
+
+The owner reported that a successful native login returned to Home in an anonymous state. The correction makes the HTTPS preview session cookie `HttpOnly`, `Secure`, `SameSite=None`, and `Partitioned`, allowing a first-party session to persist when the Manus preview is embedded in a cross-site host context. The Login page now verifies `auth.me` after the login mutation and before navigating to Home; if the browser still cannot establish the session, it remains on the login page with a clear error instead of appearing to sign in anonymously.
+
+Focused session and post-login regression tests passed **8/8**, and TypeScript check plus production build passed. The shared sandbox browser remains anonymous until the owner enters credentials there, so the real-login and authenticated 375px admin layout checks are deliberately still pending. No password, token, customer record, order, payment record, or role was read, changed, or stored during this investigation.

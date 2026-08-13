@@ -155,7 +155,7 @@
 - [x] Audit every fixed mobile navigation and CTA surface (Product Detail, Checkout, Contact, and Cart Drawer) for external platform-chrome overlap risk.
 - [x] Add evidence-backed safeguards and 375px privacy-preserving QA records for persistent route-level fixed mobile CTA surfaces; document Cart Drawer separately as an interaction-dependent side modal with a source-level safe-area/control contract.
 - [x] Add Cart Drawer safe lower clearance and 44px remove/quantity controls without changing cart business logic.
-- [ ] Await owner confirmation that Georgian commercial copy reflects the intended ₾5 delivery, free delivery from ₾150, free pickup, and 10:00–20:00 business hours; language accuracy review and non-policy corrections are complete
+- [x] Confirm Georgian commercial copy reflects the intended ₾5 delivery, free delivery from ₾150, free pickup, and 10:00–20:00 business hours; language accuracy review and non-policy corrections are complete
 - [x] Correct verified Georgian grammar and terminology in checkout, delivery, and returns without changing commercial thresholds, refund conditions, availability claims, or contact policy
 - [x] Run comprehensive staging-style validation and publish verified checkpoint; owner-dependent authenticated-admin and commercial-copy confirmations remain tracked separately
 
@@ -163,6 +163,13 @@
 - [ ] Validate the authenticated admin mobile layout through the Manus project preview at 375px without opening orders, customer details, payments, or account settings
 - [x] Determine whether the existing authorized browser session is safely available for the pending 375px read-only admin layout capture without creating or impersonating an administrator session
 - [x] Review safe evidence paths for the remaining owner-dependent authenticated mobile QA and Georgian commercial-copy checks without creating credentials or modifying private commerce data
+- [x] Record the owner's final confirmation of the stated delivery, pickup, and business-hours commercial copy
+- [ ] Record final authenticated 375px read-only admin products-dashboard layout evidence after owner device-mode setup
+
+## Manus browser authentication incident — 2026-08-13
+- [ ] Reproduce the owner-reported Manus browser sign-in failure without using personal credentials or changing account data
+- [x] Diagnose and repair the native authentication/session flow with a regression test
+- [ ] Revalidate owner sign-in and complete the pending authenticated 375px admin layout review without opening private records
 
 - [x] Preserve a valid `?page=N` catalog deep link on first mount and reset to page 1 only after an actual filter or sort change
 - [x] Add focused contract coverage proving initial URL page stability and filter/sort pagination reset behavior
@@ -199,3 +206,8 @@
 
 ## Owner-authorized protected mobile QA — 2026-08-12
 - [x] Consolidate this duplicate tracker into the authoritative pending authenticated 375px admin QA item in “Final Authorized QA Follow-up”; no private data was accessed and the capture itself remains incomplete.
+
+## Native login session-persistence incident — 2026-08-13
+- [x] Trace the confirmed successful-login-to-Home unauthenticated redirect without handling owner credentials
+- [x] Correct the native session cookie or redirect path and add a regression test for post-login authenticated state
+- [ ] Revalidate owner sign-in and complete the pending authenticated 375px admin products layout review without opening private records

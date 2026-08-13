@@ -85,9 +85,19 @@ export default function Login() {
         password: formData.password,
       });
 
-      // Invalidate and refetch auth.me to update header immediately
+      // The native login mutation sets an HttpOnly session cookie. Verify it
+      // before leaving this page so a browser that rejects the cookie never
+      // appears to complete login and then lands on Home as anonymous.
       await utils.auth.me.invalidate();
-      await utils.auth.me.refetch();
+      const authenticatedUser = await utils.auth.me.fetch();
+      if (!authenticatedUser) {
+        throw new Error(
+          language === "ka"
+            ? "სესიის შექმნა ვერ მოხერხდა. გთხოვთ, სცადოთ ხელახლა."
+            : "Your session could not be established. Please try again.",
+        );
+      }
+      utils.auth.me.setData(undefined, authenticatedUser);
 
       toast.success(t.success);
       navigate("/");
