@@ -251,39 +251,39 @@
 
 ## Original immersive homepage hero redesign — 2026-08-13
 - [x] Inspect the active hero content, asset constraints, and transition behavior; define an original Flower’s Boutique editorial direction without copying the reference site’s branding, text, or exact composition
-- [ ] Generate and store original premium floral hero imagery in persistent web storage for the redesigned carousel
-- [ ] Implement an additive full-width hero composition, accessible controls, and reduced-motion-safe desktop/mobile transitions without changing catalog or commerce behavior
-- [ ] Add focused hero regression coverage and validate desktop, 390px, and 375px presentation before publishing
+- [x] Generate and store original premium floral hero imagery in persistent web storage for the redesigned carousel
+- [x] Implement an additive full-width hero composition, accessible controls, and reduced-motion-safe desktop/mobile transitions without changing catalog or commerce behavior
+- [x] Add focused hero regression coverage and validate desktop, 390px, and 375px presentation before publishing
 
 ## Distinct transparent category artwork — 2026-08-13
-- [ ] Generate and store distinct background-free floral cutouts for wedding bouquets, ready-made bouquets, and individual flower categories
-- [ ] Map the category gallery artwork to distinct florist visuals without changing category routes, names, or catalog behavior
-- [ ] Add focused regression coverage and validate the category artwork at desktop, 390px, and 375px before publishing
+- [x] Generate and store distinct background-free floral cutouts for wedding bouquets, ready-made bouquets, and individual flower categories
+- [x] Map the category gallery artwork to distinct florist visuals without changing category routes, names, or catalog behavior
+- [x] Add focused regression coverage and validate the category artwork at desktop, 390px, and 375px before publishing
 
 ## Homepage collection discovery refinement — 2026-08-13
-- [ ] Inspect public category/product metadata and research compatible 21st component patterns for collection-led product discovery
-- [ ] Divide homepage products into route-safe flower, bouquet, and composition collection sections with localized headings and collection links
-- [ ] Refine the product-card presentation and responsive collection layout without changing prices, cart, wishlist, product routes, or catalog data
-- [ ] Add focused regression coverage and validate desktop, 390px, and 375px collection presentation before publishing
+- [x] Inspect public category/product metadata and research compatible 21st component patterns for collection-led product discovery
+- [x] Divide homepage products into route-safe flower, bouquet, and composition collection sections with localized headings and collection links
+- [x] Refine the product-card presentation and responsive collection layout without changing prices, cart, wishlist, product routes, or catalog data
+- [x] Add focused regression coverage and validate desktop, 390px, and 375px collection presentation before publishing
 
 ## Homepage editorial experience cards — 2026-08-13
-- [ ] Identify the current public homepage news/banner blocks and choose replacement editorial experience cards without altering commerce flows
-- [ ] Generate and store original visual assets for florist courses, event styling, and seasonal floral stories
-- [ ] Implement responsive editorial cards with accessible links, original copy, and transform/opacity-only scroll reveal motion
-- [ ] Add focused regression coverage and validate desktop, 390px, and 375px motion-safe presentation before publishing
+- [x] Identify the current public homepage news/banner blocks and choose replacement editorial experience cards without altering commerce flows
+- [x] Generate and store original visual assets for florist courses, event styling, and seasonal floral stories
+- [x] Implement responsive editorial cards with accessible links, original copy, and transform/opacity-only scroll reveal motion
+- [x] Add focused regression coverage and validate desktop, 390px, and 375px motion-safe presentation before publishing
 
 ## Contact and footer refinement — 2026-08-13
-- [ ] Inspect and refine the public contact CTA and shared footer visual hierarchy without changing contact details or external links
-- [ ] Add accessible transform/opacity-only interaction and scroll-reveal treatment with reduced-motion fallback
-- [ ] Validate desktop, 390px, and 375px contact/footer layout and retain existing contact channels unchanged
+- [x] Inspect and refine the public contact CTA and shared footer visual hierarchy without changing contact details or external links
+- [x] Add accessible transform/opacity-only interaction and scroll-reveal treatment with reduced-motion fallback
+- [x] Validate desktop, 390px, and 375px contact/footer layout and retain existing contact channels unchanged
 
-- [ ] Incorporate user-provided skill archive into project-local reference directory
-- [ ] Implement immersive carousel hero with original persistent Manus storage assets (`/manus-storage/...`)
-- [ ] Implement transparent category gallery using distinct background-free floral cutouts (`wedding-bouquet`, `ready-bouquet`, `individual-flower`)
-- [ ] Split homepage product discovery into collection sections (Flowers, Bouquets, Compositions) inspired by 21st card components
-- [ ] Replace static news/banner blocks with original editorial experience cards (`floristry-class`, `event-styling`, `seasonal-story`) with smooth scroll motion
-- [ ] Refine contact CTA and footer layout with polished mobile responsiveness and micro-interactions
-- [ ] Extend Vitest UI regression suite and verify TypeScript check and production build
+- [x] Incorporate user-provided skill archive into project-local reference directory
+- [x] Implement immersive carousel hero with original persistent Manus storage assets (`/manus-storage/...`)
+- [x] Implement transparent category gallery using distinct background-free floral cutouts (`wedding-bouquet`, `ready-bouquet`, `individual-flower`)
+- [x] Split homepage product discovery into collection sections (Flowers, Bouquets, Compositions) inspired by 21st card components
+- [x] Replace static news/banner blocks with original editorial experience cards (`floristry-class`, `event-styling`, `seasonal-story`) with smooth scroll motion
+- [x] Refine contact CTA and footer layout with polished mobile responsiveness and micro-interactions
+- [x] Extend Vitest UI regression suite and verify TypeScript check and production build
 
 ## Operational guide and public screenshot package — 2026-08-14
 - [x] Audit implemented public and protected capabilities, routes, commerce flows, configuration limits, and current published status for a factual Georgian guide
