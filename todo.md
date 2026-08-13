@@ -198,4 +198,4 @@
 - [x] Apply only the verified non-destructive schema or query compatibility repair, and add regression coverage for the protected admin orders list.
 
 ## Owner-authorized protected mobile QA — 2026-08-12
-- [ ] Verify the authenticated `/admin` dashboard at 375px in a read-only layout-only session; do not open, expose, edit, or export order, customer, payment, or credential data.
+- [x] Consolidate this duplicate tracker into the authoritative pending authenticated 375px admin QA item in “Final Authorized QA Follow-up”; no private data was accessed and the capture itself remains incomplete.
