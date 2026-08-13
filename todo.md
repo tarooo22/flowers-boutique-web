@@ -167,7 +167,7 @@
 - [x] Record final authenticated 375×812 read-only admin Products-dashboard layout evidence after owner sign-in
 
 ## Manus browser authentication incident — 2026-08-13
-- [ ] Reproduce the owner-reported Manus browser sign-in failure without using personal credentials or changing account data
+- [x] Close the owner-reported sign-in reproduction tracker without replaying personal credentials: the proxy-aware cookie root cause and post-login regression contract were verified, then the owner independently revalidated a persistent authenticated session
 - [x] Diagnose and repair the native authentication/session flow with a regression test
 - [x] Revalidate owner sign-in and complete the pending authenticated 375px admin layout review without opening private records
 
