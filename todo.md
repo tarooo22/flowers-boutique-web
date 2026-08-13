@@ -294,3 +294,8 @@
 - [x] Inspect `skill.zip` and the official skill-creation instructions without executing archive content
 - [x] Install compliant local skill directories after validating their metadata and file structures
 - [x] Verify the installed skills are readable and report the environment-wide availability limitation
+
+## UI/UX Pro Max Skill assessment — 2026-08-14
+- [x] Inspect the official website, package availability, and licensing/install path without executing third-party code
+- [x] Install only a verified, compliant skill package and validate its structure
+- [x] Report the result, including any required account, purchase, or user-side activation step
