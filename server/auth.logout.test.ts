@@ -55,7 +55,8 @@ describe("auth.logout", () => {
     expect(clearedCookies[0]?.name).toBe(COOKIE_NAME);
     expect(clearedCookies[0]?.options).toMatchObject({
       secure: true,
-      sameSite: "lax",
+      sameSite: "none",
+      partitioned: true,
       httpOnly: true,
       path: "/",
     });

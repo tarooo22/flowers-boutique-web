@@ -19,17 +19,19 @@ describe("getSessionCookieOptions", () => {
     });
   });
 
-  it("keeps SameSite=Lax and enables Secure on HTTPS", () => {
+  it("uses the embedded-preview cookie contract on HTTPS", () => {
     expect(getSessionCookieOptions(request("https"))).toMatchObject({
-      sameSite: "lax",
+      sameSite: "none",
       secure: true,
+      partitioned: true,
     });
   });
 
   it("honours HTTPS forwarded by the deployment proxy", () => {
     expect(getSessionCookieOptions(request("http", "https"))).toMatchObject({
-      sameSite: "lax",
+      sameSite: "none",
       secure: true,
+      partitioned: true,
     });
   });
 });

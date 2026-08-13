@@ -160,16 +160,16 @@
 - [x] Run comprehensive staging-style validation and publish verified checkpoint; owner-dependent authenticated-admin and commercial-copy confirmations remain tracked separately
 
 ## Final Authorized QA Follow-up — 2026-08-13
-- [ ] Validate the authenticated admin mobile layout through the Manus project preview at 375px without opening orders, customer details, payments, or account settings
+- [x] Validate the authenticated admin mobile Products-dashboard layout at 375×812 in the owner-authorized connected browser without opening orders, customer details, payments, or account settings
 - [x] Determine whether the existing authorized browser session is safely available for the pending 375px read-only admin layout capture without creating or impersonating an administrator session
 - [x] Review safe evidence paths for the remaining owner-dependent authenticated mobile QA and Georgian commercial-copy checks without creating credentials or modifying private commerce data
 - [x] Record the owner's final confirmation of the stated delivery, pickup, and business-hours commercial copy
-- [ ] Record final authenticated 375px read-only admin products-dashboard layout evidence after owner device-mode setup
+- [x] Record final authenticated 375×812 read-only admin Products-dashboard layout evidence after owner sign-in
 
 ## Manus browser authentication incident — 2026-08-13
 - [ ] Reproduce the owner-reported Manus browser sign-in failure without using personal credentials or changing account data
 - [x] Diagnose and repair the native authentication/session flow with a regression test
-- [ ] Revalidate owner sign-in and complete the pending authenticated 375px admin layout review without opening private records
+- [x] Revalidate owner sign-in and complete the pending authenticated 375px admin layout review without opening private records
 
 - [x] Preserve a valid `?page=N` catalog deep link on first mount and reset to page 1 only after an actual filter or sort change
 - [x] Add focused contract coverage proving initial URL page stability and filter/sort pagination reset behavior
@@ -210,4 +210,13 @@
 ## Native login session-persistence incident — 2026-08-13
 - [x] Trace the confirmed successful-login-to-Home unauthenticated redirect without handling owner credentials
 - [x] Correct the native session cookie or redirect path and add a regression test for post-login authenticated state
-- [ ] Revalidate owner sign-in and complete the pending authenticated 375px admin products layout review without opening private records
+- [x] Revalidate owner sign-in and complete the pending authenticated 375px admin Products-dashboard layout review without opening private records
+- [x] Align legacy HTTPS/logout cookie expectations with the corrected `SameSite=None` preview session contract and rerun the full validation suite
+
+## Development server interruption — 2026-08-13
+- [x] Restart the reported unresponsive development server and verify the preview becomes reachable
+
+## 21st MCP connector request — 2026-08-13
+- [x] Inspect whether a 21st MCP connector already exists and prepare a secure setup only after intent is confirmed
+- [x] Create and verify the 21st MCP connector without storing its API key in project code, environment files, or Git
+- [x] Remove the temporary connector setup artifact containing the API key and confirm no full key literal exists in project or Git-tracked content
