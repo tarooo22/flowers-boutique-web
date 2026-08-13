@@ -289,3 +289,8 @@
 - [x] Audit implemented public and protected capabilities, routes, commerce flows, configuration limits, and current published status for a factual Georgian guide
 - [x] Capture full-page public storefront screenshots at desktop and mobile breakpoints without exposing customer, order, payment, or administrator data
 - [x] Write and deliver a detailed Georgian operational guide describing functionality, user journeys, administration, dependencies, and known constraints
+
+## User-provided skill archive installation — 2026-08-14
+- [x] Inspect `skill.zip` and the official skill-creation instructions without executing archive content
+- [x] Install compliant local skill directories after validating their metadata and file structures
+- [x] Verify the installed skills are readable and report the environment-wide availability limitation
