@@ -29,3 +29,21 @@ The Cart Drawer is an interaction-dependent right-side modal rather than a persi
 ## Authenticated admin mobile QA status
 
 The connected browser session was checked at the development `/admin` route without submitting credentials or opening any private records. The server correctly rendered the localized access-denied surface, confirming that no authenticated administrator session is available for the outstanding 375px dashboard inspection. The protected dashboard, orders, customer data, and product-management controls were not accessed. This evidence is intentionally recorded as a blocker rather than inferred as authenticated-admin validation.
+
+### Owner-authorized session activation
+
+The owner subsequently authorized a layout-only protected review and activated an administrator session in the connected browser. The default products-management shell rendered successfully. No Orders tab, customer record, payment data, account setting, edit control, delete control, or export action was opened. The remaining responsive review is limited to dashboard shell navigation, filters, and product-list layout.
+
+The review uses a temporary same-origin QA wrapper that fixes the embedded `/admin` surface to 375×812 CSS pixels and disables pointer events on the frame. It is noindex and introduces no route, credential, data request, or mutation of its own; it will be removed after the capture.
+
+The embedded-frame page loaded in the connected browser, but its screenshot transport returned no image. To avoid inferring a visual result, the capture method is being switched to the directly rendered `/admin` page at a browser zoom-equivalent narrow viewport. This is a capture-environment limitation only; no business data or protected record was opened.
+
+The direct authenticated page successfully rendered the localized dashboard shell. Its first narrow-view capture showed the product-table empty state while the data request was still settling, so no product-card conclusion is drawn from that intermediate frame.
+
+## Final 375px admin mobile QA evidence
+
+The Manus project preview captured `/admin` at **375×812**. In its clean visitor session, the protected route rendered the Georgian access-denied surface with the heading, explanatory text, and return action centered, visible, and without horizontal clipping; protected records did not render. Separately, the owner-authorized connected session had already rendered the authenticated products-management shell without opening Orders, customer data, payment data, account settings, or any product mutation control.
+
+The authenticated responsive result is supported by the existing focused UI contract for the actual `Admin.tsx` render path: at the mobile breakpoint the desktop table is `hidden md:block`, the one-column product-card surface is `md:hidden`, the filters use `grid-cols-1 md:grid-cols-4`, the tab bar uses horizontal overflow, and the visible card actions retain wrapping minimum widths of 120px, 100px, and 80px. This source/test evidence applies to the same role-gated dashboard shell shown in the authorized session. However, it does **not** replace a successful authenticated 375px live capture. The connected-browser screenshot transport did not return an embedded authenticated-frame image, and the Manus preview capture had no session cookie. Therefore the authenticated 375px visual-QA item remains pending; no product-content or pixel-perfect mobile conclusion is asserted.
+
+The temporary noindex QA wrapper used only for the attempted frame capture has been removed before release. It never added application access, routes, credentials, mutations, or persisted data.

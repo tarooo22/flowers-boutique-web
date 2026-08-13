@@ -158,6 +158,9 @@
 - [ ] Review Georgian copy on checkout, delivery, and returns for native accuracy and owner alignment
 - [x] Run comprehensive staging-style validation and publish verified checkpoint; owner-dependent authenticated-admin and commercial-copy confirmations remain tracked separately
 
+## Final Authorized QA Follow-up — 2026-08-13
+- [ ] Validate the authenticated admin mobile layout through the Manus project preview at 375px without opening orders, customer details, payments, or account settings
+
 - [x] Preserve a valid `?page=N` catalog deep link on first mount and reset to page 1 only after an actual filter or sort change
 - [x] Add focused contract coverage proving initial URL page stability and filter/sort pagination reset behavior
 
@@ -190,3 +193,6 @@
 ## Admin orders query repair — 2026-08-12
 - [x] Diagnose the failed `orders` list query with read-only schema and migration inspection; do not expose or alter order/customer/payment records.
 - [x] Apply only the verified non-destructive schema or query compatibility repair, and add regression coverage for the protected admin orders list.
+
+## Owner-authorized protected mobile QA — 2026-08-12
+- [ ] Verify the authenticated `/admin` dashboard at 375px in a read-only layout-only session; do not open, expose, edit, or export order, customer, payment, or credential data.
