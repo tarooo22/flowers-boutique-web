@@ -101,7 +101,7 @@
 - [x] Repair real product-image resolution and ensure the catalog, cards, product detail, wishlist, cart, and checkout never show a false missing-image state when a mapped image exists
 - [x] Align the SEO tracking schema, additive database migration, server mapping, and admin monitor contract to remove the pre-existing type errors
 - [x] Consolidate the public design tokens, loaded Georgian/English typography, responsive typography wordmark, header, mobile menu, footer, and reusable product card without changing protected business logic
-- [ ] Refine the homepage, catalog, product detail, cart, checkout, account, bouquet builder, about, contact, and admin experiences using actual configured data only; preserve approved layouts where no defect was found
+- [x] Refine the homepage, catalog, product detail, cart, checkout, account, bouquet builder, about, contact, and admin experiences using actual configured data only; preserve approved layouts where no defect was found
 - [x] Investigate the `/product/6` development-preview “product not found” state using read-only route and catalog evidence; correct only a confirmed published-product routing defect
 - [x] Preserve Georgian as the default language, existing SEO routes/content, secure authorization, server-side pricing, and disabled BOG card payment behaviour
 - [x] Add or update focused Vitest coverage for every repaired server-side or shared utility behaviour
@@ -137,7 +137,7 @@
 - [x] Localize the admin header’s secondary control-room label for the active Georgian interface while preserving the Flower’s Boutique brand name and dashboard layout
 - [x] Verify the deployed admin language value and header fallback path so the live Georgian control-room label matches the tested source behavior
 - [x] Use the same Georgian-first category label fallback in admin product table and mobile cards, preserving data, filters, and responsive layout
-- [ ] Perform an authenticated 375px read-only validation of the admin overview, filters, mobile product cards, and visible actions; document only non-sensitive layout evidence
+- [x] Consolidate this duplicate tracker into the authoritative pending authenticated 375px admin QA item in “Final Authorized QA Follow-up”; no private data was accessed and the capture itself remains incomplete
 
 ## Master Implementation Prompt Integration (pasted_content_3.txt) — 2026-08-12
 - [x] Implement server-side pagination, sorting, and availability filtering for the catalog (rendering initial 18-24 items with load more / pagination)
@@ -155,7 +155,7 @@
 - [x] Audit every fixed mobile navigation and CTA surface (Product Detail, Checkout, Contact, and Cart Drawer) for external platform-chrome overlap risk.
 - [x] Add evidence-backed safeguards and 375px privacy-preserving QA records for persistent route-level fixed mobile CTA surfaces; document Cart Drawer separately as an interaction-dependent side modal with a source-level safe-area/control contract.
 - [x] Add Cart Drawer safe lower clearance and 44px remove/quantity controls without changing cart business logic.
-- [ ] Review Georgian copy on checkout, delivery, and returns for native accuracy and owner alignment
+- [ ] Await owner confirmation that Georgian commercial copy reflects the intended ₾5 delivery, free delivery from ₾150, free pickup, and 10:00–20:00 business hours; language accuracy review and non-policy corrections are complete
 - [x] Correct verified Georgian grammar and terminology in checkout, delivery, and returns without changing commercial thresholds, refund conditions, availability claims, or contact policy
 - [x] Run comprehensive staging-style validation and publish verified checkpoint; owner-dependent authenticated-admin and commercial-copy confirmations remain tracked separately
 
