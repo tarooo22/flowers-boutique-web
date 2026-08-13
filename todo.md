@@ -220,3 +220,4 @@
 - [x] Inspect whether a 21st MCP connector already exists and prepare a secure setup only after intent is confirmed
 - [x] Create and verify the 21st MCP connector without storing its API key in project code, environment files, or Git
 - [x] Remove the temporary connector setup artifact containing the API key and confirm no full key literal exists in project or Git-tracked content
+- [x] Rotate the user-supplied 21st API key only in protected connector configuration, then verify connector access and project secret hygiene
