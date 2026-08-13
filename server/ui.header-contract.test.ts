@@ -18,6 +18,8 @@ const wishlistPath = path.join(projectRoot, "client/src/pages/Wishlist.tsx");
 const checkoutPath = path.join(projectRoot, "client/src/pages/Checkout.tsx");
 const adminPath = path.join(projectRoot, "client/src/pages/Admin.tsx");
 const profilePath = path.join(projectRoot, "client/src/pages/Profile.tsx");
+const loginPath = path.join(projectRoot, "client/src/pages/Login.tsx");
+const registerPath = path.join(projectRoot, "client/src/pages/Register.tsx");
 const productCardPath = path.join(
   projectRoot,
   "client/src/components/product/ProductCard.tsx"
@@ -50,6 +52,23 @@ describe("storefront header contract", () => {
     expect(styles).toContain(".p1-brand:focus-visible");
     expect(styles).toContain("@media (max-width: 960px)");
     expect(styles).toContain("@media (max-width: 767px)");
+  });
+
+  it("keeps the 21st-inspired navigation and product-media refinement scoped to the existing boutique system", async () => {
+    const styles = await readFile(
+      path.join(projectRoot, "client/src/index.css"),
+      "utf8"
+    );
+
+    expect(styles).toContain("Phase 3 · 21st-inspired boutique refinement");
+    expect(styles).toContain(".p1-header__nav a::after");
+    expect(styles).toContain(".p1-header__nav a.is-active::after");
+    expect(styles).toContain(".p1-app--commerce .fb-product-gallery__main::after");
+    expect(styles).toContain(".p1-app--commerce .fb-product-gallery__thumbs button.is-active::after");
+    expect(styles).toContain(
+      ".p1-app--commerce :is(input:not([type=\"checkbox\"]):not([type=\"radio\"]):not([type=\"range\"]), textarea, select):focus"
+    );
+    expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
   });
 
   it("keeps header controls at a 44px minimum touch target", async () => {
@@ -196,5 +215,55 @@ describe("storefront header contract", () => {
     expect(profile).toContain("setIsEditing(true)");
     expect(styles).toContain(".fb-profile-info-card {");
     expect(styles).toContain("background: var(--surface-soft);");
+  });
+
+  it("keeps Login and Register primary actions on the boutique dusty-rose CTA hierarchy", async () => {
+    const [login, register] = await Promise.all([
+      readFile(loginPath, "utf8"),
+      readFile(registerPath, "utf8"),
+    ]);
+
+    for (const page of [login, register]) {
+      expect(page).toContain("auth-submit--boutique");
+      expect(page).toContain('backgroundColor: "#8b5f68"');
+      expect(page).toContain(
+        '"linear-gradient(135deg, #9f6b7b 0%, #84525f 100%)"'
+      );
+      expect(page).toContain('color: "#fff"');
+    }
+  });
+
+  it("keeps mobile navigation semantically active and preserves the shared 44px safe-area layer", async () => {
+    const [navbar, styles] = await Promise.all([
+      readFile(navbarPath, "utf8"),
+      readFile(path.join(projectRoot, "client/src/index.css"), "utf8"),
+    ]);
+
+    expect(navbar).toContain('aria-current={location === "/" ? "page" : undefined}');
+    expect(navbar).toContain('aria-current={isActive(href) ? "page" : undefined}');
+    expect(styles).toContain("Phase 5 · mobile-first shared refinement");
+    expect(styles).toContain("--p3-mobile-control: 44px");
+    expect(styles).toContain("body.has-p1-bottom-nav");
+    expect(styles).toContain("env(safe-area-inset-bottom)");
+    expect(styles).toContain(".p1-mobile-menu__links a.is-active");
+    expect(styles).toContain("overflow-x: clip");
+  });
+
+  it("keeps mobile checkout grouping and admin chrome presentation-only", async () => {
+    const [checkout, admin, styles] = await Promise.all([
+      readFile(checkoutPath, "utf8"),
+      readFile(adminPath, "utf8"),
+      readFile(path.join(projectRoot, "client/src/index.css"), "utf8"),
+    ]);
+
+    expect(checkout).toContain("fb-checkout-section");
+    expect(checkout).toContain("fb-checkout-delivery-option");
+    expect(checkout).toContain("fb-checkout-address-grid");
+    expect(checkout).toContain("fb-checkout-summary");
+    expect(admin).toContain('className="fb-admin-tabs mb-8 overflow-x-auto"');
+    expect(styles).toContain("Phase 5b · route-specific phone refinement");
+    expect(styles).toContain(".p1-app--checkout .fb-checkout-address-grid");
+    expect(styles).toContain(".p1-app--admin .fb-admin-tabs");
+    expect(styles).toContain(".p1-app--builder [role=\"tablist\"]");
   });
 });

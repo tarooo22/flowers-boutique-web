@@ -330,12 +330,21 @@ export default function Navbar() {
             className="p1-mobile-menu__links"
             aria-label={ka ? "მობილური ნავიგაცია" : "Mobile navigation"}
           >
-            <Link href="/">
+            <Link
+              href="/"
+              className={location === "/" ? "is-active" : ""}
+              aria-current={location === "/" ? "page" : undefined}
+            >
               {ka ? "მთავარი" : "Home"}
               <ArrowRight />
             </Link>
             {links.map(([href, label]) => (
-              <Link key={href} href={href}>
+              <Link
+                key={href}
+                href={href}
+                className={isActive(href) ? "is-active" : ""}
+                aria-current={isActive(href) ? "page" : undefined}
+              >
                 {label}
                 <ArrowRight />
               </Link>

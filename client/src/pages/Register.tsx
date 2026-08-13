@@ -292,7 +292,14 @@ export default function Register() {
 
               <Button
                 type="submit"
-                className="auth-submit w-full font-semibold py-3 rounded-lg transition-all duration-300 disabled:opacity-50 mt-6"
+                className="auth-submit auth-submit--boutique w-full font-semibold py-3 rounded-lg transition-all duration-300 disabled:opacity-50 mt-6"
+                style={{
+                  backgroundColor: "#8b5f68",
+                  backgroundImage:
+                    "linear-gradient(135deg, #9f6b7b 0%, #84525f 100%)",
+                  boxShadow: "0 10px 20px rgba(132, 82, 95, 0.2)",
+                  color: "#fff",
+                }}
                 disabled={registerMutation.isPending}
               >
                 {registerMutation.isPending ? t.registering : t.registerButton}

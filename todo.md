@@ -221,3 +221,15 @@
 - [x] Create and verify the 21st MCP connector without storing its API key in project code, environment files, or Git
 - [x] Remove the temporary connector setup artifact containing the API key and confirm no full key literal exists in project or Git-tracked content
 - [x] Rotate the user-supplied 21st API key only in protected connector configuration, then verify connector access and project secret hygiene
+
+## Comprehensive visual refinement with 21st — 2026-08-13
+- [x] Audit every public, account, and admin route at desktop and mobile breakpoints without reading or changing private commerce data
+- [x] Research and select compatible 21st component patterns for premium navigation, product discovery, forms, feedback states, and dashboard controls
+- [x] Refine shared header, navigation, footer, typography, spacing, interactions, and responsive behavior while preserving the approved brand wordmark and Georgian-first content
+- [x] Refine storefront, catalog, product, bouquet builder, cart, checkout, informational, account, and admin presentation layers without changing commerce logic or BOG sandbox behavior
+- [x] Add or update focused visual/UI contract tests and complete desktop/mobile screenshot QA, TypeScript, production-build, and full test-suite validation
+- [x] Re-check the desktop Login/Register primary-action hierarchy and retain the intentional high-contrast dark submit treatment after final rendered QA
+- [x] After the current desktop refinement is complete, audit every route at 375px and 390px for mobile navigation, text wrapping, spacing, touch targets, safe areas, and horizontal overflow
+- [x] Refine shared mobile navigation, header actions, typography scale, controls, and bottom-safe-area behavior without changing route or commerce logic
+- [x] Refine mobile storefront, catalog, product, bouquet builder, cart, checkout, informational, account, and access-gated admin presentation layers
+- [x] Add mobile UI contract coverage and complete 375px/390px visual regression, TypeScript, production-build, and full-suite validation

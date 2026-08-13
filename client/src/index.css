@@ -8663,6 +8663,27 @@ select:focus-visible {
   background: var(--focus-ring) !important;
   transform: translateY(-1px);
 }
+
+/* Account screens can render outside the storefront shell; preserve the same action language there. */
+.auth-page button.auth-submit {
+  min-height: 48px;
+  border: 1px solid rgba(139, 95, 104, 0.24) !important;
+  background: linear-gradient(135deg, #9c6677 0%, #865464 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 20px rgba(134, 84, 100, 0.18) !important;
+  letter-spacing: 0.01em;
+}
+
+.auth-page button.auth-submit:hover:not(:disabled) {
+  background: linear-gradient(135deg, #865464 0%, #754554 100%) !important;
+  box-shadow: 0 13px 26px rgba(134, 84, 100, 0.24) !important;
+  transform: translateY(-1px);
+}
+
+.auth-page .auth-input:focus-visible {
+  border-color: var(--accent-primary) !important;
+  box-shadow: 0 0 0 3px rgba(139, 95, 104, 0.14) !important;
+}
 .p1-app--account .fb-profile-page [data-slot="tabs-list"] {
   border-color: var(--border-default) !important;
   background: var(--surface-soft) !important;
@@ -9223,5 +9244,1001 @@ select:focus-visible {
   .p2-wishlist-card__quick-add,
   .p2-contact-page .fb-contact-details > * {
     transition: none !important;
+  }
+}
+
+/* Phase 3 · 21st-inspired boutique refinement.
+   The interaction hierarchy borrows the calm, content-first structure of the
+   reviewed shop-navigation and product-media patterns while preserving Flower's
+   Boutique's own type, colors, routes, and commerce behavior. */
+:root {
+  --p3-ink: #242120;
+  --p3-rose: #8b5f68;
+  --p3-rose-wash: color-mix(in srgb, var(--accent-soft) 68%, white);
+  --p3-line: color-mix(in srgb, var(--border-default) 88%, var(--accent-primary));
+  --p3-radius: 14px;
+  --p3-ease: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.p1-header {
+  border-bottom-color: color-mix(in srgb, var(--border-default) 82%, var(--accent-primary));
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.72) inset;
+}
+
+.p1-header::after {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(139, 95, 104, 0.42) 34%, rgba(139, 95, 104, 0.42) 66%, transparent);
+  content: "";
+  opacity: 0;
+  transition: opacity var(--fb-motion-base) var(--p3-ease);
+}
+
+.p1-header.is-scrolled::after {
+  opacity: 1;
+}
+
+.p1-brand {
+  position: relative;
+  isolation: isolate;
+  color: var(--p3-ink);
+}
+
+.p1-brand::before {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 6px;
+  margin-right: 10px;
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 74%, white);
+  border-radius: 999px;
+  background: var(--p3-rose-wash);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--p3-rose-wash) 70%, transparent);
+  content: "";
+}
+
+.p1-header__nav {
+  align-self: stretch;
+  gap: clamp(14px, 2.15vw, 34px);
+}
+
+.p1-header__nav a {
+  position: relative;
+  display: inline-flex;
+  height: 100%;
+  align-items: center;
+  padding: 3px 0 1px;
+  color: var(--text-secondary);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.075em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color var(--fb-motion-fast) var(--p3-ease);
+}
+
+.p1-header__nav a::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: right;
+  background: var(--p3-rose);
+  content: "";
+  transition: transform var(--fb-motion-base) var(--p3-ease);
+}
+
+.p1-header__nav a:hover,
+.p1-header__nav a.is-active {
+  color: var(--p3-rose);
+}
+
+.p1-header__nav a:hover::after,
+.p1-header__nav a.is-active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.p1-header__actions {
+  gap: 4px;
+}
+
+.p1-icon-button,
+.p1-account-button {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--p3-ink);
+  transition: border-color var(--fb-motion-fast) var(--p3-ease), background-color var(--fb-motion-fast) var(--p3-ease), color var(--fb-motion-fast) var(--p3-ease), transform var(--fb-motion-fast) var(--p3-ease);
+}
+
+.p1-icon-button:hover,
+.p1-account-button:hover {
+  border-color: color-mix(in srgb, var(--accent-primary) 30%, transparent);
+  background: var(--p3-rose-wash);
+  color: var(--p3-rose);
+}
+
+.p1-icon-button:active,
+.p1-account-button:active,
+.p1-button:active {
+  transform: scale(0.97);
+}
+
+.p1-language {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--p3-line);
+  border-radius: 999px;
+  background: color-mix(in srgb, white 84%, var(--surface-soft));
+  padding: 2px;
+}
+
+.p1-language button {
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  transition: background-color var(--fb-motion-fast) var(--p3-ease), color var(--fb-motion-fast) var(--p3-ease);
+}
+
+.p1-language button.is-active {
+  background: var(--p3-ink);
+  color: white;
+}
+
+.p1-cart-button b {
+  top: 3px;
+  right: 2px;
+  min-width: 17px;
+  min-height: 17px;
+  border: 2px solid var(--surface-card);
+  background: var(--p3-rose);
+  box-shadow: none;
+}
+
+.p1-search-dialog {
+  overflow: hidden;
+  border: 1px solid var(--p3-line);
+  border-radius: var(--p3-radius);
+  box-shadow: 0 28px 72px rgba(48, 35, 38, 0.2);
+}
+
+.p1-search-dialog__form {
+  border: 1px solid var(--p3-line);
+  border-radius: 12px;
+  background: var(--surface-page);
+  transition: border-color var(--fb-motion-fast) var(--p3-ease), box-shadow var(--fb-motion-fast) var(--p3-ease);
+}
+
+.p1-search-dialog__form:focus-within {
+  border-color: var(--p3-rose);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-primary) 14%, transparent);
+}
+
+.p1-mobile-menu {
+  border-right-color: var(--p3-line);
+  background: linear-gradient(155deg, white 0%, var(--surface-page) 58%, var(--p3-rose-wash) 170%);
+}
+
+.p1-mobile-menu__links a {
+  position: relative;
+  border-bottom-color: color-mix(in srgb, var(--border-default) 80%, transparent);
+  font-family: var(--font-heading);
+  font-size: clamp(21px, 6vw, 27px);
+  transition: color var(--fb-motion-fast) var(--p3-ease), padding-left var(--fb-motion-fast) var(--p3-ease);
+}
+
+.p1-mobile-menu__links a:hover,
+.p1-mobile-menu__links a:focus-visible {
+  padding-left: 8px;
+  color: var(--p3-rose);
+}
+
+.p1-kicker {
+  color: var(--p3-rose);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.p1-section-heading > div:first-child,
+.p1-hero__copy {
+  position: relative;
+}
+
+.p1-button {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  font-weight: 750;
+  letter-spacing: 0.045em;
+  transition: transform var(--fb-motion-fast) var(--p3-ease), box-shadow var(--fb-motion-fast) var(--p3-ease), background-color var(--fb-motion-fast) var(--p3-ease), color var(--fb-motion-fast) var(--p3-ease);
+}
+
+.p1-button--primary {
+  box-shadow: 0 11px 24px color-mix(in srgb, var(--accent-primary) 24%, transparent);
+}
+
+.p1-button--primary:hover {
+  box-shadow: 0 15px 31px color-mix(in srgb, var(--accent-primary) 31%, transparent);
+  transform: translateY(-2px);
+}
+
+.p1-button--text {
+  text-underline-offset: 5px;
+}
+
+.p1-product-card {
+  position: relative;
+}
+
+.p1-product-card__visual {
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--surface-soft), var(--p3-rose-wash));
+}
+
+.p1-product-card__image {
+  transform: scale(1.001);
+  transition: transform 520ms var(--p3-ease), filter 520ms var(--p3-ease);
+}
+
+.p1-product-card:hover .p1-product-card__image {
+  transform: scale(1.035);
+  filter: saturate(0.94) contrast(1.015);
+}
+
+.p1-product-card__title {
+  color: var(--p3-ink);
+  font-weight: 650;
+  letter-spacing: -0.012em;
+}
+
+.p1-product-card__price {
+  color: var(--p3-rose);
+  font-weight: 750;
+}
+
+.p1-product-card__action {
+  border: 1px solid transparent;
+  border-radius: 999px;
+}
+
+.p1-product-card:hover .p1-product-card__action,
+.p1-product-card__action:focus-visible {
+  border-color: color-mix(in srgb, var(--accent-primary) 32%, transparent);
+  background: var(--p3-rose-wash);
+  color: var(--p3-rose);
+}
+
+.fb-catalog-intro {
+  position: relative;
+  border-bottom-color: var(--p3-line);
+}
+
+.fb-catalog-intro::after {
+  display: block;
+  width: 40px;
+  height: 2px;
+  margin-top: 20px;
+  background: var(--p3-rose);
+  content: "";
+}
+
+.fb-catalog-collection-nav {
+  border-top-color: var(--p3-line);
+  scrollbar-color: color-mix(in srgb, var(--accent-primary) 48%, transparent) transparent;
+}
+
+.fb-catalog-collection-nav button {
+  min-height: 42px;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.p1-footer {
+  position: relative;
+  border-top-color: color-mix(in srgb, var(--accent-primary) 32%, var(--border-default));
+}
+
+.p1-footer::before {
+  display: block;
+  width: min(100% - (var(--fb-gutter) * 2), var(--fb-container-wide));
+  height: 1px;
+  margin: 0 auto;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent-primary) 42%, transparent), transparent);
+  content: "";
+}
+
+@media (max-width: 960px) {
+  .p1-brand::before {
+    width: 5px;
+    height: 5px;
+    flex-basis: 5px;
+    margin-right: 7px;
+  }
+  .p1-header__actions {
+    gap: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .p1-header {
+    background: color-mix(in srgb, var(--surface-card) 94%, var(--surface-page));
+  }
+  .p1-brand::before {
+    margin-right: 5px;
+  }
+  .p1-mobile-menu__links a:hover,
+  .p1-mobile-menu__links a:focus-visible {
+    padding-left: 4px;
+  }
+  .p1-product-card:hover .p1-product-card__image {
+    transform: none;
+    filter: none;
+  }
+  .p1-button--primary:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p1-header::after,
+  .p1-header__nav a,
+  .p1-header__nav a::after,
+  .p1-icon-button,
+  .p1-account-button,
+  .p1-language button,
+  .p1-search-dialog__form,
+  .p1-mobile-menu__links a,
+  .p1-button,
+  .p1-product-card__image {
+    transition: none !important;
+  }
+}
+
+/* Phase 3b · product, form, account and control-room surfaces.
+   These details extend the selected 21st patterns into the existing components
+   rather than importing a second UI system. */
+.p1-app--commerce .fb-product-gallery__main {
+  isolation: isolate;
+  border-color: var(--p3-line);
+  border-radius: var(--p3-radius);
+  box-shadow: 0 20px 48px rgba(41, 32, 34, 0.08);
+}
+
+.p1-app--commerce .fb-product-gallery__main::after {
+  position: absolute;
+  z-index: 1;
+  inset: auto 0 0;
+  height: 18%;
+  background: linear-gradient(180deg, transparent, rgba(29, 25, 24, 0.11));
+  content: "";
+  pointer-events: none;
+}
+
+.p1-app--commerce .fb-product-gallery__wish {
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  backdrop-filter: blur(10px);
+}
+
+.p1-app--commerce .fb-product-gallery__thumbs {
+  gap: 12px;
+  padding-top: 2px;
+}
+
+.p1-app--commerce .fb-product-gallery__thumbs button {
+  position: relative;
+  width: 68px;
+  height: 68px;
+  border-radius: 10px;
+}
+
+.p1-app--commerce .fb-product-gallery__thumbs button::after {
+  position: absolute;
+  inset: 4px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  content: "";
+  transition: border-color var(--fb-motion-fast) var(--p3-ease);
+}
+
+.p1-app--commerce .fb-product-gallery__thumbs button.is-active::after {
+  border-color: var(--p3-rose);
+}
+
+.p1-app--commerce .fb-product-copy > .fb-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.p1-app--commerce .fb-product-copy > .fb-eyebrow::after {
+  width: 26px;
+  height: 1px;
+  background: var(--p3-rose);
+  content: "";
+}
+
+.p1-app--commerce .fb-product-price-row {
+  padding-block: 14px;
+  border-block: 1px solid var(--p3-line);
+}
+
+.p1-app--commerce .fb-product-availability {
+  width: fit-content;
+  margin-top: 16px;
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 24%, transparent);
+  border-radius: 999px;
+  background: var(--p3-rose-wash);
+  padding: 7px 11px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.p1-app--commerce .fb-variant-fieldset,
+.p1-app--commerce .fb-quantity-row {
+  border-top-color: var(--p3-line);
+}
+
+.p1-app--commerce .fb-variant {
+  min-height: 42px;
+  border-radius: 999px;
+  transition: border-color var(--fb-motion-fast) var(--p3-ease), background-color var(--fb-motion-fast) var(--p3-ease), color var(--fb-motion-fast) var(--p3-ease), transform var(--fb-motion-fast) var(--p3-ease);
+}
+
+.p1-app--commerce .fb-variant:hover:not(:disabled),
+.p1-app--commerce .fb-variant.is-selected {
+  border-color: var(--p3-rose);
+  background: var(--p3-rose-wash);
+  color: var(--p3-ink);
+}
+
+.p1-app--commerce .fb-quantity {
+  border-color: var(--p3-line);
+  border-radius: 999px;
+  background: var(--surface-card);
+}
+
+.p1-app--commerce .fb-quantity button {
+  transition: background-color var(--fb-motion-fast) var(--p3-ease), color var(--fb-motion-fast) var(--p3-ease), transform var(--fb-motion-fast) var(--p3-ease);
+}
+
+.p1-app--commerce .fb-quantity button:hover {
+  background: var(--p3-rose-wash);
+  color: var(--p3-rose);
+}
+
+.p1-app--commerce .fb-product-add,
+.p1-app--commerce .fb-cart-primary,
+.p1-app--commerce .fb-checkout-page button[type="submit"] {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 26px color-mix(in srgb, var(--accent-primary) 20%, transparent);
+}
+
+.p1-app--commerce .fb-product-add::after,
+.p1-app--commerce .fb-cart-primary::after {
+  position: absolute;
+  top: 0;
+  right: -35%;
+  width: 28%;
+  height: 100%;
+  transform: skewX(-20deg);
+  background: rgba(255, 255, 255, 0.18);
+  content: "";
+  transition: right 360ms var(--p3-ease);
+}
+
+.p1-app--commerce .fb-product-add:hover:not(:disabled)::after,
+.p1-app--commerce .fb-cart-primary:hover::after {
+  right: 112%;
+}
+
+.p1-app--commerce .fb-product-information article,
+.p1-app--commerce .fb-product-perks div {
+  border-radius: 10px;
+  transition: border-color var(--fb-motion-fast) var(--p3-ease), transform var(--fb-motion-fast) var(--p3-ease), box-shadow var(--fb-motion-fast) var(--p3-ease);
+}
+
+.p1-app--commerce .fb-product-information article:hover,
+.p1-app--commerce .fb-product-perks div:hover {
+  border-color: color-mix(in srgb, var(--accent-primary) 42%, var(--border-default));
+  box-shadow: 0 12px 25px rgba(41, 32, 34, 0.05);
+  transform: translateY(-2px);
+}
+
+.p1-app--commerce .fb-catalog-filters,
+.p1-app--commerce .fb-catalog-toolbar,
+.p1-app--commerce .fb-cart-summary__box,
+.p1-app--commerce .fb-cart-form {
+  border-color: var(--p3-line);
+}
+
+.p1-app--commerce .fb-catalog-filters fieldset + fieldset {
+  border-top-color: var(--p3-line);
+}
+
+.p1-app--commerce .fb-search-field:focus-within,
+.p1-app--commerce .fb-price-fields:focus-within {
+  border-color: var(--p3-rose);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-primary) 12%, transparent);
+}
+
+.p1-app--commerce :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), textarea, select) {
+  border-color: var(--p3-line);
+  border-radius: 9px;
+  background: color-mix(in srgb, white 88%, var(--surface-soft));
+  transition: border-color var(--fb-motion-fast) var(--p3-ease), box-shadow var(--fb-motion-fast) var(--p3-ease), background-color var(--fb-motion-fast) var(--p3-ease);
+}
+
+.p1-app--commerce :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), textarea, select):focus {
+  border-color: var(--p3-rose);
+  background: white;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-primary) 13%, transparent);
+}
+
+.p1-app--account .auth-card,
+.p1-app--account .profile-card,
+.p1-app--commerce .fb-contact-panel,
+.p1-app--commerce .fb-delivery-card,
+.p1-app--commerce .fb-legal-page .bg-white {
+  border-color: var(--p3-line) !important;
+  box-shadow: 0 16px 38px rgba(41, 32, 34, 0.06);
+}
+
+.p1-app--account .auth-card::before {
+  display: block;
+  width: 34px;
+  height: 2px;
+  margin-bottom: 20px;
+  background: var(--p3-rose);
+  content: "";
+}
+
+.p1-app--builder [role="tabpanel"] {
+  border-color: var(--p3-line) !important;
+  box-shadow: 0 18px 38px rgba(41, 32, 34, 0.05);
+}
+
+.p1-app--admin .fb-admin-header,
+.p1-app--admin .fb-admin-tabs {
+  border-color: var(--p3-line);
+}
+
+.p1-app--admin .fb-admin-tabs button {
+  position: relative;
+  border-radius: 8px 8px 0 0;
+  transition: color var(--fb-motion-fast) var(--p3-ease), background-color var(--fb-motion-fast) var(--p3-ease);
+}
+
+.p1-app--admin .fb-admin-tabs button[aria-selected="true"],
+.p1-app--admin .fb-admin-tabs button.is-active {
+  background: var(--p3-rose-wash);
+  color: var(--p3-rose);
+}
+
+@media (max-width: 767px) {
+  .p1-app--commerce .fb-product-gallery__main {
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .p1-app--commerce .fb-product-gallery__thumbs button {
+    width: 60px;
+    height: 60px;
+  }
+  .p1-app--commerce .fb-product-information article:hover,
+  .p1-app--commerce .fb-product-perks div:hover {
+    box-shadow: none;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p1-app--commerce .fb-product-gallery__thumbs button::after,
+  .p1-app--commerce .fb-variant,
+  .p1-app--commerce .fb-quantity button,
+  .p1-app--commerce .fb-product-add::after,
+  .p1-app--commerce .fb-cart-primary::after,
+  .p1-app--commerce .fb-product-information article,
+  .p1-app--commerce .fb-product-perks div,
+  .p1-app--commerce :is(input, textarea, select),
+  .p1-app--admin .fb-admin-tabs button {
+    transition: none !important;
+  }
+}
+
+/* Final account-action cascade: intentionally mirrors the storefront primary CTA. */
+.auth-page .auth-submit--boutique[class] {
+  min-height: 48px !important;
+  border: 1px solid rgba(139, 95, 104, 0.28) !important;
+  background-color: #8b5f68 !important;
+  background-image: linear-gradient(135deg, #9f6b7b 0%, #84525f 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 20px rgba(132, 82, 95, 0.2) !important;
+}
+
+.auth-page .auth-submit--boutique[class]:hover:not(:disabled) {
+  background-color: #754653 !important;
+  background-image: linear-gradient(135deg, #8b5f68 0%, #70414d 100%) !important;
+  box-shadow: 0 13px 26px rgba(112, 65, 77, 0.26) !important;
+  transform: translateY(-1px);
+}
+
+/* Keep the final account CTA above legacy shorthand declarations on every breakpoint. */
+body .auth-page button.auth-submit.auth-submit--boutique {
+  background: linear-gradient(135deg, #9f6b7b 0%, #84525f 100%) !important;
+}
+
+body .auth-page button.auth-submit.auth-submit--boutique:hover:not(:disabled) {
+  background: linear-gradient(135deg, #8b5f68 0%, #70414d 100%) !important;
+}
+
+/* Phase 5 · mobile-first shared refinement.
+   This additive layer keeps the approved storefront architecture intact while
+   giving 375px–390px interfaces a calmer rhythm, reliable tap affordances, and
+   protected fixed-navigation clearance. */
+@media (max-width: 767px) {
+  :root {
+    --p3-mobile-gutter: clamp(16px, 4.8vw, 20px);
+    --p3-mobile-control: 44px;
+    --fb-gutter: var(--p3-mobile-gutter);
+  }
+
+  html,
+  body,
+  #root {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  .p1-header__inner,
+  .p1-header__actions,
+  .p1-brand,
+  .p1-mobile-menu__head,
+  .p1-mobile-menu__links,
+  .p1-mobile-menu__utilities,
+  .p1-mobile-menu__account,
+  .p1-app--commerce .fb-catalog-toolbar,
+  .p1-app--commerce .fb-catalog-filters {
+    min-width: 0;
+  }
+
+  .p1-header__inner,
+  .p1-header.is-scrolled .p1-header__inner {
+    min-height: 64px;
+    gap: 4px;
+  }
+
+  .p1-mobile-menu-trigger,
+  .p1-header__actions .p1-icon-button {
+    width: var(--p3-mobile-control);
+    min-width: var(--p3-mobile-control);
+    height: var(--p3-mobile-control);
+    min-height: var(--p3-mobile-control);
+    border-radius: 12px;
+  }
+
+  .p1-mobile-menu {
+    width: min(100%, 360px);
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+
+  .p1-mobile-menu__head {
+    padding: 24px var(--p3-mobile-gutter) 18px;
+  }
+
+  .p1-mobile-menu__head h2 {
+    font-size: clamp(28px, 8vw, 32px);
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+  }
+
+  .p1-mobile-menu__links {
+    gap: 3px;
+    padding: 12px var(--p3-mobile-gutter) 16px;
+  }
+
+  .p1-mobile-menu__links a {
+    min-height: 52px;
+    border-radius: 10px;
+    padding-inline: 10px;
+    line-height: 1.2;
+    letter-spacing: -0.018em;
+    transition: color var(--fb-motion-fast) var(--p3-ease), background-color var(--fb-motion-fast) var(--p3-ease);
+  }
+
+  .p1-mobile-menu__links a.is-active {
+    background: linear-gradient(90deg, var(--p3-rose-wash), color-mix(in srgb, var(--p3-rose-wash) 46%, transparent));
+    color: var(--p3-rose);
+  }
+
+  .p1-mobile-menu__links a.is-active svg {
+    color: currentColor;
+    transform: translateX(2px);
+  }
+
+  .p1-mobile-menu__utilities {
+    margin-inline: var(--p3-mobile-gutter);
+    border: 1px solid var(--p3-line);
+    border-radius: 12px;
+  }
+
+  .p1-mobile-menu__utilities button,
+  .p1-mobile-menu__language button,
+  .p1-mobile-menu__account a,
+  .p1-mobile-menu__account button {
+    min-height: var(--p3-mobile-control);
+  }
+
+  .p1-mobile-menu__language,
+  .p1-mobile-menu__account {
+    padding-inline: var(--p3-mobile-gutter);
+  }
+
+  .p1-kicker,
+  .fb-field-label,
+  .fb-catalog-filters legend {
+    line-height: 1.35;
+    letter-spacing: 0.1em;
+  }
+
+  .p1-bottom-nav {
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -10px 24px rgba(40, 40, 40, 0.08);
+  }
+
+  .p1-bottom-nav > a,
+  .p1-bottom-nav > button {
+    position: relative;
+    min-height: 64px;
+    gap: 4px;
+    padding-block: 7px;
+    font-size: 9px;
+    font-weight: 650;
+    letter-spacing: 0.015em;
+  }
+
+  .p1-bottom-nav > a::before {
+    position: absolute;
+    top: 4px;
+    width: 18px;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: center;
+    border-radius: 999px;
+    background: var(--accent-primary);
+    content: "";
+    opacity: 0;
+    transition: transform var(--fb-motion-fast) var(--p3-ease), opacity var(--fb-motion-fast) var(--p3-ease);
+  }
+
+  .p1-bottom-nav > a.is-active::before {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+
+  body.has-p1-bottom-nav {
+    padding-bottom: calc(124px + env(safe-area-inset-bottom));
+  }
+
+  .p1-app--commerce .fb-catalog-filters {
+    border-color: var(--p3-line);
+    border-radius: 14px;
+    box-shadow: 0 14px 34px rgba(41, 32, 34, 0.08);
+    padding: 20px var(--p3-mobile-gutter);
+  }
+
+  .p1-app--commerce .fb-catalog-filters fieldset + fieldset {
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+
+  .p1-app--commerce :is(.fb-filter-close, .fb-catalog-toolbar button, .fb-catalog-filters button, .fb-variant, .fb-quantity button, .fb-product-add, .fb-cart-primary, .fb-checkout-page button[type="submit"]) {
+    min-height: var(--p3-mobile-control);
+  }
+
+  .p1-app--commerce :is(.fb-cart-form, .fb-cart-summary__box, .fb-contact-panel, .fb-delivery-card),
+  .p1-app--account :is(.auth-card, .profile-card) {
+    border-radius: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p1-mobile-menu__links a,
+  .p1-bottom-nav > a::before {
+    transition: none !important;
+  }
+
+  .p1-mobile-menu__links a.is-active svg {
+    transform: none;
+  }
+}
+
+/* Phase 5b · route-specific phone refinement.
+   Public/storefront composition and all commerce behavior are preserved; these
+   rules only optimize hierarchy, grouping, and physical interaction comfort. */
+@media (max-width: 767px) {
+  .p1-app--commerce .fb-catalog-intro h1,
+  .p1-app--commerce .fb-product-copy h1,
+  .p1-app--commerce .fb-checkout-page h1,
+  .p1-app--account .auth-card h1,
+  .p1-app--admin .fb-admin-header h1 {
+    letter-spacing: -0.035em;
+    line-height: 1.12;
+  }
+
+  .p1-app--commerce .fb-catalog-collection-nav {
+    gap: 18px;
+    margin-inline: calc(var(--p3-mobile-gutter) * -1);
+    padding-inline: var(--p3-mobile-gutter);
+    scroll-padding-inline: var(--p3-mobile-gutter);
+    scrollbar-width: none;
+  }
+
+  .p1-app--commerce .fb-catalog-collection-nav::-webkit-scrollbar,
+  .p1-app--commerce .fb-product-gallery__thumbs::-webkit-scrollbar,
+  .p1-app--admin .fb-admin-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .p1-app--commerce .fb-product-gallery__thumbs {
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding: 2px var(--p3-mobile-gutter) 8px;
+    scroll-padding-inline: var(--p3-mobile-gutter);
+    scrollbar-width: none;
+  }
+
+  .p1-app--commerce .fb-product-copy {
+    padding-top: 6px;
+  }
+
+  .p1-app--commerce .fb-product-copy > .fb-eyebrow {
+    gap: 7px;
+    margin-bottom: 10px;
+  }
+
+  .p1-app--commerce .fb-variant-fieldset,
+  .p1-app--commerce .fb-quantity-row {
+    padding-block: 18px;
+  }
+
+  .p1-app--builder main {
+    padding-inline: var(--p3-mobile-gutter);
+    padding-bottom: max(28px, env(safe-area-inset-bottom));
+  }
+
+  .p1-app--builder [role="tablist"] {
+    display: flex;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-padding-inline: var(--p3-mobile-gutter);
+  }
+
+  .p1-app--builder [role="tab"] {
+    min-height: var(--p3-mobile-control);
+    flex: 0 0 auto;
+  }
+
+  .p1-app--checkout .fb-checkout-shell {
+    padding-top: 20px;
+    padding-bottom: max(48px, env(safe-area-inset-bottom));
+  }
+
+  .p1-app--checkout .fb-checkout-heading {
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .p1-app--checkout .fb-checkout-heading > button {
+    width: var(--p3-mobile-control);
+    min-width: var(--p3-mobile-control);
+    min-height: var(--p3-mobile-control);
+    padding: 0;
+  }
+
+  .p1-app--checkout .fb-checkout-section,
+  .p1-app--checkout .fb-checkout-summary {
+    border-radius: 14px;
+    padding: 20px;
+  }
+
+  .p1-app--checkout .fb-checkout-section {
+    box-shadow: 0 10px 26px rgba(41, 32, 34, 0.05);
+  }
+
+  .p1-app--checkout .fb-checkout-delivery-option {
+    min-height: 76px;
+    border-radius: 12px;
+    padding: 14px;
+  }
+
+  .p1-app--checkout .fb-checkout-time-slot {
+    min-height: var(--p3-mobile-control);
+  }
+
+  .p1-app--checkout .fb-checkout-address-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .p1-app--checkout .fb-checkout-option {
+    min-height: var(--p3-mobile-control);
+    border: 1px solid var(--p3-line);
+    border-radius: 10px;
+    background: color-mix(in srgb, white 80%, var(--surface-soft));
+    padding: 10px 12px;
+  }
+
+  .p1-app--checkout .fb-checkout-option input {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+  }
+
+  .p1-app--checkout .fb-checkout-summary {
+    margin-top: 4px;
+  }
+
+  .p1-app--checkout .fb-checkout-summary h2 {
+    margin-bottom: 18px;
+    font-size: 1.2rem;
+  }
+
+  .p1-app--commerce .fb-legal-page .bg-white,
+  .p1-app--commerce .fb-contact-panel,
+  .p1-app--commerce .fb-delivery-card {
+    padding: 20px !important;
+  }
+
+  .p1-app--account .auth-card,
+  .p1-app--account .profile-card {
+    border-radius: 14px !important;
+  }
+
+  .p1-app--admin .admin-page,
+  .p1-app--admin .p2-admin-page {
+    overflow-x: clip;
+  }
+
+  .p1-app--admin .fb-admin-header {
+    align-items: flex-start;
+    gap: 16px;
+    border-radius: 14px;
+    padding: 18px;
+  }
+
+  .p1-app--admin .fb-admin-header__identity {
+    gap: 12px;
+  }
+
+  .p1-app--admin .fb-admin-tabs {
+    margin-inline: -4px;
+    border-radius: 12px;
+    overscroll-behavior-inline: contain;
+    scroll-padding-inline: 12px;
+    scrollbar-width: none;
+  }
+
+  .p1-app--admin .fb-admin-tabs > div {
+    gap: 4px;
+  }
+
+  .p1-app--admin .fb-admin-tabs button {
+    min-height: var(--p3-mobile-control);
+    padding-inline: 12px;
+    font-size: 13px;
+  }
+
+  .p1-app--admin :is(input, select, button) {
+    min-height: var(--p3-mobile-control);
   }
 }

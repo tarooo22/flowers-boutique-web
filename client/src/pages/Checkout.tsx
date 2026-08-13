@@ -147,7 +147,7 @@ function getAvailableTimeSlots(date: string): typeof TIME_SLOTS {
 // Section card wrapper
 function SectionCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`bg-white rounded-2xl border border-[#E8E3DC] p-6 shadow-sm hover:shadow-md transition-shadow ${className}`}>
+    <div className={`fb-checkout-section bg-white rounded-2xl border border-[#E8E3DC] p-6 shadow-sm hover:shadow-md transition-shadow ${className}`}>
       {children}
     </div>
   );
@@ -172,7 +172,7 @@ function DeliveryOptionCard({
   return (
     <button
       onClick={onClick}
-      className={`w-full p-4 rounded-xl border-2 transition-all text-left ${
+      className={`fb-checkout-delivery-option w-full p-4 rounded-xl border-2 transition-all text-left ${
         selected
           ? "border-[#C4603A] bg-[#FFF8F5]"
           : "border-[#E8E3DC] bg-white hover:border-[#D4C4B0]"
@@ -208,7 +208,7 @@ function TimeSlotButton({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`px-4 py-2 rounded-lg border-2 font-medium transition-all ${
+      className={`fb-checkout-time-slot px-4 py-2 rounded-lg border-2 font-medium transition-all ${
         disabled
           ? "border-[#E8E3DC] bg-[#F5F2EE] text-[#A89B8F] cursor-not-allowed"
           : selected
@@ -454,7 +454,7 @@ export default function Checkout() {
 
       <main id="main-content" className="fb-checkout-shell max-w-7xl mx-auto px-4 py-6 md:py-8">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
+        <div className="fb-checkout-heading flex items-center gap-4 mb-8">
           <button
             onClick={() => navigate("/")}
             className="p-2 hover:bg-[#E8E3DC] rounded-lg transition text-[#1C1C1C]"
@@ -688,7 +688,7 @@ export default function Checkout() {
                       </Button>
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="fb-checkout-address-grid grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-[#1C1C1C] mb-2">{t.building}</label>
                       <Input
@@ -761,7 +761,7 @@ export default function Checkout() {
                 </div>
                 {deliveryType === "delivery" && (
                   <div className="space-y-2 pt-2">
-                    <label className="flex items-center gap-3 cursor-pointer">
+                    <label className="fb-checkout-option flex items-center gap-3 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={sendAnonymously}
@@ -770,7 +770,7 @@ export default function Checkout() {
                       />
                       <span className="text-sm text-[#1C1C1C]">{t.sendAnonymously}</span>
                     </label>
-                    <label className="flex items-center gap-3 cursor-pointer">
+                    <label className="fb-checkout-option flex items-center gap-3 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={noConfirmationCall}
@@ -779,7 +779,7 @@ export default function Checkout() {
                       />
                       <span className="text-sm text-[#1C1C1C]">{t.noConfirmationCall}</span>
                     </label>
-                    <label className="flex items-center gap-3 cursor-pointer">
+                    <label className="fb-checkout-option flex items-center gap-3 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={leaveAtDoor}
@@ -796,7 +796,7 @@ export default function Checkout() {
 
           {/* Order Summary - Right Column (Sticky on Desktop) */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-2xl border border-[#E8E3DC] p-6 shadow-sm lg:sticky lg:top-8">
+            <div className="fb-checkout-summary bg-white rounded-2xl border border-[#E8E3DC] p-6 shadow-sm lg:sticky lg:top-8">
               <h2 className="text-xl font-semibold text-[#1C1C1C] mb-6 flex items-center gap-2" style={{ fontFamily: 'var(--font-heading)' }}>
                 <span className="text-[#C4603A]">📋</span>
                 {t.orderSummary}
