@@ -314,4 +314,25 @@ describe("storefront header contract", () => {
     expect(english).toContain('"home.categories.intro"');
     expect(english).toContain('"home.categories.explore"');
   });
+
+  it("keeps the homepage new-arrivals grid scoped, action-complete, and reduced-motion safe", async () => {
+    const [home, productCard, styles] = await Promise.all([
+      readFile(homePath, "utf8"),
+      readFile(productCardPath, "utf8"),
+      readFile(path.join(projectRoot, "client/src/index.css"), "utf8"),
+    ]);
+
+    expect(home).toContain('className="p1-product-grid p1-product-grid--signature"');
+    expect(productCard).toContain('className="p1-product-card__wish"');
+    expect(productCard).toContain('className="p1-product-card__action"');
+    expect(styles).toContain("Homepage new-arrivals · 21st-informed product reveal treatment");
+    expect(styles).toContain(".p1-signatures .p1-product-grid--signature .p1-product-card {");
+    expect(styles).toContain(".p1-signatures .p1-product-grid--signature .p1-product-card::before");
+    expect(styles).toContain(".p1-signatures .p1-product-grid--signature .p1-product-card:focus-within");
+    expect(styles).toContain("@media (hover: hover) and (pointer: fine)");
+    expect(styles).toContain(".p1-signatures .p1-product-grid--signature .p1-product-card__action");
+    expect(styles).toContain("grid-template-columns: repeat(2, minmax(0, 1fr))");
+    expect(styles).toContain("min-height: 44px;");
+    expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
+  });
 });

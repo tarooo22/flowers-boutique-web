@@ -241,7 +241,7 @@ export default function Home() {
               </button>
             </div>
           ) : featured.length ? (
-            <div className="p1-product-grid">
+            <div className="p1-product-grid p1-product-grid--signature">
               {featured.map((product: any) => (
                 <ProductCard
                   key={product.id}

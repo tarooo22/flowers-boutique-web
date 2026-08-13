@@ -243,3 +243,8 @@
 - [x] Inspect the active category-section markup, category labels, route metadata, and image presentation before altering visuals
 - [x] Refine category labels, supporting copy, links, spacing, and background-free floral visuals without changing category routes or catalog behavior
 - [x] Add focused category-section coverage and validate desktop, 390px, and 375px presentation before publishing
+
+## Homepage new-arrivals grid refinement — 2026-08-13
+- [x] Inspect the active new-arrivals grid markup, product-card controls, and compatible 21st community patterns before changing presentation
+- [x] Refine product-card frames, image presentation, pricing/actions hierarchy, hover/focus feedback, and reduced-motion-safe animation without changing cart, wishlist, or product navigation behavior
+- [x] Add focused product-grid regression coverage and validate desktop, 390px, and 375px presentation before publishing
