@@ -160,6 +160,7 @@
 
 ## Final Authorized QA Follow-up — 2026-08-13
 - [ ] Validate the authenticated admin mobile layout through the Manus project preview at 375px without opening orders, customer details, payments, or account settings
+- [x] Determine whether the existing authorized browser session is safely available for the pending 375px read-only admin layout capture without creating or impersonating an administrator session
 
 - [x] Preserve a valid `?page=N` catalog deep link on first mount and reset to page 1 only after an actual filter or sort change
 - [x] Add focused contract coverage proving initial URL page stability and filter/sort pagination reset behavior
