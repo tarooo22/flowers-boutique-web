@@ -284,3 +284,8 @@
 - [ ] Replace static news/banner blocks with original editorial experience cards (`floristry-class`, `event-styling`, `seasonal-story`) with smooth scroll motion
 - [ ] Refine contact CTA and footer layout with polished mobile responsiveness and micro-interactions
 - [ ] Extend Vitest UI regression suite and verify TypeScript check and production build
+
+## Operational guide and public screenshot package — 2026-08-14
+- [x] Audit implemented public and protected capabilities, routes, commerce flows, configuration limits, and current published status for a factual Georgian guide
+- [x] Capture full-page public storefront screenshots at desktop and mobile breakpoints without exposing customer, order, payment, or administrator data
+- [x] Write and deliver a detailed Georgian operational guide describing functionality, user journeys, administration, dependencies, and known constraints
