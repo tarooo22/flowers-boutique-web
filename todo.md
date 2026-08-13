@@ -156,11 +156,13 @@
 - [x] Add evidence-backed safeguards and 375px privacy-preserving QA records for persistent route-level fixed mobile CTA surfaces; document Cart Drawer separately as an interaction-dependent side modal with a source-level safe-area/control contract.
 - [x] Add Cart Drawer safe lower clearance and 44px remove/quantity controls without changing cart business logic.
 - [ ] Review Georgian copy on checkout, delivery, and returns for native accuracy and owner alignment
+- [x] Correct verified Georgian grammar and terminology in checkout, delivery, and returns without changing commercial thresholds, refund conditions, availability claims, or contact policy
 - [x] Run comprehensive staging-style validation and publish verified checkpoint; owner-dependent authenticated-admin and commercial-copy confirmations remain tracked separately
 
 ## Final Authorized QA Follow-up — 2026-08-13
 - [ ] Validate the authenticated admin mobile layout through the Manus project preview at 375px without opening orders, customer details, payments, or account settings
 - [x] Determine whether the existing authorized browser session is safely available for the pending 375px read-only admin layout capture without creating or impersonating an administrator session
+- [x] Review safe evidence paths for the remaining owner-dependent authenticated mobile QA and Georgian commercial-copy checks without creating credentials or modifying private commerce data
 
 - [x] Preserve a valid `?page=N` catalog deep link on first mount and reset to page 1 only after an actual filter or sort change
 - [x] Add focused contract coverage proving initial URL page stability and filter/sort pagination reset behavior

@@ -51,3 +51,9 @@ The temporary noindex QA wrapper used only for the attempted frame capture has b
 ### Existing-session availability check — 2026-08-13
 
 The session configuration was inspected read-only. The **My Browser** connector is enabled, but this task's available automated page context remained the isolated sandbox browser. A new direct `/admin` navigation therefore correctly returned the role-gated Georgian access-denied surface. No administrator session was created, copied, impersonated, or fabricated, and no protected tab or record was opened. Consequently, the pending authenticated 375px capture cannot be completed by the currently available automated browser context; its status remains open rather than inferred from source contracts.
+
+### Georgian public-copy refinement — 2026-08-13
+
+Checkout, Delivery, and Returns received Georgian-only grammar and terminology corrections. The revision leaves all commercial facts unchanged: the shared `₾5` delivery fee and `₾150` free-delivery threshold remain sourced from the canonical checkout policy, and the Returns page retains its displayed 24-hour request period and 3–5-business-day processing period. The change corrects language quality only; it does not confirm or alter same-day availability, business hours, refund eligibility, payment methods, contacts, or any commercial policy.
+
+The focused `server/georgian-copy.contract.test.ts` passed **3/3** assertions. TypeScript check and production build completed successfully. Public mobile previews at **375×812** were captured for `/delivery` and `/returns`; both pages displayed the updated Georgian headings, paragraphs, cards, and footer without a confirmed clipping or layout defect. No private data, order flow, form submission, payment operation, or administrator route was opened during this validation.
