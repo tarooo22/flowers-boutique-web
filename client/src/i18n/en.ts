@@ -195,6 +195,8 @@ export const en = {
   "home.categories.title": "Find the right bouquet",
   "home.categories.label": "Bouquet categories",
   "home.categories.all": "All bouquets",
+  "home.categories.intro": "Every composition starts with a feeling — choose one for your moment.",
+  "home.categories.explore": "Explore collection",
   "home.products.eyebrow": "Selected collection",
   "home.products.title": "New bouquets",
   "home.products.all": "View all bouquets",

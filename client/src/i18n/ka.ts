@@ -195,6 +195,8 @@ export const ka = {
   "home.categories.title": "იპოვე სასურველი თაიგული",
   "home.categories.label": "თაიგულების კატეგორიები",
   "home.categories.all": "ყველა თაიგული",
+  "home.categories.intro": "ყველა კომპოზიცია იწყება განწყობით — შეარჩიე შენი მომენტისთვის.",
+  "home.categories.explore": "კოლექციის ნახვა",
   "home.products.eyebrow": "შერჩეული კოლექცია",
   "home.products.title": "ახალი თაიგულები",
   "home.products.all": "ყველა თაიგულის ნახვა",

@@ -238,3 +238,8 @@
 - [x] Inspect the active homepage hero media transition and select compatible 21st community motion/composition patterns without introducing external runtime dependencies
 - [x] Refine the hero image transition, framing, supporting visual layers, typography composition, and CTA hierarchy with additive desktop and mobile styling
 - [x] Add focused hero transition contracts and validate the refined hero at desktop, 390px, and 375px before publishing
+
+## Homepage bouquet category refinement — 2026-08-13
+- [x] Inspect the active category-section markup, category labels, route metadata, and image presentation before altering visuals
+- [x] Refine category labels, supporting copy, links, spacing, and background-free floral visuals without changing category routes or catalog behavior
+- [x] Add focused category-section coverage and validate desktop, 390px, and 375px presentation before publishing

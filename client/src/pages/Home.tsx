@@ -27,6 +27,14 @@ import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import ProductCard from "@/components/product/ProductCard";
 
+const categoryArtwork = [
+  "/manus-storage/category-floral-reference_cd0dd04b.png",
+  "/manus-storage/category-floral-reference_cd0dd04b.png",
+  "/manus-storage/category-floral-reference_cd0dd04b.png",
+  "/manus-storage/category-floral-reference_cd0dd04b.png",
+  "/manus-storage/category-floral-reference_cd0dd04b.png",
+];
+
 export default function Home() {
   const { language, t } = useLanguage();
   const { openDrawer } = useCartDrawer();
@@ -140,6 +148,9 @@ export default function Home() {
             <div>
               <p className="p1-kicker">{t("home.categories.eyebrow")}</p>
               <h2 id="p1-categories-title">{t("home.categories.title")}</h2>
+              <p className="p1-category-intro">
+                {t("home.categories.intro")}
+              </p>
             </div>
           </div>
           <nav
@@ -159,6 +170,45 @@ export default function Home() {
               </Link>
             ))}
           </nav>
+          {categories.length > 0 && (
+            <div className="p1-category-gallery" role="list">
+              {categories.map((category: any, index: number) => {
+                const categoryName = cleanProductName(
+                  ka ? category.nameKa : category.nameEn,
+                  ka ? "კატეგორია" : "Category"
+                );
+
+                return (
+                  <Link
+                    key={category.id}
+                    href={`/catalog?category=${category.id}`}
+                    className={`p1-category-tile p1-category-tile--${index + 1}`}
+                    role="listitem"
+                  >
+                    <span className="p1-category-tile__visual" aria-hidden="true">
+                      <img
+                        src={categoryArtwork[index % categoryArtwork.length]}
+                        alt=""
+                        width="640"
+                        height="640"
+                        loading="lazy"
+                      />
+                    </span>
+                    <span className="p1-category-tile__meta">
+                      <span className="p1-category-tile__index">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span className="p1-category-tile__title">{categoryName}</span>
+                      <span className="p1-category-tile__action">
+                        {t("home.categories.explore")}
+                        <ArrowRight aria-hidden="true" />
+                      </span>
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
         </section>
 
         <section

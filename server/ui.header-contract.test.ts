@@ -29,6 +29,8 @@ const flowerImagePath = path.join(
   projectRoot,
   "client/src/components/FlowerImage.tsx"
 );
+const georgianTranslationsPath = path.join(projectRoot, "client/src/i18n/ka.ts");
+const englishTranslationsPath = path.join(projectRoot, "client/src/i18n/en.ts");
 const headerStylesPath = path.join(
   projectRoot,
   "client/src/styles/header-refinement.css"
@@ -284,5 +286,32 @@ describe("storefront header contract", () => {
     expect(styles).toContain(".p1-hero--editorial .p1-hero__media.is-loaded .p1-hero__image");
     expect(styles).toContain(".p1-hero--editorial .p1-hero__image {");
     expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
+  });
+
+  it("keeps the homepage bouquet category gallery route-safe, bilingual, and free of photo-card backdrops", async () => {
+    const [home, styles, georgian, english] = await Promise.all([
+      readFile(homePath, "utf8"),
+      readFile(path.join(projectRoot, "client/src/index.css"), "utf8"),
+      readFile(georgianTranslationsPath, "utf8"),
+      readFile(englishTranslationsPath, "utf8"),
+    ]);
+
+    expect(home).toContain("const categoryArtwork = [");
+    expect(home).toContain('className="p1-category-gallery" role="list"');
+    expect(home).toContain('className={`p1-category-tile p1-category-tile--${index + 1}`}');
+    expect(home).toContain('href={`/catalog?category=${category.id}`}');
+    expect(home).toContain('src={categoryArtwork[index % categoryArtwork.length]}');
+    expect(home).toContain('t("home.categories.intro")');
+    expect(home).toContain('t("home.categories.explore")');
+    expect(styles).toContain("Phase 7 · Homepage bouquet-category editorial gallery");
+    expect(styles).toContain(".p1-category-tile {");
+    expect(styles).toContain("background: transparent;");
+    expect(styles).toContain(".p1-category-tile__visual {");
+    expect(styles).toContain(".p1-category-gallery {");
+    expect(styles).toContain("grid-template-columns: repeat(2, minmax(0, 1fr))");
+    expect(georgian).toContain('"home.categories.intro"');
+    expect(georgian).toContain('"home.categories.explore"');
+    expect(english).toContain('"home.categories.intro"');
+    expect(english).toContain('"home.categories.explore"');
   });
 });
