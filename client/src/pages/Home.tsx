@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import {
   ArrowRight,
   CheckCircle2,
@@ -30,6 +30,7 @@ import ProductCard from "@/components/product/ProductCard";
 export default function Home() {
   const { language, t } = useLanguage();
   const { openDrawer } = useCartDrawer();
+  const [heroImageReady, setHeroImageReady] = useState(false);
   const productsQuery = trpc.products.list.useQuery();
   const categoriesQuery = trpc.categories.list.useQuery();
   const ka = language === "ka";
@@ -80,7 +81,10 @@ export default function Home() {
     <div className="p1-site">
       <Navbar />
       <main id="main-content">
-        <section className="p1-hero" aria-labelledby="p1-hero-title">
+        <section
+          className="p1-hero p1-hero--editorial"
+          aria-labelledby="p1-hero-title"
+        >
           <div className="p1-hero__copy">
             <p className="p1-kicker">FLOWER’S BOUTIQUE</p>
             <h1 id="p1-hero-title">{t("home.simpleHero.title")}</h1>
@@ -99,7 +103,9 @@ export default function Home() {
               </Link>
             </div>
           </div>
-          <picture className="p1-hero__media">
+          <picture
+            className={`p1-hero__media ${heroImageReady ? "is-loaded" : ""}`}
+          >
             <source
               type="image/avif"
               media="(max-width: 767px)"
@@ -115,11 +121,13 @@ export default function Home() {
               srcSet="/flower-assets/hero/light-studio-desktop.avif"
             />
             <img
+              className="p1-hero__image"
               src="/flower-assets/hero/light-studio-desktop.webp"
               alt={t("home.simpleHero.imageAlt")}
               width="1280"
               height="960"
               fetchPriority="high"
+              onLoad={() => setHeroImageReady(true)}
             />
           </picture>
         </section>

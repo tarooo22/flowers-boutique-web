@@ -10242,3 +10242,130 @@ body .auth-page button.auth-submit.auth-submit--boutique:hover:not(:disabled) {
     min-height: var(--p3-mobile-control);
   }
 }
+
+/* Phase 6 · Homepage editorial hero refinement.
+   Inspired by the composition principles researched from 21st community hero
+   patterns: the permanent product photograph remains central while a quiet
+   paper-to-image blend, frame depth, and brief load-aware reveal prevent the
+   hard image edge that previously interrupted the editorial composition. */
+.p1-hero--editorial {
+  isolation: isolate;
+}
+
+.p1-hero--editorial::before {
+  position: absolute;
+  z-index: -1;
+  top: 4%;
+  right: -8%;
+  width: min(48vw, 660px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--p3-rose-wash) 78%, transparent) 0%, transparent 70%);
+  content: "";
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.p1-hero--editorial .p1-hero__copy .p1-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.p1-hero--editorial .p1-hero__copy .p1-kicker::after {
+  width: 30px;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  opacity: 0.62;
+}
+
+.p1-hero--editorial .p1-hero__media {
+  isolation: isolate;
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 15%, var(--p3-line));
+  background: var(--surface-soft);
+  box-shadow: 0 26px 60px rgba(48, 35, 38, 0.11);
+}
+
+.p1-hero--editorial .p1-hero__media::before,
+.p1-hero--editorial .p1-hero__media::after {
+  position: absolute;
+  z-index: 1;
+  content: "";
+  pointer-events: none;
+}
+
+.p1-hero--editorial .p1-hero__media::before {
+  inset: 0;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--surface-page) 84%, transparent) 0%, color-mix(in srgb, var(--surface-page) 42%, transparent) 10%, transparent 27%);
+}
+
+.p1-hero--editorial .p1-hero__media::after {
+  inset: clamp(8px, 1.3vw, 14px);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  opacity: 0.54;
+}
+
+.p1-hero--editorial .p1-hero__image {
+  position: relative;
+  z-index: 0;
+  opacity: 0;
+  transform: scale(1.018);
+  transition: opacity 240ms var(--p3-ease), transform 240ms var(--p3-ease);
+}
+
+.p1-hero--editorial .p1-hero__media.is-loaded .p1-hero__image {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.p1-hero--editorial .p1-hero__actions .p1-button--primary {
+  min-height: 48px;
+  padding-inline: 22px;
+}
+
+.p1-hero--editorial .p1-hero__actions .p1-button--text {
+  min-height: 48px;
+  padding-inline: 2px;
+}
+
+@media (max-width: 767px) {
+  .p1-hero--editorial {
+    gap: 24px;
+  }
+
+  .p1-hero--editorial::before {
+    top: 8%;
+    right: -35%;
+    width: 92vw;
+    opacity: 0.62;
+  }
+
+  .p1-hero--editorial .p1-hero__media {
+    box-shadow: 0 18px 38px rgba(48, 35, 38, 0.1);
+  }
+
+  .p1-hero--editorial .p1-hero__media::before {
+    background: linear-gradient(180deg, transparent 0%, transparent 72%, color-mix(in srgb, var(--surface-page) 14%, transparent) 100%);
+  }
+
+  .p1-hero--editorial .p1-hero__media::after {
+    inset: 8px;
+  }
+
+  .p1-hero--editorial .p1-hero__actions {
+    gap: 12px;
+  }
+
+  .p1-hero--editorial .p1-hero__actions .p1-button--text {
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p1-hero--editorial .p1-hero__image {
+    opacity: 1;
+    transform: none;
+    transition: none !important;
+  }
+}

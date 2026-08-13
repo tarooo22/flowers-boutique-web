@@ -8,6 +8,7 @@ const navbarPath = path.join(
   "client/src/components/Navbar.tsx"
 );
 const appPath = path.join(projectRoot, "client/src/App.tsx");
+const homePath = path.join(projectRoot, "client/src/pages/Home.tsx");
 const footerPath = path.join(projectRoot, "client/src/components/Footer.tsx");
 const cartPath = path.join(projectRoot, "client/src/pages/Cart.tsx");
 const cartDrawerPath = path.join(
@@ -265,5 +266,23 @@ describe("storefront header contract", () => {
     expect(styles).toContain(".p1-app--checkout .fb-checkout-address-grid");
     expect(styles).toContain(".p1-app--admin .fb-admin-tabs");
     expect(styles).toContain(".p1-app--builder [role=\"tablist\"]");
+  });
+
+  it("keeps the homepage hero's editorial media transition load-aware and reduced-motion safe", async () => {
+    const [home, styles] = await Promise.all([
+      readFile(homePath, "utf8"),
+      readFile(path.join(projectRoot, "client/src/index.css"), "utf8"),
+    ]);
+
+    expect(home).toContain('className="p1-hero p1-hero--editorial"');
+    expect(home).toContain("const [heroImageReady, setHeroImageReady] = useState(false)");
+    expect(home).toContain('className={`p1-hero__media ${heroImageReady ? "is-loaded" : ""}`}');
+    expect(home).toContain("onLoad={() => setHeroImageReady(true)}");
+    expect(home).toContain('className="p1-hero__image"');
+    expect(styles).toContain("Phase 6 · Homepage editorial hero refinement");
+    expect(styles).toContain(".p1-hero--editorial .p1-hero__media::before");
+    expect(styles).toContain(".p1-hero--editorial .p1-hero__media.is-loaded .p1-hero__image");
+    expect(styles).toContain(".p1-hero--editorial .p1-hero__image {");
+    expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
   });
 });

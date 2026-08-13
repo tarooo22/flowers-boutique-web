@@ -233,3 +233,8 @@
 - [x] Refine shared mobile navigation, header actions, typography scale, controls, and bottom-safe-area behavior without changing route or commerce logic
 - [x] Refine mobile storefront, catalog, product, bouquet builder, cart, checkout, informational, account, and access-gated admin presentation layers
 - [x] Add mobile UI contract coverage and complete 375px/390px visual regression, TypeScript, production-build, and full-suite validation
+
+## Homepage hero transition refinement — 2026-08-13
+- [x] Inspect the active homepage hero media transition and select compatible 21st community motion/composition patterns without introducing external runtime dependencies
+- [x] Refine the hero image transition, framing, supporting visual layers, typography composition, and CTA hierarchy with additive desktop and mobile styling
+- [x] Add focused hero transition contracts and validate the refined hero at desktop, 390px, and 375px before publishing
