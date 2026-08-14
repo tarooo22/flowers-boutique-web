@@ -117,3 +117,54 @@
     letter-spacing: -0.055em;
   }
 }
+
+/* Competitive redesign — additive shared trust and navigation layer. */
+.p1-header .p1-utility-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-block-size: 30px;
+  padding: 5px max(20px, calc((100vw - 1240px) / 2));
+  color: color-mix(in srgb, var(--color-ink, #24342b) 74%, transparent);
+  background: color-mix(in srgb, var(--color-cream, #fbf8f2) 86%, var(--color-rose-primary, #b56d76) 14%);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-ink, #24342b) 10%, transparent);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.045em;
+}
+
+.p1-utility-strip__delivery {
+  margin: 0;
+}
+
+.p1-header .p1-utility-strip a {
+  color: inherit;
+  text-decoration-color: color-mix(in srgb, currentColor 48%, transparent);
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+.p1-header .p1-utility-strip a:hover {
+  color: var(--color-rose-primary, #a95364);
+}
+
+.p1-header .p1-utility-strip a:focus-visible {
+  outline: 2px solid var(--accent-primary, #a95364);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .p1-header .p1-utility-strip {
+    justify-content: center;
+    min-block-size: 28px;
+    padding-inline: 16px;
+    font-size: 9px;
+    text-align: center;
+  }
+
+  .p1-header .p1-utility-strip a {
+    display: none;
+  }
+}

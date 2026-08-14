@@ -52,11 +52,11 @@ export default function AIBouquetBuilder() {
     <div className="p2-builder-page min-h-screen bg-[#faf7f2]">
       <Navbar />
 
-      <main id="main-content" className="mx-auto max-w-[1460px] px-4 py-6 sm:px-6 sm:py-8">
-        <section className="p2-builder-intro mb-6 grid gap-4 rounded-2xl border border-[#eadfce] bg-[#171717] p-5 text-[#f7f2e9] sm:grid-cols-[1fr_auto] sm:items-center sm:p-6" aria-label={language === "ka" ? "ნაბიჯები" : "Builder steps"}>
+      <main id="main-content" className="p2-builder-main mx-auto max-w-[1460px] px-4 py-6 sm:px-6 sm:py-8">
+        <section className="p2-builder-intro p2-builder-journey mb-6 grid gap-4 rounded-2xl border border-[#eadfce] bg-[#171717] p-5 text-[#f7f2e9] sm:grid-cols-[1fr_auto] sm:items-center sm:p-6" aria-labelledby="builder-page-title">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#e2c58b]">01 · {language === "ka" ? "აირჩიეთ ყვავილები" : "Choose flowers first"}</p>
-            <h1 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-[#f7f2e9] sm:text-3xl">{language === "ka" ? "შექმენით თქვენი თაიგული" : "Build your bouquet"}</h1>
+            <h1 id="builder-page-title" className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-[#f7f2e9] sm:text-3xl">{language === "ka" ? "შექმენით თქვენი თაიგული" : "Build your bouquet"}</h1>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-white/70">{language === "ka" ? "შემდეგ აირჩიეთ შეფუთვა და ლენტი, გადაამოწმეთ ფასი და დაამატეთ თაიგული კალათაში." : "Then choose wrapping and ribbon, review the price, and add your bouquet to cart."}</p>
           </div>
           <div className="flex items-center gap-2 text-xs text-white/55"><span className="rounded-full bg-[#c9a86a] px-3 py-1.5 font-semibold text-[#171717]">1 {language === "ka" ? "ყვავილები" : "Flowers"}</span><span>→</span><span>2 {language === "ka" ? "შეფუთვა" : "Wrap"}</span><span>→</span><span>3 {language === "ka" ? "კალათა" : "Cart"}</span></div>
@@ -64,7 +64,8 @@ export default function AIBouquetBuilder() {
         <Tabs
           value={mode}
           onValueChange={value => setMode(value as "visual" | "ai")}
-          className="w-full"
+          className="p2-builder-mode-switcher w-full"
+          aria-labelledby="builder-page-title"
         >
           <TabsList className="p2-builder-tabs mb-6 grid h-auto w-full grid-cols-2 rounded-2xl border border-[#eadfce] bg-white p-1.5 shadow-[0_10px_30px_rgba(83,61,40,0.05)] sm:mb-8">
             <TabsTrigger
@@ -83,7 +84,7 @@ export default function AIBouquetBuilder() {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="visual" className="mt-0">
+          <TabsContent value="visual" className="p2-builder-tab-panel mt-0">
             <VisualBouquetBuilder
               products={singleStemProducts}
               isLoading={productsLoading || categoriesLoading}
@@ -92,7 +93,7 @@ export default function AIBouquetBuilder() {
             />
           </TabsContent>
 
-          <TabsContent value="ai" className="mt-0">
+          <TabsContent value="ai" className="p2-builder-tab-panel mt-0">
             <AIBouquetMode
               language={language}
               products={singleStemProducts}

@@ -339,3 +339,12 @@
 - [x] Add a semantic Home Page editorial-flow wrapper and section hooks so category, signature-product, bespoke-builder, experience, delivery and contact sections share one responsive visual rhythm without altering their existing routes or content.
 - [x] Add a strictly additive Home Page editorial continuity layer: Georgian-first typography scaling, restrained botanical dividers, CTA hierarchy/press feedback, touch-safe action sizing, and reduced-motion-safe interactions.
 - [x] Extend focused UI contracts for the editorial-flow landmark, builder/contact action semantics, and the new additive presentation layer.
+
+## Competitive redesign master brief — 2026-08-14
+- [x] Read the attached competitive redesign brief, current operational guide, design-system master, route map, visual references, and current repository state; record only verified gaps and preserve uncommitted user work.
+- [x] Translate the approved “Quiet Tbilisi Floral Atelier” direction into a phased, non-destructive implementation scope that preserves React/Vite/TypeScript, tRPC, Drizzle, authentication, cart, checkout, bouquet builder, SEO, real catalog data, delivery policy, and BOG sandbox/disabled mode.
+- [x] Audit and prioritize shared trust/navigation/component/accessibility requirements before any presentation change, without inventing reviews, discounts, stock, delivery promises, photography, or commercial features.
+- [x] Complete staged responsive, accessibility, performance, browser-diagnostics, test, TypeScript, and production-build validation before any future release checkpoint.
+- [x] Preserve the current refined Home Page carousel and apply the approved competitive brief only to shared navigation, Home/Catalog/Product/Builder hierarchy, accessibility, and mobile rhythm.
+- [x] Implement additive shared-shell trust, navigation, focus, and touch-target polish without changing brand wording, canonical contact facts, routes, authentication, cart, checkout, delivery policy, or BOG sandbox status.
+- [x] Implement only presentation-level discovery and builder improvements for existing routes, real catalog data, loading/error/empty states, and current CTA destinations.

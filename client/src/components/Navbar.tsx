@@ -20,6 +20,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { getCart } from "@/lib/cartUtils";
 import { phoneHref, siteContact } from "@/lib/siteConfig";
 import { BrandWordmark } from "@/components/BrandWordmark";
+import { DELIVERY_FEE_GEL, FREE_DELIVERY_THRESHOLD_GEL } from "@shared/checkoutPolicy";
 import ContactSheet from "@/components/mobile/ContactSheet";
 import MobileBottomNav from "@/components/mobile/MobileBottomNav";
 import {
@@ -104,7 +105,15 @@ export default function Navbar() {
         {ka ? "მთავარ შინაარსზე გადასვლა" : "Skip to main content"}
       </a>
       <header className={`p1-header ${scrolled ? "is-scrolled" : ""}`}>
-        <div className="p1-utility-strip">
+        <div
+          className="p1-utility-strip"
+          aria-label={ka ? "მიწოდებისა და კონტაქტის ინფორმაცია" : "Delivery and contact information"}
+        >
+          <p className="p1-utility-strip__delivery">
+            {ka
+              ? `მიწოდება ₾${DELIVERY_FEE_GEL} · უფასო ₾${FREE_DELIVERY_THRESHOLD_GEL}-დან`
+              : `Delivery ₾${DELIVERY_FEE_GEL} · Free from ₾${FREE_DELIVERY_THRESHOLD_GEL}`}
+          </p>
           <a href={phoneHref}>{siteContact.phone}</a>
         </div>
         <div className="p1-header__inner">

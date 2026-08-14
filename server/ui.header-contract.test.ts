@@ -9,6 +9,16 @@ const navbarPath = path.join(
 );
 const appPath = path.join(projectRoot, "client/src/App.tsx");
 const homePath = path.join(projectRoot, "client/src/pages/Home.tsx");
+const catalogPath = path.join(projectRoot, "client/src/pages/Catalog.tsx");
+const productDetailPath = path.join(projectRoot, "client/src/pages/ProductDetail.tsx");
+const bouquetBuilderPath = path.join(
+  projectRoot,
+  "client/src/pages/AIBouquetBuilder.tsx"
+);
+const visualBouquetBuilderPath = path.join(
+  projectRoot,
+  "client/src/components/bouquet-builder/VisualBouquetBuilder.tsx"
+);
 const footerPath = path.join(projectRoot, "client/src/components/Footer.tsx");
 const cartPath = path.join(projectRoot, "client/src/pages/Cart.tsx");
 const cartDrawerPath = path.join(
@@ -98,6 +108,24 @@ describe("storefront header contract", () => {
     expect(navbar).toContain("aria-label={ka ? \"მობილური ნავიგაცია\"");
     expect(navbar).toContain("aria-label={ka ? \"მენიუს გახსნა\"");
     expect(styles).toContain("outline: 2px solid var(--accent-primary)");
+  });
+
+  it("keeps the header trust strip tied to the canonical delivery policy and usable at mobile widths", async () => {
+    const [navbar, styles] = await Promise.all([
+      readFile(navbarPath, "utf8"),
+      readFile(headerStylesPath, "utf8"),
+    ]);
+
+    expect(navbar).toContain('from "@shared/checkoutPolicy"');
+    expect(navbar).toContain("DELIVERY_FEE_GEL, FREE_DELIVERY_THRESHOLD_GEL");
+    expect(navbar).toContain('className="p1-utility-strip"');
+    expect(navbar).toContain('className="p1-utility-strip__delivery"');
+    expect(navbar).toContain("მიწოდებისა და კონტაქტის ინფორმაცია");
+    expect(styles).toContain("Competitive redesign — additive shared trust and navigation layer");
+    expect(styles).toContain(".p1-header .p1-utility-strip a:focus-visible");
+    expect(styles).toContain("@media (max-width: 640px)");
+    expect(styles).toContain(".p1-header .p1-utility-strip a {");
+    expect(styles).toContain("display: none;");
   });
 
   it("keeps footer branding typography-led without removing contact or policy routes", async () => {
@@ -304,6 +332,75 @@ describe("storefront header contract", () => {
     expect(styles).toContain(".p1-app--checkout .fb-checkout-address-grid");
     expect(styles).toContain(".p1-app--admin .fb-admin-tabs");
     expect(styles).toContain(".p1-app--builder [role=\"tablist\"]");
+  });
+
+  it("keeps catalog discovery controls linked, stateful, and motion-safe", async () => {
+    const [catalog, styles] = await Promise.all([
+      readFile(catalogPath, "utf8"),
+      readFile(path.join(projectRoot, "client/src/index.css"), "utf8"),
+    ]);
+
+    expect(catalog).toContain('aria-controls="catalog-filters"');
+    expect(catalog).toContain('id="catalog-filters"');
+    expect(catalog).toContain("aria-pressed={selectedCategoryId === null}");
+    expect(catalog).toContain("aria-pressed={selectedCategoryId === category.id}");
+    expect(catalog).toContain('data-has-active-filters={hasFilters ? "true" : "false"}');
+    expect(catalog).toContain('className="fb-catalog-toolbar__count" role="status" aria-live="polite"');
+    expect(catalog).toContain('className="fb-catalog-toolbar__context"');
+    expect(styles).toContain("Competitive redesign P1 — additive catalog discovery rhythm, carousel preserved");
+    expect(styles).toContain(".p2-catalog-page .fb-catalog-toolbar__context");
+    expect(styles).toContain(".p2-catalog-page .fb-catalog-results[data-has-active-filters=\"true\"]");
+    expect(styles).toContain(".p2-catalog-page .fb-catalog-collection-nav button:active");
+    expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
+  });
+
+  it("keeps product-detail purchase context labelled, live, and motion-safe", async () => {
+    const [productDetail, styles] = await Promise.all([
+      readFile(productDetailPath, "utf8"),
+      readFile(path.join(projectRoot, "client/src/index.css"), "utf8"),
+    ]);
+
+    expect(productDetail).toContain('className="p2-product-page min-h-screen');
+    expect(productDetail).toContain('aria-labelledby="product-title"');
+    expect(productDetail).toContain('aria-label={ka ? "პროდუქტის ფოტოები" : "Product images"}');
+    expect(productDetail).toContain('id="product-title"');
+    expect(productDetail).toContain('id="product-price" className="fb-product-price-row" aria-live="polite"');
+    expect(productDetail).toContain('id="product-availability"');
+    expect(productDetail).toContain('aria-describedby="product-price product-availability"');
+    expect(productDetail).toContain('aria-labelledby="related-products-title"');
+    expect(styles).toContain("Competitive redesign P1 — additive product-detail purchase clarity");
+    expect(styles).toContain(".p2-product-page .fb-product-copy h1");
+    expect(styles).toContain(".p2-product-page .fb-product-add:active");
+    expect(styles).toContain(".p2-product-page :is(.fb-product-add, .fb-product-inquiry");
+    expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
+  });
+
+  it("keeps the bouquet builder journey labelled, live, and touch-safe without changing its cart flow", async () => {
+    const [builder, visualBuilder, styles] = await Promise.all([
+      readFile(bouquetBuilderPath, "utf8"),
+      readFile(visualBouquetBuilderPath, "utf8"),
+      readFile(path.join(projectRoot, "client/src/index.css"), "utf8"),
+    ]);
+
+    expect(builder).toContain('className="p2-builder-page min-h-screen');
+    expect(builder).toContain('className="p2-builder-main');
+    expect(builder).toContain('className="p2-builder-intro p2-builder-journey');
+    expect(builder).toContain('id="builder-page-title"');
+    expect(builder).toContain('className="p2-builder-mode-switcher w-full"');
+    expect(builder).toContain('className="p2-builder-tab-panel mt-0"');
+    expect(visualBuilder).toContain('className="p2-builder-workspace');
+    expect(visualBuilder).toContain('aria-labelledby="visual-preview-title"');
+    expect(visualBuilder).toContain('className="p2-builder-summary');
+    expect(visualBuilder).toContain('aria-atomic="true"');
+    expect(visualBuilder).toContain('id="builder-total"');
+    expect(visualBuilder).toContain('className="p2-builder-add-to-cart');
+    expect(visualBuilder).toContain('aria-describedby="builder-total"');
+    expect(styles).toContain("Competitive redesign B — builder journey refinement");
+    expect(styles).toContain(
+      ".p2-builder-page .p2-builder-add-to-cart:not(:disabled):active"
+    );
+    expect(styles).toContain("env(safe-area-inset-bottom)");
+    expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
   });
 
   it("keeps the homepage hero's editorial media transition load-aware and reduced-motion safe", async () => {

@@ -188,6 +188,7 @@ export default function Catalog() {
                 className="fb-filter-trigger"
                 onClick={() => setFiltersOpen(open => !open)}
                 aria-expanded={filtersOpen}
+                aria-controls="catalog-filters"
               >
                 <SlidersHorizontal size={17} /> {ka ? "ფილტრები" : "Filters"}{" "}
                 {hasFilters && <span aria-label="Active filters" />}
@@ -225,6 +226,7 @@ export default function Catalog() {
 
         <section className="fb-page-shell fb-catalog-layout">
           <aside
+            id="catalog-filters"
             className={`fb-catalog-filters ${filtersOpen ? "is-open" : ""}`}
             aria-label={ka ? "კატალოგის ფილტრები" : "Catalog filters"}
           >
@@ -263,10 +265,11 @@ export default function Catalog() {
               <legend>{ka ? "კატეგორია" : "Category"}</legend>
               <div className="fb-filter-list">
                 <button
-                  type="button"
-                  className={selectedCategoryId === null ? "is-selected" : ""}
-                  onClick={() => setSelectedCategoryId(null)}
-                >
+                type="button"
+                className={selectedCategoryId === null ? "is-selected" : ""}
+                onClick={() => setSelectedCategoryId(null)}
+                aria-pressed={selectedCategoryId === null}
+              >
                   <span>{ka ? "ყველა კოლექცია" : "All collections"}</span>
                   <small>{totalProducts}</small>
                 </button>
@@ -274,11 +277,12 @@ export default function Catalog() {
                   <button
                     type="button"
                     key={category.id}
-                    className={
-                      selectedCategoryId === category.id ? "is-selected" : ""
-                    }
-                    onClick={() => setSelectedCategoryId(category.id)}
-                  >
+                  className={
+                    selectedCategoryId === category.id ? "is-selected" : ""
+                  }
+                  onClick={() => setSelectedCategoryId(category.id)}
+                  aria-pressed={selectedCategoryId === category.id}
+                >
                     <span>
                       {cleanProductName(
                         ka ? category.nameKa : category.nameEn,
@@ -368,12 +372,20 @@ export default function Catalog() {
             />
           )}
 
-          <div className="fb-catalog-results">
+          <div
+            className="fb-catalog-results"
+            data-has-active-filters={hasFilters ? "true" : "false"}
+          >
             <div className="fb-catalog-toolbar">
-              <p>
+              <p className="fb-catalog-toolbar__count" role="status" aria-live="polite">
                 {productsQuery.isLoading
                   ? "—"
                   : `${totalProducts} ${ka ? "თაიგული" : "bouquets"}`}
+              </p>
+              <p className="fb-catalog-toolbar__context">
+                {ka
+                  ? "აირჩიეთ კოლექცია ან დააზუსტეთ შედეგი ფილტრებით."
+                  : "Choose a collection or refine the results with filters."}
               </p>
               <label>
                 {ka ? "დალაგება" : "Sort by"}

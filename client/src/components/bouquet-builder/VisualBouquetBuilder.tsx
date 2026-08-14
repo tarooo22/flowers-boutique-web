@@ -167,8 +167,8 @@ export function VisualBouquetBuilder({
   };
 
   return (
-    <div className="grid items-start gap-6 lg:grid-cols-[minmax(390px,0.92fr)_minmax(520px,1.08fr)] xl:gap-8">
-      <section className="order-1 lg:sticky lg:top-28 lg:col-start-1 lg:row-start-1">
+    <div className="p2-builder-workspace grid items-start gap-6 lg:grid-cols-[minmax(390px,0.92fr)_minmax(520px,1.08fr)] xl:gap-8">
+      <section className="p2-builder-preview-panel order-1 lg:sticky lg:top-28 lg:col-start-1 lg:row-start-1" aria-labelledby="visual-preview-title">
         <div className="rounded-[28px] border border-[#eadfce] bg-white p-4 shadow-[0_18px_55px_rgba(83,61,40,0.08)] sm:p-5">
           <div className="mb-4 flex items-start justify-between gap-4">
             <div>
@@ -178,6 +178,7 @@ export function VisualBouquetBuilder({
                   : "Visual Builder"}
               </p>
               <h2
+                id="visual-preview-title"
                 className="mt-1 text-2xl font-medium text-[#2c2925]"
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
@@ -195,7 +196,7 @@ export function VisualBouquetBuilder({
                 ribbonId === "burgundy" &&
                 wrapMode === "paper"
               }
-              className="inline-flex h-9 items-center gap-2 rounded-full border border-[#e6d8c5] px-3 text-xs font-medium text-[#7a6a5a] transition hover:bg-[#f7f1e8] disabled:cursor-not-allowed disabled:opacity-40"
+              className="p2-builder-reset-control inline-flex min-h-11 items-center gap-2 rounded-full border border-[#e6d8c5] px-3 text-xs font-medium text-[#7a6a5a] transition hover:bg-[#f7f1e8] disabled:cursor-not-allowed disabled:opacity-40"
             >
               <RotateCcw className="h-3.5 w-3.5" />
               {language === "ka" ? "თავიდან დაწყება" : "Reset"}
@@ -325,14 +326,16 @@ export function VisualBouquetBuilder({
         </div>
       </section>
 
-      <section className="order-2 flex flex-col gap-6 lg:col-start-2 lg:row-start-1">
+      <section className="p2-builder-selection-panel order-2 flex flex-col gap-6 lg:col-start-2 lg:row-start-1" aria-labelledby="builder-selection-title">
         <aside
-          className="order-2 rounded-[24px] border border-[#d6c2a4] bg-[#30291f] p-5 text-[#fffaf2] shadow-[0_18px_45px_rgba(53,40,27,0.14)]"
+          className="p2-builder-summary order-2 rounded-[24px] border border-[#d6c2a4] bg-[#30291f] p-5 text-[#fffaf2] shadow-[0_18px_45px_rgba(53,40,27,0.14)]"
           aria-live="polite"
+          aria-atomic="true"
+          aria-labelledby="builder-summary-title"
         >
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#d9bb8b]">
+              <p id="builder-summary-title" className="text-xs font-semibold uppercase tracking-[0.18em] text-[#d9bb8b]">
                 {language === "ka" ? "თქვენი თაიგული" : "Your bouquet"}
               </p>
               <p className="mt-1 text-sm text-white/65">
@@ -341,8 +344,9 @@ export function VisualBouquetBuilder({
                   : `${selectedStemCount} stems`}
               </p>
             </div>
-            <p
-              className="text-3xl font-semibold text-[#f4d199]"
+              <p
+                id="builder-total"
+                className="text-3xl font-semibold text-[#f4d199]"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
               {formatBuilderPrice(total)}
@@ -409,7 +413,8 @@ export function VisualBouquetBuilder({
             type="button"
             onClick={handleAddToCart}
             disabled={selectedStemCount === 0}
-            className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#f4d199] px-5 py-3 text-sm font-bold text-[#30291f] shadow-[0_10px_28px_rgba(0,0,0,0.16)] transition hover:bg-[#ffe0aa] disabled:cursor-not-allowed disabled:opacity-40"
+            className="p2-builder-add-to-cart mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#f4d199] px-5 py-3 text-sm font-bold text-[#30291f] shadow-[0_10px_28px_rgba(0,0,0,0.16)] transition hover:bg-[#ffe0aa] disabled:cursor-not-allowed disabled:opacity-40"
+            aria-describedby="builder-total"
           >
             <ShoppingBag className="h-4.5 w-4.5" />
             {language === "ka" ? "კალათაში დამატება" : "Add to cart"}
@@ -423,6 +428,7 @@ export function VisualBouquetBuilder({
                 {language === "ka" ? "ცალკეული ყვავილები" : "Single stems"}
               </p>
               <h2
+                id="builder-selection-title"
                 className="mt-1 text-2xl font-medium text-[#2c2925]"
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
@@ -432,7 +438,7 @@ export function VisualBouquetBuilder({
               </h2>
             </div>
             <div className="text-right">
-              <span className="inline-flex rounded-full bg-[#f5eee4] px-3 py-1 text-xs font-semibold text-[#86633b]">
+              <span className="inline-flex rounded-full bg-[#f5eee4] px-3 py-1 text-xs font-semibold text-[#86633b]" aria-live="polite">
                 {language === "ka"
                   ? `${builderProducts.length} სახეობა`
                   : `${builderProducts.length} types`}
