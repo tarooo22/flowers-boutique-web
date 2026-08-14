@@ -417,11 +417,21 @@ describe("storefront header contract", () => {
     expect(home).toContain("setCurrentSlide((prev) => (prev + 1) % heroSlides.length)");
     expect(home).toContain("setLoadedHeroSlides((loaded) => {");
     expect(home).toContain('className="p1-hero__image"');
+    expect(home).toContain('className="p1-hero__backdrop absolute inset-0 z-0"');
+    expect(home).toContain('className="p1-hero__title text-4xl md:text-6xl lg:text-7xl');
+    expect(home).toContain('className="p1-hero__actions flex flex-wrap items-center gap-4 pt-4"');
+    expect(home).toContain('p1-hero__cta p1-hero__cta--primary');
+    expect(home).toContain('p1-hero__cta p1-hero__cta--secondary');
+    expect(home).toContain('className="p1-hero__indicators lg:col-span-4');
+    expect(home).toContain('aria-pressed={idx === currentSlide}');
     expect(styles).toContain("Phase 6 · Homepage editorial hero refinement");
+    expect(styles).toContain("Phase 10 · Home hero composition refinement");
     expect(styles).toContain(".p1-hero--editorial .p1-hero__media::before");
     expect(styles).toContain(".p1-hero--editorial .p1-hero__media.is-active");
     expect(styles).toContain(".p1-hero--editorial .p1-hero__media.is-active .p1-hero__image");
     expect(styles).toContain(".p1-hero--editorial .p1-hero__image {");
+    expect(styles).toContain(".p1-hero--editorial .p1-hero__cta:active");
+    expect(styles).toContain(".p1-hero--editorial .p1-hero__indicator:focus-visible");
     expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
   });
 

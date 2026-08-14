@@ -348,3 +348,8 @@
 - [x] Preserve the current refined Home Page carousel and apply the approved competitive brief only to shared navigation, Home/Catalog/Product/Builder hierarchy, accessibility, and mobile rhythm.
 - [x] Implement additive shared-shell trust, navigation, focus, and touch-target polish without changing brand wording, canonical contact facts, routes, authentication, cart, checkout, delivery policy, or BOG sandbox status.
 - [x] Implement only presentation-level discovery and builder improvements for existing routes, real catalog data, loading/error/empty states, and current CTA destinations.
+
+## Hero composition refinement — 2026-08-15
+- [x] Review the current Home Page hero markup, active append-only carousel CSS, and relevant UI/UX, brand, responsive, frontend, senior-development, motion, and image-presentation guidance without altering carousel content or behavior.
+- [x] Refine the current hero’s visual composition, contrast, copy/CTA hierarchy, slide indicators, image framing, and desktop/mobile spacing through additive presentation-only changes.
+- [x] Add focused regression coverage and complete desktop, 390px, and 320px visual QA, browser diagnostics, full Vitest, TypeScript, and production-build validation before release.

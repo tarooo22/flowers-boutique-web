@@ -12118,3 +12118,392 @@ body .auth-page button.auth-submit.auth-submit--boutique:hover:not(:disabled) {
     transition: none !important;
   }
 }
+
+/* Phase 10 · Home hero composition refinement.
+   The existing carousel stays intact; this layer strengthens its calm editorial
+   composition, Georgian-first reading order and fully reachable slide controls. */
+.p1-hero--editorial {
+  min-block-size: clamp(36rem, 72svh, 48.75rem);
+  overflow: clip;
+}
+
+.p1-hero--editorial .p1-hero__backdrop {
+  overflow: hidden;
+}
+
+.p1-hero--editorial .p1-hero__backdrop::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background:
+    radial-gradient(circle at 77% 21%, rgba(247, 218, 194, 0.15), transparent 31%),
+    linear-gradient(90deg, rgba(32, 27, 24, 0.12) 0%, transparent 55%);
+  content: "";
+  pointer-events: none;
+}
+
+.p1-hero--editorial .p1-hero__veil--lateral {
+  background: linear-gradient(90deg, rgba(28, 24, 22, 0.82) 0%, rgba(28, 24, 22, 0.56) 35%, rgba(28, 24, 22, 0.1) 73%, rgba(28, 24, 22, 0.2) 100%) !important;
+}
+
+.p1-hero--editorial .p1-hero__veil--vertical {
+  background: linear-gradient(180deg, rgba(19, 17, 15, 0.12) 0%, transparent 42%, rgba(19, 17, 15, 0.54) 100%) !important;
+}
+
+.p1-hero--editorial .p1-hero__layout {
+  padding: clamp(5.5rem, 10vw, 8.5rem) clamp(1.25rem, 4vw, 4.25rem) clamp(3.5rem, 7vw, 6rem);
+}
+
+.p1-hero--editorial .p1-hero__copy {
+  max-width: 45rem;
+  text-shadow: 0 2px 18px rgba(20, 17, 14, 0.22);
+}
+
+.p1-hero--editorial .p1-hero__kicker {
+  min-height: 2.15rem;
+  padding-inline: 0.9rem;
+  border-color: rgba(255, 248, 240, 0.37);
+  background: rgba(34, 29, 26, 0.26);
+  color: #fff4df;
+  font-size: 0.67rem;
+  letter-spacing: 0.12em;
+}
+
+.p1-hero--editorial .p1-hero__title {
+  max-width: 12.5ch;
+  font-size: clamp(3rem, 6vw, 5.95rem);
+  font-weight: 500;
+  letter-spacing: -0.052em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.p1-hero--editorial .p1-hero__lede {
+  max-width: 34rem;
+  color: rgba(255, 250, 244, 0.9);
+  font-size: clamp(1rem, 1.55vw, 1.2rem);
+  line-height: 1.7;
+}
+
+.p1-hero--editorial .p1-hero__actions {
+  gap: 0.75rem;
+  padding-top: 0.85rem;
+}
+
+.p1-hero--editorial .p1-hero__cta {
+  min-height: 3.25rem;
+  padding-inline: 1.4rem;
+  letter-spacing: 0.055em;
+  transition-property: transform, opacity;
+  transition-duration: 160ms;
+  transition-timing-function: var(--p3-ease);
+}
+
+.p1-hero--editorial .p1-hero__cta--primary {
+  background: #d97259;
+  box-shadow: 0 14px 32px rgba(23, 18, 15, 0.28);
+}
+
+.p1-hero--editorial .p1-hero__cta--secondary {
+  border-color: rgba(255, 249, 242, 0.48);
+  background: rgba(42, 35, 31, 0.24);
+}
+
+.p1-hero--editorial .p1-hero__cta:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+}
+
+.p1-hero--editorial .p1-hero__cta:active {
+  opacity: 1;
+  transform: scale(0.97);
+}
+
+.p1-hero--editorial .p1-hero__cta:focus-visible,
+.p1-hero--editorial .p1-hero__indicator:focus-visible {
+  outline: 2px solid #fff4df;
+  outline-offset: 4px;
+}
+
+.p1-hero--editorial .p1-hero__indicators {
+  align-self: end;
+  padding: 0.8rem;
+  border: 1px solid rgba(255, 248, 240, 0.28);
+  border-radius: 1rem;
+  background: rgba(34, 29, 26, 0.24);
+  backdrop-filter: blur(12px);
+}
+
+.p1-hero--editorial .p1-hero__indicator {
+  min-width: 4.75rem;
+  min-height: 2.75rem;
+  padding: 0.4rem;
+  border-radius: 0.65rem;
+  transition-property: transform, opacity;
+  transition-duration: 160ms;
+  transition-timing-function: var(--p3-ease);
+}
+
+.p1-hero--editorial .p1-hero__indicator:hover {
+  transform: translateX(-2px);
+}
+
+.p1-hero--editorial .p1-hero__indicator:active {
+  transform: scale(0.97);
+}
+
+.p1-hero--editorial .p1-hero__indicator[aria-pressed="true"] {
+  background: rgba(255, 248, 240, 0.12);
+}
+
+.p1-hero--editorial .p1-hero__indicator-index {
+  min-width: 1.55rem;
+}
+
+@media (max-width: 1023px) {
+  .p1-hero--editorial {
+    min-block-size: clamp(39rem, 86svh, 44rem);
+  }
+
+  .p1-hero--editorial .p1-hero__layout {
+    gap: 1.65rem;
+  }
+
+  .p1-hero--editorial .p1-hero__indicators {
+    align-self: start;
+    justify-self: start;
+  }
+
+  .p1-hero--editorial .p1-hero__indicator:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 639px) {
+  .p1-hero--editorial {
+    min-block-size: 41.5rem;
+  }
+
+  .p1-hero--editorial .p1-hero__layout {
+    padding: 6.25rem 1.25rem 2rem;
+  }
+
+  .p1-hero--editorial .p1-hero__copy {
+    gap: 1.15rem;
+  }
+
+  .p1-hero--editorial .p1-hero__title {
+    max-width: 11.5ch;
+    font-size: clamp(2.75rem, 13vw, 3.7rem);
+    line-height: 1.02;
+  }
+
+  .p1-hero--editorial .p1-hero__lede {
+    max-width: 29rem;
+    font-size: 1rem;
+    line-height: 1.62;
+  }
+
+  .p1-hero--editorial .p1-hero__actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: min(100%, 22rem);
+  }
+
+  .p1-hero--editorial .p1-hero__cta {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .p1-hero--editorial .p1-hero__indicators {
+    width: 100%;
+    max-width: 19rem;
+    justify-content: space-between;
+    gap: 0.25rem;
+    padding: 0.4rem;
+  }
+
+  .p1-hero--editorial .p1-hero__indicator {
+    min-width: 2.9rem;
+    min-height: 2.75rem;
+    justify-content: center;
+    padding-inline: 0.25rem;
+  }
+
+  .p1-hero--editorial .p1-hero__indicator-line {
+    width: 1.55rem !important;
+  }
+
+  .p1-hero--editorial .p1-hero__indicator[aria-pressed="true"] .p1-hero__indicator-line {
+    width: 2.2rem !important;
+  }
+
+  .p1-hero--editorial .p1-hero__veil--lateral {
+    background: linear-gradient(90deg, rgba(28, 24, 22, 0.76) 0%, rgba(28, 24, 22, 0.5) 58%, rgba(28, 24, 22, 0.24) 100%) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p1-hero--editorial .p1-hero__cta,
+  .p1-hero--editorial .p1-hero__indicator {
+    transition: none !important;
+  }
+}
+
+/* Phase 10.1 · Resolve the legacy two-column shell against the current
+   full-bleed carousel. The content grid is intentionally the sole layout
+   authority for this hero variation. */
+.p1-hero--editorial {
+  display: block;
+}
+
+.p1-hero--editorial .p1-hero__layout {
+  min-block-size: inherit;
+}
+
+.p1-hero--editorial .p1-hero__copy {
+  max-width: none;
+  padding: 0;
+}
+
+.p1-hero--editorial .p1-hero__title {
+  max-width: min(100%, 42rem);
+  font-size: clamp(2.9rem, 4.7vw, 5.35rem);
+}
+
+.p1-hero--editorial .p1-hero__lede {
+  color: rgba(255, 255, 255, 0.86);
+  text-shadow: 0 1px 18px rgba(18, 20, 18, 0.42);
+}
+
+@media (max-width: 639px) {
+  .p1-hero--editorial .p1-hero__title {
+    max-width: 100%;
+    font-size: clamp(2rem, 9vw, 2.2rem);
+    letter-spacing: -0.045em;
+    line-height: 1.08;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
+  .p1-hero--editorial .p1-hero__lede {
+    color: #fff;
+  }
+
+  .p1-hero--editorial .p1-hero__indicators {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    z-index: 2;
+    width: fit-content;
+    padding: 0.3rem;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+    background: rgba(25, 25, 22, 0.16);
+    margin-top: 0;
+    gap: 0.45rem;
+  }
+
+  .p1-hero--editorial .p1-hero__indicator {
+    align-items: center;
+    justify-content: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    border-radius: 999px;
+    background: rgba(25, 25, 22, 0.2);
+  }
+
+  .p1-hero--editorial .p1-hero__indicator[aria-current="true"] {
+    border-color: rgba(255, 220, 140, 0.92);
+    background: rgba(25, 25, 22, 0.4);
+  }
+
+  .p1-hero--editorial .p1-hero__indicator-line {
+    display: none;
+  }
+
+  .p1-hero--editorial .p1-hero__indicator-index {
+    font-size: 0.58rem;
+    line-height: 1;
+  }
+}
+
+/* Hero narrow-mobile safeguard: Georgian word shapes stay intact before visual scale is reduced. */
+@media (max-width: 359px) {
+  .p1-hero--editorial {
+    min-block-size: 40.5rem;
+  }
+  .p1-hero--editorial .p1-hero__layout {
+    padding: 5.75rem 1rem 1.5rem;
+  }
+  .p1-hero--editorial .p1-hero__title {
+    max-inline-size: 100%;
+    font-size: clamp(1.82rem, 8.8vw, 1.98rem);
+    line-height: 1.11;
+    letter-spacing: -0.032em;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+    text-wrap: balance;
+  }
+  .p1-hero--editorial .p1-hero__lede {
+    max-inline-size: 25rem;
+    font-size: 0.95rem;
+    line-height: 1.56;
+  }
+  .p1-hero--editorial .p1-hero__actions {
+    gap: 0.65rem;
+  }
+}
+
+/* Read-surface keeps supporting Georgian copy legible across light floral imagery. */
+@media (max-width: 639px) {
+  .p1-hero--editorial .p1-hero__lede {
+    display: inline-block;
+    max-inline-size: min(100%, 25rem);
+    padding: 0.55rem 0.7rem 0.6rem;
+    border-inline-start: 1px solid rgba(255, 220, 140, 0.84);
+    border-radius: 0 0.65rem 0.65rem 0;
+    background: linear-gradient(90deg, rgba(23, 23, 20, 0.54), rgba(23, 23, 20, 0.24));
+    color: #fff !important;
+    font-weight: 400;
+    opacity: 1;
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.7);
+  }
+}
+
+@media (max-width: 359px) {
+  .p1-hero--editorial .p1-hero__copy {
+    gap: 0.72rem;
+  }
+  .p1-hero--editorial .p1-hero__lede {
+    padding: 0.46rem 0.62rem 0.5rem;
+    line-height: 1.48;
+  }
+  .p1-hero--editorial .p1-hero__actions {
+    padding-top: 0;
+  }
+}
+
+@media (min-width: 640px) {
+  .p1-hero--editorial .p1-hero__lede {
+    width: fit-content;
+    max-width: 31rem;
+    padding: 0.52rem 0.74rem 0.56rem;
+    border-left: 2px solid color-mix(in srgb, var(--color-rose-primary) 78%, white);
+    border-radius: 0 0.68rem 0.68rem 0;
+    background: linear-gradient(90deg, rgba(35, 29, 27, 0.64), rgba(35, 29, 27, 0.16));
+    color: #fffaf5;
+    text-shadow: 0 1px 12px rgba(15, 10, 8, 0.72);
+  }
+}
+
+/* Hero final readability guard: composes over every real floral slide without darkening the image globally. */
+@media (min-width: 640px) {
+  .p1-hero--editorial .p1-hero__copy > p.p1-hero__lede {
+    background: linear-gradient(90deg, rgba(26, 19, 17, 0.78), rgba(26, 19, 17, 0.36));
+    color: #fffdf9 !important;
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.82);
+  }
+}

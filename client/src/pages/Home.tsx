@@ -130,7 +130,7 @@ export default function Home() {
           className="p1-hero p1-hero--editorial"
           aria-labelledby="p1-hero-title"
         >
-          <div className="absolute inset-0 z-0">
+          <div className="p1-hero__backdrop absolute inset-0 z-0">
             {heroSlides.map((slide, idx) => (
               <div
                 key={slide.image}
@@ -140,6 +140,7 @@ export default function Home() {
                 <img
                   src={slide.image}
                   alt=""
+                  decoding="async"
                   onLoad={() => {
                     setLoadedHeroSlides((loaded) => {
                       if (loaded.has(idx)) return loaded;
@@ -148,38 +149,38 @@ export default function Home() {
                   }}
                   className="p1-hero__image"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/20" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
+                <div className="p1-hero__veil p1-hero__veil--lateral absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/20" />
+                <div className="p1-hero__veil p1-hero__veil--vertical absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
               </div>
             ))}
           </div>
 
-          <div className="relative z-10 max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="p1-hero__layout relative z-10 max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="p1-hero__copy lg:col-span-8 text-left space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs tracking-widest uppercase font-medium text-amber-100">
+              <div className="p1-hero__kicker inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs tracking-widest uppercase font-medium text-amber-100">
                 <Sparkles className="w-3.5 h-3.5 text-amber-300" />
                 {ka ? activeSlide.kickerKa : activeSlide.kickerEn}
               </div>
               <h1
                 id="p1-hero-title"
-                className="text-4xl md:text-6xl lg:text-7xl font-serif font-light tracking-tight text-white leading-[1.15]"
+                className="p1-hero__title text-4xl md:text-6xl lg:text-7xl font-serif font-light tracking-tight text-white leading-[1.15]"
               >
                 {ka ? activeSlide.titleKa : activeSlide.titleEn}
               </h1>
-              <p className="text-lg md:text-xl text-stone-200 font-light max-w-2xl leading-relaxed">
+              <p className="p1-hero__lede text-lg md:text-xl text-stone-200 font-light max-w-2xl leading-relaxed">
                 {ka ? activeSlide.copyKa : activeSlide.copyEn}
               </p>
-              <div className="flex flex-wrap items-center gap-4 pt-4">
+              <div className="p1-hero__actions flex flex-wrap items-center gap-4 pt-4">
                 <Link
                   href="/catalog"
-                  className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#E07A5F] hover:bg-[#d56b4e] text-white font-medium text-sm tracking-wider uppercase transition-all duration-300 shadow-xl shadow-black/20 transform hover:-translate-y-0.5 active:translate-y-0"
+                  className="p1-hero__cta p1-hero__cta--primary inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#E07A5F] hover:bg-[#d56b4e] text-white font-medium text-sm tracking-wider uppercase transition-all duration-300 shadow-xl shadow-black/20 transform hover:-translate-y-0.5 active:translate-y-0"
                 >
                   {ka ? "კატალოგის ნახვა" : "Explore Catalog"}
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
                   href="/bouquet-builder"
-                  className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-medium text-sm tracking-wider uppercase transition-all duration-300"
+                  className="p1-hero__cta p1-hero__cta--secondary inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-medium text-sm tracking-wider uppercase transition-all duration-300"
                 >
                   {ka ? "შექმენი შენი თაიგული" : "Build Bouquet"}
                   <Sparkles className="w-4 h-4 text-amber-300" />
@@ -188,22 +189,27 @@ export default function Home() {
             </div>
 
             {/* Slide Navigation Indicators */}
-            <div className="lg:col-span-4 flex lg:flex-col justify-center lg:items-end gap-3 mt-8 lg:mt-0">
+            <div
+              className="p1-hero__indicators lg:col-span-4 flex lg:flex-col justify-center lg:items-end gap-3 mt-8 lg:mt-0"
+              role="group"
+              aria-label={ka ? "Hero სლაიდების ნავიგაცია" : "Hero slide navigation"}
+            >
               {heroSlides.map((_, idx) => (
                 <button
                   key={idx}
                   type="button"
                   onClick={() => setCurrentSlide(idx)}
-                  className={`group flex items-center gap-3 text-left transition-all duration-300 ${
+                  className={`p1-hero__indicator group flex items-center gap-3 text-left transition-all duration-300 ${
                     idx === currentSlide ? "opacity-100" : "opacity-50 hover:opacity-80"
                   }`}
                   aria-label={ka ? `გადასვლა სლაიდზე ${idx + 1}` : `Go to slide ${idx + 1}`}
                   aria-current={idx === currentSlide ? "true" : undefined}
+                  aria-pressed={idx === currentSlide}
                 >
-                  <span className={`text-xs font-mono tracking-widest ${idx === currentSlide ? "text-amber-300 font-bold" : "text-stone-300"}`}>
+                  <span className={`p1-hero__indicator-index text-xs font-mono tracking-widest ${idx === currentSlide ? "text-amber-300 font-bold" : "text-stone-300"}`}>
                     0{idx + 1}
                   </span>
-                  <div className={`h-0.5 transition-all duration-500 ${idx === currentSlide ? "w-16 bg-amber-300" : "w-8 bg-white/40 group-hover:w-12"}`} />
+                  <div className={`p1-hero__indicator-line h-0.5 transition-all duration-500 ${idx === currentSlide ? "w-16 bg-amber-300" : "w-8 bg-white/40 group-hover:w-12"}`} />
                 </button>
               ))}
             </div>
