@@ -299,3 +299,16 @@
 - [x] Inspect the official website, package availability, and licensing/install path without executing third-party code
 - [x] Install only a verified, compliant skill package and validate its structure
 - [x] Report the result, including any required account, purchase, or user-side activation step
+
+## Design Master Plan implementation — 2026-08-14
+- [ ] Establish desktop and mobile baseline evidence for the homepage, catalog, product, cart, checkout, builder, account and SEO public routes
+- [ ] Document heuristic findings and prioritize the catalog → product → cart → checkout journey without inventing user research data
+- [ ] Align shared design primitives, loading/status states, and responsive safeguards with the approved Flower’s Boutique design system
+- [ ] Implement safe, localized high-impact refinements to the primary commerce journey without changing API contracts, database schema, prices, delivery policy, authentication or BOG sandbox behavior
+- [ ] Complete responsive, keyboard, reduced-motion, console, TypeScript, unit-test and production-build validation
+- [ ] Create `DESIGN_POLISH_CHANGELOG_GE.md`, record intentional untouched behavior and owner decisions, and publish a verified checkpoint
+
+## Design Master Plan — Wave 2: Auth accessibility polish — 2026-08-14
+- [x] Add only additive global styling for password-visibility controls, visible keyboard focus, 44px touch targets, and reduced-motion-safe submit feedback across Login and Register.
+- [x] Extend UI regression contracts for password-toggle labels, inline invalid states, alert-role validation messaging, and pending submit labels.
+- [x] Verify Login and Register at desktop and mobile viewports, then run the relevant Vitest suite, TypeScript check, and production build before publishing.

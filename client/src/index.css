@@ -9515,6 +9515,50 @@ select:focus-visible {
   color: var(--p3-rose);
 }
 
+/* Design Master Plan — P0 commerce-control clarity. These are additive
+   presentation safeguards: the product and bouquet-builder state machines
+   remain entirely in their existing React components. */
+.p1-product-card__image-link:focus-visible,
+.p1-product-card__title:focus-visible,
+.p1-product-card__wish:focus-visible,
+.p1-product-card__action:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 30%, transparent);
+}
+
+.p1-product-card__wish,
+.p1-product-card__action {
+  min-height: 44px;
+}
+
+.p1-product-card__action:active {
+  transform: scale(0.97);
+}
+
+.fb-builder-flower-card__stepper {
+  transition: transform var(--fb-motion-fast) var(--p3-ease);
+}
+
+.fb-builder-flower-card:focus-within .fb-builder-flower-card__stepper {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 18%, transparent);
+}
+
+.fb-builder-flower-card__stepper button:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fb-builder-flower-card__stepper,
+  .fb-builder-flower-card__stepper button {
+    transition: none !important;
+  }
+
+  .fb-builder-flower-card__stepper button:active:not(:disabled),
+  .p1-product-card__action:active {
+    transform: none;
+  }
+}
+
 .fb-catalog-intro {
   position: relative;
   border-bottom-color: var(--p3-line);
@@ -10748,5 +10792,94 @@ body .auth-page button.auth-submit.auth-submit--boutique:hover:not(:disabled) {
   .p1-signatures .p1-product-grid--signature .p1-product-card__image,
   .p1-signatures .p1-product-grid--signature .p1-product-card__action {
     transition: none !important;
+  }
+}
+
+/* Master Plan P1 — communication-channel CTA feedback. Presentation only; order logic remains in Checkout.tsx. */
+.fb-checkout-action-panel {
+  border-top: 1px solid color-mix(in srgb, var(--color-rose-primary, #c4603a) 12%, transparent);
+  padding-top: 1rem;
+}
+
+.fb-checkout-channel-action {
+  min-height: 48px;
+  box-shadow: 0 8px 18px rgba(42, 33, 29, 0.08);
+}
+
+.fb-checkout-channel-action:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-rose-primary, #c4603a) 40%, transparent);
+  outline-offset: 3px;
+}
+
+.fb-checkout-action-panel[aria-busy="true"] .fb-checkout-channel-action {
+  cursor: wait;
+}
+
+.fb-checkout-channel-help {
+  margin: 0;
+  color: #76675d;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media (max-width: 390px) {
+  .fb-checkout-summary {
+    padding: 1.125rem;
+  }
+
+  .fb-checkout-channel-action {
+    min-height: 50px;
+    white-space: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fb-checkout-channel-action,
+  .fb-checkout-channel-action * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Master Plan Wave 2 — auth form accessibility polish. Additive only. */
+.auth-password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.auth-password-field .auth-input {
+  width: 100%;
+  padding-right: 3.75rem;
+}
+.auth-password-field > button[type="button"] {
+  position: absolute;
+  right: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 0.375rem;
+  color: var(--text-primary, #3d3028);
+  opacity: 0.64;
+  transition: opacity 150ms ease-out, transform 150ms ease-out;
+}
+.auth-password-field > button[type="button"]:hover {
+  opacity: 1;
+}
+.auth-password-field > button[type="button"]:focus-visible,
+.auth-input:focus-visible,
+.auth-submit--boutique:focus-visible {
+  outline: 2px solid var(--accent-primary, #9f6b7b);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .auth-submit--boutique {
+    transition: transform 160ms ease-out, box-shadow 160ms ease-out, opacity 160ms ease-out;
+  }
+  .auth-submit--boutique:active,
+  .auth-password-field > button[type="button"]:active {
+    transform: scale(0.97);
   }
 }

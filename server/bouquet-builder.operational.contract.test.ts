@@ -43,6 +43,10 @@ describe("bouquet builder operational surface", () => {
     ]);
 
     expect(visualCard.match(/h-11 w-11/g)?.length).toBeGreaterThanOrEqual(2);
+    expect(visualCard).toContain('data-selected={quantity > 0 ? "true" : "false"}');
+    expect(visualCard).toContain('role="group"');
+    expect(visualCard).toContain('aria-live="polite"');
+    expect(visualCard).toContain('aria-atomic="true"');
     expect(aiMode.match(/h-11 w-11/g)?.length).toBeGreaterThanOrEqual(2);
     expect(visualBuilder).toContain("const hasUnavailableSelection = selectedFlowers.some(");
     expect(visualBuilder).toContain("if (hasUnavailableSelection) {");

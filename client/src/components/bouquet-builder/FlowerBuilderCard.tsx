@@ -31,6 +31,7 @@ export function FlowerBuilderCard({
 
   return (
     <article
+      data-selected={quantity > 0 ? "true" : "false"}
       className={`group grid min-h-[112px] grid-cols-[68px_minmax(0,1fr)] gap-3 rounded-2xl border p-3 transition duration-200 ${
         available
           ? quantity > 0
@@ -63,6 +64,7 @@ export function FlowerBuilderCard({
               className={`mt-0.5 h-2 w-2 shrink-0 rounded-full ${
                 available ? "bg-[#5ca873]" : "bg-[#dd7b83]"
               }`}
+              aria-hidden="true"
               title={
                 available
                   ? language === "ka"
@@ -121,12 +123,20 @@ export function FlowerBuilderCard({
                 : "Out of stock"}
           </span>
 
-          <div className="flex min-h-11 items-center rounded-full border border-[#dfd1bd] bg-[#fffdf9] p-0.5">
+          <div
+            className="fb-builder-flower-card__stepper flex min-h-11 items-center rounded-full border border-[#dfd1bd] bg-[#fffdf9] p-0.5"
+            role="group"
+            aria-label={
+              language === "ka"
+                ? `${product.nameKa}: რაოდენობა`
+                : `${product.nameEn}: quantity`
+            }
+          >
             <button
               type="button"
               onClick={() => onQuantityChange(Math.max(0, quantity - 1))}
               disabled={!available || quantity === 0}
-              className="grid h-11 w-11 place-items-center rounded-full text-[#77695d] transition hover:bg-[#f2eadf] disabled:cursor-not-allowed disabled:opacity-30"
+              className="grid h-11 w-11 place-items-center rounded-full text-[#77695d] transition hover:bg-[#f2eadf] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b98a53] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-30"
               aria-label={
                 language === "ka"
                   ? `${product.nameKa}: რაოდენობის შემცირება`
@@ -135,14 +145,19 @@ export function FlowerBuilderCard({
             >
               <Minus className="h-3.5 w-3.5" />
             </button>
-            <span className="min-w-8 text-center text-sm font-semibold tabular-nums text-[#2c2925]">
+            <span
+              id={`builder-quantity-${product.id}`}
+              className="min-w-8 text-center text-sm font-semibold tabular-nums text-[#2c2925]"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {quantity}
             </span>
             <button
               type="button"
               onClick={() => onQuantityChange(Math.min(24, quantity + 1))}
               disabled={!available || quantity >= 24 || !canIncrement}
-              className="grid h-11 w-11 place-items-center rounded-full text-[#8f6535] transition hover:bg-[#f2eadf] disabled:cursor-not-allowed disabled:opacity-30"
+              className="grid h-11 w-11 place-items-center rounded-full text-[#8f6535] transition hover:bg-[#f2eadf] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b98a53] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-30"
               aria-label={
                 language === "ka"
                   ? `${product.nameKa}: რაოდენობის გაზრდა`

@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
-import { ArrowLeft, Truck, MapPin, Calendar as CalendarIcon, Clock, Gift, MessageSquare, Check, MessageCircle, CheckCircle2, ChevronRight } from "lucide-react";
+import { ArrowLeft, Truck, MapPin, Calendar as CalendarIcon, Clock, Gift, MessageSquare, Check, MessageCircle, CheckCircle2, ChevronRight, Loader2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { getCart, getTotalPrice, clearCart } from "@/lib/cartUtils";
@@ -68,6 +68,8 @@ const translations = {
     selectDeliveryDate: "Please select a delivery date",
     selectDeliveryTime: "Please select a delivery time",
     willCallIfNeeded: "We'll call if needed",
+    sendingRequest: "Sending your request…",
+    communicationHelp: "After we record your request, the selected communication channel will open.",
   },
   ka: {
     checkout: "შეკვეთის მოთხოვნა",
@@ -116,6 +118,8 @@ const translations = {
     selectDeliveryDate: "აირჩიეთ მიწოდების თარიღი",
     selectDeliveryTime: "აირჩიეთ მიწოდების დრო",
     willCallIfNeeded: "საჭიროების შემთხვევაში დაგიკავშირდებით",
+    sendingRequest: "მოთხოვნა იგზავნება…",
+    communicationHelp: "მოთხოვნის დაფიქსირების შემდეგ, არჩეული კომუნიკაციის არხი გაიხსნება.",
   },
 };
 
@@ -839,23 +843,24 @@ export default function Checkout() {
               </div>
 
               {/* Payment Methods */}
-              <div className="space-y-3">
+              <div className="fb-checkout-action-panel space-y-3" aria-live="polite" aria-busy={isProcessing}>
                 <Button
                   onClick={handleWhatsApp}
                   disabled={isProcessing}
-                  className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 rounded-lg transition-all"
+                  className="fb-checkout-channel-action w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 rounded-lg transition-all"
                 >
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  {t.whatsapp}
+                  {isProcessing ? <Loader2 className="w-4 h-4 mr-2 animate-spin" aria-hidden="true" /> : <MessageCircle className="w-4 h-4 mr-2" />}
+                  {isProcessing ? t.sendingRequest : t.whatsapp}
                 </Button>
                 <Button
                   onClick={handleMessenger}
                   disabled={isProcessing}
-                  className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 rounded-lg transition-all"
+                  className="fb-checkout-channel-action w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 rounded-lg transition-all"
                 >
-                  <MessageSquare className="w-4 h-4 mr-2" />
-                  {t.messenger}
+                  {isProcessing ? <Loader2 className="w-4 h-4 mr-2 animate-spin" aria-hidden="true" /> : <MessageSquare className="w-4 h-4 mr-2" />}
+                  {isProcessing ? t.sendingRequest : t.messenger}
                 </Button>
+                <p className="fb-checkout-channel-help" role="status">{isProcessing ? t.sendingRequest : t.communicationHelp}</p>
               </div>
             </div>
           </div>

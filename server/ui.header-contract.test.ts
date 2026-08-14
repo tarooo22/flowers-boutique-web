@@ -145,6 +145,9 @@ describe("storefront header contract", () => {
     expect(productCard).toContain('href={`/product/${product.id}`}');
     expect(productCard).toContain('className="p1-product-card__wish"');
     expect(productCard).toContain('className="p1-product-card__action"');
+    expect(productCard).toContain('data-availability={isAvailable ? "available" : "unavailable"}');
+    expect(productCard).toContain('id={`product-price-${product.id}`}');
+    expect(productCard).toContain('aria-describedby={`product-price-${product.id}`}');
   });
 
   it("keeps checkout order summaries non-visual, so a mapped product URL cannot create an image fallback there", async () => {
@@ -156,6 +159,16 @@ describe("storefront header contract", () => {
     expect(checkout).toContain("{item.name} × {item.quantity}");
     expect(checkout).not.toContain("<img");
     expect(checkout).not.toContain("FlowerImage");
+  });
+
+  it("keeps checkout communication actions accessible while an order request is processing", async () => {
+    const checkout = await readFile(checkoutPath, "utf8");
+
+    expect(checkout).toContain('className="fb-checkout-action-panel space-y-3" aria-live="polite" aria-busy={isProcessing}');
+    expect(checkout).toContain('{isProcessing ? t.sendingRequest : t.whatsapp}');
+    expect(checkout).toContain('{isProcessing ? t.sendingRequest : t.messenger}');
+    expect(checkout).toContain('className="fb-checkout-channel-help" role="status"');
+    expect(checkout).toContain('Loader2');
   });
 
   it("keeps the unauthenticated admin state readable at mobile widths without weakening access control", async () => {
@@ -234,6 +247,29 @@ describe("storefront header contract", () => {
       );
       expect(page).toContain('color: "#fff"');
     }
+  });
+
+  it("keeps Login and Register password controls, inline errors, and pending labels accessible", async () => {
+    const [login, register, styles] = await Promise.all([
+      readFile(loginPath, "utf8"),
+      readFile(registerPath, "utf8"),
+      readFile(path.join(projectRoot, "client/src/index.css"), "utf8"),
+    ]);
+
+    for (const page of [login, register]) {
+      expect(page).toContain('className="auth-password-field"');
+      expect(page).toContain('type="button"');
+      expect(page).toContain("aria-label={");
+      expect(page).toContain("aria-invalid={Boolean(errors.");
+      expect(page).toContain('role="alert"');
+    }
+
+    expect(login).toContain("loginMutation.isPending ? t.loggingIn");
+    expect(register).toContain("registerMutation.isPending ? t.registering");
+    expect(styles).toContain("Master Plan Wave 2 — auth form accessibility polish");
+    expect(styles).toContain(".auth-password-field > button[type=\"button\"]");
+    expect(styles).toContain("min-width: 44px");
+    expect(styles).toContain(".auth-input:focus-visible");
   });
 
   it("keeps mobile navigation semantically active and preserves the shared 44px safe-area layer", async () => {

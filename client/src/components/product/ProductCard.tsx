@@ -66,6 +66,7 @@ export default function ProductCard({
   return (
     <article
       className={`p1-product-card ${isAvailable ? "" : "is-unavailable"}`}
+      data-availability={isAvailable ? "available" : "unavailable"}
     >
       <div className="p1-product-card__visual">
         <Link
@@ -108,7 +109,7 @@ export default function ProductCard({
           </button>
         </div>
         <div className="p1-product-card__price-row">
-          <strong>{price}</strong>
+          <strong id={`product-price-${product.id}`}>{price}</strong>
           {salePrice && basePrice && <del>{formatMoney(basePrice)}</del>}
         </div>
         {canQuickAdd ? (
@@ -119,6 +120,7 @@ export default function ProductCard({
             aria-label={
               ka ? `${name} კალათაში დამატება` : `Add ${name} to cart`
             }
+            aria-describedby={`product-price-${product.id}`}
           >
             <ShoppingBag aria-hidden="true" />
             {ka ? "კალათაში დამატება" : "Quick add"}
@@ -136,6 +138,7 @@ export default function ProductCard({
                   ? `${name} პროდუქტის ნახვა`
                   : `View ${name}`
             }
+            aria-describedby={`product-price-${product.id}`}
           >
             <ArrowUpRight aria-hidden="true" />
             {isAvailable
