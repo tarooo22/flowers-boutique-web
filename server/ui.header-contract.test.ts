@@ -313,13 +313,17 @@ describe("storefront header contract", () => {
     ]);
 
     expect(home).toContain('className="p1-hero p1-hero--editorial"');
-    expect(home).toContain("const [heroImageReady, setHeroImageReady] = useState(false)");
-    expect(home).toContain('className={`p1-hero__media ${heroImageReady ? "is-loaded" : ""}`}');
-    expect(home).toContain("onLoad={() => setHeroImageReady(true)}");
+    expect(home).toContain("const [currentSlide, setCurrentSlide] = useState(0)");
+    expect(home).toContain("const [loadedHeroSlides, setLoadedHeroSlides] = useState<Set<number>>(() => new Set())");
+    expect(home).toContain('className={`p1-hero__media ${idx === currentSlide ? "is-active" : ""} ${loadedHeroSlides.has(idx) ? "is-loaded" : ""}`}');
+    expect(home).toContain("aria-hidden={idx !== currentSlide}");
+    expect(home).toContain("setCurrentSlide((prev) => (prev + 1) % heroSlides.length)");
+    expect(home).toContain("setLoadedHeroSlides((loaded) => {");
     expect(home).toContain('className="p1-hero__image"');
     expect(styles).toContain("Phase 6 · Homepage editorial hero refinement");
     expect(styles).toContain(".p1-hero--editorial .p1-hero__media::before");
-    expect(styles).toContain(".p1-hero--editorial .p1-hero__media.is-loaded .p1-hero__image");
+    expect(styles).toContain(".p1-hero--editorial .p1-hero__media.is-active");
+    expect(styles).toContain(".p1-hero--editorial .p1-hero__media.is-active .p1-hero__image");
     expect(styles).toContain(".p1-hero--editorial .p1-hero__image {");
     expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
   });
@@ -369,6 +373,34 @@ describe("storefront header contract", () => {
     expect(styles).toContain(".p1-signatures .p1-product-grid--signature .p1-product-card__action");
     expect(styles).toContain("grid-template-columns: repeat(2, minmax(0, 1fr))");
     expect(styles).toContain("min-height: 44px;");
+    expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
+  });
+
+  it("keeps the homepage editorial flow semantic, action-oriented, and motion-safe", async () => {
+    const [home, styles] = await Promise.all([
+      readFile(homePath, "utf8"),
+      readFile(path.join(projectRoot, "client/src/index.css"), "utf8"),
+    ]);
+
+    expect(home).toContain('className="p1-home"');
+    expect(home).toContain('p1-home-section p1-home-section--categories');
+    expect(home).toContain('p1-home-section p1-home-section--signatures');
+    expect(home).toContain('p1-home-section p1-home-section--builder');
+    expect(home).toContain('p1-home-section p1-home-section--experiences');
+    expect(home).toContain('p1-home-section p1-home-section--delivery');
+    expect(home).toContain('p1-home-section p1-home-section--contact');
+    expect(home).toContain('className="p1-category-tile__meta');
+    expect(home).toContain('className="p1-home-primary-cta');
+    expect(home).toContain('className="p1-home-contact__action');
+    expect(home).toContain('className="p1-home-experience-card');
+    expect(home).toContain('className="p1-home-delivery-step');
+    expect(styles).toContain("Home Page follow-up · editorial flow refinement");
+    expect(styles).toContain(".p1-home .p1-home-section--signatures::before");
+    expect(styles).toContain(".p1-home .p1-category-tile__meta");
+    expect(styles).toContain(".p1-home .p1-home-primary-cta:active");
+    expect(styles).toContain(".p1-home .p1-home-experience-card");
+    expect(styles).toContain(".p1-home .p1-home-delivery-step::before");
+    expect(styles).toContain("@media (hover: hover) and (pointer: fine)");
     expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
   });
 });

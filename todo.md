@@ -330,3 +330,12 @@
 - [x] Write `DESIGN_POLISH_CHANGELOG_GE.md` documenting completed waves, the public-policy/SEO corrections, intentional non-changes, validation evidence, and privacy/payment guardrails.
 - [x] Mark the umbrella Master Plan checklist items complete and publish the final verified release checkpoint.
 - [x] Correct the verified nested-anchor markup warning on the Flower Shop Tbilisi public SEO route and re-run final diagnostics without altering its route, H1, canonical policy copy, or navigation destination.
+
+## Home Page refinement follow-up — 2026-08-14
+- [x] Re-audit the current Home Page at desktop and mobile widths using the installed UI/UX, UX architecture, brand, UI design, frontend, senior development, image-prompt, whimsy, research, and discoverability skill guidance; record only verified issues.
+- [x] Implement the prioritized Home Page visual, hierarchy, motion, and interaction refinements as an additive presentation layer without changing catalog data, routes, cart/checkout/auth behavior, prices, delivery policy, image-storage rules, or BOG sandbox mode.
+- [x] Add or update targeted regression coverage; verify desktop, 390px, and 320px layouts, browser diagnostics, TypeScript, full Vitest, and production build before publishing.
+- [x] Apply senior-developer implementation review to the final Home Page changes, confirming maintainable React/CSS boundaries, transform/opacity-only motion, and no unnecessary dependency or runtime overhead.
+- [x] Add a semantic Home Page editorial-flow wrapper and section hooks so category, signature-product, bespoke-builder, experience, delivery and contact sections share one responsive visual rhythm without altering their existing routes or content.
+- [x] Add a strictly additive Home Page editorial continuity layer: Georgian-first typography scaling, restrained botanical dividers, CTA hierarchy/press feedback, touch-safe action sizing, and reduced-motion-safe interactions.
+- [x] Extend focused UI contracts for the editorial-flow landmark, builder/contact action semantics, and the new additive presentation layer.

@@ -70,7 +70,7 @@ export default function Home() {
   const { language, t } = useLanguage();
   const { openDrawer } = useCartDrawer();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [heroImageReady, setHeroImageReady] = useState(false);
+  const [loadedHeroSlides, setLoadedHeroSlides] = useState<Set<number>>(() => new Set());
   const persistentEditorialImages = useMemo(() => ({ builder: "", brand: "" }), []);
 
   const productsQuery = trpc.products.list.useQuery();
@@ -124,7 +124,7 @@ export default function Home() {
   return (
     <div className="p1-site bg-[#FAF7F2] text-[#2C2825] min-h-screen font-sans selection:bg-[#D4A373]/20">
       <Navbar />
-      <main id="main-content">
+      <main id="main-content" className="p1-home">
         {/* Immersive Hero Carousel */}
         <section
           className="p1-hero p1-hero--editorial"
@@ -134,12 +134,18 @@ export default function Home() {
             {heroSlides.map((slide, idx) => (
               <div
                 key={slide.image}
-                className={`p1-hero__media ${heroImageReady ? "is-loaded" : ""}`}
+                className={`p1-hero__media ${idx === currentSlide ? "is-active" : ""} ${loadedHeroSlides.has(idx) ? "is-loaded" : ""}`}
+                aria-hidden={idx !== currentSlide}
               >
                 <img
                   src={slide.image}
                   alt=""
-                  onLoad={() => setHeroImageReady(true)}
+                  onLoad={() => {
+                    setLoadedHeroSlides((loaded) => {
+                      if (loaded.has(idx)) return loaded;
+                      return new Set([...loaded, idx]);
+                    });
+                  }}
                   className="p1-hero__image"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/20" />
@@ -191,7 +197,8 @@ export default function Home() {
                   className={`group flex items-center gap-3 text-left transition-all duration-300 ${
                     idx === currentSlide ? "opacity-100" : "opacity-50 hover:opacity-80"
                   }`}
-                  aria-label={`Go to slide ${idx + 1}`}
+                  aria-label={ka ? `გადასვლა სლაიდზე ${idx + 1}` : `Go to slide ${idx + 1}`}
+                  aria-current={idx === currentSlide ? "true" : undefined}
                 >
                   <span className={`text-xs font-mono tracking-widest ${idx === currentSlide ? "text-amber-300 font-bold" : "text-stone-300"}`}>
                     0{idx + 1}
@@ -205,21 +212,21 @@ export default function Home() {
 
         {/* Distinct Background-Free Category Gallery */}
         <section
-          className="p1-category-gallery py-20 px-4 md:px-12 max-w-7xl mx-auto"
+          className="p1-home-section p1-home-section--categories py-20 px-4 md:px-12 max-w-7xl mx-auto"
           aria-labelledby="p1-categories-title"
         >
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div className="p1-home-section__heading flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <div>
-              <span className="text-xs font-mono tracking-widest uppercase text-[#A56A5B] block mb-2">
+              <span className="p1-home-section__eyebrow text-xs font-mono tracking-widest uppercase text-[#A56A5B] block mb-2">
                 {t("home.categories.intro")}
               </span>
               <h2
                 id="p1-categories-title"
-                className="text-3xl md:text-5xl font-serif font-light text-[#2C2825]"
+                className="p1-home-section__title text-3xl md:text-5xl font-serif font-light text-[#2C2825]"
               >
                 {ka ? "იპოვე სასურველი თაიგული" : "Find Your Arrangement"}
               </h2>
-              <p className="text-stone-600 font-light mt-2 max-w-xl">
+              <p className="p1-home-section__lede text-stone-600 font-light mt-2 max-w-xl">
                 {ka
                   ? "ყველა კომპოზიცია იწყება განწყობით — შეარჩიე შენი მომენტისათვის."
                   : "Every composition begins with a mood — choose for your moment."}
@@ -227,7 +234,7 @@ export default function Home() {
             </div>
             <Link
               href="/catalog"
-              className="inline-flex items-center gap-2 text-sm font-medium tracking-wider uppercase text-[#2C2825] hover:text-[#E07A5F] transition-colors"
+              className="p1-home-section__link inline-flex items-center gap-2 text-sm font-medium tracking-wider uppercase text-[#2C2825] hover:text-[#E07A5F] transition-colors"
             >
               {t("home.categories.explore")}
               <ArrowRight className="w-4 h-4" />
@@ -252,14 +259,14 @@ export default function Home() {
                     className="max-h-52 w-auto object-contain drop-shadow-2xl filter contrast-[1.05]"
                   />
                 </div>
-                <div className="space-y-2 z-10 pt-4 border-t border-[#E5DEC9]">
-                  <h3 className="text-xl font-serif font-normal text-[#2C2825] group-hover:text-[#E07A5F] transition-colors">
+                <div className="p1-category-tile__meta space-y-2 z-10 pt-4 border-t border-[#E5DEC9]">
+                  <h3 className="p1-category-tile__title text-xl font-serif font-normal text-[#2C2825] group-hover:text-[#E07A5F] transition-colors">
                     {ka ? category.nameKa : category.nameEn}
                   </h3>
-                  <p className="text-sm text-stone-600 font-light">
+                  <p className="p1-category-tile__description text-sm text-stone-600 font-light">
                     {ka ? category.descriptionKa : category.descriptionEn}
                   </p>
-                  <div className="pt-2 flex items-center gap-2 text-xs font-medium tracking-wider uppercase text-[#2C2825] group-hover:translate-x-1 transition-transform">
+                  <div className="p1-category-tile__action pt-2 flex items-center gap-2 text-xs font-medium tracking-wider uppercase text-[#2C2825] group-hover:translate-x-1 transition-transform">
                     {ka ? "კოლექციის ნახვა" : "Explore Collection"}
                     <ArrowRight className="w-3.5 h-3.5" />
                   </div>
@@ -271,24 +278,24 @@ export default function Home() {
 
         {/* New-Arrivals Signature Grid */}
         <section
-          className="p1-signatures py-20 px-4 md:px-12 max-w-7xl mx-auto border-t border-[#EAE2D0]"
+          className="p1-home-section p1-home-section--signatures p1-signatures py-20 px-4 md:px-12 max-w-7xl mx-auto border-t border-[#EAE2D0]"
           aria-labelledby="p1-collections-title"
         >
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div className="p1-home-section__heading flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <div>
-              <span className="text-xs font-mono tracking-widest uppercase text-[#A56A5B] block mb-2">
+              <span className="p1-home-section__eyebrow text-xs font-mono tracking-widest uppercase text-[#A56A5B] block mb-2">
                 {ka ? "ახალი კოლექცია" : "SIGNATURE DROP"}
               </span>
               <h2
                 id="p1-collections-title"
-                className="text-3xl md:text-5xl font-serif font-light text-[#2C2825]"
+                className="p1-home-section__title text-3xl md:text-5xl font-serif font-light text-[#2C2825]"
               >
                 {ka ? "ახალი თაიგულები" : "New Arrivals & Collections"}
               </h2>
             </div>
             <Link
               href="/catalog"
-              className="inline-flex items-center gap-2 text-sm font-medium tracking-wider uppercase text-[#2C2825] hover:text-[#E07A5F] transition-colors"
+              className="p1-home-section__link inline-flex items-center gap-2 text-sm font-medium tracking-wider uppercase text-[#2C2825] hover:text-[#E07A5F] transition-colors"
             >
               {ka ? "ყველა პროდუქტი — ნახვა" : "View All Products"}
               <ArrowRight className="w-4 h-4" />
@@ -321,18 +328,18 @@ export default function Home() {
 
         {/* Bouquet Builder Promo */}
         <section
-          className="py-16 px-4 md:px-12 max-w-7xl mx-auto"
+          className="p1-home-section p1-home-section--builder py-16 px-4 md:px-12 max-w-7xl mx-auto"
           aria-labelledby="p1-builder-title"
           slot="builder"
         >
-          <div className="bg-[#2C2825] text-white rounded-3xl overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12 items-center">
-            <div className="lg:col-span-6 p-8 md:p-16 space-y-6">
-              <span className="text-xs font-mono tracking-widest uppercase text-amber-300 block">
+          <div className="p1-home-builder bg-[#2C2825] text-white rounded-3xl overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12 items-center">
+            <div className="p1-home-builder__copy lg:col-span-6 p-8 md:p-16 space-y-6">
+              <span className="p1-home-section__eyebrow text-xs font-mono tracking-widest uppercase text-amber-300 block">
                 {ka ? "შენი კომპოზიცია" : "BESPOKE FLORISTRY"}
               </span>
               <h2
                 id="p1-builder-title"
-                className="text-3xl md:text-5xl font-serif font-light leading-tight text-white"
+                className="p1-home-section__title text-3xl md:text-5xl font-serif font-light leading-tight text-white"
               >
                 {ka ? "შეიქმენი შენი თაიგული" : "Build Your Own Bouquet"}
               </h2>
@@ -344,18 +351,18 @@ export default function Home() {
               <div>
                 <Link
                   href="/bouquet-builder"
-                  className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#E07A5F] hover:bg-[#d56b4e] text-white font-medium text-sm tracking-wider uppercase transition-all duration-300 shadow-lg"
+                  className="p1-home-primary-cta inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#E07A5F] hover:bg-[#d56b4e] text-white font-medium text-sm tracking-wider uppercase transition-all duration-300 shadow-lg"
                 >
                   {ka ? "დაიწყე შექმნა" : "Start Creating"}
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
             </div>
-            <div className="lg:col-span-6 h-96 lg:h-full relative overflow-hidden">
+            <div className="p1-home-builder__media lg:col-span-6 h-96 lg:h-full relative overflow-hidden">
               <img
                 src="/manus-storage/flowers-boutique-experience-event-styling_07114441.jpg"
                 alt=""
-                className="w-full h-full object-cover filter brightness-90 hover:scale-105 transition-transform duration-700"
+                className="p1-home-builder__image w-full h-full object-cover filter brightness-90 hover:scale-105 transition-transform duration-700"
               />
             </div>
           </div>
@@ -363,25 +370,25 @@ export default function Home() {
 
         {/* Original Editorial Experience Cards */}
         <section
-          className="py-20 px-4 md:px-12 max-w-7xl mx-auto border-t border-[#EAE2D0]"
+          className="p1-home-section p1-home-section--experiences py-20 px-4 md:px-12 max-w-7xl mx-auto border-t border-[#EAE2D0]"
           aria-labelledby="p1-editorial-title"
           slot="brand"
         >
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div className="p1-home-section__heading flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <div>
-              <span className="text-xs font-mono tracking-widest uppercase text-[#A56A5B] block mb-2">
+              <span className="p1-home-section__eyebrow text-xs font-mono tracking-widest uppercase text-[#A56A5B] block mb-2">
                 {ka ? "ჟურნალი & სწავლება" : "JOURNAL & EXPERIENCES"}
               </span>
               <h2
                 id="p1-editorial-title"
-                className="text-3xl md:text-5xl font-serif font-light text-[#2C2825]"
+                className="p1-home-section__title text-3xl md:text-5xl font-serif font-light text-[#2C2825]"
               >
                 {ka ? "ჩვენ ასევე ვასწავლით და ვაფორმებთ" : "Floristry School & Events"}
               </h2>
             </div>
             <Link
               href="/about"
-              className="inline-flex items-center gap-2 text-sm font-medium tracking-wider uppercase text-[#2C2825] hover:text-[#E07A5F] transition-colors"
+              className="p1-home-section__link inline-flex items-center gap-2 text-sm font-medium tracking-wider uppercase text-[#2C2825] hover:text-[#E07A5F] transition-colors"
             >
               {ka ? "ჩვენ შესახებ" : "About Us"}
               <ArrowRight className="w-4 h-4" />
@@ -417,19 +424,19 @@ export default function Home() {
             ].map((item, idx) => (
               <div
                 key={idx}
-                className="group bg-white rounded-3xl overflow-hidden border border-[#EBE3D5] hover:border-[#D4A373]/60 transition-all duration-500 shadow-sm hover:shadow-xl flex flex-col justify-between"
+                className="p1-home-experience-card group bg-white rounded-3xl overflow-hidden border border-[#EBE3D5] hover:border-[#D4A373]/60 transition-all duration-500 shadow-sm hover:shadow-xl flex flex-col justify-between"
               >
-                <div className="h-64 overflow-hidden relative">
+                <div className="p1-home-experience-card__media h-64 overflow-hidden relative">
                   <img
                     src={item.image}
                     alt={ka ? item.titleKa : item.titleEn}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
-                  <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[11px] font-mono tracking-widest text-[#2C2825] uppercase">
+                  <span className="p1-home-experience-card__tag absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[11px] font-mono tracking-widest text-[#2C2825] uppercase">
                     {item.tag}
                   </span>
                 </div>
-                <div className="p-8 space-y-4 flex-1 flex flex-col justify-between">
+                <div className="p1-home-experience-card__copy p-8 space-y-4 flex-1 flex flex-col justify-between">
                   <div>
                     <h3 className="text-2xl font-serif font-normal text-[#2C2825] mb-2 group-hover:text-[#E07A5F] transition-colors">
                       {ka ? item.titleKa : item.titleEn}
@@ -440,7 +447,7 @@ export default function Home() {
                   </div>
                   <Link
                     href="/about"
-                    className="inline-flex items-center gap-2 text-xs font-medium tracking-widest uppercase text-[#2C2825] pt-4 border-t border-[#F0EBE1]"
+                    className="p1-home-experience-card__link inline-flex items-center gap-2 text-xs font-medium tracking-widest uppercase text-[#2C2825] pt-4 border-t border-[#F0EBE1]"
                   >
                     {ka ? "გაიგე მეტი" : "Read More"}
                     <ChevronRight className="w-4 h-4 text-[#E07A5F]" />
@@ -453,7 +460,7 @@ export default function Home() {
 
         {/* Three Delivery Steps */}
         <section
-          className="py-16 px-4 md:px-12 max-w-7xl mx-auto border-t border-[#EAE2D0]"
+          className="p1-home-section p1-home-section--delivery py-16 px-4 md:px-12 max-w-7xl mx-auto border-t border-[#EAE2D0]"
           aria-labelledby="p1-delivery-title"
         >
           <div className="text-center max-w-2xl mx-auto mb-16">
@@ -495,7 +502,7 @@ export default function Home() {
               return (
                 <div
                   key={idx}
-                  className="bg-[#F5F0E6] rounded-3xl p-8 border border-[#EBE3D5] text-center space-y-4 relative"
+                  className="p1-home-delivery-step bg-[#F5F0E6] rounded-3xl p-8 border border-[#EBE3D5] text-center space-y-4 relative"
                 >
                   <div className="absolute top-6 right-6 font-mono text-xs text-[#A56A5B]/60">
                     0{idx + 1}
@@ -517,11 +524,11 @@ export default function Home() {
 
         {/* Refined Contact CTA */}
         <section
-          className="py-16 px-4 md:px-12 max-w-7xl mx-auto"
+          className="p1-home-section p1-home-section--contact py-16 px-4 md:px-12 max-w-7xl mx-auto"
           aria-labelledby="p1-contact-title"
         >
-          <div className="bg-[#2C2825] text-white rounded-3xl p-8 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-8 shadow-xl">
-            <div className="space-y-3 text-center lg:text-left">
+          <div className="p1-home-contact bg-[#2C2825] text-white rounded-3xl p-8 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-8 shadow-xl">
+            <div className="p1-home-contact__copy space-y-3 text-center lg:text-left">
               <span className="text-xs font-mono tracking-widest uppercase text-amber-300 block">
                 {ka ? "სწრაფი კონტაქტი" : "QUICK CONTACT"}
               </span>
@@ -537,13 +544,13 @@ export default function Home() {
                   : "If you need assistance with your choice, message or call us anytime."}
               </p>
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-4">
+            <div className="p1-home-contact__actions flex flex-wrap items-center justify-center gap-4">
               {siteContact.whatsapp && (
                 <a
                   href={siteContact.whatsapp}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-sm tracking-wider uppercase transition-all shadow-lg"
+                  className="p1-home-contact__action p1-home-contact__action--whatsapp inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-sm tracking-wider uppercase transition-all shadow-lg"
                 >
                   <Send className="w-4 h-4" />
                   WhatsApp
@@ -554,7 +561,7 @@ export default function Home() {
                   href={siteContact.messenger}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm tracking-wider uppercase transition-all shadow-lg"
+                  className="p1-home-contact__action p1-home-contact__action--messenger inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm tracking-wider uppercase transition-all shadow-lg"
                 >
                   <MessageCircle className="w-4 h-4" />
                   Messenger
@@ -563,7 +570,7 @@ export default function Home() {
               {siteContact.phone && (
                 <a
                   href={phoneHref}
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 text-white font-medium text-sm tracking-wider uppercase transition-all"
+                  className="p1-home-contact__action p1-home-contact__action--phone inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 text-white font-medium text-sm tracking-wider uppercase transition-all"
                 >
                   <Phone className="w-4 h-4" />
                   {siteContact.phone}

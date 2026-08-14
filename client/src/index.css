@@ -11425,3 +11425,392 @@ body .auth-page button.auth-submit.auth-submit--boutique:hover:not(:disabled) {
     padding: 1.4rem !important;
   }
 }
+
+/* Home Page follow-up · Active hero carousel and editorial continuity.
+   Each persistent slide remains preloaded, while only the active image becomes
+   visually and interactively present. This avoids an abrupt/static hero without
+   introducing layout work or an additional client dependency. */
+.p1-hero--editorial > .absolute.inset-0 {
+  overflow: hidden;
+}
+
+.p1-hero--editorial .p1-hero__media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(1.025);
+}
+
+.p1-hero--editorial .p1-hero__media.is-active {
+  z-index: 1;
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.p1-hero--editorial .p1-hero__media .p1-hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.p1-hero--editorial .p1-hero__copy {
+  text-wrap: balance;
+}
+
+.p1-hero--editorial .p1-hero__copy > p {
+  text-wrap: pretty;
+}
+
+.p1-hero--editorial button[aria-current="true"] {
+  cursor: default;
+}
+
+.p1-hero--editorial button:focus-visible {
+  border-radius: 0.35rem;
+  outline: 2px solid var(--color-rose-primary, #e07a5f);
+  outline-offset: 5px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .p1-hero--editorial .p1-hero__media {
+    transition: opacity 260ms cubic-bezier(0.23, 1, 0.32, 1), transform 260ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .p1-hero--editorial .p1-hero__media.is-active .p1-hero__image {
+    animation: p1-hero-image-settle 260ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  }
+}
+
+@keyframes p1-hero-image-settle {
+  from {
+    opacity: 0.82;
+    transform: scale(1.018);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 767px) {
+  .p1-hero--editorial .p1-hero__media .p1-hero__image {
+    object-position: 58% center;
+  }
+
+  .p1-hero--editorial .p1-hero__copy {
+    max-width: 33rem;
+  }
+
+  .p1-hero--editorial .p1-hero__copy > p {
+    max-width: 29rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p1-hero--editorial .p1-hero__media,
+  .p1-hero--editorial .p1-hero__media .p1-hero__image {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Home Page follow-up · editorial flow refinement.
+   Presentation only: existing routes, data, images, actions, copy and commerce
+   behavior stay unchanged while the Georgian-first boutique rhythm is unified. */
+.p1-home {
+  overflow: clip;
+}
+
+.p1-home .p1-home-section {
+  position: relative;
+}
+
+.p1-home .p1-home-section--signatures,
+.p1-home .p1-home-section--experiences,
+.p1-home .p1-home-section--delivery {
+  padding-top: clamp(5.5rem, 9vw, 8.5rem);
+}
+
+.p1-home .p1-home-section--signatures::before,
+.p1-home .p1-home-section--experiences::before,
+.p1-home .p1-home-section--delivery::before {
+  position: absolute;
+  top: 0;
+  left: max(1rem, calc((100% - 80rem) / 2));
+  width: min(10rem, 21vw);
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-primary), color-mix(in srgb, var(--accent-primary) 18%, transparent));
+  content: "";
+  opacity: 0.5;
+}
+
+.p1-home .p1-home-section__heading {
+  position: relative;
+}
+
+.p1-home .p1-home-section__eyebrow {
+  font-weight: 700;
+  letter-spacing: 0.13em;
+}
+
+.p1-home .p1-home-section__title,
+.p1-home .p1-home-section--delivery .p1-delivery__heading h2 {
+  max-width: 16ch;
+  font-size: clamp(2.2rem, 4.5vw, 4.25rem);
+  font-weight: 500;
+  letter-spacing: -0.048em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.p1-home .p1-home-section__lede {
+  max-width: 34rem;
+  font-size: clamp(0.96rem, 1.25vw, 1.07rem);
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.p1-home .p1-home-section__link {
+  width: fit-content;
+  min-height: 44px;
+  padding-block: 0.45rem;
+}
+
+.p1-home .p1-home-section__link svg,
+.p1-home .p1-home-experience-card__link svg {
+  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.p1-home .p1-home-section__link:hover svg,
+.p1-home .p1-home-section__link:focus-visible svg {
+  transform: translateX(3px);
+}
+
+.p1-home .p1-hero--editorial .p1-hero__actions a,
+.p1-home .p1-home-primary-cta,
+.p1-home .p1-home-contact__action {
+  min-height: 48px;
+  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), opacity 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.p1-home .p1-hero--editorial .p1-hero__actions a:active,
+.p1-home .p1-home-primary-cta:active,
+.p1-home .p1-home-contact__action:active {
+  transform: scale(0.97);
+}
+
+.p1-home .p1-category-gallery {
+  align-items: end;
+}
+
+.p1-home .p1-category-tile {
+  position: relative;
+  padding-top: 0.4rem;
+}
+
+.p1-home .p1-category-tile > .absolute {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.p1-home .p1-category-tile__visual {
+  margin-block: clamp(1rem, 2.4vw, 1.65rem);
+}
+
+.p1-home .p1-category-tile__meta {
+  display: block;
+  min-height: 0;
+  border-top-color: color-mix(in srgb, var(--accent-primary) 22%, var(--fb-line));
+  padding-top: 1rem;
+}
+
+.p1-home .p1-category-tile__title {
+  display: block;
+  font-size: clamp(1.05rem, 1.45vw, 1.3rem);
+  font-weight: 600;
+  letter-spacing: -0.028em;
+  line-height: 1.3;
+}
+
+.p1-home .p1-category-tile__description {
+  display: -webkit-box;
+  overflow: hidden;
+  margin-top: 0.45rem;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-height: 1.55;
+}
+
+.p1-home .p1-category-tile__action {
+  margin-top: 0.7rem;
+}
+
+.p1-home .p1-home-builder,
+.p1-home .p1-home-contact {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.p1-home .p1-home-builder::before,
+.p1-home .p1-home-contact::before {
+  position: absolute;
+  z-index: -1;
+  top: -45%;
+  right: -12%;
+  width: min(34rem, 55vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent-primary) 31%, transparent) 0%, transparent 68%);
+  content: "";
+  opacity: 0.46;
+  pointer-events: none;
+}
+
+.p1-home .p1-home-builder__copy,
+.p1-home .p1-home-builder__media,
+.p1-home .p1-home-contact__copy,
+.p1-home .p1-home-contact__actions {
+  position: relative;
+  z-index: 1;
+}
+
+.p1-home .p1-home-builder__image {
+  transition: transform 240ms cubic-bezier(0.23, 1, 0.32, 1), opacity 240ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.p1-home .p1-home-experience-card,
+.p1-home .p1-home-delivery-step {
+  overflow: hidden;
+  border-radius: 1.15rem;
+  transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1), opacity 200ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.p1-home .p1-home-experience-card__media {
+  isolation: isolate;
+}
+
+.p1-home .p1-home-experience-card__media::after {
+  position: absolute;
+  z-index: 1;
+  inset: auto 0 0;
+  height: 34%;
+  background: linear-gradient(180deg, transparent, rgba(44, 40, 37, 0.27));
+  content: "";
+  pointer-events: none;
+}
+
+.p1-home .p1-home-experience-card__tag {
+  z-index: 2;
+}
+
+.p1-home .p1-home-delivery-step::before {
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  width: 2.1rem;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--accent-primary);
+  content: "";
+  opacity: 0.72;
+}
+
+.p1-home .p1-home-contact__actions {
+  gap: 0.75rem;
+}
+
+.p1-home .p1-home-contact__action {
+  justify-content: center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .p1-home .p1-home-builder:hover .p1-home-builder__image {
+    transform: scale(1.035);
+  }
+
+  .p1-home .p1-home-experience-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .p1-home .p1-home-experience-card:hover .p1-home-experience-card__link svg {
+    transform: translateX(3px);
+  }
+
+  .p1-home .p1-home-delivery-step:hover {
+    transform: translateY(-3px);
+  }
+}
+
+@media (max-width: 767px) {
+  .p1-home .p1-home-section--signatures,
+  .p1-home .p1-home-section--experiences,
+  .p1-home .p1-home-section--delivery {
+    padding-top: 4.75rem;
+  }
+
+  .p1-home .p1-home-section--signatures::before,
+  .p1-home .p1-home-section--experiences::before,
+  .p1-home .p1-home-section--delivery::before {
+    left: var(--fb-gutter);
+    width: 5.5rem;
+  }
+
+  .p1-home .p1-home-section__title,
+  .p1-home .p1-home-section--delivery .p1-delivery__heading h2 {
+    max-width: 13ch;
+    font-size: clamp(2rem, 9.2vw, 2.85rem);
+  }
+
+  .p1-home .p1-category-tile__meta {
+    padding-top: 0.8rem;
+  }
+
+  .p1-home .p1-category-tile__description {
+    font-size: 0.8rem;
+  }
+
+  .p1-home .p1-home-builder::before,
+  .p1-home .p1-home-contact::before {
+    top: -22%;
+    right: -52%;
+    width: 24rem;
+  }
+
+  .p1-home .p1-home-contact {
+    align-items: flex-start;
+  }
+
+  .p1-home .p1-home-contact__copy {
+    text-align: left;
+  }
+
+  .p1-home .p1-home-contact__actions {
+    width: 100%;
+  }
+
+  .p1-home .p1-home-contact__action {
+    min-width: calc(50% - 0.4rem);
+    flex: 1 1 9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p1-home .p1-home-section__link svg,
+  .p1-home .p1-hero--editorial .p1-hero__actions a,
+  .p1-home .p1-home-primary-cta,
+  .p1-home .p1-home-contact__action,
+  .p1-home .p1-home-builder__image,
+  .p1-home .p1-home-experience-card,
+  .p1-home .p1-home-experience-card__link svg,
+  .p1-home .p1-home-delivery-step {
+    transition: none !important;
+  }
+}
