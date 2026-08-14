@@ -552,4 +552,27 @@ describe("storefront header contract", () => {
     expect(styles).toContain(".dashboard-sidebar__nav-button[data-active-route");
     expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
   });
+
+  it("keeps the Amelie-inspired shared storefront shell route-safe, policy-aware, and motion-safe", async () => {
+    const [navbar, footer, styles] = await Promise.all([
+      readFile(navbarPath, "utf8"),
+      readFile(footerPath, "utf8"),
+      readFile(path.join(projectRoot, "client/src/index.css"), "utf8"),
+    ]);
+
+    expect(navbar).toContain("p1-header p1-header--atelier");
+    expect(navbar).toContain('href="/delivery" className="p1-mobile-menu__delivery-link"');
+    expect(navbar).toContain("DELIVERY_FEE_GEL, FREE_DELIVERY_THRESHOLD_GEL");
+    expect(navbar).toContain("onClick={openDrawer}");
+    expect(navbar).toContain('href="/wishlist"');
+    expect(footer).toContain('className="p1-footer__eyebrow"');
+    expect(footer).toContain('href="/delivery" className="p1-footer__delivery-cta"');
+    expect(footer).toContain("siteContact.phone");
+    expect(styles).toContain("Amelie-inspired storefront convergence — Wave 1 (append-only).");
+    expect(styles).toContain(".p1-header--atelier .p1-header__nav a::after");
+    expect(styles).toContain(".p1-mobile-menu__delivery-link");
+    expect(styles).toContain(".p1-footer__delivery-cta");
+    expect(styles).toContain("transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1)");
+    expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
+  });
 });

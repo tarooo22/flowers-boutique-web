@@ -1,4 +1,5 @@
 import {
+  ArrowRight,
   ChevronDown,
   Clock3,
   Facebook,
@@ -82,19 +83,29 @@ export default function Footer() {
   return (
     <footer className="p1-footer">
       <div className="p1-footer__shell">
-        <div className="p1-footer__grid">
-          <div className="p1-footer__brand">
-            <Link href="/" aria-label={ka ? "ყვავილების ბუტიკი და ივენთები — მთავარი" : "Flower’s Boutique & Events home"}>
-              <strong>
-                <BrandWordmark language={language} className="p1-footer__wordmark" />
+          <div className="p1-footer__grid">
+            <div className="p1-footer__brand">
+              <p className="p1-footer__eyebrow">
+                {ka ? "თბილისის ყვავილების ატელიე" : "Tbilisi floral atelier"}
+              </p>
+              <Link href="/" aria-label={ka ? "ყვავილების ბუტიკი და ივენთები — მთავარი" : "Flower’s Boutique & Events home"}>
+                <strong>
+                  <BrandWordmark language={language} className="p1-footer__wordmark" />
               </strong>
             </Link>
             <p>
               {ka
                 ? "ყვავილების ბუტიკი თბილისში — მზა თაიგულები და თქვენზე მორგებული კომპოზიციები."
-                : "A Tbilisi flower boutique for ready-made bouquets and personal floral compositions."}
-            </p>
-            <div className="p1-footer__socials">
+                  : "A Tbilisi flower boutique for ready-made bouquets and personal floral compositions."}
+              </p>
+              <Link href="/delivery" className="p1-footer__delivery-cta">
+                <span>
+                  <small>{ka ? "მზად ხართ შეკვეთისთვის?" : "Ready to order?"}</small>
+                  <strong>{ka ? "იხილეთ მიწოდების დეტალები" : "View delivery details"}</strong>
+                </span>
+                <ArrowRight aria-hidden="true" />
+              </Link>
+              <div className="p1-footer__socials">
               {siteContact.instagram && (
                 <a
                   href={siteContact.instagram}

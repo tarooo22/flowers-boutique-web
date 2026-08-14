@@ -359,3 +359,9 @@
 - [x] Integrate only compatible additive UI improvements: global motion/glass/gradient utilities, Home trust and scroll presentation, Auth password/focus/card treatment, AI chat empty/typing/avatar states, and Dashboard active/glass sidebar states.
 - [x] Preserve the active Home carousel, existing routes and semantics, Georgian-first localization, auth/session behavior, cart/checkout/payment logic, canonical delivery policy, persistent image storage, and BOG sandbox/disabled mode.
 - [x] Update focused UI regression coverage; validate responsive desktop/390px/320px output, browser diagnostics, Vitest, TypeScript, and production build before publishing.
+
+## Amelie-inspired storefront convergence — 2026-08-15
+- [x] Document the evidence-based Amelie-to-Flower’s Boutique UX/UI architecture, including transferable patterns, deliberate non-goals, dependencies, and wave sequencing.
+- [x] Refine the shared storefront shell: header utility/action hierarchy, account entry, search affordance, active navigation, mobile menu, and footer conversion rhythm—without changing routes, authentication, contact facts, checkout policy, cart behavior, or BOG sandbox mode.
+- [x] Prepare the next waves for catalog discovery, product-card visual language, About storytelling, and bouquet-builder contextual hierarchy without prematurely adding rewards, promotions, review claims, checkout mutations, or unsupported order lookup.
+- [x] Add targeted UI regression contracts and complete desktop/390px/320px visual QA, accessibility checks, browser diagnostics, Vitest, TypeScript, and production build before release.

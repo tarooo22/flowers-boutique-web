@@ -104,7 +104,7 @@ export default function Navbar() {
       <a className="p1-skip-link" href="#main-content">
         {ka ? "მთავარ შინაარსზე გადასვლა" : "Skip to main content"}
       </a>
-      <header className={`p1-header ${scrolled ? "is-scrolled" : ""}`}>
+      <header className={`p1-header p1-header--atelier ${scrolled ? "is-scrolled" : ""}`}>
         <div
           className="p1-utility-strip"
           aria-label={ka ? "მიწოდებისა და კონტაქტის ინფორმაცია" : "Delivery and contact information"}
@@ -381,6 +381,10 @@ export default function Navbar() {
               {ka ? "სწრაფი კონტაქტი" : "Quick contact"}
             </button>
           </div>
+          <Link href="/delivery" className="p1-mobile-menu__delivery-link">
+            <span>{ka ? "მიწოდების პირობები" : "Delivery information"}</span>
+            <ArrowRight aria-hidden="true" />
+          </Link>
           <div className="p1-mobile-menu__language">
             <button
               type="button"
