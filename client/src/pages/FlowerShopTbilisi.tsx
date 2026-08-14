@@ -77,10 +77,8 @@ export default function FlowerShopTbilisi() {
       <div className="bg-gray-50 border-b">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center gap-2 text-sm text-gray-600">
-            <Link href="/">
-              <a className="hover:text-gray-900">
-                {language === "ka" ? "მთავარი" : "Home"}
-              </a>
+            <Link href="/" className="hover:text-gray-900">
+              {language === "ka" ? "მთავარი" : "Home"}
             </Link>
             <ChevronRight className="w-4 h-4" />
             <span className="text-gray-900 font-medium">

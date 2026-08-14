@@ -45,6 +45,12 @@ describe("Wave 4 SEO public-page consistency contract", () => {
     expect(sprayRose).toContain("მიტანა ხელმისაწვდომია თბილისის მასშტაბით");
   });
 
+  it("keeps the Flower Shop breadcrumb as one accessible link rather than nested anchors", () => {
+    const flowerShop = seoPages[1];
+    expect(flowerShop).toContain('Link href="/" className="hover:text-gray-900"');
+    expect(flowerShop).not.toContain('<Link href="/">\n              <a');
+  });
+
   it("keeps focus visibility, responsive heading balance, and motion preference safeguards", () => {
     expect(styles).toContain(".fb-seo-page .group:focus-visible");
     expect(styles).toContain(".fb-seo-page > section:first-of-type h1");

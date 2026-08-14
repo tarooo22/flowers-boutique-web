@@ -301,12 +301,12 @@
 - [x] Report the result, including any required account, purchase, or user-side activation step
 
 ## Design Master Plan implementation — 2026-08-14
-- [ ] Establish desktop and mobile baseline evidence for the homepage, catalog, product, cart, checkout, builder, account and SEO public routes
-- [ ] Document heuristic findings and prioritize the catalog → product → cart → checkout journey without inventing user research data
-- [ ] Align shared design primitives, loading/status states, and responsive safeguards with the approved Flower’s Boutique design system
-- [ ] Implement safe, localized high-impact refinements to the primary commerce journey without changing API contracts, database schema, prices, delivery policy, authentication or BOG sandbox behavior
-- [ ] Complete responsive, keyboard, reduced-motion, console, TypeScript, unit-test and production-build validation
-- [ ] Create `DESIGN_POLISH_CHANGELOG_GE.md`, record intentional untouched behavior and owner decisions, and publish a verified checkpoint
+- [x] Establish desktop and mobile baseline evidence for the homepage, catalog, product, cart, checkout, builder, account and SEO public routes
+- [x] Document heuristic findings and prioritize the catalog → product → cart → checkout journey without inventing user research data
+- [x] Align shared design primitives, loading/status states, and responsive safeguards with the approved Flower’s Boutique design system
+- [x] Implement safe, localized high-impact refinements to the primary commerce journey without changing API contracts, database schema, prices, delivery policy, authentication or BOG sandbox behavior
+- [x] Complete responsive, keyboard, reduced-motion, console, TypeScript, unit-test and production-build validation
+- [x] Create `DESIGN_POLISH_CHANGELOG_GE.md`, record intentional untouched behavior and owner decisions, and publish a verified checkpoint
 
 ## Design Master Plan — Wave 2: Auth accessibility polish — 2026-08-14
 - [x] Add only additive global styling for password-visibility controls, visible keyboard focus, 44px touch targets, and reduced-motion-safe submit feedback across Login and Register.
@@ -323,3 +323,10 @@
 - [x] Apply a shared, additive Georgian-first editorial presentation layer to SEO landing pages while preserving unique H1s, existing routes, metadata architecture, and real product data.
 - [x] Correct only verified contradictory delivery/policy claims in visible SEO copy and JSON-LD: remove unsupported time/service promises and align fee/pickup wording to the canonical ₾5 / free-from-₾150 / free-pickup policy.
 - [x] Add focused public-page/SEO contracts and verify desktop plus 390px and 320px responsive presentation before running the full validation suite.
+
+## Design Master Plan — Wave 5: Final validation and release record — 2026-08-14
+- [x] Complete a read-only cross-page visual smoke check of representative public storefront, account-entry, cart/checkout, builder, informational, and SEO routes at desktop and mobile widths; record only verified findings.
+- [x] Inspect current browser/server diagnostics and run the complete Vitest, TypeScript, and production-build validation after all Master Plan source changes.
+- [x] Write `DESIGN_POLISH_CHANGELOG_GE.md` documenting completed waves, the public-policy/SEO corrections, intentional non-changes, validation evidence, and privacy/payment guardrails.
+- [x] Mark the umbrella Master Plan checklist items complete and publish the final verified release checkpoint.
+- [x] Correct the verified nested-anchor markup warning on the Flower Shop Tbilisi public SEO route and re-run final diagnostics without altering its route, H1, canonical policy copy, or navigation destination.
