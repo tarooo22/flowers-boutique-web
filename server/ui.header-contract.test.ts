@@ -31,6 +31,14 @@ const adminPath = path.join(projectRoot, "client/src/pages/Admin.tsx");
 const profilePath = path.join(projectRoot, "client/src/pages/Profile.tsx");
 const loginPath = path.join(projectRoot, "client/src/pages/Login.tsx");
 const registerPath = path.join(projectRoot, "client/src/pages/Register.tsx");
+const aiChatBoxPath = path.join(
+  projectRoot,
+  "client/src/components/AIChatBox.tsx"
+);
+const dashboardLayoutPath = path.join(
+  projectRoot,
+  "client/src/components/DashboardLayout.tsx"
+);
 const productCardPath = path.join(
   projectRoot,
   "client/src/components/product/ProductCard.tsx"
@@ -508,6 +516,40 @@ describe("storefront header contract", () => {
     expect(styles).toContain(".p1-home .p1-home-experience-card");
     expect(styles).toContain(".p1-home .p1-home-delivery-step::before");
     expect(styles).toContain("@media (hover: hover) and (pointer: fine)");
+    expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
+  });
+
+  it("integrates archive-inspired reveal, trust, account, chat, and dashboard polish without replacing live flows", async () => {
+    const [home, login, register, chat, dashboard, styles] = await Promise.all([
+      readFile(homePath, "utf8"),
+      readFile(loginPath, "utf8"),
+      readFile(registerPath, "utf8"),
+      readFile(aiChatBoxPath, "utf8"),
+      readFile(dashboardLayoutPath, "utf8"),
+      readFile(path.join(projectRoot, "client/src/index.css"), "utf8"),
+    ]);
+
+    expect(home).toContain('ref={revealRootRef}');
+    expect(home).toContain("IntersectionObserver");
+    expect(home).toContain('className="p1-home-trust fb-archive-reveal"');
+    expect(home).toContain("DELIVERY_FEE_GEL");
+    expect(home).toContain("FREE_DELIVERY_THRESHOLD_GEL");
+    expect(login).toContain('auth-card auth-card--glass');
+    expect(register).toContain('auth-card auth-card--glass');
+    expect(register).toContain('id="register-confirm-password"');
+    expect(register).toContain('className="auth-password-toggle"');
+    expect(chat).toContain('boutique-ai-chat__typing-dots');
+    expect(chat).toContain('role="status"');
+    expect(chat).toContain('boutique-ai-chat__empty-mark');
+    expect(dashboard).toContain('className="dashboard-sidebar border-r-0"');
+    expect(dashboard).toContain('data-active-route={isActive ? "true" : "false"}');
+    expect(dashboard).toContain('aria-current={isActive ? "page" : undefined}');
+    expect(styles).toContain("Redesign archive integration — additive motion, glass and gradient utilities.");
+    expect(styles).toContain(".p1-home .fb-archive-reveal");
+    expect(styles).toContain(".p1-home-trust");
+    expect(styles).toContain(".auth-card.auth-card--glass");
+    expect(styles).toContain(".boutique-ai-chat__typing-dots");
+    expect(styles).toContain(".dashboard-sidebar__nav-button[data-active-route");
     expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
   });
 });

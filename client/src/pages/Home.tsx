@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import {
   ArrowRight,
   CheckCircle2,
@@ -29,6 +29,10 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import ProductCard from "@/components/product/ProductCard";
+import {
+  DELIVERY_FEE_GEL,
+  FREE_DELIVERY_THRESHOLD_GEL,
+} from "@shared/checkoutPolicy";
 
 const heroSlides = [
   {
@@ -72,6 +76,7 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loadedHeroSlides, setLoadedHeroSlides] = useState<Set<number>>(() => new Set());
   const persistentEditorialImages = useMemo(() => ({ builder: "", brand: "" }), []);
+  const revealRootRef = useRef<HTMLElement>(null);
 
   const productsQuery = trpc.products.list.useQuery();
   const categoriesQuery = trpc.categories.list.useQuery();
@@ -85,6 +90,35 @@ export default function Home() {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
     }, 6000);
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const root = revealRootRef.current;
+    if (!root) return;
+
+    const revealTargets = Array.from(
+      root.querySelectorAll<HTMLElement>(".fb-archive-reveal"),
+    );
+
+    if (!window.IntersectionObserver) {
+      revealTargets.forEach((target) => target.classList.add("is-revealed"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -8%", threshold: 0.08 },
+    );
+
+    revealTargets.forEach((target) => observer.observe(target));
+    return () => observer.disconnect();
   }, []);
 
   const featured = products
@@ -124,7 +158,7 @@ export default function Home() {
   return (
     <div className="p1-site bg-[#FAF7F2] text-[#2C2825] min-h-screen font-sans selection:bg-[#D4A373]/20">
       <Navbar />
-      <main id="main-content" className="p1-home">
+      <main id="main-content" className="p1-home" ref={revealRootRef}>
         {/* Immersive Hero Carousel */}
         <section
           className="p1-hero p1-hero--editorial"
@@ -216,9 +250,36 @@ export default function Home() {
           </div>
         </section>
 
+        <aside
+          className="p1-home-trust fb-archive-reveal"
+          aria-label={ka ? "შეკვეთის პირობები" : "Order benefits"}
+        >
+          <div className="p1-home-trust__item">
+            <span aria-hidden="true">₾</span>
+            <p>
+              <strong>{ka ? `მიწოდება ₾${DELIVERY_FEE_GEL}` : `Delivery ₾${DELIVERY_FEE_GEL}`}</strong>
+              <small>{ka ? "თბილისის მასშტაბით" : "Across Tbilisi"}</small>
+            </p>
+          </div>
+          <div className="p1-home-trust__item">
+            <Heart aria-hidden="true" />
+            <p>
+              <strong>{ka ? `უფასო ₾${FREE_DELIVERY_THRESHOLD_GEL}-დან` : `Free from ₾${FREE_DELIVERY_THRESHOLD_GEL}`}</strong>
+              <small>{ka ? "მიწოდებაზე" : "on delivery"}</small>
+            </p>
+          </div>
+          <div className="p1-home-trust__item">
+            <MapPin aria-hidden="true" />
+            <p>
+              <strong>{ka ? "გატანა — უფასო" : "Pickup — free"}</strong>
+              <small>10:00–20:00</small>
+            </p>
+          </div>
+        </aside>
+
         {/* Distinct Background-Free Category Gallery */}
         <section
-          className="p1-home-section p1-home-section--categories py-20 px-4 md:px-12 max-w-7xl mx-auto"
+          className="p1-home-section p1-home-section--categories fb-archive-reveal py-20 px-4 md:px-12 max-w-7xl mx-auto"
           aria-labelledby="p1-categories-title"
         >
           <div className="p1-home-section__heading flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
@@ -284,7 +345,7 @@ export default function Home() {
 
         {/* New-Arrivals Signature Grid */}
         <section
-          className="p1-home-section p1-home-section--signatures p1-signatures py-20 px-4 md:px-12 max-w-7xl mx-auto border-t border-[#EAE2D0]"
+          className="p1-home-section p1-home-section--signatures p1-signatures fb-archive-reveal py-20 px-4 md:px-12 max-w-7xl mx-auto border-t border-[#EAE2D0]"
           aria-labelledby="p1-collections-title"
         >
           <div className="p1-home-section__heading flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
@@ -334,7 +395,7 @@ export default function Home() {
 
         {/* Bouquet Builder Promo */}
         <section
-          className="p1-home-section p1-home-section--builder py-16 px-4 md:px-12 max-w-7xl mx-auto"
+          className="p1-home-section p1-home-section--builder fb-archive-reveal py-16 px-4 md:px-12 max-w-7xl mx-auto"
           aria-labelledby="p1-builder-title"
           slot="builder"
         >
@@ -376,7 +437,7 @@ export default function Home() {
 
         {/* Original Editorial Experience Cards */}
         <section
-          className="p1-home-section p1-home-section--experiences py-20 px-4 md:px-12 max-w-7xl mx-auto border-t border-[#EAE2D0]"
+          className="p1-home-section p1-home-section--experiences fb-archive-reveal py-20 px-4 md:px-12 max-w-7xl mx-auto border-t border-[#EAE2D0]"
           aria-labelledby="p1-editorial-title"
           slot="brand"
         >
@@ -466,7 +527,7 @@ export default function Home() {
 
         {/* Three Delivery Steps */}
         <section
-          className="p1-home-section p1-home-section--delivery py-16 px-4 md:px-12 max-w-7xl mx-auto border-t border-[#EAE2D0]"
+          className="p1-home-section p1-home-section--delivery fb-archive-reveal py-16 px-4 md:px-12 max-w-7xl mx-auto border-t border-[#EAE2D0]"
           aria-labelledby="p1-delivery-title"
         >
           <div className="text-center max-w-2xl mx-auto mb-16">
@@ -530,7 +591,7 @@ export default function Home() {
 
         {/* Refined Contact CTA */}
         <section
-          className="p1-home-section p1-home-section--contact py-16 px-4 md:px-12 max-w-7xl mx-auto"
+          className="p1-home-section p1-home-section--contact fb-archive-reveal py-16 px-4 md:px-12 max-w-7xl mx-auto"
           aria-labelledby="p1-contact-title"
         >
           <div className="p1-home-contact bg-[#2C2825] text-white rounded-3xl p-8 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-8 shadow-xl">

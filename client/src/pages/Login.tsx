@@ -114,7 +114,7 @@ export default function Login() {
 
       {/* Main Content */}
       <main className="auth-main flex items-center justify-center px-4 py-12 md:py-20">
-        <Card className="auth-card w-full max-w-md">
+        <Card className="auth-card auth-card--glass w-full max-w-md">
           <div className="p-8 md:p-10">
             <p className="auth-kicker">Flower's Boutique / Account</p>
             <h1 className="auth-title text-3xl md:text-4xl font-semibold text-center mb-2">
@@ -172,6 +172,7 @@ export default function Login() {
                   />
                   <button
                     type="button"
+                    className="auth-password-toggle"
                     onClick={() => setShowPassword(value => !value)}
                     aria-label={
                       showPassword

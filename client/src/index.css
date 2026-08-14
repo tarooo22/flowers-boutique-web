@@ -12507,3 +12507,276 @@ body .auth-page button.auth-submit.auth-submit--boutique:hover:not(:disabled) {
     text-shadow: 0 1px 14px rgba(0, 0, 0, 0.82);
   }
 }
+
+/* Redesign archive integration — additive motion, glass and gradient utilities. */
+:root {
+  --fb-archive-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --fb-archive-glass: rgba(255, 253, 249, 0.78);
+  --fb-archive-glass-line: rgba(156, 114, 122, 0.2);
+  --fb-archive-rose-wash: linear-gradient(135deg, rgba(243, 233, 235, 0.92), rgba(255, 253, 249, 0.72));
+}
+
+.fb-archive-glass {
+  border: 1px solid var(--fb-archive-glass-line);
+  background: var(--fb-archive-glass);
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .fb-archive-glass {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+}
+
+.p1-home .fb-archive-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 260ms var(--fb-archive-ease-out),
+    transform 260ms var(--fb-archive-ease-out);
+}
+
+.p1-home .fb-archive-reveal.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.p1-home .fb-archive-reveal--delay-1 {
+  transition-delay: 60ms;
+}
+
+.p1-home-trust {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: min(84rem, calc(100% - 2rem));
+  margin: -1.75rem auto 2.5rem;
+  position: relative;
+  z-index: 4;
+  border: 1px solid var(--fb-archive-glass-line);
+  border-radius: 0.9rem;
+  background: var(--fb-archive-rose-wash);
+  box-shadow: 0 14px 34px rgba(55, 36, 39, 0.08);
+}
+
+.p1-home-trust__item {
+  display: flex;
+  min-height: 4.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-right: 1px solid rgba(156, 114, 122, 0.16);
+  color: var(--text-primary);
+  text-align: left;
+}
+
+.p1-home-trust__item:last-child {
+  border-right: 0;
+}
+
+.p1-home-trust__item > :first-child {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(156, 114, 122, 0.12);
+  color: var(--accent-primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.p1-home-trust__item p {
+  display: grid;
+  gap: 0.16rem;
+  margin: 0;
+}
+
+.p1-home-trust__item strong,
+.p1-home-trust__item small {
+  line-height: 1.25;
+}
+
+.p1-home-trust__item strong {
+  font-size: 0.78rem;
+}
+
+.p1-home-trust__item small {
+  color: var(--text-muted);
+  font-size: 0.71rem;
+}
+
+.auth-card.auth-card--glass {
+  border-color: rgba(156, 114, 122, 0.22);
+  background: linear-gradient(135deg, rgba(255, 253, 249, 0.94), rgba(255, 253, 249, 0.78));
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .auth-card.auth-card--glass {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+}
+
+.auth-password-toggle {
+  border-radius: 0.55rem;
+}
+
+.auth-password-field > .auth-password-toggle:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+
+.boutique-ai-chat {
+  border-color: rgba(156, 114, 122, 0.2);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(243, 233, 235, 0.46));
+  box-shadow: 0 16px 38px rgba(55, 36, 39, 0.08);
+}
+
+.boutique-ai-chat__empty-mark {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  border: 1px solid rgba(156, 114, 122, 0.2);
+  border-radius: 999px;
+  background: rgba(156, 114, 122, 0.1);
+  color: var(--accent-primary);
+}
+
+.boutique-ai-chat__prompt {
+  transition:
+    border-color 180ms var(--fb-archive-ease-out),
+    background-color 180ms var(--fb-archive-ease-out),
+    transform 180ms var(--fb-archive-ease-out);
+}
+
+.boutique-ai-chat__prompt:hover {
+  border-color: rgba(156, 114, 122, 0.4);
+  transform: translateY(-1px);
+}
+
+.boutique-ai-chat__prompt:active {
+  transform: scale(0.98);
+}
+
+.boutique-ai-chat__avatar {
+  border: 1px solid rgba(156, 114, 122, 0.18);
+}
+
+.boutique-ai-chat__avatar--assistant {
+  color: var(--accent-primary);
+}
+
+.boutique-ai-chat__typing-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  min-height: 2.5rem;
+}
+
+.boutique-ai-chat__typing-dots span {
+  width: 0.32rem;
+  height: 0.32rem;
+  border-radius: 999px;
+  background: var(--accent-primary);
+  animation: boutique-chat-dot 720ms var(--fb-archive-ease-out) infinite alternate;
+}
+
+.boutique-ai-chat__typing-dots span:nth-child(2) {
+  animation-delay: 90ms;
+}
+
+.boutique-ai-chat__typing-dots span:nth-child(3) {
+  animation-delay: 180ms;
+}
+
+@keyframes boutique-chat-dot {
+  from {
+    opacity: 0.38;
+    transform: translateY(1px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+.dashboard-sidebar {
+  border-right: 1px solid rgba(156, 114, 122, 0.16) !important;
+  background: rgba(255, 253, 249, 0.86);
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .dashboard-sidebar {
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  }
+}
+
+.dashboard-sidebar__header,
+.dashboard-sidebar__footer {
+  border-color: rgba(156, 114, 122, 0.14);
+}
+
+.dashboard-sidebar__nav-button[data-active-route="true"] {
+  background: linear-gradient(135deg, rgba(156, 114, 122, 0.16), rgba(243, 233, 235, 0.68));
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.dashboard-sidebar__nav-button[data-active-route="true"] svg {
+  color: var(--accent-primary);
+}
+
+.dashboard-sidebar__nav-button:hover,
+.dashboard-sidebar__profile:hover {
+  background-color: rgba(156, 114, 122, 0.08);
+}
+
+.dashboard-sidebar__nav-button:focus-visible,
+.dashboard-sidebar__profile:focus-visible,
+.dashboard-sidebar__toggle:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .p1-home-trust {
+    grid-template-columns: 1fr;
+    width: min(31rem, calc(100% - 1.5rem));
+    margin-top: -1.25rem;
+  }
+
+  .p1-home-trust__item {
+    min-height: 3.7rem;
+    justify-content: flex-start;
+    border-right: 0;
+    border-bottom: 1px solid rgba(156, 114, 122, 0.14);
+  }
+
+  .p1-home-trust__item:last-child {
+    border-bottom: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p1-home .fb-archive-reveal,
+  .p1-home .fb-archive-reveal.is-revealed {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .boutique-ai-chat__typing-dots span {
+    animation: none;
+  }
+
+  .boutique-ai-chat__prompt,
+  .boutique-ai-chat__prompt:hover,
+  .boutique-ai-chat__prompt:active {
+    transform: none;
+    transition: none;
+  }
+}

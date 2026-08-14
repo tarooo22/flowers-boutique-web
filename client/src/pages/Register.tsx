@@ -124,7 +124,7 @@ export default function Register() {
 
       {/* Main Content */}
       <main className="auth-main flex items-center justify-center px-4 py-12 md:py-16">
-        <Card className="auth-card w-full max-w-md">
+        <Card className="auth-card auth-card--glass w-full max-w-md">
           <div className="p-8 md:p-10">
             <p className="auth-kicker">Flower's Boutique / Account</p>
             <h1 className="auth-title text-3xl md:text-4xl font-semibold text-center mb-2">
@@ -238,6 +238,7 @@ export default function Register() {
                   />
                   <button
                     type="button"
+                    className="auth-password-toggle"
                     onClick={() => setShowPasswords(value => !value)}
                     aria-label={
                       showPasswords
@@ -269,17 +270,35 @@ export default function Register() {
                 >
                   {t.confirmPassword}
                 </label>
-                <Input
-                  id="register-confirm-password"
-                  type={showPasswords ? "text" : "password"}
-                  name="confirmPassword"
-                  autoComplete="new-password"
-                  aria-invalid={Boolean(errors.confirmPassword)}
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  placeholder="••••••••"
-                  className={`auth-input rounded-lg ${errors.confirmPassword ? "border-red-500" : ""}`}
-                />
+                <div className="auth-password-field">
+                  <Input
+                    id="register-confirm-password"
+                    type={showPasswords ? "text" : "password"}
+                    name="confirmPassword"
+                    autoComplete="new-password"
+                    aria-invalid={Boolean(errors.confirmPassword)}
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    placeholder="••••••••"
+                    className={`auth-input rounded-lg ${errors.confirmPassword ? "border-red-500" : ""}`}
+                  />
+                  <button
+                    type="button"
+                    className="auth-password-toggle"
+                    onClick={() => setShowPasswords(value => !value)}
+                    aria-label={
+                      showPasswords
+                        ? language === "ka"
+                          ? "პაროლის დამალვა"
+                          : "Hide password"
+                        : language === "ka"
+                          ? "პაროლის ჩვენება"
+                          : "Show password"
+                    }
+                  >
+                    {showPasswords ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
                 {errors.confirmPassword && (
                   <p
                     className="text-red-600 text-sm mt-1 font-medium"

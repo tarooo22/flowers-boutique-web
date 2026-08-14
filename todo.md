@@ -353,3 +353,9 @@
 - [x] Review the current Home Page hero markup, active append-only carousel CSS, and relevant UI/UX, brand, responsive, frontend, senior-development, motion, and image-presentation guidance without altering carousel content or behavior.
 - [x] Refine the current hero’s visual composition, contrast, copy/CTA hierarchy, slide indicators, image framing, and desktop/mobile spacing through additive presentation-only changes.
 - [x] Add focused regression coverage and complete desktop, 390px, and 320px visual QA, browser diagnostics, full Vitest, TypeScript, and production-build validation before release.
+
+## User-provided Flower’s Boutique redesign archive integration — 2026-08-15
+- [x] Safely inspect `flowers-boutique-redesign.zip`, confirm that `DESIGN_REVIEW.md` was not included, and compare each actually supplied UI file against the current production-ready implementation.
+- [x] Integrate only compatible additive UI improvements: global motion/glass/gradient utilities, Home trust and scroll presentation, Auth password/focus/card treatment, AI chat empty/typing/avatar states, and Dashboard active/glass sidebar states.
+- [x] Preserve the active Home carousel, existing routes and semantics, Georgian-first localization, auth/session behavior, cart/checkout/payment logic, canonical delivery policy, persistent image storage, and BOG sandbox/disabled mode.
+- [x] Update focused UI regression coverage; validate responsive desktop/390px/320px output, browser diagnostics, Vitest, TypeScript, and production build before publishing.
