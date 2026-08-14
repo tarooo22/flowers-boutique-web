@@ -14,8 +14,8 @@ export default function BirthdayFlowers() {
   useSEO({
     titleKa: 'დაბადების დღის ყვავილები თბილისში | Flower’s Boutique',
     titleEn: 'Birthday Flowers Tbilisi | Flower’s Boutique',
-    descriptionKa: 'დაბადების დღის ყვავილები თბილისში. Flower’s Boutique გთავაზობთ ხელოვნურ თაიგულებს დაბადების დღის აღსანიშნავად. სწრაფი მიტანა.',
-    descriptionEn: 'Birthday flowers in Tbilisi. Flower’s Boutique offers artistic bouquets for birthday celebration. Fast delivery.',
+    descriptionKa: 'დაბადების დღის ყვავილები თბილისში. Flower’s Boutique გთავაზობთ ხელოვნურ თაიგულებს დაბადების დღის აღსანიშნავად და მიტანას თბილისის მასშტაბით.',
+    descriptionEn: 'Birthday flowers in Tbilisi. Flower’s Boutique offers artistic bouquets for birthday celebration and delivery across Tbilisi.',
     canonical: '/birthday-flowers',
     lang: language as 'ka' | 'en',
   });
@@ -48,7 +48,7 @@ export default function BirthdayFlowers() {
           name: language === 'ka' ? 'შემიძლია თუ არა დაბადების დღის თაიგული შეკვეთა დღეს?' : 'Can I order birthday bouquet today?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: language === 'ka' ? 'დიახ, შეკვეთა შეგიძლიათ დღეს და მიტანა იქნება 2 საათში თბილისში.' : 'Yes, you can order today and delivery will be within 2 hours in Tbilisi.',
+            text: language === 'ka' ? 'შეკვეთის შესაძლებლობა და მიწოდების ზუსტი დრო დასტურდება შეკვეთის დეტალების მიხედვით.' : 'Order availability and the exact delivery time are confirmed according to your order details.',
           },
         },
         {
@@ -73,7 +73,7 @@ export default function BirthdayFlowers() {
   }, [language]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="fb-seo-page min-h-screen bg-white">
       <Navbar />
 
       <div className="bg-gray-50 border-b">
@@ -119,12 +119,12 @@ export default function BirthdayFlowers() {
               <Cake className="w-8 h-8 text-[#A16207] flex-shrink-0 mt-1" />
               <div>
                 <h3 className="font-bold text-lg mb-2">
-                  {language === 'ka' ? 'სწრაფი მიტანა' : 'Fast Delivery'}
+                  {language === 'ka' ? 'მიტანა თბილისში' : 'Delivery in Tbilisi'}
                 </h3>
                 <p className="text-gray-600">
                   {language === 'ka'
-                    ? 'მიტანა თბილისში 2 საათში. დაბადების დღე აღსანიშნავი უნდა იყოს დროულად.'
-                    : 'Delivery in Tbilisi within 2 hours. Birthday should be celebrated on time.'}
+                    ? 'მიტანა ხელმისაწვდომია თბილისის მასშტაბით; დეტალები დასტურდება შეკვეთის მიხედვით.'
+                    : 'Delivery is available across Tbilisi; details are confirmed with your order.'}
                 </p>
               </div>
             </div>
@@ -170,8 +170,8 @@ export default function BirthdayFlowers() {
             </h2>
             <p className="mb-6 text-lg">
               {language === 'ka'
-                ? 'დაბადების დღის აღსანიშნავად შეუკვეთეთ ხელოვნური თაიგული. სწრაფი მიტანა თბილისში.'
-                : 'Celebrate birthday with artistic bouquet. Fast delivery in Tbilisi.'}
+                ? 'დაბადების დღის აღსანიშნავად შეუკვეთეთ ხელოვნური თაიგული. მიტანა ხელმისაწვდომია თბილისის მასშტაბით.'
+                : 'Celebrate birthday with an artistic bouquet. Delivery is available across Tbilisi.'}
             </p>
             <Link href="/catalog">
               <Button className="bg-white text-[#A16207] hover:bg-gray-100 px-8 py-3 font-bold">
@@ -207,12 +207,12 @@ export default function BirthdayFlowers() {
               </div>
               <div className="border-l-4 border-[#A16207] pl-6">
                 <h3 className="font-bold text-lg mb-2">
-                  {language === 'ka' ? 'შემიძლია თუ არა დაბადების დღის თაიგული შეკვეთა დღეს?' : 'Can I order birthday bouquet today?'}
+                  {language === 'ka' ? 'როდის დასტურდება დაბადების დღის თაიგულის მიწოდება?' : 'When is birthday bouquet delivery confirmed?'}
                 </h3>
                 <p className="text-gray-600">
                   {language === 'ka'
-                    ? 'დიახ, შეკვეთა შეგიძლიათ დღეს და მიტანა იქნება 2 საათში თბილისში. WhatsApp ან Messenger-ით დაგვიკავშირდით.'
-                    : 'Yes, you can order today and delivery will be within 2 hours in Tbilisi. Contact us via WhatsApp or Messenger.'}
+                    ? 'შეკვეთის შესაძლებლობა და მიწოდების ზუსტი დრო დასტურდება შეკვეთის დეტალების მიხედვით. დასაზუსტებლად დაგვიკავშირდით სამუშაო საათებში.'
+                    : 'Order availability and the exact delivery time are confirmed according to your order details. Contact us during working hours to confirm.'}
                 </p>
               </div>
               <div className="border-l-4 border-[#A16207] pl-6">

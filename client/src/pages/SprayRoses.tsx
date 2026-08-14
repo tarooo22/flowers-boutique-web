@@ -14,8 +14,8 @@ export default function SprayRoses() {
   useSEO({
     titleKa: 'სპრეი ვარდების თაიგულები თბილისში | Flower’s Boutique',
     titleEn: 'Spray Roses Bouquets Tbilisi | Flower’s Boutique',
-    descriptionKa: 'სპრეი ვარდების თაიგულები თბილისში. Flower’s Boutique გთავაზობთ ხარისხიან სპრეი ვარდებს. სწრაფი მიტანა, ინდივიდუალური დიზაინი.',
-    descriptionEn: 'Spray roses bouquets in Tbilisi. Flower’s Boutique offers quality spray roses. Fast delivery, custom design.',
+    descriptionKa: 'სპრეი ვარდების თაიგულები თბილისში. Flower’s Boutique გთავაზობთ ხარისხიან სპრეი ვარდებს, ინდივიდუალურ დიზაინსა და მიტანას თბილისის მასშტაბით.',
+    descriptionEn: 'Spray roses bouquets in Tbilisi. Flower’s Boutique offers quality spray roses, custom design and delivery across Tbilisi.',
     canonical: '/spray-roses',
     lang: language as 'ka' | 'en',
   });
@@ -73,7 +73,7 @@ export default function SprayRoses() {
   }, [language]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="fb-seo-page min-h-screen bg-white">
       <Navbar />
 
       <div className="bg-gray-50 border-b">
@@ -170,8 +170,8 @@ export default function SprayRoses() {
             </h2>
             <p className="mb-6 text-lg">
               {language === 'ka'
-                ? 'ელეგანტური სპრეი ვარდების თაიგული ხელმისაწვდომი ფასით. სწრაფი მიტანა თბილისში.'
-                : 'Elegant spray rose bouquet at affordable price. Fast delivery in Tbilisi.'}
+                ? 'ელეგანტური სპრეი ვარდების თაიგული ხელმისაწვდომი ფასით. მიტანა ხელმისაწვდომია თბილისის მასშტაბით.'
+                : 'Elegant spray rose bouquet at an accessible price. Delivery is available across Tbilisi.'}
             </p>
             <Link href="/catalog">
               <Button className="bg-white text-[#A16207] hover:bg-gray-100 px-8 py-3 font-bold">

@@ -7,6 +7,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { ChevronRight, Truck, Clock, Sparkles, Heart } from 'lucide-react';
+import { DELIVERY_FEE_GEL, FREE_DELIVERY_THRESHOLD_GEL } from '@shared/checkoutPolicy';
 
 export default function FlowerDeliveryTbilisi() {
   const { language, t } = useLanguage();
@@ -33,7 +34,7 @@ export default function FlowerDeliveryTbilisi() {
           name: language === 'ka' ? 'რამდენი ხანი სჭირდება ყვავილების მიტანა?' : 'How long does flower delivery take?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: language === 'ka' ? 'Flower’s Boutique გთავაზობთ მიტანას თბილისში 2 საათში.' : 'Flower’s Boutique offers delivery in Tbilisi within 2 hours.',
+            text: language === 'ka' ? 'Flower’s Boutique გთავაზობთ მიტანას თბილისის მასშტაბით. მიწოდების დრო დასტურდება შეკვეთის დეტალების მიხედვით.' : 'Flower’s Boutique offers delivery across Tbilisi. Delivery timing is confirmed according to your order details.',
           },
         },
         {
@@ -41,15 +42,15 @@ export default function FlowerDeliveryTbilisi() {
           name: language === 'ka' ? 'რა ღირს ყვავილების მიტანა?' : 'What is the cost of flower delivery?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: language === 'ka' ? 'მიტანა თბილისში უფასოა 50 ლარი და მეტი შეკვეთის დროს.' : 'Delivery in Tbilisi is free for orders over 50 GEL.',
+            text: language === 'ka' ? `₾${FREE_DELIVERY_THRESHOLD_GEL}-ის ან მეტი ღირებულების შეკვეთაზე მიტანა უფასოა; სხვა შეკვეთებისთვის საფასური ₾${DELIVERY_FEE_GEL}-ია. თვითგატანა უფასოა.` : `Delivery is free for orders of ₾${FREE_DELIVERY_THRESHOLD_GEL} or more; the fee for other orders is ₾${DELIVERY_FEE_GEL}. Pickup is free.`,
           },
         },
         {
           '@type': 'Question',
-          name: language === 'ka' ? 'შემიძლია თუ არა ყვავილების შეკვეთა ღამით?' : 'Can I order flowers at night?',
+          name: language === 'ka' ? 'როდის შეიძლება შეკვეთის განთავსება?' : 'When can I place an order?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: language === 'ka' ? 'დიახ, შეკვეთა შეგიძლიათ ნებისმიერ დროს WhatsApp ან Messenger-ით.' : 'Yes, you can order anytime via WhatsApp or Messenger.',
+            text: language === 'ka' ? 'ჩვენი სამუშაო საათებია ყოველდღე 10:00-დან 20:00-მდე. მიწოდების დეტალების დასაზუსტებლად დაგვიკავშირდით ამ პერიოდში.' : 'Our working hours are daily from 10:00 to 20:00. Please contact us during these hours to confirm delivery details.',
           },
         },
         {
@@ -74,7 +75,7 @@ export default function FlowerDeliveryTbilisi() {
   }, [language]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="fb-seo-page min-h-screen bg-white">
       <Navbar />
 
       {/* Breadcrumbs */}
@@ -100,8 +101,8 @@ export default function FlowerDeliveryTbilisi() {
           </h1>
           <p className="text-xl text-gray-700 max-w-2xl">
             {language === 'ka'
-              ? 'Flower’s Boutique გთავაზობთ სწრაფ, საიმედო ყვავილების მიტანას თბილისის ნებისმიერ კუთხეში. ახალი ყვავილები, დახვეწილი თაიგულები და პირადი მიდგომა.'
-              : 'Flower’s Boutique offers fast, reliable flower delivery to any part of Tbilisi. Fresh flowers, elegant bouquets and personal approach.'}
+              ? 'Flower’s Boutique გთავაზობთ საიმედო ყვავილების მიტანას თბილისის მასშტაბით. ახალი ყვავილები, დახვეწილი თაიგულები და პირადი მიდგომა.'
+              : 'Flower’s Boutique offers reliable flower delivery across Tbilisi. Fresh flowers, elegant bouquets and a personal approach.'}
           </p>
         </div>
       </section>
@@ -114,12 +115,12 @@ export default function FlowerDeliveryTbilisi() {
               <Truck className="w-8 h-8 text-[#A16207] flex-shrink-0 mt-1" />
               <div>
                 <h3 className="font-bold text-lg mb-2">
-                  {language === 'ka' ? 'სწრაფი მიტანა' : 'Fast Delivery'}
+                  {language === 'ka' ? 'მიტანა თბილისში' : 'Delivery in Tbilisi'}
                 </h3>
                 <p className="text-gray-600">
                   {language === 'ka'
-                    ? 'მიტანა თბილისში 2 საათში. შეუკვეთეთ დღეს, მიიღეთ დღეს.'
-                    : 'Delivery in Tbilisi within 2 hours. Order today, receive today.'}
+                    ? 'მიტანა ხელმისაწვდომია თბილისის მასშტაბით. ზუსტი დრო დასტურდება შეკვეთის დეტალების მიხედვით.'
+                    : 'Delivery is available across Tbilisi. The exact timing is confirmed according to your order details.'}
                 </p>
               </div>
             </div>
@@ -211,8 +212,8 @@ export default function FlowerDeliveryTbilisi() {
                 </h3>
                 <p className="text-gray-600">
                   {language === 'ka'
-                    ? 'Flower’s Boutique გთავაზობთ მიტანას თბილისში 2 საათში. შეკვეთის შემდეგ, ჩვენი მიმტანი მოვა თქვენთან.'
-                    : 'Flower’s Boutique offers delivery in Tbilisi within 2 hours. After ordering, our courier will come to you.'}
+                    ? 'Flower’s Boutique გთავაზობთ მიტანას თბილისის მასშტაბით. შეკვეთის შემდეგ, მიწოდების დეტალებს დაგიდასტურებთ.'
+                    : 'Flower’s Boutique offers delivery across Tbilisi. We will confirm delivery details after your order.'}
                 </p>
               </div>
               <div className="border-l-4 border-[#A16207] pl-6">
@@ -221,18 +222,18 @@ export default function FlowerDeliveryTbilisi() {
                 </h3>
                 <p className="text-gray-600">
                   {language === 'ka'
-                    ? 'მიტანა თბილისში უფასოა 50 ლარი და მეტი შეკვეთის დროს. ნაკლები თანხის შეკვეთის დროს მიტანა 5 ლარი.'
-                    : 'Delivery in Tbilisi is free for orders over 50 GEL. For smaller orders, delivery is 5 GEL.'}
+                    ? `₾${FREE_DELIVERY_THRESHOLD_GEL}-ის ან მეტი ღირებულების შეკვეთაზე მიტანა უფასოა; სხვა შეკვეთებისთვის საფასური ₾${DELIVERY_FEE_GEL}-ია. თვითგატანა უფასოა.`
+                    : `Delivery is free for orders of ₾${FREE_DELIVERY_THRESHOLD_GEL} or more; the fee for other orders is ₾${DELIVERY_FEE_GEL}. Pickup is free.`}
                 </p>
               </div>
               <div className="border-l-4 border-[#A16207] pl-6">
                 <h3 className="font-bold text-lg mb-2">
-                  {language === 'ka' ? 'შემიძლია თუ არა ყვავილების შეკვეთა ღამით?' : 'Can I order flowers at night?'}
+                  {language === 'ka' ? 'როდის შეიძლება შეკვეთის განთავსება?' : 'When can I place an order?'}
                 </h3>
                 <p className="text-gray-600">
                   {language === 'ka'
-                    ? 'დიახ, შეკვეთა შეგიძლიათ ნებისმიერ დროს WhatsApp ან Messenger-ით. ჩვენი გუნდი ყოველდღე 10:00-დან 20:00 მდე მუშაობს.'
-                    : 'Yes, you can order anytime via WhatsApp or Messenger. Our team works daily from 10:00 to 20:00.'}
+                    ? 'ჩვენი სამუშაო საათებია ყოველდღე 10:00-დან 20:00-მდე. მიწოდების დეტალების დასაზუსტებლად დაგვიკავშირდით ამ პერიოდში.'
+                    : 'Our working hours are daily from 10:00 to 20:00. Please contact us during these hours to confirm delivery details.'}
                 </p>
               </div>
               <div className="border-l-4 border-[#A16207] pl-6">

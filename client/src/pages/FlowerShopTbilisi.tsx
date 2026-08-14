@@ -71,7 +71,7 @@ export default function FlowerShopTbilisi() {
   }, [language]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="fb-seo-page min-h-screen bg-white">
       <Navbar />
 
       <div className="bg-gray-50 border-b">
@@ -141,12 +141,12 @@ export default function FlowerShopTbilisi() {
                 <Clock className="w-8 h-8 text-[#A16207] flex-shrink-0" />
                 <div>
                   <h3 className="font-bold mb-2">
-                    {language === "ka" ? "სწრაფი მიტანა" : "Fast Delivery"}
+                    {language === "ka" ? "მიტანა თბილისში" : "Delivery in Tbilisi"}
                   </h3>
                   <p className="text-gray-600 text-sm">
                     {language === "ka"
-                      ? "2 საათში თბილისში"
-                      : "2 hours in Tbilisi"}
+                      ? "დეტალები დასტურდება შეკვეთის მიხედვით"
+                      : "Details confirmed with your order"}
                   </p>
                 </div>
               </div>

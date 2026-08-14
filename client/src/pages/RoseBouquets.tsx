@@ -14,8 +14,8 @@ export default function RoseBouquets() {
   useSEO({
     titleKa: 'ვარდების თაიგულები თბილისში | Flower’s Boutique',
     titleEn: 'Rose Bouquets Tbilisi | Flower’s Boutique',
-    descriptionKa: 'ელეგანტური ვარდების თაიგულები თბილისში. Flower’s Boutique გთავაზობთ ხარისხიან წითელ, თეთრ, ვარდისფერ ვარდებს. სწრაფი მიტანა, ინდივიდუალური დიზაინი.',
-    descriptionEn: 'Elegant rose bouquets in Tbilisi. Flower’s Boutique offers quality red, white, pink roses. Fast delivery, custom design.',
+    descriptionKa: 'ელეგანტური ვარდების თაიგულები თბილისში. Flower’s Boutique გთავაზობთ ხარისხიან წითელ, თეთრ, ვარდისფერ ვარდებს, ინდივიდუალურ დიზაინსა და მიტანას თბილისის მასშტაბით.',
+    descriptionEn: 'Elegant rose bouquets in Tbilisi. Flower’s Boutique offers quality red, white, pink roses, custom design and delivery across Tbilisi.',
     canonical: '/rose-bouquets',
     lang: language as 'ka' | 'en',
   });
@@ -73,7 +73,7 @@ export default function RoseBouquets() {
   }, [language]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="fb-seo-page min-h-screen bg-white">
       <Navbar />
 
       <div className="bg-gray-50 border-b">
@@ -170,8 +170,8 @@ export default function RoseBouquets() {
             </h2>
             <p className="mb-6 text-lg">
               {language === 'ka'
-                ? 'ჩვენი დიზაინერი შექმნის თქვენთვის იდეალურ თაიგულს. სწრაფი მიტანა თბილისში.'
-                : 'Our designer will create the perfect bouquet for you. Fast delivery in Tbilisi.'}
+                ? 'ჩვენი დიზაინერი შექმნის თქვენთვის იდეალურ თაიგულს. მიტანა ხელმისაწვდომია თბილისის მასშტაბით.'
+                : 'Our designer will create the perfect bouquet for you. Delivery is available across Tbilisi.'}
             </p>
             <Link href="/catalog">
               <Button className="bg-white text-[#A16207] hover:bg-gray-100 px-8 py-3 font-bold">

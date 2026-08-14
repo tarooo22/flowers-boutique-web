@@ -317,3 +317,9 @@
 - [x] Add only append-only Catalog presentation refinement for filter/sort focus hierarchy, mobile control clarity, state-card rhythm, loading feedback, and 320px grid resilience.
 - [x] Add only append-only Product Detail presentation refinement for gallery controls, variant and quantity feedback, trust-signal grouping, related-product interactions, and mobile purchase affordance.
 - [x] Extend focused UI contracts and verify Catalog/Product Detail at desktop, 390px, and 320px before running Vitest, TypeScript, and production build.
+
+## Design Master Plan — Wave 4: Informational and SEO public surfaces — 2026-08-14
+- [x] Improve Delivery, Returns, Privacy, and Terms readability with semantic long-form sections, clear heading hierarchy, explicit policy highlights, and keyboard-usable local navigation without altering approved policies or legal obligations.
+- [x] Apply a shared, additive Georgian-first editorial presentation layer to SEO landing pages while preserving unique H1s, existing routes, metadata architecture, and real product data.
+- [x] Correct only verified contradictory delivery/policy claims in visible SEO copy and JSON-LD: remove unsupported time/service promises and align fee/pickup wording to the canonical ₾5 / free-from-₾150 / free-pickup policy.
+- [x] Add focused public-page/SEO contracts and verify desktop plus 390px and 320px responsive presentation before running the full validation suite.

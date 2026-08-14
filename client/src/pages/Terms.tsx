@@ -1,6 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
+import { useSEO } from "@/hooks/useSEO";
 import { contactFallback, siteContact } from "@/lib/siteConfig";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,6 +9,16 @@ import Footer from "@/components/Footer";
 export default function Terms() {
   const { language } = useLanguage();
   const [, navigate] = useLocation();
+  const siteUrl = (import.meta.env.VITE_SITE_URL || "https://flower-shop-jx9auvvz.manus.space").replace(/\/$/, "");
+
+  useSEO({
+    titleKa: "წესები და პირობები | Flower’s Boutique",
+    titleEn: "Terms and Conditions | Flower’s Boutique",
+    descriptionKa: "გაეცანით Flower’s Boutique-ის შეკვეთის, მიტანის, დაბრუნებისა და მომსახურების პირობებს.",
+    descriptionEn: "Read Flower’s Boutique’s terms for ordering, delivery, returns, and service use.",
+    canonical: "/terms",
+    lang: language,
+  });
 
   const handleBack = () => {
     if (window.history.length > 1) {
@@ -35,7 +46,7 @@ export default function Terms() {
           title: "2. Contact Information",
           paragraphs: [
             "Company: Flower’s Boutique / FLOWERS BOUTIQUE.GE",
-            "Website: https://flowers-boutique.example",
+            `Website: ${siteUrl}`,
             `Email: ${siteContact.email || contactFallback.en}`,
             `Phone / WhatsApp: ${siteContact.phone || contactFallback.en}`,
             `Address: ${siteContact.address || "Tbilisi, Georgia — exact address available when ordering"}`,
@@ -154,7 +165,7 @@ export default function Terms() {
           title: "2. საკონტაქტო ინფორმაცია",
           paragraphs: [
             "კომპანია: Flower’s Boutique / FLOWERS BOUTIQUE.GE",
-            "ვებგვერდი: https://flowers-boutique.example",
+            `ვებგვერდი: ${siteUrl}`,
             `ელ. ფოსტა: ${siteContact.email || contactFallback.ka}`,
             `ტელეფონი / WhatsApp: ${siteContact.phone || contactFallback.ka}`,
             `მისამართი: ${siteContact.address || "თბილისი — ზუსტი მისამართი ხელმისაწვდომია შეკვეთისას"}`,
@@ -263,39 +274,50 @@ export default function Terms() {
   return (
     <div className="fb-secondary-page p2-legal-page min-h-screen">
       <Navbar />
-      <main className="fb-legal-page px-4 py-8 sm:py-12">
-      <div className="max-w-4xl mx-auto">
+      <main id="main-content" className="fb-legal-page fb-legal-page--terms px-4 py-8 sm:py-12">
+      <div className="max-w-4xl mx-auto fb-legal-page__frame">
         <div className="mb-6">
           <Button
             onClick={handleBack}
-            className="rounded-full px-6 py-2 bg-gradient-to-r from-[#A16207] to-[#D4AF37] text-white hover:shadow-lg hover:shadow-[#A16207]/20 transition-all w-full sm:w-auto"
+            className="fb-legal-page__back rounded-full px-6 py-2 bg-gradient-to-r from-[#A16207] to-[#D4AF37] text-white hover:shadow-lg hover:shadow-[#A16207]/20 transition-all w-full sm:w-auto"
           >
             ← {language === "ka" ? "უკან" : "Back"}
           </Button>
         </div>
 
         <h1
-          className="text-4xl sm:text-5xl font-light text-[#1C1917] mb-2"
+          className="fb-legal-page__title text-4xl sm:text-5xl font-light text-[#1C1917] mb-2"
           style={{ fontFamily: "'Cormorant Garamond', serif" }}
         >
           {currentContent.title}
         </h1>
-        <p className="text-[#666] mb-8">{currentContent.lastUpdated}</p>
+        <p className="fb-legal-page__updated text-[#666] mb-8">{currentContent.lastUpdated}</p>
+
+        <nav className="fb-legal-page__nav" aria-label={language === "ka" ? "ამ გვერდზე" : "On this page"}>
+          <span className="fb-legal-page__nav-label">{language === "ka" ? "ამ გვერდზე" : "On this page"}</span>
+          <div className="fb-legal-page__nav-links">
+            {currentContent.sections.map((section, index) => (
+              <a key={section.title} href={`#terms-section-${index + 1}`}>
+                {section.title}
+              </a>
+            ))}
+          </div>
+        </nav>
 
         {currentContent.sections.map((section, index) => (
-          <div key={index} className="bg-white p-6 rounded-lg shadow-sm mb-6">
+          <section id={`terms-section-${index + 1}`} key={section.title} className="fb-legal-page__section bg-white p-6 rounded-lg shadow-sm mb-6">
             <h2
-              className="text-2xl font-semibold text-[#1C1917] mb-4"
+              className="fb-legal-page__section-title text-2xl font-semibold text-[#1C1917] mb-4"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
               {section.title}
             </h2>
             {section.paragraphs.map((paragraph, pIndex) => (
-              <p key={pIndex} className="text-[#333] mb-3 leading-relaxed">
+              <p key={pIndex} className="fb-legal-page__paragraph text-[#333] mb-3 leading-relaxed">
                 {paragraph}
               </p>
             ))}
-          </div>
+          </section>
         ))}
       </div>
       </main>

@@ -53,8 +53,8 @@ export default function Returns() {
       contactText: "For return requests or refund inquiries, please contact us at:",
       phone: "Phone",
       email: "Email",
-      hours: "Response Time",
-      hoursText: "We typically respond within 2 hours during business hours",
+      hours: "Working Hours",
+      hoursText: "Every day · 10:00–20:00",
       
       important: "Important",
       importantText: "Please keep the flowers in their original condition and take photos immediately if you notice any issues. This will help us process your request faster.",
@@ -93,8 +93,8 @@ export default function Returns() {
       contactText: "დაბრუნების ან თანხის ანაზღაურების მოთხოვნისთვის დაგვიკავშირდით:",
       phone: "ტელეფონი",
       email: "ელ-ფოსტა",
-      hours: "საპასუხო დრო",
-      hoursText: "სამუშაო საათებში, როგორც წესი, 2 საათის განმავლობაში გიპასუხებთ",
+      hours: "სამუშაო საათები",
+      hoursText: "ყოველდღე · 10:00–20:00",
       
       important: "მნიშვნელოვანი",
       importantText: "გთხოვთ, ყვავილები თავდაპირველ მდგომარეობაში შეინახოთ და ნებისმიერი პრობლემის აღმოჩენისთანავე ფოტოები გადაიღოთ. ეს დაგვეხმარება მოთხოვნის უფრო სწრაფად დამუშავებაში.",
@@ -104,24 +104,39 @@ export default function Returns() {
   const t = content[language as keyof typeof content] || content.en;
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-amber-50 to-white">
+    <div className="fb-info-page fb-returns-page min-h-screen flex flex-col bg-gradient-to-b from-amber-50 to-white">
       <Navbar />
-      <main id="main-content" className="flex-1 container max-w-4xl mx-auto px-4 py-16">
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold text-amber-900 mb-2">{t.title}</h1>
-          <p className="text-lg text-amber-700">{t.subtitle}</p>
+      <main id="main-content" className="fb-info-page__main flex-1 container max-w-4xl mx-auto px-4 py-16">
+        <div className="fb-info-page__header mb-12">
+          <h1 className="fb-info-page__title text-4xl font-bold text-amber-900 mb-2">{t.title}</h1>
+          <p className="fb-info-page__lead text-lg text-amber-700">{t.subtitle}</p>
         </div>
 
+        <nav className="fb-info-page__nav" aria-label={language === "ka" ? "ამ გვერდზე" : "On this page"}>
+          <span className="fb-info-page__nav-label">{language === "ka" ? "ამ გვერდზე" : "On this page"}</span>
+          <div className="fb-info-page__nav-links">
+            <a href="#returns-policy">{t.section1Title}</a>
+            <a href="#returns-conditions">{t.section2Title}</a>
+            <a href="#returns-process">{t.section3Title}</a>
+            <a href="#returns-exceptions">{t.section4Title}</a>
+            <a href="#returns-methods">{t.section5Title}</a>
+            <a href="#returns-contact">{t.section6Title}</a>
+          </div>
+        </nav>
+
         {/* Main Policy */}
-        <Card className="p-8 border-gold/20 mb-8">
+        <section id="returns-policy">
+        <Card className="fb-info-page__card p-8 border-gold/20 mb-8">
           <h2 className="text-2xl font-bold text-amber-900 mb-4">
             {t.section1Title}
           </h2>
           <p className="text-gray-700 leading-relaxed">{t.section1Text}</p>
         </Card>
+        </section>
 
         {/* Conditions */}
-        <Card className="p-8 border-gold/20 mb-8">
+        <section id="returns-conditions">
+        <Card className="fb-info-page__card p-8 border-gold/20 mb-8">
           <h2 className="text-2xl font-bold text-amber-900 mb-4">
             {t.section2Title}
           </h2>
@@ -132,9 +147,11 @@ export default function Returns() {
             <p>{t.condition4}</p>
           </div>
         </Card>
+        </section>
 
         {/* Refund Process */}
-        <Card className="p-8 border-gold/20 mb-8">
+        <section id="returns-process">
+        <Card className="fb-info-page__card p-8 border-gold/20 mb-8">
           <h2 className="text-2xl font-bold text-amber-900 mb-4">
             {t.section3Title}
           </h2>
@@ -157,9 +174,11 @@ export default function Returns() {
             </div>
           </div>
         </Card>
+        </section>
 
         {/* Non-Returnable */}
-        <Card className="p-8 border-gold/20 mb-8 bg-red-50">
+        <section id="returns-exceptions">
+        <Card className="fb-info-page__card fb-info-page__card--caution p-8 border-gold/20 mb-8 bg-red-50">
           <h2 className="text-2xl font-bold text-red-900 mb-4">
             {t.section4Title}
           </h2>
@@ -170,9 +189,11 @@ export default function Returns() {
             <p>{t.nonReturn4}</p>
           </div>
         </Card>
+        </section>
 
         {/* Refund Methods */}
-        <Card className="p-8 border-gold/20 mb-8">
+        <section id="returns-methods">
+        <Card className="fb-info-page__card p-8 border-gold/20 mb-8">
           <h2 className="text-2xl font-bold text-amber-900 mb-4">
             {t.section5Title}
           </h2>
@@ -182,9 +203,11 @@ export default function Returns() {
             <p>{t.refundMethod3}</p>
           </div>
         </Card>
+        </section>
 
         {/* Contact */}
-        <Card className="p-8 border-gold/20 mb-8 bg-gradient-to-r from-amber-50 to-amber-100">
+        <section id="returns-contact">
+        <Card className="fb-info-page__card fb-info-page__card--contact p-8 border-gold/20 mb-8 bg-gradient-to-r from-amber-50 to-amber-100">
           <h2 className="text-2xl font-bold text-amber-900 mb-6">
             {t.section6Title}
           </h2>
@@ -206,13 +229,14 @@ export default function Returns() {
               <p className="text-sm text-amber-700 font-semibold mb-1">
                 {t.hours}
               </p>
-              <p className="text-lg text-amber-900 font-bold">{t.hoursText}</p>
+              <p className="text-lg text-amber-900 font-bold">{language === "ka" ? siteContact.hoursKa : siteContact.hoursEn}</p>
             </div>
           </div>
         </Card>
+        </section>
 
         {/* Important Notice */}
-        <Card className="p-8 border-2 border-amber-300 bg-amber-50">
+        <Card className="fb-info-page__card fb-info-page__card--notice p-8 border-2 border-amber-300 bg-amber-50">
           <div className="flex items-start gap-4">
             <AlertCircle className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
             <div>

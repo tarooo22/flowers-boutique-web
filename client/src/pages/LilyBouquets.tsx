@@ -14,8 +14,8 @@ export default function LilyBouquets() {
   useSEO({
     titleKa: 'ლილიების თაიგულები თბილისში | Flower’s Boutique',
     titleEn: 'Lily Bouquets Tbilisi | Flower’s Boutique',
-    descriptionKa: 'ლილიების ელეგანტური თაიგულები თბილისში. Flower’s Boutique გთავაზობთ თეთრ, ვარდისფერ, წითალ ლილიებს. სწრაფი მიტანა, ინდივიდუალური დიზაინი.',
-    descriptionEn: 'Elegant lily bouquets in Tbilisi. Flower’s Boutique offers white, pink, red lilies. Fast delivery, custom design.',
+    descriptionKa: 'ლილიების ელეგანტური თაიგულები თბილისში. Flower’s Boutique გთავაზობთ თეთრ, ვარდისფერ, წითელ ლილიებს, ინდივიდუალურ დიზაინსა და მიტანას თბილისის მასშტაბით.',
+    descriptionEn: 'Elegant lily bouquets in Tbilisi. Flower’s Boutique offers white, pink, red lilies, custom design and delivery across Tbilisi.',
     canonical: '/lily-bouquets',
     lang: language as 'ka' | 'en',
   });
@@ -73,7 +73,7 @@ export default function LilyBouquets() {
   }, [language]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="fb-seo-page min-h-screen bg-white">
       <Navbar />
 
       <div className="bg-gray-50 border-b">
@@ -170,8 +170,8 @@ export default function LilyBouquets() {
             </h2>
             <p className="mb-6 text-lg">
               {language === 'ka'
-                ? 'ელეგანტური ლილიების თაიგული თქვენი სპეციალური მომენტისთვის. სწრაფი მიტანა თბილისში.'
-                : 'Elegant lily bouquet for your special moment. Fast delivery in Tbilisi.'}
+                ? 'ელეგანტური ლილიების თაიგული თქვენი სპეციალური მომენტისთვის. მიტანა ხელმისაწვდომია თბილისის მასშტაბით.'
+                : 'Elegant lily bouquet for your special moment. Delivery is available across Tbilisi.'}
             </p>
             <Link href="/catalog">
               <Button className="bg-white text-[#A16207] hover:bg-gray-100 px-8 py-3 font-bold">
