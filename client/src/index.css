@@ -10883,3 +10883,188 @@ body .auth-page button.auth-submit.auth-submit--boutique:hover:not(:disabled) {
     transform: scale(0.97);
   }
 }
+
+/* === MASTER PLAN WAVE 3: Catalog and product discovery refinement === */
+.p2-catalog-page .fb-filter-trigger,
+.p2-catalog-page .fb-filter-list button,
+.p2-catalog-page .fb-search-field button,
+.p2-catalog-page .fb-sort-select select,
+.p2-catalog-page .fb-catalog-state button,
+.p2-catalog-page .fb-catalog-pagination button,
+.fb-product-gallery__wish,
+.fb-product-gallery__thumbs button,
+.fb-variant,
+.fb-quantity button,
+.fb-product-add,
+.fb-product-inquiry,
+.fb-product-sticky button,
+.fb-related-card {
+  outline: 0;
+}
+.p2-catalog-page .fb-filter-trigger:focus-visible,
+.p2-catalog-page .fb-filter-list button:focus-visible,
+.p2-catalog-page .fb-search-field button:focus-visible,
+.p2-catalog-page .fb-sort-select select:focus-visible,
+.p2-catalog-page .fb-catalog-state button:focus-visible,
+.p2-catalog-page .fb-catalog-pagination button:focus-visible,
+.fb-product-gallery__wish:focus-visible,
+.fb-product-gallery__thumbs button:focus-visible,
+.fb-variant:focus-visible,
+.fb-quantity button:focus-visible,
+.fb-product-add:focus-visible,
+.fb-product-inquiry:focus-visible,
+.fb-product-sticky button:focus-visible,
+.fb-related-card:focus-visible {
+  outline: 2px solid var(--fb-focus, #8f6e3a);
+  outline-offset: 3px;
+}
+.p2-catalog-page .fb-catalog-toolbar {
+  align-items: center;
+}
+.p2-catalog-page .fb-catalog-toolbar p {
+  color: #625a51;
+  font-variant-numeric: tabular-nums;
+}
+.p2-catalog-page .fb-catalog-toolbar label {
+  color: #625a51;
+  font-size: 12px;
+  font-weight: 700;
+}
+.p2-catalog-page .fb-sort-select {
+  min-height: 44px;
+  padding-inline: 10px 6px;
+  border: 1px solid #d4c8b8;
+  background: #fffdf9;
+}
+.p2-catalog-page .fb-sort-select select {
+  min-width: 152px;
+}
+.p2-catalog-page .fb-filter-trigger {
+  border-color: rgba(226, 197, 139, 0.72);
+  background: rgba(255, 253, 249, 0.06);
+}
+.p2-catalog-page .fb-catalog-state {
+  min-height: 380px;
+  border-style: solid;
+  border-color: #ded1c0;
+  background: linear-gradient(135deg, rgba(255, 253, 249, 0.95), rgba(244, 236, 226, 0.92));
+  box-shadow: 0 18px 44px rgba(48, 40, 31, 0.05);
+}
+.p2-catalog-page .fb-catalog-state h2 {
+  max-width: 20ch;
+}
+.p2-catalog-page .fb-catalog-state button {
+  border: 1px solid #171717;
+}
+.p2-catalog-page .fb-product-skeleton {
+  border: 1px solid #e6dbcf;
+  box-shadow: inset 0 0 0 1px rgba(255, 253, 249, 0.7);
+}
+.fb-product-gallery__main {
+  border: 1px solid #e0d4c5;
+  box-shadow: 0 20px 54px rgba(53, 43, 33, 0.08);
+}
+.fb-product-gallery__wish {
+  border: 1px solid rgba(176, 151, 108, 0.38);
+  box-shadow: 0 7px 18px rgba(47, 38, 29, 0.08);
+}
+.fb-product-gallery__thumbs button {
+  background: #fffdf9;
+}
+.fb-product-gallery__thumbs button.is-active {
+  border-color: var(--fb-focus, #8f6e3a);
+  box-shadow: 0 0 0 2px rgba(143, 110, 58, 0.14);
+}
+.fb-product-availability {
+  width: fit-content;
+  min-height: 34px;
+  margin-top: 20px;
+  padding: 0 11px;
+  border: 1px solid currentColor;
+  background: #fffdf9;
+}
+.fb-variant.is-selected {
+  background: #f4ebdf;
+  color: #2c2823;
+}
+.fb-product-perks {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding-top: 20px;
+}
+.fb-product-perks div {
+  min-height: 62px;
+  padding: 12px;
+  border: 1px solid #dfd2c1;
+  background: #fffdf9;
+}
+.fb-related-card {
+  overflow: hidden;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .p2-catalog-page .fb-filter-trigger:active,
+  .p2-catalog-page .fb-catalog-state button:active,
+  .p2-catalog-page .fb-catalog-pagination button:active,
+  .fb-product-gallery__wish:active,
+  .fb-variant:active,
+  .fb-quantity button:active,
+  .fb-product-add:active,
+  .fb-product-sticky button:active {
+    transform: scale(0.97);
+  }
+  .fb-product-gallery__main img,
+  .fb-related-card {
+    transition: transform 180ms ease-out, opacity 180ms ease-out;
+  }
+  .fb-product-gallery__main:hover img {
+    transform: scale(1.015);
+  }
+  .fb-related-card:hover {
+    transform: translateY(-2px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fb-product-skeleton,
+  .fb-product-loading__image,
+  .fb-product-loading__copy,
+  .fb-related-skeleton {
+    animation: none;
+    background: #eee7dc;
+  }
+}
+@media (max-width: 560px) {
+  .p2-catalog-page .fb-catalog-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .p2-catalog-page .fb-catalog-toolbar label {
+    justify-content: space-between;
+    width: 100%;
+  }
+  .p2-catalog-page .fb-sort-select {
+    flex: 1 1 auto;
+    justify-content: space-between;
+  }
+  .p2-catalog-page .fb-sort-select select {
+    min-width: 0;
+    width: 100%;
+  }
+  .fb-product-perks {
+    grid-template-columns: 1fr;
+  }
+  .fb-product-perks div {
+    min-height: 56px;
+  }
+}
+@media (max-width: 360px) {
+  .p2-catalog-page .fb-catalog-grid {
+    gap: 18px 8px;
+  }
+  .p2-catalog-page .fb-catalog-card__body {
+    padding-inline: 8px;
+  }
+  .p2-catalog-page .fb-catalog-card__add {
+    padding-inline: 7px;
+  }
+}

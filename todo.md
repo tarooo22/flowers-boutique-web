@@ -312,3 +312,8 @@
 - [x] Add only additive global styling for password-visibility controls, visible keyboard focus, 44px touch targets, and reduced-motion-safe submit feedback across Login and Register.
 - [x] Extend UI regression contracts for password-toggle labels, inline invalid states, alert-role validation messaging, and pending submit labels.
 - [x] Verify Login and Register at desktop and mobile viewports, then run the relevant Vitest suite, TypeScript check, and production build before publishing.
+
+## Design Master Plan — Wave 3: Catalog and product discovery polish — 2026-08-14
+- [x] Add only append-only Catalog presentation refinement for filter/sort focus hierarchy, mobile control clarity, state-card rhythm, loading feedback, and 320px grid resilience.
+- [x] Add only append-only Product Detail presentation refinement for gallery controls, variant and quantity feedback, trust-signal grouping, related-product interactions, and mobile purchase affordance.
+- [x] Extend focused UI contracts and verify Catalog/Product Detail at desktop, 390px, and 320px before running Vitest, TypeScript, and production build.
