@@ -13051,3 +13051,416 @@ body .auth-page button.auth-submit.auth-submit--boutique:hover:not(:disabled) {
     transition: none;
   }
 }
+
+/* Home editorial convergence layer — additive only */
+.p1-amelie-discovery,
+.p1-amelie-collection,
+.p1-amelie-experiences,
+.p1-amelie-delivery,
+.p1-amelie-contact-section {
+  position: relative;
+}
+
+.p1-amelie-discovery::before,
+.p1-amelie-collection::before,
+.p1-amelie-experiences::before {
+  position: absolute;
+  top: 0;
+  left: max(1rem, calc((100% - 76rem) / 2));
+  width: min(9.5rem, 16vw);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(212, 163, 115, 0), rgba(212, 163, 115, 0.82), rgba(212, 163, 115, 0));
+  content: "";
+}
+
+.p1-amelie-discovery .p1-home-section__heading,
+.p1-amelie-collection .p1-home-section__heading,
+.p1-amelie-experiences .p1-home-section__heading {
+  align-items: flex-end;
+}
+
+.p1-amelie-discovery .p1-home-section__heading > div,
+.p1-amelie-collection .p1-home-section__heading > div,
+.p1-amelie-experiences .p1-home-section__heading > div {
+  position: relative;
+  padding-left: clamp(0rem, 4vw, 3.5rem);
+}
+
+.p1-amelie-discovery .p1-home-section__heading > div::before,
+.p1-amelie-collection .p1-home-section__heading > div::before,
+.p1-amelie-experiences .p1-home-section__heading > div::before {
+  position: absolute;
+  top: 0.08rem;
+  left: 0;
+  color: rgba(165, 106, 91, 0.62);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+}
+
+.p1-amelie-discovery .p1-home-section__heading > div::before { content: "01"; }
+.p1-amelie-collection .p1-home-section__heading > div::before { content: "02"; }
+.p1-amelie-experiences .p1-home-section__heading > div::before { content: "03"; }
+
+.p1-amelie-discovery .p1-home-section__title,
+.p1-amelie-collection .p1-home-section__title,
+.p1-amelie-experiences .p1-home-section__title {
+  max-width: 16ch;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.p1-amelie-discovery .p1-home-section__lede {
+  max-width: 39rem;
+  line-height: 1.7;
+}
+
+.p1-amelie-discovery .p1-home-section__link,
+.p1-amelie-collection .p1-home-section__link,
+.p1-amelie-experiences .p1-home-section__link {
+  min-height: 44px;
+  padding: 0.625rem 0.1rem;
+  border-bottom: 1px solid rgba(165, 106, 91, 0.36);
+}
+
+.p1-amelie-discovery .p1-home-section__link:hover,
+.p1-amelie-collection .p1-home-section__link:hover,
+.p1-amelie-experiences .p1-home-section__link:hover {
+  border-color: #a56a5b;
+}
+
+.p1-amelie-discovery .p1-category-gallery {
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+.p1-amelie-discovery .p1-category-tile {
+  min-height: 25rem;
+  border-color: rgba(229, 222, 201, 0.92);
+  border-radius: 1.4rem;
+  background:
+    radial-gradient(circle at 82% 16%, rgba(224, 122, 95, 0.12), transparent 31%),
+    linear-gradient(145deg, #fffdf9, #f8f2e9);
+  box-shadow: 0 18px 46px rgba(71, 55, 44, 0.07);
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 220ms cubic-bezier(0.23, 1, 0.32, 1), border-color 220ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.p1-amelie-discovery .p1-category-tile::after {
+  position: absolute;
+  right: -3.5rem;
+  bottom: -3.5rem;
+  width: 9rem;
+  height: 9rem;
+  border: 1px solid rgba(212, 163, 115, 0.23);
+  border-radius: 999px;
+  content: "";
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1), opacity 220ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.p1-amelie-discovery .p1-category-tile:hover {
+  transform: translateY(-5px);
+  border-color: rgba(212, 163, 115, 0.72);
+  box-shadow: 0 26px 58px rgba(71, 55, 44, 0.14);
+}
+
+.p1-amelie-discovery .p1-category-tile:hover::after {
+  transform: translate(-0.75rem, -0.75rem) scale(1.06);
+}
+
+.p1-amelie-discovery .p1-category-tile__visual {
+  position: relative;
+  z-index: 1;
+}
+
+.p1-amelie-discovery .p1-category-tile__visual::before {
+  position: absolute;
+  z-index: -1;
+  width: min(15rem, 78%);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(212, 163, 115, 0.09);
+  content: "";
+}
+
+.p1-amelie-discovery .p1-category-tile__meta {
+  position: relative;
+}
+
+.p1-amelie-discovery .p1-category-tile__action {
+  min-height: 30px;
+  color: #7f4539;
+}
+
+.p1-amelie-collection .p1-product-grid {
+  gap: clamp(0.85rem, 2vw, 1.45rem);
+}
+
+.p1-amelie-collection .p1-product-grid::before {
+  grid-column: 1 / -1;
+  margin-bottom: 0.25rem;
+  color: #8a756a;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  content: "CURATED FOR THE MOMENT";
+}
+
+.p1-amelie-builder-section .p1-home-builder {
+  position: relative;
+  isolation: isolate;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background:
+    radial-gradient(circle at 18% 15%, rgba(224, 122, 95, 0.42), transparent 34%),
+    linear-gradient(135deg, #322a27 0%, #201c1a 100%);
+}
+
+.p1-amelie-builder-section .p1-home-builder__copy {
+  position: relative;
+  z-index: 2;
+}
+
+.p1-amelie-builder-section .p1-home-builder__copy::before {
+  position: absolute;
+  top: 1.75rem;
+  right: 2rem;
+  width: 7.5rem;
+  height: 7.5rem;
+  border: 1px solid rgba(255, 235, 205, 0.16);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.p1-amelie-builder__steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.p1-amelie-builder__steps li {
+  display: grid;
+  gap: 0.35rem;
+  min-height: 72px;
+  padding: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+.p1-amelie-builder__steps span {
+  color: #f4bd75;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.13em;
+}
+
+.p1-amelie-builder-section .p1-home-primary-cta {
+  min-height: 48px;
+  transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms cubic-bezier(0.23, 1, 0.32, 1), background-color 180ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.p1-amelie-builder-section .p1-home-primary-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(224, 122, 95, 0.28);
+}
+
+.p1-amelie-builder-section .p1-home-primary-cta:active {
+  transform: scale(0.97);
+}
+
+.p1-amelie-builder-section .p1-home-builder__media::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(32, 28, 26, 0.5), transparent 45%);
+  content: "";
+  pointer-events: none;
+}
+
+.p1-amelie-experiences .p1-home-experience-card {
+  border-color: rgba(229, 222, 201, 0.92);
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 220ms cubic-bezier(0.23, 1, 0.32, 1), border-color 220ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.p1-amelie-experiences .p1-home-experience-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 23px 52px rgba(71, 55, 44, 0.12);
+}
+
+.p1-amelie-experiences .p1-home-experience-card__media::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 54%, rgba(44, 40, 37, 0.3));
+  content: "";
+  pointer-events: none;
+}
+
+.p1-amelie-experiences .p1-home-experience-card__link {
+  min-height: 40px;
+}
+
+.p1-amelie-delivery .p1-home-delivery-step {
+  min-height: 248px;
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(255, 253, 248, 0.72), rgba(245, 240, 230, 0.94)),
+    #f5f0e6;
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 220ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.p1-amelie-delivery .p1-home-delivery-step::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #e07a5f, #d4a373);
+  content: "";
+}
+
+.p1-amelie-delivery .p1-home-delivery-step:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 36px rgba(71, 55, 44, 0.1);
+}
+
+.p1-amelie-delivery__policy {
+  max-width: 38rem;
+  margin-right: auto;
+  margin-left: auto;
+  line-height: 1.65;
+}
+
+.p1-amelie-contact-section .p1-home-contact {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 82% 22%, rgba(224, 122, 95, 0.35), transparent 28%),
+    linear-gradient(135deg, #2c2825, #191716);
+}
+
+.p1-amelie-contact-section .p1-home-contact::before,
+.p1-amelie-contact-section .p1-home-contact::after {
+  position: absolute;
+  z-index: -1;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  content: "";
+}
+
+.p1-amelie-contact-section .p1-home-contact::before {
+  top: -5.5rem;
+  right: 14%;
+  width: 16rem;
+  height: 16rem;
+}
+
+.p1-amelie-contact-section .p1-home-contact::after {
+  bottom: -7rem;
+  left: -3rem;
+  width: 13rem;
+  height: 13rem;
+}
+
+.p1-amelie-contact-section .p1-home-contact__action {
+  min-height: 48px;
+  transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms cubic-bezier(0.23, 1, 0.32, 1), background-color 180ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.p1-amelie-contact-section .p1-home-contact__action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.22);
+}
+
+.p1-amelie-contact-section .p1-home-contact__action:active {
+  transform: scale(0.97);
+}
+
+.p1-amelie-discovery a:focus-visible,
+.p1-amelie-collection a:focus-visible,
+.p1-amelie-builder-section a:focus-visible,
+.p1-amelie-experiences a:focus-visible,
+.p1-amelie-contact-section a:focus-visible {
+  outline: 2px solid #a56a5b;
+  outline-offset: 4px;
+}
+
+@media (max-width: 767px) {
+  .p1-amelie-discovery .p1-home-section__heading,
+  .p1-amelie-collection .p1-home-section__heading,
+  .p1-amelie-experiences .p1-home-section__heading {
+    align-items: flex-start;
+  }
+
+  .p1-amelie-discovery .p1-home-section__heading > div,
+  .p1-amelie-collection .p1-home-section__heading > div,
+  .p1-amelie-experiences .p1-home-section__heading > div {
+    padding-left: 1.9rem;
+  }
+
+  .p1-amelie-discovery .p1-home-section__title,
+  .p1-amelie-collection .p1-home-section__title,
+  .p1-amelie-experiences .p1-home-section__title {
+    max-width: 17ch;
+  }
+
+  .p1-amelie-discovery .p1-category-tile {
+    min-height: 22.5rem;
+  }
+
+  .p1-amelie-builder__steps {
+    gap: 0.45rem;
+  }
+
+  .p1-amelie-builder__steps li {
+    min-height: 68px;
+    padding: 0.6rem;
+    font-size: 0.69rem;
+  }
+
+  .p1-amelie-builder-section .p1-home-builder__media::after {
+    background: linear-gradient(180deg, rgba(32, 28, 26, 0.12), rgba(32, 28, 26, 0.5));
+  }
+
+  .p1-amelie-delivery .p1-home-delivery-step {
+    min-height: 0;
+  }
+
+  .p1-amelie-contact-section .p1-home-contact {
+    padding-bottom: max(2rem, env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 360px) {
+  .p1-amelie-discovery .p1-home-section__title,
+  .p1-amelie-collection .p1-home-section__title,
+  .p1-amelie-experiences .p1-home-section__title {
+    font-size: 1.85rem;
+  }
+
+  .p1-amelie-builder__steps {
+    grid-template-columns: 1fr;
+  }
+
+  .p1-amelie-builder__steps li {
+    grid-template-columns: 2.3rem 1fr;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p1-amelie-discovery .p1-category-tile,
+  .p1-amelie-discovery .p1-category-tile::after,
+  .p1-amelie-builder-section .p1-home-primary-cta,
+  .p1-amelie-experiences .p1-home-experience-card,
+  .p1-amelie-delivery .p1-home-delivery-step,
+  .p1-amelie-contact-section .p1-home-contact__action {
+    transition: none;
+  }
+}

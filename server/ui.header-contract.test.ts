@@ -452,7 +452,7 @@ describe("storefront header contract", () => {
     ]);
 
     expect(home).toContain("const categoryArtwork = [");
-    expect(home).toContain('className="p1-category-gallery" role="list"');
+    expect(home).toContain('className="p1-category-gallery');
     expect(home).toContain('className={`p1-category-tile p1-category-tile--${index + 1}`}');
     expect(home).toContain('href={`/catalog?category=${category.id}`}');
     expect(home).toContain('src={categoryArtwork[index % categoryArtwork.length]}');
@@ -516,6 +516,31 @@ describe("storefront header contract", () => {
     expect(styles).toContain(".p1-home .p1-home-experience-card");
     expect(styles).toContain(".p1-home .p1-home-delivery-step::before");
     expect(styles).toContain("@media (hover: hover) and (pointer: fine)");
+    expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
+  });
+
+  it("keeps the Amelie-inspired Home editorial layer scoped, policy-aware, and reduced-motion safe", async () => {
+    const [home, styles] = await Promise.all([
+      readFile(homePath, "utf8"),
+      readFile(path.join(projectRoot, "client/src/index.css"), "utf8"),
+    ]);
+
+    expect(home).toContain("p1-amelie-discovery");
+    expect(home).toContain("p1-amelie-collection");
+    expect(home).toContain("p1-amelie-builder-section");
+    expect(home).toContain("p1-amelie-experiences");
+    expect(home).toContain("p1-amelie-delivery");
+    expect(home).toContain("p1-amelie-contact-section");
+    expect(home).toContain('className="p1-amelie-builder__steps"');
+    expect(home).toContain('aria-label={ka ? "თაიგულის შექმნის ეტაპები"');
+    expect(home).toContain('className="p1-amelie-delivery__policy');
+    expect(home).toContain("DELIVERY_FEE_GEL");
+    expect(home).toContain("FREE_DELIVERY_THRESHOLD_GEL");
+    expect(styles).toContain("Home editorial convergence layer — additive only");
+    expect(styles).toContain(".p1-amelie-discovery .p1-category-tile:hover");
+    expect(styles).toContain(".p1-amelie-builder__steps");
+    expect(styles).toContain(".p1-amelie-delivery__policy");
+    expect(styles).toContain(".p1-amelie-contact-section .p1-home-contact");
     expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
   });
 

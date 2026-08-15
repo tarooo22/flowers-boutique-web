@@ -365,3 +365,9 @@
 - [x] Refine the shared storefront shell: header utility/action hierarchy, account entry, search affordance, active navigation, mobile menu, and footer conversion rhythm—without changing routes, authentication, contact facts, checkout policy, cart behavior, or BOG sandbox mode.
 - [x] Prepare the next waves for catalog discovery, product-card visual language, About storytelling, and bouquet-builder contextual hierarchy without prematurely adding rewards, promotions, review claims, checkout mutations, or unsupported order lookup.
 - [x] Add targeted UI regression contracts and complete desktop/390px/320px visual QA, accessibility checks, browser diagnostics, Vitest, TypeScript, and production build before release.
+
+## Home-only Amelie-inspired redesign — 2026-08-15
+- [x] Audit the complete current Home experience, including hero carousel, category discovery, collection/product sections, bouquet-builder CTA, service/editorial cards, delivery trust, and contact conversion, against the documented architecture.
+- [x] Document the Home-only redesign architecture and rank safe, data-backed visual/interaction improvements without changing the carousel's real imagery, routes, pricing, policy, catalog query behavior, or commerce logic.
+- [x] Refine Home discovery and conversion surfaces through presentation-only, accessible, responsive components and append-only styles that strengthen the Flower’s Boutique brand rather than copying Amelie assets or claims.
+- [x] Add focused Home regression coverage and complete desktop/390px/320px QA, browser diagnostics, Vitest, TypeScript, and production build before checkpointing.

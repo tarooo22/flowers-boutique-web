@@ -279,7 +279,7 @@ export default function Home() {
 
         {/* Distinct Background-Free Category Gallery */}
         <section
-          className="p1-home-section p1-home-section--categories fb-archive-reveal py-20 px-4 md:px-12 max-w-7xl mx-auto"
+          className="p1-home-section p1-home-section--categories p1-amelie-discovery fb-archive-reveal py-20 px-4 md:px-12 max-w-7xl mx-auto"
           aria-labelledby="p1-categories-title"
         >
           <div className="p1-home-section__heading flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
@@ -345,7 +345,7 @@ export default function Home() {
 
         {/* New-Arrivals Signature Grid */}
         <section
-          className="p1-home-section p1-home-section--signatures p1-signatures fb-archive-reveal py-20 px-4 md:px-12 max-w-7xl mx-auto border-t border-[#EAE2D0]"
+          className="p1-home-section p1-home-section--signatures p1-signatures p1-amelie-collection fb-archive-reveal py-20 px-4 md:px-12 max-w-7xl mx-auto border-t border-[#EAE2D0]"
           aria-labelledby="p1-collections-title"
         >
           <div className="p1-home-section__heading flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
@@ -395,7 +395,7 @@ export default function Home() {
 
         {/* Bouquet Builder Promo */}
         <section
-          className="p1-home-section p1-home-section--builder fb-archive-reveal py-16 px-4 md:px-12 max-w-7xl mx-auto"
+          className="p1-home-section p1-home-section--builder p1-amelie-builder-section fb-archive-reveal py-16 px-4 md:px-12 max-w-7xl mx-auto"
           aria-labelledby="p1-builder-title"
           slot="builder"
         >
@@ -415,6 +415,14 @@ export default function Home() {
                   ? "აირჩიე ყვავილები, შეფუთვა და დეტალები შენს გემოზე — თანამედროვე კონსტრუქტორი ეტაპობრივად გაგიძღვება."
                   : "Select stems, wrapping and styling details to match your exact aesthetic."}
               </p>
+              <ol
+                className="p1-amelie-builder__steps"
+                aria-label={ka ? "თაიგულის შექმნის ეტაპები" : "Bouquet creation steps"}
+              >
+                <li><span>01</span>{ka ? "აირჩიე ყვავილები" : "Choose stems"}</li>
+                <li><span>02</span>{ka ? "დაამატე შეფუთვა" : "Add wrapping"}</li>
+                <li><span>03</span>{ka ? "დაასრულე დეტალებით" : "Finish the details"}</li>
+              </ol>
               <div>
                 <Link
                   href="/bouquet-builder"
@@ -437,7 +445,7 @@ export default function Home() {
 
         {/* Original Editorial Experience Cards */}
         <section
-          className="p1-home-section p1-home-section--experiences fb-archive-reveal py-20 px-4 md:px-12 max-w-7xl mx-auto border-t border-[#EAE2D0]"
+          className="p1-home-section p1-home-section--experiences p1-amelie-experiences fb-archive-reveal py-20 px-4 md:px-12 max-w-7xl mx-auto border-t border-[#EAE2D0]"
           aria-labelledby="p1-editorial-title"
           slot="brand"
         >
@@ -527,7 +535,7 @@ export default function Home() {
 
         {/* Three Delivery Steps */}
         <section
-          className="p1-home-section p1-home-section--delivery fb-archive-reveal py-16 px-4 md:px-12 max-w-7xl mx-auto border-t border-[#EAE2D0]"
+          className="p1-home-section p1-home-section--delivery p1-amelie-delivery fb-archive-reveal py-16 px-4 md:px-12 max-w-7xl mx-auto border-t border-[#EAE2D0]"
           aria-labelledby="p1-delivery-title"
         >
           <div className="text-center max-w-2xl mx-auto mb-16">
@@ -540,6 +548,11 @@ export default function Home() {
             >
               {ka ? "სამი მარტივი ნაბიჯი" : "Three Simple Steps"}
             </h2>
+            <p className="p1-amelie-delivery__policy text-stone-600 font-light mt-4">
+              {ka
+                ? `მიწოდება თბილისში — ₾${DELIVERY_FEE_GEL}; უფასოა ₾${FREE_DELIVERY_THRESHOLD_GEL}-დან და გატანისას.`
+                : `Tbilisi delivery is ₾${DELIVERY_FEE_GEL}; free from ₾${FREE_DELIVERY_THRESHOLD_GEL} and for pickup.`}
+            </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -591,7 +604,7 @@ export default function Home() {
 
         {/* Refined Contact CTA */}
         <section
-          className="p1-home-section p1-home-section--contact fb-archive-reveal py-16 px-4 md:px-12 max-w-7xl mx-auto"
+          className="p1-home-section p1-home-section--contact p1-amelie-contact-section fb-archive-reveal py-16 px-4 md:px-12 max-w-7xl mx-auto"
           aria-labelledby="p1-contact-title"
         >
           <div className="p1-home-contact bg-[#2C2825] text-white rounded-3xl p-8 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-8 shadow-xl">
