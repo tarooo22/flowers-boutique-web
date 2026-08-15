@@ -600,4 +600,32 @@ describe("storefront header contract", () => {
     expect(styles).toContain("transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1)");
     expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
   });
+
+  it("keeps the supplied reference adaptation original, scoped, responsive, and motion-safe", async () => {
+    const [home, navbar, footer, styles] = await Promise.all([
+      readFile(homePath, "utf8"),
+      readFile(navbarPath, "utf8"),
+      readFile(footerPath, "utf8"),
+      readFile(path.join(projectRoot, "client/src/index.css"), "utf8"),
+    ]);
+
+    expect(home).toContain("p1-amelie-discovery");
+    expect(home).toContain("p1-amelie-builder-section");
+    expect(home).toContain("p1-amelie-contact-section");
+    expect(navbar).toContain("p1-header--atelier");
+    expect(footer).toContain("p1-footer__delivery-cta");
+    expect(styles).toContain("Supplied Amelie-style reference adaptation — Flower's Boutique");
+    expect(styles).toContain("--fb-ref-cream: #faf6ef");
+    expect(styles).toContain("--fb-ref-coral: #e4472f");
+    expect(styles).toContain("--fb-ref-green: #14532d");
+    expect(styles).toContain(".p1-category-tile:hover");
+    expect(styles).toContain(".p1-home-builder");
+    expect(styles).toContain(".p1-home-contact");
+    expect(styles).toContain(".p1-footer");
+    expect(styles).toContain("@media (max-width: 760px)");
+    expect(styles).toContain("@media (max-width: 380px)");
+    expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
+    expect(styles).not.toContain("testimonial");
+    expect(styles).not.toContain("fake review");
+  });
 });

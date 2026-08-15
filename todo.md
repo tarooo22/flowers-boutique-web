@@ -371,3 +371,8 @@
 - [x] Document the Home-only redesign architecture and rank safe, data-backed visual/interaction improvements without changing the carousel's real imagery, routes, pricing, policy, catalog query behavior, or commerce logic.
 - [x] Refine Home discovery and conversion surfaces through presentation-only, accessible, responsive components and append-only styles that strengthen the Flower’s Boutique brand rather than copying Amelie assets or claims.
 - [x] Add focused Home regression coverage and complete desktop/390px/320px QA, browser diagnostics, Vitest, TypeScript, and production build before checkpointing.
+
+## Supplied Amelie-style reference adaptation — 2026-08-16
+- [x] Translate the supplied HTML preview into an original Flower’s Boutique adaptation: cream/coral/green palette, serif-sans hierarchy, sticky utility navigation, rounded product cards, editorial service panels, and dark conversion footer without copying unsupported claims or changing commerce logic.
+- [x] Apply the safe visual adaptation to Home and compatible shared storefront surfaces using additive CSS and preserved persistent-storage imagery, routes, product data, policy, auth, cart, checkout, and BOG sandbox mode.
+- [x] Add focused regression coverage and complete 1280px, 390px, and 320px visual QA, browser diagnostics, Vitest, TypeScript, and production build before checkpointing.
