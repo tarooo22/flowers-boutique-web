@@ -386,3 +386,7 @@
 - [x] Define a documented Georgian-first token system for color, type, spacing, shape, elevation, focus, and motion that retains Flower’s Boutique brand distinction.
 - [x] Integrate the token layer additively into the shared stylesheet and representative storefront surfaces without changing data, routes, cart, checkout, auth, delivery rules, or BOG sandbox behavior.
 - [x] Add design-token regression contracts and complete desktop/mobile rendering, browser diagnostics, Vitest, TypeScript, and production-build validation before checkpointing.
+
+## Claude-local skill visibility synchronization — 2026-08-16
+- [x] Synchronize the 17 unique Claude-local skills into the Manus-visible skill root without overwriting already installed Manus skills.
+- [x] Verify that every synchronized skill includes valid metadata and report the resulting Manus-visible inventory to the user.
