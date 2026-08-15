@@ -376,3 +376,13 @@
 - [x] Translate the supplied HTML preview into an original Flower’s Boutique adaptation: cream/coral/green palette, serif-sans hierarchy, sticky utility navigation, rounded product cards, editorial service panels, and dark conversion footer without copying unsupported claims or changing commerce logic.
 - [x] Apply the safe visual adaptation to Home and compatible shared storefront surfaces using additive CSS and preserved persistent-storage imagery, routes, product data, policy, auth, cart, checkout, and BOG sandbox mode.
 - [x] Add focused regression coverage and complete 1280px, 390px, and 320px visual QA, browser diagnostics, Vitest, TypeScript, and production build before checkpointing.
+
+## Requested creative/development skill installation — 2026-08-16
+- [x] Install the 16 unique requested Claude Code template skills; skip the duplicate ui-design-system entry without changing project code.
+- [x] Verify the installed skill directories and metadata, including lawful design-mirror usage boundaries.
+
+## Amelie-inspired Flower’s Boutique design tokens — 2026-08-16
+- [x] Audit current CSS variables, typography imports, component surfaces, and the supplied Amelie-style reference to map a safe original token foundation.
+- [x] Define a documented Georgian-first token system for color, type, spacing, shape, elevation, focus, and motion that retains Flower’s Boutique brand distinction.
+- [x] Integrate the token layer additively into the shared stylesheet and representative storefront surfaces without changing data, routes, cart, checkout, auth, delivery rules, or BOG sandbox behavior.
+- [x] Add design-token regression contracts and complete desktop/mobile rendering, browser diagnostics, Vitest, TypeScript, and production-build validation before checkpointing.

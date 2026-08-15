@@ -628,4 +628,26 @@ describe("storefront header contract", () => {
     expect(styles).not.toContain("testimonial");
     expect(styles).not.toContain("fake review");
   });
+
+  it("keeps the canonical Flower’s Boutique token foundation original, Georgian-first, and framework-compatible", async () => {
+    const styles = await readFile(
+      path.join(projectRoot, "client/src/index.css"),
+      "utf8"
+    );
+
+    expect(styles).toContain("Flower's Boutique token foundation — original Amelie-inspired adaptation");
+    expect(styles).toContain("--fb-token-page: #faf6ef");
+    expect(styles).toContain("--fb-token-coral: #d65c47");
+    expect(styles).toContain("--fb-token-botanical: #1f5c3b");
+    expect(styles).toContain("--fb-type-display: clamp(2.35rem, 5.2vw, 5.25rem)");
+    expect(styles).toContain("--fb-token-space-10: 128px");
+    expect(styles).toContain("--fb-radius-lg: 16px");
+    expect(styles).toContain("--fb-ease-token: cubic-bezier(0.23, 1, 0.32, 1)");
+    expect(styles).toContain("--background: var(--fb-token-page)");
+    expect(styles).toContain("--font-heading: \"Noto Serif Georgian\", Georgia, serif");
+    expect(styles).toContain(".fb-token-display {");
+    expect(styles).toContain(".fb-token-action {");
+    expect(styles).toContain(".fb-token-action:focus-visible");
+    expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
+  });
 });

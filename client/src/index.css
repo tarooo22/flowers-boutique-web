@@ -14031,3 +14031,225 @@ body .auth-page button.auth-submit.auth-submit--boutique:hover:not(:disabled) {
     transform: none !important;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Flower's Boutique token foundation — original Amelie-inspired adaptation
+   Reference principles: warm editorial canvas, decisive coral actions,
+   botanical support, and quiet rounded surfaces. The values below are the
+   canonical design-system layer for future storefront adoption.
+   -------------------------------------------------------------------------- */
+:root {
+  /* Color roles */
+  --fb-token-page: #faf6ef;
+  --fb-token-surface: #fffdf9;
+  --fb-token-panel: #f4efe6;
+  --fb-token-ink: #211e1b;
+  --fb-token-muted: #6b6459;
+  --fb-token-coral: #d65c47;
+  --fb-token-coral-hover: #b94737;
+  --fb-token-coral-soft: #f8e5df;
+  --fb-token-botanical: #1f5c3b;
+  --fb-token-botanical-soft: #e5efe7;
+  --fb-token-line: #e7ded2;
+  --fb-token-charcoal: #1b1a18;
+  --fb-token-inverse: #fffdf9;
+
+  /* Typography */
+  --fb-type-display: clamp(2.35rem, 5.2vw, 5.25rem);
+  --fb-type-hero: clamp(2.1rem, 4.4vw, 4.5rem);
+  --fb-type-section: clamp(1.8rem, 3vw, 3.1rem);
+  --fb-type-title: clamp(1.3rem, 1.8vw, 1.65rem);
+  --fb-type-body: 1rem;
+  --fb-type-small: 0.875rem;
+  --fb-type-micro: 0.75rem;
+  --fb-leading-display: 0.98;
+  --fb-leading-heading: 1.1;
+  --fb-leading-body: 1.6;
+
+  /* Spatial system */
+  --fb-token-unit: 4px;
+  --fb-token-space-1: 4px;
+  --fb-token-space-2: 8px;
+  --fb-token-space-3: 12px;
+  --fb-token-space-4: 16px;
+  --fb-token-space-5: 24px;
+  --fb-token-space-6: 32px;
+  --fb-token-space-7: 48px;
+  --fb-token-space-8: 64px;
+  --fb-token-space-9: 96px;
+  --fb-token-space-10: 128px;
+  --fb-token-gutter: clamp(16px, 3.3vw, 64px);
+  --fb-token-prose: 680px;
+  --fb-token-content: 1320px;
+  --fb-token-wide: 1400px;
+  --fb-token-section-space: clamp(64px, 8vw, 120px);
+
+  /* Shape, elevation, and interaction */
+  --fb-radius-sm: 8px;
+  --fb-radius-md: 12px;
+  --fb-radius-lg: 16px;
+  --fb-radius-pill: 999px;
+  --fb-line-hairline: 1px solid var(--fb-token-line);
+  --fb-shadow-quiet: 0 8px 22px rgba(38, 28, 20, 0.055);
+  --fb-shadow-raised: 0 18px 42px rgba(38, 28, 20, 0.11);
+  --fb-focus-token: 0 0 0 3px rgba(214, 92, 71, 0.28);
+  --fb-duration-fast: 160ms;
+  --fb-duration-base: 220ms;
+  --fb-ease-token: cubic-bezier(0.23, 1, 0.32, 1);
+
+  /* Legacy and semantic aliases retain API compatibility while adopting tokens. */
+  --surface-page: var(--fb-token-page);
+  --surface-card: var(--fb-token-surface);
+  --surface-soft: var(--fb-token-panel);
+  --text-primary: var(--fb-token-ink);
+  --text-secondary: #49443e;
+  --text-muted: var(--fb-token-muted);
+  --accent-primary: var(--fb-token-coral);
+  --accent-soft: var(--fb-token-coral-soft);
+  --accent-botanical: var(--fb-token-botanical);
+  --border-default: var(--fb-token-line);
+  --focus-ring: var(--fb-token-coral);
+
+  --fb-ivory-100: var(--fb-token-page);
+  --fb-ivory-50: var(--fb-token-surface);
+  --fb-ivory-200: var(--fb-token-panel);
+  --fb-champagne-400: var(--fb-token-coral-soft);
+  --fb-champagne-500: var(--fb-token-coral);
+  --fb-champagne-600: var(--fb-token-coral-hover);
+  --fb-sage-500: var(--fb-token-botanical-soft);
+  --fb-sage-600: var(--fb-token-botanical);
+  --fb-graphite-950: var(--fb-token-ink);
+  --fb-graphite-900: var(--fb-token-charcoal);
+  --fb-graphite-850: #49443e;
+  --fb-footer: var(--fb-token-charcoal);
+  --fb-border-light: var(--fb-token-line);
+  --fb-focus: var(--fb-token-coral);
+  --fb-gutter: var(--fb-token-gutter);
+  --fb-shadow-low: var(--fb-shadow-quiet);
+  --fb-shadow-high: var(--fb-shadow-raised);
+  --fb-motion-fast: var(--fb-duration-fast);
+  --fb-motion-base: var(--fb-duration-base);
+  --fb-ease: var(--fb-ease-token);
+
+  /* shadcn/Tailwind semantic bridge */
+  --background: var(--fb-token-page);
+  --foreground: var(--fb-token-ink);
+  --card: var(--fb-token-surface);
+  --card-foreground: var(--fb-token-ink);
+  --popover: var(--fb-token-surface);
+  --popover-foreground: var(--fb-token-ink);
+  --primary: var(--fb-token-coral);
+  --primary-foreground: var(--fb-token-inverse);
+  --secondary: var(--fb-token-panel);
+  --secondary-foreground: var(--fb-token-ink);
+  --muted: #f0ebe3;
+  --muted-foreground: var(--fb-token-muted);
+  --accent: var(--fb-token-coral-soft);
+  --accent-foreground: var(--fb-token-ink);
+  --border: var(--fb-token-line);
+  --input: var(--fb-token-line);
+  --ring: var(--fb-token-coral);
+  --sidebar: var(--fb-token-surface);
+  --sidebar-foreground: var(--fb-token-ink);
+  --sidebar-primary: var(--fb-token-coral);
+  --sidebar-primary-foreground: var(--fb-token-inverse);
+  --sidebar-accent: var(--fb-token-coral-soft);
+  --sidebar-accent-foreground: var(--fb-token-ink);
+  --sidebar-border: var(--fb-token-line);
+  --sidebar-ring: var(--fb-token-coral);
+  --radius: var(--fb-radius-md);
+  --font-heading: "Noto Serif Georgian", Georgia, serif;
+  --font-body: "Noto Sans Georgian", "DM Sans", system-ui, sans-serif;
+}
+
+/* Token utilities provide a compact, reusable bridge for new page waves. */
+.fb-token-display {
+  font-family: var(--font-heading);
+  font-size: var(--fb-type-display);
+  font-weight: 500;
+  line-height: var(--fb-leading-display);
+  letter-spacing: -0.035em;
+}
+
+.fb-token-section-title {
+  font-family: var(--font-heading);
+  font-size: var(--fb-type-section);
+  font-weight: 500;
+  line-height: var(--fb-leading-heading);
+  letter-spacing: -0.025em;
+}
+
+.fb-token-eyebrow {
+  color: var(--fb-token-coral);
+  font-family: var(--font-body);
+  font-size: var(--fb-type-micro);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.fb-token-surface {
+  background: var(--fb-token-surface);
+  border: var(--fb-line-hairline);
+  border-radius: var(--fb-radius-md);
+  box-shadow: var(--fb-shadow-quiet);
+}
+
+.fb-token-panel--botanical {
+  background: var(--fb-token-botanical-soft);
+  border: 1px solid rgba(31, 92, 59, 0.15);
+  border-radius: var(--fb-radius-lg);
+  color: var(--fb-token-ink);
+}
+
+.fb-token-action {
+  align-items: center;
+  background: var(--fb-token-coral);
+  border: 1px solid var(--fb-token-coral);
+  border-radius: var(--fb-radius-sm);
+  color: var(--fb-token-inverse);
+  display: inline-flex;
+  justify-content: center;
+  min-height: 48px;
+  padding-inline: var(--fb-token-space-5);
+  transition:
+    background-color var(--fb-duration-fast) var(--fb-ease-token),
+    border-color var(--fb-duration-fast) var(--fb-ease-token),
+    box-shadow var(--fb-duration-fast) var(--fb-ease-token),
+    transform var(--fb-duration-fast) var(--fb-ease-token);
+}
+
+.fb-token-action:hover {
+  background: var(--fb-token-coral-hover);
+  border-color: var(--fb-token-coral-hover);
+  box-shadow: var(--fb-shadow-quiet);
+  transform: translateY(-1px);
+}
+
+.fb-token-action:active {
+  transform: scale(0.97);
+}
+
+.fb-token-action:focus-visible,
+.fb-token-surface:focus-visible {
+  box-shadow: var(--fb-focus-token);
+  outline: none;
+}
+
+@media (max-width: 760px) {
+  .fb-token-display {
+    letter-spacing: -0.025em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fb-token-action {
+    transition: none;
+  }
+
+  .fb-token-action:hover,
+  .fb-token-action:active {
+    transform: none;
+  }
+}
