@@ -1065,3 +1065,39 @@ body,
   .am-contact-band__actions .am-contact-band__action { min-width: 0; min-height: 50px; padding-inline: 12px; font-size: 13px; }
   .am-contact-band + .am-footer { padding-top: 0; }
 }
+
+/* Scroll-reveal motion is isolated to transform and opacity. */
+@media (prefers-reduced-motion: no-preference) {
+  .am-reveal {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+    transition: opacity 520ms var(--am-ease), transform 520ms var(--am-ease);
+    will-change: opacity, transform;
+  }
+
+  .am-reveal.is-visible { opacity: 1; transform: translate3d(0, 0, 0); }
+  .am-reveal.is-visible .am-product-card,
+  .am-reveal.is-visible .am-service-card,
+  .am-reveal.is-visible .am-journal-card {
+    animation: am-reveal-item 440ms var(--am-ease) both;
+  }
+
+  .am-reveal.is-visible .am-product-card:nth-child(2),
+  .am-reveal.is-visible .am-service-card:nth-child(2),
+  .am-reveal.is-visible .am-journal-card:nth-child(2) { animation-delay: 55ms; }
+  .am-reveal.is-visible .am-product-card:nth-child(3),
+  .am-reveal.is-visible .am-service-card:nth-child(3),
+  .am-reveal.is-visible .am-journal-card:nth-child(3) { animation-delay: 110ms; }
+  .am-reveal.is-visible .am-product-card:nth-child(4),
+  .am-reveal.is-visible .am-service-card:nth-child(4),
+  .am-reveal.is-visible .am-journal-card:nth-child(4) { animation-delay: 165ms; }
+
+  @keyframes am-reveal-item {
+    from { opacity: 0; transform: translate3d(0, 14px, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-reveal { opacity: 1; transform: none; transition: none; }
+}

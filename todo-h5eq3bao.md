@@ -62,3 +62,5 @@
 - [x] Resolve the remaining 430px Product rail 2 height variance and pre-footer/footer semantic boundary delta, then re-run deterministic 430px mobile geometry validation.
 - [x] Rebuild the Home pre-footer contact band as the requested cream inset card with dark Call and green WhatsApp actions, preserving existing phone/WhatsApp URLs, semantics, and mobile behavior.
 - [x] Validate the contact-card redesign through focused interaction coverage, TypeScript, and responsive 375px/768px/1440px screenshots.
+- [x] Add performant, staggered Home scroll-reveal animations with `prefers-reduced-motion` support and without altering cart, navigation, or product interactions.
+- [x] Validate Home scroll motion through source-contract coverage, TypeScript, and responsive screenshot QA.

@@ -1,5 +1,5 @@
 import { ArrowRight, MessageCircle, Phone, Sparkles } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
@@ -91,7 +91,8 @@ export default function Home() {
   const { language } = useLanguage();
   const { openDrawer } = useCartDrawer();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [loadedSlides, setLoadedSlides] = useState<Set<number>>(() => new Set());
+  const [loadedSlides, setLoadedSlides] = useState<Set<number>>(new Set());
+  const homeRef = useRef<HTMLElement>(null);
   const productsQuery = trpc.products.list.useQuery();
   const categoriesQuery = trpc.categories.list.useQuery();
   const ka = language === "ka";
@@ -112,6 +113,32 @@ export default function Home() {
       6200,
     );
     return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const home = homeRef.current;
+    if (!home) return;
+
+    const revealTargets = Array.from(home.querySelectorAll<HTMLElement>(".am-reveal"));
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+      revealTargets.forEach(target => target.classList.add("is-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "0px 0px -8%", threshold: 0.12 },
+    );
+
+    revealTargets.forEach(target => observer.observe(target));
+    return () => observer.disconnect();
   }, []);
 
   useSEO({
@@ -138,7 +165,7 @@ export default function Home() {
   };
 
   const productRail = (items: any[], label: string, title: string, priority = false, layout: "grid" | "shelf" = "grid") => (
-    <section className="am-home-rail" aria-labelledby={label}>
+    <section className="am-home-rail am-reveal am-reveal--rail" aria-labelledby={label}>
       <div className="am-home-rail__head">
         <h2 id={label}>{title}</h2>
         <Link href="/catalog" className="am-text-link">{ka ? "ყველას ნახვა" : "View all"}<ArrowRight /></Link>
@@ -162,7 +189,7 @@ export default function Home() {
   return (
     <div className="am-site">
       <Navbar />
-      <main id="main-content" className="am-home">
+      <main id="main-content" className="am-home" ref={homeRef}>
         <section className="am-home-hero" aria-labelledby="am-home-hero-title">
           <div className="am-home-hero__slides" aria-hidden="true">
             {heroSlides.map((hero, index) => (
@@ -192,7 +219,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="am-occasion" aria-labelledby="am-occasion-title">
+        <section className="am-occasion am-reveal" aria-labelledby="am-occasion-title">
           <div className="am-shell">
             <h2 id="am-occasion-title">{ka ? "რისთვის ეძებ ყვავილებს?" : "What are you looking for flowers for?"}</h2>
             <div className="am-occasion__chips">
@@ -208,7 +235,7 @@ export default function Home() {
           {productRail(secondRail, "am-joy-title", ka ? "სიხარულისთვის" : "For joy")}
           {productRail(thirdRail, "am-selection-title", ka ? "არჩეული თაიგულები" : "Selected bouquets", false, "shelf")}
 
-          <section className="am-promo-banner" aria-labelledby="am-builder-title">
+          <section className="am-promo-banner am-reveal" aria-labelledby="am-builder-title">
             <div className="am-promo-banner__copy">
               <p className="am-section-label">{ka ? "პერსონალური არჩევანი" : "A personal choice"}</p>
               <h2 id="am-builder-title">{ka ? "შექმენი შენი თაიგული" : "Create your own bouquet"}</h2>
@@ -218,7 +245,7 @@ export default function Home() {
             <img className="am-promo-banner__image" src="/manus-storage/flowers-boutique-experience-event-styling_07114441.jpg" alt="" />
           </section>
 
-          <section className="am-services" aria-labelledby="am-services-title">
+          <section className="am-services am-reveal" aria-labelledby="am-services-title">
             <div className="am-home-rail__head">
               <h2 id="am-services-title">{ka ? "ჩვენ ასევე ვასწავლით და ვაფორმებთ" : "We also teach and style"}</h2>
               <Link href="/about" className="am-text-link">{ka ? "ჩვენ შესახებ" : "About us"}<ArrowRight /></Link>
@@ -233,7 +260,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="am-journal" aria-labelledby="am-journal-title">
+          <section className="am-journal am-reveal" aria-labelledby="am-journal-title">
             <div className="am-home-rail__head">
               <h2 id="am-journal-title">{ka ? "ჟურნალი" : "Journal"}</h2>
               <Link href="/about" className="am-text-link">{ka ? "ყველა" : "All"}<ArrowRight /></Link>
@@ -249,7 +276,7 @@ export default function Home() {
           </section>
         </div>
       </main>
-      <section className="am-contact-band" aria-label={ka ? "სწრაფი კონტაქტი" : "Quick contact"}>
+      <section className="am-contact-band am-reveal" aria-label={ka ? "სწრაფი კონტაქტი" : "Quick contact"}>
         <div className="am-contact-band__inner am-shell">
           <div className="am-contact-band__copy">
             <strong>{ka ? "დაგვირეკე — ვიპოვით შენს თაიგულს" : "Call us — we will find your bouquet"}</strong>
