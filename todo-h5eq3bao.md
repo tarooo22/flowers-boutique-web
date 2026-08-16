@@ -21,6 +21,6 @@
 - [x] Capture and compare the reconstructed Home at 375, 430, 768, 1024, 1440, and 1920px against the Amelie reference; iterate on material differences only within this wave’s scope.
 - [x] Add or update visual-contract tests for reconstructed Home/header/ProductCard/footer and validate protected business contracts.
 - [x] Run TypeScript, full Vitest, and production build after the corrective reconstruction.
-- [ ] Write the corrective-wave visual QA report, save a published checkpoint, and stop before Catalog or ProductDetail reconstruction.
+- [x] Write the corrective-wave visual QA report, save a published checkpoint, and stop before Catalog or ProductDetail reconstruction.
 - [x] Preserve/reintroduce every mobile and desktop route surface from the pre-rebuild header, including Contact and wishlist access, without restoring the old visual geometry.
 - [x] Restore an Amelie-compatible mobile quick-navigation surface for Home, Catalog, Wishlist and Cart, and validate it through regression coverage and screenshots.
