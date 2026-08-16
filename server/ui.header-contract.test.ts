@@ -57,7 +57,7 @@ describe("Amelie-first public storefront contract", () => {
       'productRail(firstRail',
       'productRail(secondRail',
       'productRail(thirdRail',
-      'className="am-builder-promo"',
+      'className="am-promo-banner"',
       'className="am-services"',
       'className="am-journal"',
     ];

@@ -41,6 +41,9 @@ export default function ProductCard({ product, language, onAdd, priority = false
     : product.priceMin !== product.priceMax && product.priceMax
       ? `${formatMoney(product.priceMin)}–${formatMoney(product.priceMax)}`
       : formatMoney(salePrice ?? basePrice);
+  const subtitle = ka
+    ? product.shortDescriptionKa || product.descriptionKa || product.category?.nameKa || product.category?.nameEn || ""
+    : product.shortDescriptionEn || product.descriptionEn || product.category?.nameEn || product.category?.nameKa || "";
 
   const addToWishlist = () => {
     const key = "flowers-boutique-wishlist";
@@ -70,24 +73,25 @@ export default function ProductCard({ product, language, onAdd, priority = false
         <button type="button" className="am-product-card__wish" onClick={addToWishlist} aria-label={ka ? `${name} რჩეულებში` : `Add ${name} to wishlist`}>
           <Heart aria-hidden="true" />
         </button>
+        {canQuickAdd ? (
+          <button type="button" className="am-product-card__action" onClick={() => onAdd(product)} aria-label={actionLabel} aria-describedby={`product-price-${product.id}`}>
+            <ShoppingBag aria-hidden="true" />
+          </button>
+        ) : (
+          <Link href={`/product/${product.id}`} className="am-product-card__action" aria-label={actionLabel} aria-describedby={`product-price-${product.id}`}>
+            <ArrowUpRight aria-hidden="true" />
+          </Link>
+        )}
         {!isAvailable && <span className="am-product-card__status">{ka ? "ამოიწურა" : "Unavailable"}</span>}
       </div>
       <div className="am-product-card__body">
         <Link href={`/product/${product.id}`} className="am-product-card__title">{name}</Link>
+        {subtitle && <p className="am-product-card__subtitle">{subtitle}</p>}
         <div className="am-product-card__bottom">
           <div className="am-product-card__prices">
             <strong id={`product-price-${product.id}`}>{price}</strong>
             {salePrice && basePrice && <del>{formatMoney(basePrice)}</del>}
           </div>
-          {canQuickAdd ? (
-            <button type="button" className="am-product-card__action" onClick={() => onAdd(product)} aria-label={actionLabel} aria-describedby={`product-price-${product.id}`}>
-              <ShoppingBag aria-hidden="true" />
-            </button>
-          ) : (
-            <Link href={`/product/${product.id}`} className="am-product-card__action" aria-label={actionLabel} aria-describedby={`product-price-${product.id}`}>
-              <ArrowUpRight aria-hidden="true" />
-            </Link>
-          )}
         </div>
       </div>
     </article>

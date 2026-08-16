@@ -29,11 +29,13 @@ export default function Footer() {
   </>;
   const infoLinks = <>
     <Link href="/about">{ka ? "ჩვენ შესახებ" : "About"}</Link>
+    <Link href={user ? "/profile" : "/login"}><UserRound />{user ? (ka ? "ჩემი პროფილი" : "My profile") : (ka ? "შესვლა" : "Log in")}</Link>
+    {user?.role === "admin" && <Link href="/admin"><ShieldCheck />{ka ? "ადმინისტრატორის პანელი" : "Admin panel"}</Link>}
+  </>;
+  const serviceLinks = <>
     <Link href="/contact">{ka ? "კონტაქტი" : "Contact"}</Link>
     <Link href="/delivery">{ka ? "მიწოდების ინფორმაცია" : "Delivery information"}</Link>
     <Link href="/returns">{ka ? "დაბრუნება" : "Returns"}</Link>
-    <Link href={user ? "/profile" : "/login"}><UserRound />{user ? (ka ? "ჩემი პროფილი" : "My profile") : (ka ? "შესვლა" : "Log in")}</Link>
-    {user?.role === "admin" && <Link href="/admin"><ShieldCheck />{ka ? "ადმინისტრატორის პანელი" : "Admin panel"}</Link>}
   </>;
   const contactLinks = <>
     {siteContact.phone && <a href={phoneHref}><Phone />{siteContact.phone}</a>}
@@ -59,10 +61,12 @@ export default function Footer() {
         </div>
         <div className="am-footer__group"><h2>{ka ? "მაღაზია" : "Shop"}</h2>{shopLinks}</div>
         <div className="am-footer__group"><h2>{ka ? "ინფორმაცია" : "Information"}</h2>{infoLinks}</div>
+        <div className="am-footer__group"><h2>{ka ? "მომსახურება" : "Services"}</h2>{serviceLinks}</div>
         <div className="am-footer__group"><h2>{ka ? "კონტაქტი" : "Contact"}</h2>{contactLinks}</div>
         <div className="am-footer__mobile-groups">
           <details><summary>{ka ? "მაღაზია" : "Shop"}<ChevronDown /></summary><div>{shopLinks}</div></details>
           <details><summary>{ka ? "ინფორმაცია" : "Information"}<ChevronDown /></summary><div>{infoLinks}</div></details>
+          <details><summary>{ka ? "მომსახურება" : "Services"}<ChevronDown /></summary><div>{serviceLinks}</div></details>
           <details><summary>{ka ? "კონტაქტი" : "Contact"}<ChevronDown /></summary><div>{contactLinks}</div></details>
         </div>
       </div>

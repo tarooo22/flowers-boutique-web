@@ -206,6 +206,13 @@ export default function Navbar() {
             </button>
           </div>
         </div>
+        <nav className="am-mobile-inline-nav" aria-label={ka ? "მობილური სწრაფი ნავიგაცია" : "Mobile quick navigation"}>
+          {primaryLinks.map(([href, label]) => (
+            <Link key={href} href={href} className={isActive(href) ? "is-active" : ""} aria-current={isActive(href) ? "page" : undefined}>
+              {label}
+            </Link>
+          ))}
+        </nav>
       </header>
 
       <Dialog open={searchOpen} onOpenChange={setSearchOpen}>

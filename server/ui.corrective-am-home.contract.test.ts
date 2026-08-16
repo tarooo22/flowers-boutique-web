@@ -14,7 +14,7 @@ describe("Amelie-first corrective Home contract", () => {
       'productRail(firstRail',
       'productRail(secondRail',
       'productRail(thirdRail',
-      'className="am-builder-promo"',
+      'className="am-promo-banner"',
       'className="am-services"',
       'className="am-journal"',
     ];
@@ -91,6 +91,22 @@ describe("Amelie-first corrective Home contract", () => {
     expect(styles).toContain(".am-home-hero");
     expect(styles).toContain(".am-product-card__media");
     expect(styles).toContain(".am-footer__main");
+  });
+
+  it("keeps the contact quick actions as a distinct Home pre-footer section", async () => {
+    const [home, footer, styles] = await Promise.all([
+      source("client/src/pages/Home.tsx"),
+      source("client/src/components/Footer.tsx"),
+      source("client/src/styles/amelie-rebuild.css"),
+    ]);
+
+    const contactBand = home.indexOf('className="am-contact-band"');
+    expect(contactBand).toBeGreaterThan(-1);
+    expect(contactBand).toBeLessThan(home.indexOf("<Footer />"));
+    expect(home).toContain("siteContact.whatsapp");
+    expect(home).toContain("phoneHref");
+    expect(footer).not.toContain('className="am-contact-band"');
+    expect(styles).toContain(".am-contact-band__actions");
   });
 
   it("retains mobile quick access while using the rebuilt public visual layer", async () => {

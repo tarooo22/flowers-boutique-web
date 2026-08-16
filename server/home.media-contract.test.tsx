@@ -67,7 +67,7 @@ describe("homepage editorial media contract", () => {
     expect(home).toContain('"/manus-storage/flowers-boutique-experience-event-styling_07114441.jpg"');
     expect(home).toContain('"/manus-storage/flowers-boutique-experience-floristry-class_0d9c281c.jpg"');
     expect(home).toContain('className="am-home-hero"');
-    expect(home).toContain('className="am-builder-promo"');
+    expect(home).toContain('className="am-promo-banner"');
     expect(home).toContain('className="am-services"');
     expect(home).toContain('className="am-journal"');
   });

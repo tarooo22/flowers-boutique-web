@@ -24,3 +24,25 @@
 - [x] Write the corrective-wave visual QA report, save a published checkpoint, and stop before Catalog or ProductDetail reconstruction.
 - [x] Preserve/reintroduce every mobile and desktop route surface from the pre-rebuild header, including Contact and wishlist access, without restoring the old visual geometry.
 - [x] Restore an Amelie-compatible mobile quick-navigation surface for Home, Catalog, Wishlist and Cart, and validate it through regression coverage and screenshots.
+- [x] Review `pasted_content_6.txt`, extract its new redesign requirements, and translate them into concrete implementation and QA tasks before modifying the frontend.
+- [x] Capture fresh Amelie homepage references at 375, 430, 768, 1024, 1440, and 1920px; document measured section boundaries and build normalized baseline overlays against local Home.
+- [x] Create a top-to-bottom Amelie-to-Flower’s Boutique homepage section map and remove every non-matching local composition from the parity scope.
+- [x] Tune separately the legally usable Georgian typography for hero H1, section headings, ProductCard text, navigation, and footer geometry against screenshot measurements.
+- [x] Re-measure and reconstruct announcement/header, hero, slider, stats rail, image position, spacing, and sticky geometry at all required breakpoints.
+- [x] Replace the current dark builder/service split banner with a reference-equivalent wide light/pastel promotional banner using Flower’s Boutique content and CTA behavior.
+- [x] Reconstruct shared ProductCard editorial/e-commerce geometry: card body, media/body boundary, secondary description, favorite, title, price, padding, hover, and responsive dimensions without changing business logic.
+- [x] Re-measure each Home product rail’s heading, count, controls, card width, gap, overflow behavior, alignment and bottom spacing against Amelie references.
+- [x] Reconstruct service/editorial cards and Journal card geometry to mirror Amelie’s observed count, aspect ratios, gutters, overlays, typography, and responsive stacking.
+- [x] Add an Amelie-like bottom contact/quick-action bar before the footer, using Flower’s Boutique contact methods and existing route/callback behavior.
+- [x] Reconstruct footer and header geometry from fresh reference measurements, including container, columns, brand placement, controls, link spacing, legal band, and mobile behavior.
+- [x] Complete overlay/difference QA at 375, 430, 768, 1024, 1440, and 1920px; fix largest displacement first and publish a section-by-section PASS/FAIL parity table.
+- [x] Add or update contracts for Homepage Parity Pass 2 and run interaction regression, TypeScript, full Vitest, and production build without changing Catalog or ProductDetail composition.
+- [ ] Write the Pass 2 report with 375px and 1440px screenshots, checkpoint the result, and stop before starting Catalog.
+- [x] Convert Home product sections to the reference-accurate per-viewport rail model, including measured visible-card count, overflow behavior, alignment and any required controls.
+- [x] Run and document breakpoint-specific geometry verification for service/editorial and Journal sections, including aspect ratio, gutter, overlay and responsive stacking evidence.
+- [x] Render the quick-action contact band as a distinct pre-footer Home section and verify that this structural correction preserves the measured dark-stack screenshot geometry.
+- [x] Re-run post-move contact/footer geometry capture and add a regression assertion that the contact band is rendered by Home immediately before Footer.
+- [x] Complete the 375px/430px mobile contact/footer parity pass and document a dedicated header/footer geometry check.
+- [x] Calibrate the semantic mobile footer boundary and height against the captured 375px/430px reference values while preserving the distinct pre-footer contact section.
+- [x] Run and document Home interaction regression for header navigation, search, language, cart, quick-add, contact actions and mobile quick navigation.
+- [x] Add focused source-contract coverage for every protected Home interaction not live-clicked because of the browser extension timeout.
