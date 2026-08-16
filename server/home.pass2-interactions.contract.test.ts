@@ -31,6 +31,9 @@ describe("Homepage Pass 2 protected interaction controls", () => {
     expect(home).toContain("href={phoneHref}");
     expect(home).toContain("href={siteContact.whatsapp}");
     expect(home.indexOf('className="am-contact-band"')).toBeLessThan(home.indexOf("<Footer />"));
+    expect(home).toContain('className="am-contact-band__availability"');
+    expect(home).toContain('am-contact-band__action am-contact-band__action--call');
+    expect(home).toContain('am-contact-band__action am-contact-band__action--whatsapp');
     expect(mobileNav).toContain('"/catalog"');
     expect(mobileNav).toContain('"/wishlist"');
     expect(mobileNav).toContain("onClick={openDrawer}");

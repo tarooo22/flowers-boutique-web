@@ -1,4 +1,4 @@
-import { ArrowRight, Clock3, MessageCircle, Phone, Sparkles } from "lucide-react";
+import { ArrowRight, MessageCircle, Phone, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { toast } from "sonner";
@@ -252,13 +252,12 @@ export default function Home() {
       <section className="am-contact-band" aria-label={ka ? "სწრაფი კონტაქტი" : "Quick contact"}>
         <div className="am-contact-band__inner am-shell">
           <div className="am-contact-band__copy">
-            <p>{ka ? "სწრაფი კონტაქტი" : "Quick contact"}</p>
-            <strong>{ka ? "დაგვირეკე ან მოგვწერე" : "Call or message us"}</strong>
-            <span><Clock3 aria-hidden="true" />{ka ? siteContact.hoursKa : siteContact.hoursEn}</span>
+            <strong>{ka ? "დაგვირეკე — ვიპოვით შენს თაიგულს" : "Call us — we will find your bouquet"}</strong>
+            <span className="am-contact-band__availability"><i aria-hidden="true" />{ka ? siteContact.hoursKa : siteContact.hoursEn}</span>
           </div>
           <div className="am-contact-band__actions">
-            {siteContact.phone && <a href={phoneHref}><Phone aria-hidden="true" /><span>{ka ? "დარეკვა" : "Call"}<small>{siteContact.phone}</small></span><ArrowRight aria-hidden="true" /></a>}
-            {siteContact.whatsapp && <a href={siteContact.whatsapp} target="_blank" rel="noreferrer"><MessageCircle aria-hidden="true" /><span>WhatsApp<small>{ka ? "მოგვწერეთ" : "Message us"}</small></span><ArrowRight aria-hidden="true" /></a>}
+            {siteContact.phone && <a className="am-contact-band__action am-contact-band__action--call" href={phoneHref}><Phone aria-hidden="true" /><span>{ka ? "დარეკვა" : "Call"}</span></a>}
+            {siteContact.whatsapp && <a className="am-contact-band__action am-contact-band__action--whatsapp" href={siteContact.whatsapp} target="_blank" rel="noreferrer"><MessageCircle aria-hidden="true" /><span>WhatsApp</span></a>}
           </div>
         </div>
       </section>

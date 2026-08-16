@@ -60,3 +60,5 @@
 - [x] Eliminate the 768px document-width overflow, then re-run strict 375px/768px/1440px header/hero overlays and protected Home behavior regression before closing the shell/hero task.
 - [x] Run and document final deterministic 375px/430px section geometry and ProductCard/rail measurements; add explicit mobile PASS/FAIL metrics to the Phase 5 QA evidence before closing reconstruction.
 - [x] Resolve the remaining 430px Product rail 2 height variance and pre-footer/footer semantic boundary delta, then re-run deterministic 430px mobile geometry validation.
+- [x] Rebuild the Home pre-footer contact band as the requested cream inset card with dark Call and green WhatsApp actions, preserving existing phone/WhatsApp URLs, semantics, and mobile behavior.
+- [x] Validate the contact-card redesign through focused interaction coverage, TypeScript, and responsive 375px/768px/1440px screenshots.

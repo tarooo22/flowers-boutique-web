@@ -1000,3 +1000,68 @@ body,
   .am-footer__main { padding-bottom: 0; }
   .am-footer__bottom { padding-bottom: 31.4px; }
 }
+
+/* Contact-card refinement — requested inset card treatment. */
+.am-contact-band {
+  position: relative;
+  z-index: 1;
+  background: var(--am-dark);
+  padding: 24px 0;
+}
+
+.am-contact-band__inner {
+  display: flex;
+  min-height: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  border-radius: 12px;
+  background: var(--am-canvas);
+  padding: 24px;
+  color: var(--am-ink);
+}
+
+.am-contact-band__copy { display: grid; gap: 7px; }
+.am-contact-band__copy p { display: none; }
+.am-contact-band__copy strong { max-width: 550px; color: var(--am-ink); font-size: 22px; font-weight: 600; letter-spacing: -.02em; line-height: 1.25; }
+.am-contact-band__availability { display: inline-flex; align-items: center; gap: 7px; color: var(--am-muted); font-size: 13px; }
+.am-contact-band__availability i { width: 8px; height: 8px; flex: 0 0 8px; border-radius: 50%; background: #28c76f; }
+
+.am-contact-band__actions { display: flex; flex: 0 0 auto; gap: 10px; }
+.am-contact-band__actions .am-contact-band__action {
+  display: inline-flex;
+  min-width: 142px;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--am-dark);
+  padding: 0 20px;
+  color: var(--am-paper);
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 180ms var(--am-ease), transform 180ms var(--am-ease), box-shadow 180ms var(--am-ease);
+}
+.am-contact-band__actions .am-contact-band__action svg { width: 18px; height: 18px; }
+.am-contact-band__actions .am-contact-band__action span { display: block; font-size: inherit; font-weight: inherit; }
+.am-contact-band__actions .am-contact-band__action small { display: none; }
+.am-contact-band__action--whatsapp { background: #25d366 !important; color: #173b25 !important; }
+.am-contact-band__actions .am-contact-band__action:hover { background: #353532; color: var(--am-paper); box-shadow: 0 8px 18px rgba(0,0,0,.15); transform: translateY(-1px); }
+.am-contact-band__actions .am-contact-band__action--whatsapp:hover { background: #1fbe5b !important; color: #173b25; }
+.am-contact-band__actions .am-contact-band__action:active { transform: scale(.97); }
+.am-contact-band__actions .am-contact-band__action:focus-visible { outline: 3px solid rgba(37,211,102,.48); outline-offset: 3px; }
+
+/* The contact card owns its dark surround; retire the old semantic overlap compensation. */
+.am-contact-band + .am-footer { margin-top: 0; padding-top: 0; }
+
+@media (max-width: 767px) {
+  .am-contact-band { padding: 16px 0; }
+  .am-contact-band__inner { align-items: stretch; gap: 18px; border-radius: 10px; padding: 20px; }
+  .am-contact-band__copy strong { font-size: 19px; }
+  .am-contact-band__availability { font-size: 12px; }
+  .am-contact-band__actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .am-contact-band__actions .am-contact-band__action { min-width: 0; min-height: 50px; padding-inline: 12px; font-size: 13px; }
+  .am-contact-band + .am-footer { padding-top: 0; }
+}
