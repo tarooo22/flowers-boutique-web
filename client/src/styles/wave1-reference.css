@@ -105,7 +105,7 @@ body,
 .p1-product-card__title,
 .fb-catalog-intro h1,
 .fb-catalog-filters h2 {
-  font-family: var(--fb-font-ui);
+  font-family: var(--font-heading);
 }
 
 .fb-eyebrow,

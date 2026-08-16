@@ -15,7 +15,7 @@ describe("site typography system", () => {
     ]);
 
     expect(indexCss).toContain('--f-ui: "Noto Sans Georgian", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;');
-    expect(indexCss).toContain('--f-display: "Amelie Display", "Noto Sans Georgian", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;');
+    expect(indexCss).toContain('--f-display: "Amelie Display", "Noto Serif Georgian", "Noto Sans Georgian", Georgia, serif;');
     expect(waveCss).toContain("--fb-font-ui: var(--f-ui);");
     expect(waveCss).toContain("--font-heading: var(--f-display);");
     expect(amelieCss).toContain("--am-ui: var(--f-ui);");
@@ -23,7 +23,7 @@ describe("site typography system", () => {
     expect(amelieCss).toContain("font-family: var(--f-display) !important;");
     expect(amelieCss).toContain("[style*=\"Cormorant Garamond\"]");
     expect(html).toContain("family=Noto+Sans+Georgian:wght@400;500;600;700");
-    expect(html).not.toContain("Noto+Serif+Georgian");
+    expect(html).toContain("Noto+Serif+Georgian:wght@400;500;600;700");
     expect(html).not.toContain("Space+Mono");
   });
 });

@@ -5,7 +5,8 @@
 
 :root {
   --f-ui: "Noto Sans Georgian", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --f-display: "Amelie Display", "Noto Sans Georgian", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* Amelie Display is used only when a licensed local asset is supplied; Noto Serif Georgian is the public, Georgian-safe display fallback. */
+  --f-display: "Amelie Display", "Noto Serif Georgian", "Noto Sans Georgian", Georgia, serif;
   --color-white: #ffffff;
   --color-page: #faf9f7;
   --color-soft-cream: #f5f2ee;

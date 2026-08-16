@@ -70,3 +70,7 @@
 - [x] Reconcile legacy UI typography contracts with the approved Noto Sans Georgian-only font specification and re-run the full Vitest suite.
 - [x] Diagnose and restore the disappearing Home pre-footer contact card after typography changes, preserving existing Call/WhatsApp actions and footer layout.
 - [x] Validate the restored contact card at mobile/tablet/desktop widths with protected contracts, TypeScript and production build.
+- [x] Audit the live computed font cascade and available Georgian-safe font resources to identify why the typography update is not visually apparent.
+- [x] Make the display-heading treatment visibly distinct while preserving Noto Sans Georgian for regular UI and without introducing an unlicensed font asset.
+- [x] Validate visible heading/UI contrast at mobile and desktop widths, then run typography contracts, TypeScript and production build.
+- [x] Verify computed runtime `font-family` on Home, Catalog and Product Detail heading/UI elements, then document the active fallback chain.
