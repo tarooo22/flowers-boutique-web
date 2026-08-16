@@ -20,14 +20,21 @@ describe("Homepage Pass 2 protected interaction controls", () => {
   });
 
   it("preserves quick-add, pre-footer contact and mobile quick-nav interactions", async () => {
-    const [home, card, mobileNav] = await Promise.all([
+    const [home, card, mobileNav, styles] = await Promise.all([
       source("client/src/pages/Home.tsx"),
       source("client/src/components/product/ProductCard.tsx"),
       source("client/src/components/mobile/MobileBottomNav.tsx"),
+      source("client/src/styles/amelie-rebuild.css"),
     ]);
 
     expect(card).toContain("onClick={() => onAdd(product)}");
     expect(card).toContain("const canQuickAdd = Boolean(onAdd && isAvailable && !needsSelection);");
+    expect(styles).toContain("/* Product gallery refinement");
+    expect(styles).toContain(".am-product-card__wish {");
+    expect(styles).toContain("width: 42px;");
+    expect(styles).toContain(".am-product-card__action {");
+    expect(styles).toContain("background: var(--am-coral);");
+    expect(styles).toContain(".am-product-card__title {");
     expect(home).toContain("href={phoneHref}");
     expect(home).toContain("href={siteContact.whatsapp}");
     expect(home.indexOf('className="am-contact-band"')).toBeLessThan(home.indexOf("<Footer />"));

@@ -74,3 +74,5 @@
 - [x] Make the display-heading treatment visibly distinct while preserving Noto Sans Georgian for regular UI and without introducing an unlicensed font asset.
 - [x] Validate visible heading/UI contrast at mobile and desktop widths, then run typography contracts, TypeScript and production build.
 - [x] Verify computed runtime `font-family` on Home, Catalog and Product Detail heading/UI elements, then document the active fallback chain.
+- [x] Rebuild Home product rails and the shared ProductCard presentation as a cream gallery with tall media, white information base, floating wishlist, coral quick-add and reference-style title/price hierarchy while preserving product data and actions.
+- [x] Validate the revised ProductCard interactions and responsive Home rails at mobile/tablet/desktop widths with contracts, TypeScript and production build.
