@@ -13907,20 +13907,20 @@ body .auth-page button.auth-submit.auth-submit--boutique:hover:not(:disabled) {
 }
 
 .p1-footer {
-  background: var(--fb-ref-black) !important;
+  background: var(--fb-ref-black);
   color: #b9b3aa;
   border-top-color: #2a2825 !important;
 }
 
 .p1-footer__wordmark {
-  color: #f6efe6 !important;
+  color: #f6efe6;
   font-family: "Noto Serif Georgian", Georgia, serif;
 }
 
 .p1-footer__eyebrow,
 .p1-footer__desktop-group h3,
 .p1-footer__mobile-groups summary {
-  color: #8a847b !important;
+  color: #8a847b;
   letter-spacing: 0.12em;
 }
 
@@ -13930,20 +13930,20 @@ body .auth-page button.auth-submit.auth-submit--boutique:hover:not(:disabled) {
 
 .p1-footer a:hover,
 .p1-footer a:focus-visible {
-  color: var(--fb-ref-coral) !important;
+  color: var(--fb-ref-coral);
 }
 
 .p1-footer__delivery-cta {
-  border-color: rgba(228, 71, 47, 0.34) !important;
-  background: rgba(228, 71, 47, 0.08) !important;
+  border-color: rgba(228, 71, 47, 0.34);
+  background: rgba(228, 71, 47, 0.08);
 }
 
 .p1-footer__delivery-cta strong {
-  color: #ee9a88 !important;
+  color: #ee9a88;
 }
 
 .p1-footer__bottom {
-  border-top-color: #2a2825 !important;
+  border-top-color: #2a2825;
 }
 
 .p1-category-tile:focus-visible,

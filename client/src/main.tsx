@@ -8,6 +8,7 @@ import App from "./App";
 import { initFacebookPixel } from "./lib/facebookPixel";
 import "./index.css";
 import "./styles/header-refinement.css";
+import "./styles/wave1-reference.css";
 
 // Initialize Facebook Pixel on app load
 initFacebookPixel();
