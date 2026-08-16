@@ -49,8 +49,8 @@
   --fb-z-overlay: 80;
   --fb-z-dialog: 90;
   --fb-focus-ring: 0 0 0 3px rgba(26, 26, 26, 0.16);
-  --fb-font-ui: "Noto Sans Georgian", system-ui, sans-serif;
-  --fb-font-label: "Space Mono", "Noto Sans Georgian", monospace;
+  --fb-font-ui: var(--f-ui);
+  --fb-font-label: var(--f-ui);
 
   /* Tailwind/shadcn aliases receive the same foundation. */
   --background: var(--fb-page);
@@ -71,7 +71,7 @@
   --input: var(--fb-line);
   --ring: var(--fb-action);
   --font-body: var(--fb-font-ui);
-  --font-heading: var(--fb-font-ui);
+  --font-heading: var(--f-display);
 }
 
 @media (min-width: 768px) {

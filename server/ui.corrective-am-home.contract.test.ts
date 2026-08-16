@@ -10,13 +10,13 @@ describe("Amelie-first corrective Home contract", () => {
     const home = await source("client/src/pages/Home.tsx");
     const sequence = [
       'className="am-home-hero"',
-      'className="am-occasion"',
+      'className="am-occasion am-reveal"',
       'productRail(firstRail',
       'productRail(secondRail',
       'productRail(thirdRail',
-      'className="am-promo-banner"',
-      'className="am-services"',
-      'className="am-journal"',
+      'className="am-promo-banner am-reveal"',
+      'className="am-services am-reveal"',
+      'className="am-journal am-reveal"',
     ];
 
     let previous = -1;
@@ -100,7 +100,7 @@ describe("Amelie-first corrective Home contract", () => {
       source("client/src/styles/amelie-rebuild.css"),
     ]);
 
-    const contactBand = home.indexOf('className="am-contact-band"');
+    const contactBand = home.indexOf('className="am-contact-band am-reveal"');
     expect(contactBand).toBeGreaterThan(-1);
     expect(contactBand).toBeLessThan(home.indexOf("<Footer />"));
     expect(home).toContain("siteContact.whatsapp");

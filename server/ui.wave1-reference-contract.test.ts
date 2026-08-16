@@ -42,7 +42,8 @@ describe("Wave 1 measured-reference visual contract", () => {
 
     expect(documentHead).toContain('content="#FBF7EE"');
     expect(documentHead).toContain("family=Noto+Sans+Georgian");
-    expect(documentHead).toContain("family=Space+Mono");
+    expect(documentHead).not.toContain("family=Space+Mono");
+    expect(documentHead).not.toContain("Noto+Serif+Georgian");
     expect(main).toContain('import "./styles/wave1-reference.css";');
   });
 

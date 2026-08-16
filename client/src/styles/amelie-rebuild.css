@@ -16,8 +16,8 @@
   --am-soft-dark: #2c2c29;
   --am-shell: 1280px;
   --am-gutter: 24px;
-  --am-label: "Space Mono", "Noto Sans Georgian", monospace;
-  --am-ui: "Noto Sans Georgian", system-ui, sans-serif;
+  --am-label: var(--f-ui);
+  --am-ui: var(--f-ui);
   --am-ease: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -1100,4 +1100,40 @@ body,
 
 @media (prefers-reduced-motion: reduce) {
   .am-reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* Site-wide typography refinement: UI text is Noto Sans Georgian; local Amelie Display
+   can be added later without changing the component architecture. */
+:where(#root) :is(button, input, select, textarea, summary, label, legend, p, span, small, strong, em, a, li, td, th, dt, dd, h1, h2, h3, h4, h5, h6) {
+  font-family: var(--f-ui) !important;
+}
+
+:where(#root) [style*="Cormorant Garamond"],
+:where(#root) [style*="Noto Serif Georgian"],
+:where(#root) [style*="DM Sans"] {
+  font-family: var(--f-ui) !important;
+}
+
+:where(#root) :is(
+  .fb-display,
+  .fb-brand,
+  .p1-brand,
+  .p1-footer__wordmark,
+  .am-brand__wordmark,
+  .am-footer__wordmark,
+  .am-home-hero h1,
+  .am-home-rail__head h2,
+  .am-promo-banner h2,
+  .am-service-card strong,
+  .fb-catalog-intro h1,
+  main h1
+) {
+  font-family: var(--f-display) !important;
+}
+
+.am-home-hero h1 {
+  font-family: var(--f-display) !important;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
 }

@@ -43,7 +43,7 @@ describe("Amelie-first public storefront contract", () => {
     const [app, home] = await Promise.all([read("client/src/App.tsx"), read("client/src/pages/Home.tsx")]);
 
     expect(app).toContain('main.id = "main-content"');
-    expect(home).toContain('<main id="main-content" className="am-home">');
+    expect(home).toContain('<main id="main-content" className="am-home" ref={homeRef}>');
     expect(home).toContain("<Navbar />");
     expect(home).toContain("<CartDrawer />");
     expect(home).toContain("<Footer />");
@@ -53,13 +53,13 @@ describe("Amelie-first public storefront contract", () => {
     const home = await read("client/src/pages/Home.tsx");
     const order = [
       'className="am-home-hero"',
-      'className="am-occasion"',
+      'className="am-occasion am-reveal"',
       'productRail(firstRail',
       'productRail(secondRail',
       'productRail(thirdRail',
-      'className="am-promo-banner"',
-      'className="am-services"',
-      'className="am-journal"',
+      'className="am-promo-banner am-reveal"',
+      'className="am-services am-reveal"',
+      'className="am-journal am-reveal"',
     ];
     let position = -1;
     for (const expected of order) {

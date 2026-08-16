@@ -4,6 +4,8 @@
 /* Flower's Boutique: light, calm and product-focused storefront. */
 
 :root {
+  --f-ui: "Noto Sans Georgian", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --f-display: "Amelie Display", "Noto Sans Georgian", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --color-white: #ffffff;
   --color-page: #faf9f7;
   --color-soft-cream: #f5f2ee;
@@ -127,8 +129,8 @@
   --sidebar-border: #e5e1dd;
   --sidebar-ring: #8b5f68;
   --radius: 0.5rem;
-  --font-heading: "Noto Serif Georgian", Georgia, serif;
-  --font-body: "Noto Sans Georgian", "DM Sans", system-ui, sans-serif;
+  --font-heading: var(--f-display);
+  --font-body: var(--f-ui);
 }
 html {
   overflow-x: clip;
@@ -137,7 +139,7 @@ html {
 body {
   min-width: 320px;
   overflow-x: clip;
-  font-family: "Noto Sans Georgian", "DM Sans", system-ui, sans-serif;
+  font-family: var(--f-ui);
   font-size: 16px;
   line-height: 1.6;
   background: var(--fb-ivory);
@@ -145,9 +147,9 @@ body {
   text-rendering: optimizeLegibility;
 }
 .fb-display {
-  font-family: "Noto Serif Georgian", Georgia, serif;
-  font-weight: 500;
-  letter-spacing: -0.045em;
+  font-family: var(--f-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
 }
 .fb-announcement {
   background: var(--fb-black);
@@ -175,7 +177,7 @@ body {
   align-items: center;
   gap: 10px;
   color: var(--fb-black);
-  font-family: "Noto Serif Georgian", Georgia, serif;
+  font-family: var(--f-display);
   font-size: 20px;
   letter-spacing: -0.06em;
   line-height: 1;
@@ -184,7 +186,7 @@ body {
   font-weight: 400;
 }
 .fb-brand__mark {
-  font-family: "DM Sans", sans-serif;
+  font-family: var(--f-ui);
   font-size: 10px;
   letter-spacing: 0;
   font-weight: 700;
