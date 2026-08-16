@@ -43,7 +43,8 @@ describe("Amelie-first public storefront contract", () => {
     const [app, home] = await Promise.all([read("client/src/App.tsx"), read("client/src/pages/Home.tsx")]);
 
     expect(app).toContain('main.id = "main-content"');
-    expect(home).toContain('<main id="main-content" className="am-home" ref={homeRef}>');
+    expect(home).toContain('<div className="am-site" ref={revealRootRef}>');
+    expect(home).toContain('<main id="main-content" className="am-home">');
     expect(home).toContain("<Navbar />");
     expect(home).toContain("<CartDrawer />");
     expect(home).toContain("<Footer />");

@@ -36,6 +36,8 @@ describe("Homepage Pass 2 protected interaction controls", () => {
     expect(home).toContain('am-contact-band__action am-contact-band__action--whatsapp');
     expect(home).toContain('new IntersectionObserver(');
     expect(home).toContain('window.matchMedia("(prefers-reduced-motion: reduce)")');
+    expect(home).toContain('const revealRoot = revealRootRef.current;');
+    expect(home).toContain('revealRoot.querySelectorAll<HTMLElement>(".am-reveal")');
     expect(home).toContain('am-home-rail am-reveal am-reveal--rail');
     expect(mobileNav).toContain('"/catalog"');
     expect(mobileNav).toContain('"/wishlist"');

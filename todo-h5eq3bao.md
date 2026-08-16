@@ -68,3 +68,5 @@
 - [x] Centralize `--f-ui` and `--f-display` tokens, applying Noto Sans Georgian to regular UI and display architecture to editorial headings without changing layout or behavior.
 - [x] Validate typography consistency and Georgian rendering at 375px, 768px, 1024px and 1440px across header, hero, catalog, product detail, buttons, cards and footer; run tests and build.
 - [x] Reconcile legacy UI typography contracts with the approved Noto Sans Georgian-only font specification and re-run the full Vitest suite.
+- [x] Diagnose and restore the disappearing Home pre-footer contact card after typography changes, preserving existing Call/WhatsApp actions and footer layout.
+- [x] Validate the restored contact card at mobile/tablet/desktop widths with protected contracts, TypeScript and production build.

@@ -92,7 +92,7 @@ export default function Home() {
   const { openDrawer } = useCartDrawer();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loadedSlides, setLoadedSlides] = useState<Set<number>>(new Set());
-  const homeRef = useRef<HTMLElement>(null);
+  const revealRootRef = useRef<HTMLDivElement>(null);
   const productsQuery = trpc.products.list.useQuery();
   const categoriesQuery = trpc.categories.list.useQuery();
   const ka = language === "ka";
@@ -116,10 +116,10 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const home = homeRef.current;
-    if (!home) return;
+    const revealRoot = revealRootRef.current;
+    if (!revealRoot) return;
 
-    const revealTargets = Array.from(home.querySelectorAll<HTMLElement>(".am-reveal"));
+    const revealTargets = Array.from(revealRoot.querySelectorAll<HTMLElement>(".am-reveal"));
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducedMotion || !("IntersectionObserver" in window)) {
       revealTargets.forEach(target => target.classList.add("is-visible"));
@@ -187,9 +187,9 @@ export default function Home() {
   );
 
   return (
-    <div className="am-site">
+    <div className="am-site" ref={revealRootRef}>
       <Navbar />
-      <main id="main-content" className="am-home" ref={homeRef}>
+      <main id="main-content" className="am-home">
         <section className="am-home-hero" aria-labelledby="am-home-hero-title">
           <div className="am-home-hero__slides" aria-hidden="true">
             {heroSlides.map((hero, index) => (
