@@ -27,25 +27,17 @@ type ProductCardProps = {
   priority?: boolean;
 };
 
-export default function ProductCard({
-  product,
-  language,
-  onAdd,
-  priority = false,
-}: ProductCardProps) {
+export default function ProductCard({ product, language, onAdd, priority = false }: ProductCardProps) {
   const ka = language === "ka";
   const name = getProductName(product, language);
   const salePrice = product.salePrice ?? product.discountPrice;
   const basePrice = product.priceMin ?? product.price;
   const variants = Array.isArray(product.variants) ? product.variants : [];
   const needsSelection = variants.length > 0;
-  const isAvailable =
-    product.isAvailable !== false && product.published !== false;
+  const isAvailable = product.isAvailable !== false && product.published !== false;
   const canQuickAdd = Boolean(onAdd && isAvailable && !needsSelection);
   const price = product.priceOnRequest
-    ? ka
-      ? "ფასი მოთხოვნით"
-      : "Price on request"
+    ? ka ? "ფასი მოთხოვნით" : "Price on request"
     : product.priceMin !== product.priceMax && product.priceMax
       ? `${formatMoney(product.priceMin)}–${formatMoney(product.priceMax)}`
       : formatMoney(salePrice ?? basePrice);
@@ -63,93 +55,40 @@ export default function ProductCard({
     toast.info(ka ? "უკვე რჩეულებშია" : "Already in your wishlist");
   };
 
-  return (
-    <article
-      className={`p1-product-card ${isAvailable ? "" : "is-unavailable"}`}
-      data-availability={isAvailable ? "available" : "unavailable"}
-    >
-      <div className="p1-product-card__visual">
-        <Link
-          href={`/product/${product.id}`}
-          className="p1-product-card__image-link"
-          aria-label={name}
-        >
-          <FlowerImage
-            src={product.imageUrl}
-            alt={`${name} — Flower’s Boutique`}
-            className="p1-product-card__image"
-            loading={priority ? "eager" : "lazy"}
-            fetchPriority={priority ? "high" : "auto"}
-            width={800}
-            height={1200}
-          />
-        </Link>
-        {!isAvailable && (
-          <span className="p1-badge p1-badge--muted">
-            {ka ? "ამოიწურა" : "Unavailable"}
-          </span>
-        )}
-      </div>
+  const actionLabel = isAvailable
+    ? canQuickAdd
+      ? ka ? `${name} კალათაში დამატება` : `Add ${name} to cart`
+      : ka ? `${name} ვარიანტების ნახვა` : `View options for ${name}`
+    : ka ? `${name} პროდუქტის ნახვა` : `View ${name}`;
 
-      <div className="p1-product-card__content">
-        <div className="p1-product-card__heading">
-          <Link
-            href={`/product/${product.id}`}
-            className="p1-product-card__title"
-          >
-            {name}
-          </Link>
-          <button
-            type="button"
-            className="p1-product-card__wish"
-            onClick={addToWishlist}
-            aria-label={ka ? `${name} რჩეულებში` : `Add ${name} to wishlist`}
-          >
-            <Heart aria-hidden="true" />
-          </button>
+  return (
+    <article className={`am-product-card ${isAvailable ? "" : "is-unavailable"}`} data-availability={isAvailable ? "available" : "unavailable"}>
+      <div className="am-product-card__media">
+        <Link href={`/product/${product.id}`} className="am-product-card__image-link" aria-label={name}>
+          <FlowerImage src={product.imageUrl} alt={`${name} — Flower’s Boutique`} className="am-product-card__image" loading={priority ? "eager" : "lazy"} fetchPriority={priority ? "high" : "auto"} width={800} height={1000} />
+        </Link>
+        <button type="button" className="am-product-card__wish" onClick={addToWishlist} aria-label={ka ? `${name} რჩეულებში` : `Add ${name} to wishlist`}>
+          <Heart aria-hidden="true" />
+        </button>
+        {!isAvailable && <span className="am-product-card__status">{ka ? "ამოიწურა" : "Unavailable"}</span>}
+      </div>
+      <div className="am-product-card__body">
+        <Link href={`/product/${product.id}`} className="am-product-card__title">{name}</Link>
+        <div className="am-product-card__bottom">
+          <div className="am-product-card__prices">
+            <strong id={`product-price-${product.id}`}>{price}</strong>
+            {salePrice && basePrice && <del>{formatMoney(basePrice)}</del>}
+          </div>
+          {canQuickAdd ? (
+            <button type="button" className="am-product-card__action" onClick={() => onAdd(product)} aria-label={actionLabel} aria-describedby={`product-price-${product.id}`}>
+              <ShoppingBag aria-hidden="true" />
+            </button>
+          ) : (
+            <Link href={`/product/${product.id}`} className="am-product-card__action" aria-label={actionLabel} aria-describedby={`product-price-${product.id}`}>
+              <ArrowUpRight aria-hidden="true" />
+            </Link>
+          )}
         </div>
-        <div className="p1-product-card__price-row">
-          <strong id={`product-price-${product.id}`}>{price}</strong>
-          {salePrice && basePrice && <del>{formatMoney(basePrice)}</del>}
-        </div>
-        {canQuickAdd ? (
-          <button
-            type="button"
-            className="p1-product-card__action"
-            onClick={() => onAdd(product)}
-            aria-label={
-              ka ? `${name} კალათაში დამატება` : `Add ${name} to cart`
-            }
-            aria-describedby={`product-price-${product.id}`}
-          >
-            <ShoppingBag aria-hidden="true" />
-            {ka ? "კალათაში დამატება" : "Quick add"}
-          </button>
-        ) : (
-          <Link
-            href={`/product/${product.id}`}
-            className="p1-product-card__action"
-            aria-label={
-              isAvailable
-                ? ka
-                  ? `${name} ვარიანტების ნახვა`
-                  : `View options for ${name}`
-                : ka
-                  ? `${name} პროდუქტის ნახვა`
-                  : `View ${name}`
-            }
-            aria-describedby={`product-price-${product.id}`}
-          >
-            <ArrowUpRight aria-hidden="true" />
-            {isAvailable
-              ? ka
-                ? "ვარიანტების ნახვა"
-                : "Choose options"
-              : ka
-                ? "პროდუქტის ნახვა"
-                : "View product"}
-          </Link>
-        )}
       </div>
     </article>
   );

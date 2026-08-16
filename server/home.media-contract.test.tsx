@@ -60,17 +60,15 @@ describe("homepage editorial media contract", () => {
     expect(image.style.visibility).toBe("visible");
   });
 
-  it("keeps Home wired to the tested editorial component and persistent image data", async () => {
-    const [home, media] = await Promise.all([
-      readProjectFile("client/src/pages/Home.tsx"),
-      readProjectFile("client/src/lib/editorialMedia.ts"),
-    ]);
+  it("keeps Home media sourced from Flower’s Boutique assets in the new reference-first composition", async () => {
+    const home = await readProjectFile("client/src/pages/Home.tsx");
 
-    expect(media).toContain('"/flower-assets/editorial/pink-roses.webp"');
-    expect(media).toContain('"/flower-assets/editorial/mixed-bouquet.webp"');
-    expect(home).toContain("import EditorialImage from \"@/components/EditorialImage\";");
-    expect(home).toContain("const persistentEditorialImages = useMemo(");
-    expect(home).toContain('slot="builder"');
-    expect(home).toContain('slot="brand"');
+    expect(home).toContain('"/manus-storage/flowers-boutique-hero-rose-peony_f8130032.jpg"');
+    expect(home).toContain('"/manus-storage/flowers-boutique-experience-event-styling_07114441.jpg"');
+    expect(home).toContain('"/manus-storage/flowers-boutique-experience-floristry-class_0d9c281c.jpg"');
+    expect(home).toContain('className="am-home-hero"');
+    expect(home).toContain('className="am-builder-promo"');
+    expect(home).toContain('className="am-services"');
+    expect(home).toContain('className="am-journal"');
   });
 });

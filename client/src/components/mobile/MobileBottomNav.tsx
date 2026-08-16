@@ -35,8 +35,8 @@ export default function MobileBottomNav() {
   }, []);
 
   useEffect(() => {
-    document.body.classList.toggle("has-p1-bottom-nav", !hidden);
-    return () => document.body.classList.remove("has-p1-bottom-nav");
+    document.body.classList.toggle("has-am-mobile-quick-nav", !hidden);
+    return () => document.body.classList.remove("has-am-mobile-quick-nav");
   }, [hidden]);
 
   if (hidden) return null;
@@ -48,7 +48,7 @@ export default function MobileBottomNav() {
   ] as const;
 
   return (
-    <nav className="p1-bottom-nav" aria-label={ka ? "სწრაფი ნავიგაცია" : "Quick navigation"}>
+    <nav className="am-mobile-quick-nav" aria-label={ka ? "სწრაფი ნავიგაცია" : "Quick navigation"}>
       {links.map(([href, Icon, label]) => {
         const active = href === "/" ? location === "/" : location.startsWith(href);
         return (
@@ -64,7 +64,7 @@ export default function MobileBottomNav() {
         );
       })}
       <button type="button" onClick={openDrawer} aria-label={ka ? "კალათის გახსნა" : "Open cart"}>
-        <span className="p1-bottom-nav__icon">
+        <span className="am-mobile-quick-nav__icon">
           <ShoppingBag aria-hidden="true" />
           {count > 0 && <b>{count > 99 ? "99+" : count}</b>}
         </span>

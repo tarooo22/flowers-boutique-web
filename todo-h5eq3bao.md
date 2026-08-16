@@ -11,4 +11,16 @@
 - [x] Add/update focused Vitest coverage for Wave 1 visual-contract assertions.
 - [x] Run TypeScript validation, relevant tests, and production build without new errors; an existing bundle-size advisory remains documented.
 - [x] Capture and compare Home/Catalog screenshots at 375, 430, 768, 1024, 1440, and 1920px; correct major differences within Wave 1 scope.
-- [ ] Document actual implemented values, reference deviations, QA evidence, and protected-area confirmation; save a published checkpoint.
+- [x] Document actual implemented values, reference deviations, QA evidence, and protected-area confirmation; save a published checkpoint.
+- [x] Reconfirm the live Amelie homepage structure and capture fresh reference evidence for the first corrective wave.
+- [x] Document the exact Home/header/navigation/ProductCard/footer presentation-to-business boundary before replacing visual markup.
+- [x] Replace the public page shell, announcement rail, header, and navigation presentation with a clean-room Amelie-first structure while retaining all existing behavior.
+- [x] Replace the existing Home page visual composition and section order with the measured Amelie homepage composition using Flower’s Boutique content, images, data queries, and routes.
+- [x] Rebuild shared ProductCard presentation to match the observed Amelie card DOM geometry while retaining localization, prices, wishlist, availability, variants, and add-to-cart behavior.
+- [x] Replace the existing footer presentation with the measured Amelie footer composition while retaining Flower’s Boutique contact, legal, and account/admin content.
+- [x] Capture and compare the reconstructed Home at 375, 430, 768, 1024, 1440, and 1920px against the Amelie reference; iterate on material differences only within this wave’s scope.
+- [x] Add or update visual-contract tests for reconstructed Home/header/ProductCard/footer and validate protected business contracts.
+- [x] Run TypeScript, full Vitest, and production build after the corrective reconstruction.
+- [ ] Write the corrective-wave visual QA report, save a published checkpoint, and stop before Catalog or ProductDetail reconstruction.
+- [x] Preserve/reintroduce every mobile and desktop route surface from the pre-rebuild header, including Contact and wishlist access, without restoring the old visual geometry.
+- [x] Restore an Amelie-compatible mobile quick-navigation surface for Home, Catalog, Wishlist and Cart, and validate it through regression coverage and screenshots.

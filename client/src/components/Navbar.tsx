@@ -59,11 +59,12 @@ export default function Navbar() {
   const [count, setCount] = useState(0);
   const ka = language === "ka";
   const links = [
-    ["/catalog", ka ? "კატალოგი" : "Catalog"],
-    ["/bouquet-builder", ka ? "შექმენი თაიგული" : "Create a bouquet"],
-    ["/about", ka ? "ჩვენ შესახებ" : "About"],
+    ["/catalog", ka ? "ყველა თაიგული" : "All bouquets"],
+    ["/bouquet-builder", ka ? "შექმენი თაიგული" : "Create bouquet"],
+    ["/about", ka ? "ჩვენ შესახებ" : "About us"],
     ["/contact", ka ? "კონტაქტი" : "Contact"],
   ] as const;
+  const primaryLinks = links;
 
   useEffect(() => {
     const sync = () =>
@@ -94,97 +95,59 @@ export default function Navbar() {
     event.preventDefault();
     const query = searchTerm.trim();
     setSearchOpen(false);
-    navigate(
-      query ? `/catalog?search=${encodeURIComponent(query)}` : "/catalog"
-    );
+    navigate(query ? `/catalog?search=${encodeURIComponent(query)}` : "/catalog");
   };
 
   return (
     <>
-      <a className="p1-skip-link" href="#main-content">
+      <a className="am-skip-link" href="#main-content">
         {ka ? "მთავარ შინაარსზე გადასვლა" : "Skip to main content"}
       </a>
-      <header className={`p1-header p1-header--atelier ${scrolled ? "is-scrolled" : ""}`}>
-        <div
-          className="p1-utility-strip"
-          aria-label={ka ? "მიწოდებისა და კონტაქტის ინფორმაცია" : "Delivery and contact information"}
-        >
-          <p className="p1-utility-strip__delivery">
+      <header className={`am-header ${scrolled ? "is-scrolled" : ""}`}>
+        <div className="am-announcement" aria-label={ka ? "მიწოდებისა და კონტაქტის ინფორმაცია" : "Delivery and contact information"}>
+          <p>
             {ka
-              ? `მიწოდება ₾${DELIVERY_FEE_GEL} · უფასო ₾${FREE_DELIVERY_THRESHOLD_GEL}-დან`
-              : `Delivery ₾${DELIVERY_FEE_GEL} · Free from ₾${FREE_DELIVERY_THRESHOLD_GEL}`}
+              ? `თბილისში მიწოდება ₾${DELIVERY_FEE_GEL} · უფასო ₾${FREE_DELIVERY_THRESHOLD_GEL}-დან`
+              : `Tbilisi delivery ₾${DELIVERY_FEE_GEL} · Free from ₾${FREE_DELIVERY_THRESHOLD_GEL}`}
           </p>
-          <a href={phoneHref}>{siteContact.phone}</a>
+          {siteContact.phone && <a href={phoneHref}>{siteContact.phone}</a>}
         </div>
-        <div className="p1-header__inner">
+        <div className="am-header__main">
           <button
             type="button"
-            className="p1-icon-button p1-mobile-menu-trigger"
+            className="am-icon-button am-mobile-trigger"
             onClick={() => setMenuOpen(true)}
             aria-label={ka ? "მენიუს გახსნა" : "Open menu"}
           >
             <Menu />
           </button>
-          <nav
-            className="p1-header__nav"
-            aria-label={ka ? "მთავარი ნავიგაცია" : "Primary navigation"}
-          >
-            {links.map(([href, label]) => (
-              <Link
-                key={href}
-                href={href}
-                className={isActive(href) ? "is-active" : ""}
-                aria-current={isActive(href) ? "page" : undefined}
-              >
+
+          <Link href="/" className="am-brand" aria-label={ka ? "ყვავილების ბუტიკი და ივენთები — მთავარი" : "Flower’s Boutique & Events home"}>
+            <BrandWordmark language={language} className="am-brand__wordmark" />
+          </Link>
+
+          <nav className="am-primary-nav" aria-label={ka ? "მთავარი ნავიგაცია" : "Primary navigation"}>
+            {primaryLinks.map(([href, label]) => (
+              <Link key={href} href={href} className={isActive(href) ? "is-active" : ""} aria-current={isActive(href) ? "page" : undefined}>
                 {label}
               </Link>
             ))}
           </nav>
 
-          <Link
-            href="/"
-            className="p1-brand"
-            aria-label={ka ? "ყვავილების ბუტიკი და ივენთები — მთავარი" : "Flower’s Boutique & Events home"}
-          >
-            <BrandWordmark language={language} className="p1-brand__wordmark" />
-          </Link>
-
-          <div className="p1-header__actions">
-            <button
-              type="button"
-              className="p1-icon-button"
-              onClick={() => setSearchOpen(true)}
-              aria-label={ka ? "ძიება" : "Search"}
-            >
-              <Search />
-            </button>
-            <div
-              className="p1-language"
-              aria-label={ka ? "ენის არჩევა" : "Language selector"}
-            >
-              <button
-                type="button"
-                className={language === "ka" ? "is-active" : ""}
-                onClick={() => setLanguage("ka")}
-                aria-pressed={language === "ka"}
-              >
-                ქა
+          <div className="am-header__tools">
+            <div className="am-language" aria-label={ka ? "ენის არჩევა" : "Language selector"}>
+              <button type="button" className={language === "ka" ? "is-active" : ""} onClick={() => setLanguage("ka")} aria-pressed={language === "ka"}>
+                ქარ
               </button>
-              <button
-                type="button"
-                className={language === "en" ? "is-active" : ""}
-                onClick={() => setLanguage("en")}
-                aria-pressed={language === "en"}
-              >
-                EN
+              <button type="button" className={language === "en" ? "is-active" : ""} onClick={() => setLanguage("en")} aria-pressed={language === "en"}>
+                ENG
               </button>
             </div>
+            <button type="button" className="am-icon-button" onClick={() => setSearchOpen(true)} aria-label={ka ? "ძიება" : "Search"}>
+              <Search />
+            </button>
             {user?.role === "admin" && (
-              <Link
-                href="/admin"
-                className="p1-icon-button p1-admin-button"
-                aria-label={ka ? "ადმინისტრატორის პანელი" : "Admin panel"}
-              >
+              <Link href="/admin" className="am-icon-button am-admin-link" aria-label={ka ? "ადმინისტრატორის პანელი" : "Admin panel"}>
                 <ShieldCheck />
               </Link>
             )}
@@ -192,96 +155,52 @@ export default function Navbar() {
               <DropdownMenuTrigger asChild>
                 <button
                   type="button"
-                  className="p1-account-button"
+                  className="am-icon-button am-account-trigger"
                   disabled={loading}
-                  aria-label={
-                    user
-                      ? ka
-                        ? "ჩემი ანგარიში"
-                        : "My account"
-                      : ka
-                        ? "შესვლა ან რეგისტრაცია"
-                        : "Log in or register"
-                  }
+                  aria-label={user ? (ka ? "ჩემი ანგარიში" : "My account") : (ka ? "შესვლა ან რეგისტრაცია" : "Log in or register")}
                 >
                   <UserRound />
-                  <ChevronDown />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                sideOffset={10}
-                className="p1-account-menu"
-              >
+              <DropdownMenuContent align="end" sideOffset={10} className="am-account-menu">
                 {user ? (
                   <>
-                    <DropdownMenuLabel className="p1-account-menu__identity">
-                      <strong>
-                        {user.name || (ka ? "ჩემი ანგარიში" : "My account")}
-                      </strong>
+                    <DropdownMenuLabel className="am-account-menu__identity">
+                      <strong>{user.name || (ka ? "ჩემი ანგარიში" : "My account")}</strong>
                       <span>{user.email}</span>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
-                      <Link href="/profile">
-                        <UserRound />
-                        {ka ? "პროფილი და შეკვეთები" : "Profile and orders"}
-                      </Link>
+                      <Link href="/profile"><UserRound />{ka ? "პროფილი და შეკვეთები" : "Profile and orders"}</Link>
                     </DropdownMenuItem>
                     {user.role === "admin" && (
                       <DropdownMenuItem asChild>
-                        <Link href="/admin">
-                          <ShieldCheck />
-                          {ka ? "ადმინისტრატორის პანელი" : "Admin panel"}
-                        </Link>
+                        <Link href="/admin"><ShieldCheck />{ka ? "ადმინისტრატორის პანელი" : "Admin panel"}</Link>
                       </DropdownMenuItem>
                     )}
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      onSelect={() => void logout()}
-                      className="is-danger"
-                    >
-                      <LogOut />
-                      {ka ? "გასვლა" : "Log out"}
+                    <DropdownMenuItem onSelect={() => void logout()} className="is-danger">
+                      <LogOut />{ka ? "გასვლა" : "Log out"}
                     </DropdownMenuItem>
                   </>
                 ) : (
                   <>
-                    <DropdownMenuLabel>
-                      {ka
-                        ? "შეკვეთების მარტივად სამართავად"
-                        : "Manage your orders with an account"}
-                    </DropdownMenuLabel>
+                    <DropdownMenuLabel>{ka ? "შეკვეთების მარტივად სამართავად" : "Manage your orders with an account"}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
-                      <Link href="/login">
-                        <LogIn />
-                        {ka ? "შესვლა" : "Log in"}
-                      </Link>
+                      <Link href="/login"><LogIn />{ka ? "შესვლა" : "Log in"}</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href="/register">
-                        <UserPlus />
-                        {ka ? "რეგისტრაცია" : "Register"}
-                      </Link>
+                      <Link href="/register"><UserPlus />{ka ? "რეგისტრაცია" : "Register"}</Link>
                     </DropdownMenuItem>
                   </>
                 )}
               </DropdownMenuContent>
             </DropdownMenu>
-            <Link
-              href="/wishlist"
-              className="p1-icon-button p1-desktop-wish"
-              aria-label={ka ? "რჩეულები" : "Wishlist"}
-            >
+            <Link href="/wishlist" className="am-icon-button am-wishlist-link" aria-label={ka ? "რჩეულები" : "Wishlist"}>
               <Heart />
             </Link>
-            <button
-              type="button"
-              className="p1-icon-button p1-cart-button"
-              onClick={openDrawer}
-              aria-label={ka ? "კალათა" : "Cart"}
-            >
+            <button type="button" className="am-icon-button am-cart-button" onClick={openDrawer} aria-label={ka ? "კალათა" : "Cart"}>
               <ShoppingBag />
               {count > 0 && <b>{count > 99 ? "99+" : count}</b>}
             </button>
@@ -290,145 +209,54 @@ export default function Navbar() {
       </header>
 
       <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
-        <DialogContent className="p1-search-dialog">
+        <DialogContent className="am-search-dialog">
           <DialogHeader>
-            <p className="p1-kicker">FLOWER’S BOUTIQUE · SEARCH</p>
-            <DialogTitle>
-              {ka ? "რას ეძებთ?" : "What are you looking for?"}
-            </DialogTitle>
-            <DialogDescription>
-              {ka
-                ? "მოძებნეთ თაიგული სახელით ან შემთხვევით."
-                : "Search the collection by bouquet or occasion."}
-            </DialogDescription>
+            <p className="am-kicker">FLOWER’S BOUTIQUE · SEARCH</p>
+            <DialogTitle>{ka ? "რას ეძებთ?" : "What are you looking for?"}</DialogTitle>
+            <DialogDescription>{ka ? "მოძებნეთ თაიგული სახელით ან შემთხვევით." : "Search the collection by bouquet or occasion."}</DialogDescription>
           </DialogHeader>
-          <form
-            onSubmit={submitSearch}
-            role="search"
-            className="p1-search-dialog__form"
-          >
+          <form onSubmit={submitSearch} role="search" className="am-search-dialog__form">
             <Search aria-hidden="true" />
-            <input
-              autoFocus
-              value={searchTerm}
-              onChange={event => setSearchTerm(event.target.value)}
-              placeholder={
-                ka ? "მაგ. ვარდები, დაბადების დღე…" : "e.g. roses, birthday…"
-              }
-            />
-            <button type="submit">
-              {ka ? "ძიება" : "Search"}
-              <ArrowRight />
-            </button>
+            <input autoFocus value={searchTerm} onChange={event => setSearchTerm(event.target.value)} placeholder={ka ? "მაგ. ვარდები, დაბადების დღე…" : "e.g. roses, birthday…"} />
+            <button type="submit">{ka ? "ძიება" : "Search"}<ArrowRight /></button>
           </form>
         </DialogContent>
       </Dialog>
 
       <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
-        <SheetContent side="left" className="p1-mobile-menu">
-          <SheetHeader className="p1-mobile-menu__head">
-            <p className="p1-kicker">FLOWER’S BOUTIQUE</p>
+        <SheetContent side="left" className="am-mobile-menu">
+          <SheetHeader className="am-mobile-menu__head">
+            <p className="am-kicker">FLOWER’S BOUTIQUE</p>
             <SheetTitle>{ka ? "მენიუ" : "Menu"}</SheetTitle>
-            <SheetDescription>
-              {ka
-                ? "კოლექცია, სერვისები და თქვენი ანგარიში."
-                : "Collection, services and your account."}
-            </SheetDescription>
+            <SheetDescription>{ka ? "კოლექცია, სერვისები და თქვენი ანგარიში." : "Collection, services and your account."}</SheetDescription>
           </SheetHeader>
-          <nav
-            className="p1-mobile-menu__links"
-            aria-label={ka ? "მობილური ნავიგაცია" : "Mobile navigation"}
-          >
-            <Link
-              href="/"
-              className={location === "/" ? "is-active" : ""}
-              aria-current={location === "/" ? "page" : undefined}
-            >
-              {ka ? "მთავარი" : "Home"}
-              <ArrowRight />
-            </Link>
+          <nav className="am-mobile-menu__links" aria-label={ka ? "მობილური ნავიგაცია" : "Mobile navigation"}>
+            <Link href="/" className={location === "/" ? "is-active" : ""} aria-current={location === "/" ? "page" : undefined}>{ka ? "მთავარი" : "Home"}<ArrowRight /></Link>
             {links.map(([href, label]) => (
-              <Link
-                key={href}
-                href={href}
-                className={isActive(href) ? "is-active" : ""}
-                aria-current={isActive(href) ? "page" : undefined}
-              >
-                {label}
-                <ArrowRight />
-              </Link>
+              <Link key={href} href={href} className={isActive(href) ? "is-active" : ""} aria-current={isActive(href) ? "page" : undefined}>{label}<ArrowRight /></Link>
             ))}
           </nav>
-          <div className="p1-mobile-menu__utilities">
-            <button
-              type="button"
-              onClick={() => {
-                setMenuOpen(false);
-                setSearchOpen(true);
-              }}
-            >
-              <Search />
-              {ka ? "ძიება" : "Search"}
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setMenuOpen(false);
-                setContactOpen(true);
-              }}
-            >
-              <MessageCircle />
-              {ka ? "სწრაფი კონტაქტი" : "Quick contact"}
-            </button>
+          <div className="am-mobile-menu__utilities">
+            <button type="button" onClick={() => { setMenuOpen(false); setSearchOpen(true); }}><Search />{ka ? "ძიება" : "Search"}</button>
+            <button type="button" onClick={() => { setMenuOpen(false); setContactOpen(true); }}><MessageCircle />{ka ? "სწრაფი კონტაქტი" : "Quick contact"}</button>
           </div>
-          <Link href="/delivery" className="p1-mobile-menu__delivery-link">
-            <span>{ka ? "მიწოდების პირობები" : "Delivery information"}</span>
-            <ArrowRight aria-hidden="true" />
-          </Link>
-          <div className="p1-mobile-menu__language">
-            <button
-              type="button"
-              className={language === "ka" ? "is-active" : ""}
-              onClick={() => setLanguage("ka")}
-            >
-              ქართული
-            </button>
-            <button
-              type="button"
-              className={language === "en" ? "is-active" : ""}
-              onClick={() => setLanguage("en")}
-            >
-              English
-            </button>
+          <Link href="/wishlist" className="am-mobile-menu__delivery-link"><span>{ka ? "რჩეულები" : "Wishlist"}</span><Heart aria-hidden="true" /></Link>
+          <Link href="/delivery" className="am-mobile-menu__delivery-link"><span>{ka ? "მიწოდების პირობები" : "Delivery information"}</span><ArrowRight aria-hidden="true" /></Link>
+          <div className="am-mobile-menu__language">
+            <button type="button" className={language === "ka" ? "is-active" : ""} onClick={() => setLanguage("ka")}>ქართული</button>
+            <button type="button" className={language === "en" ? "is-active" : ""} onClick={() => setLanguage("en")}>English</button>
           </div>
-          <div className="p1-mobile-menu__account">
+          <div className="am-mobile-menu__account">
             {user ? (
               <>
-                <Link href="/profile">
-                  <UserRound />
-                  {ka ? "პროფილი და შეკვეთები" : "Profile and orders"}
-                </Link>
-                {user.role === "admin" && (
-                  <Link href="/admin">
-                    <ShieldCheck />
-                    {ka ? "ადმინისტრატორის პანელი" : "Admin panel"}
-                  </Link>
-                )}
-                <button type="button" onClick={() => void logout()}>
-                  <LogOut />
-                  {ka ? "გასვლა" : "Log out"}
-                </button>
+                <Link href="/profile"><UserRound />{ka ? "პროფილი და შეკვეთები" : "Profile and orders"}</Link>
+                {user.role === "admin" && <Link href="/admin"><ShieldCheck />{ka ? "ადმინისტრატორის პანელი" : "Admin panel"}</Link>}
+                <button type="button" onClick={() => void logout()}><LogOut />{ka ? "გასვლა" : "Log out"}</button>
               </>
             ) : (
               <>
-                <Link href="/login">
-                  <LogIn />
-                  {ka ? "შესვლა" : "Log in"}
-                </Link>
-                <Link href="/register">
-                  <UserPlus />
-                  {ka ? "რეგისტრაცია" : "Register"}
-                </Link>
+                <Link href="/login"><LogIn />{ka ? "შესვლა" : "Log in"}</Link>
+                <Link href="/register"><UserPlus />{ka ? "რეგისტრაცია" : "Register"}</Link>
               </>
             )}
           </div>
