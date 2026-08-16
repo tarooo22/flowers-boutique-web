@@ -37,7 +37,7 @@
 - [x] Reconstruct footer and header geometry from fresh reference measurements, including container, columns, brand placement, controls, link spacing, legal band, and mobile behavior.
 - [x] Complete overlay/difference QA at 375, 430, 768, 1024, 1440, and 1920px; fix largest displacement first and publish a section-by-section PASS/FAIL parity table.
 - [x] Add or update contracts for Homepage Parity Pass 2 and run interaction regression, TypeScript, full Vitest, and production build without changing Catalog or ProductDetail composition.
-- [ ] Write the Pass 2 report with 375px and 1440px screenshots, checkpoint the result, and stop before starting Catalog.
+- [x] Write the Pass 2 report with 375px and 1440px screenshots, checkpoint the result, and stop before starting Catalog.
 - [x] Convert Home product sections to the reference-accurate per-viewport rail model, including measured visible-card count, overflow behavior, alignment and any required controls.
 - [x] Run and document breakpoint-specific geometry verification for service/editorial and Journal sections, including aspect ratio, gutter, overlay and responsive stacking evidence.
 - [x] Render the quick-action contact band as a distinct pre-footer Home section and verify that this structural correction preserves the measured dark-stack screenshot geometry.
@@ -46,3 +46,4 @@
 - [x] Calibrate the semantic mobile footer boundary and height against the captured 375px/430px reference values while preserving the distinct pre-footer contact section.
 - [x] Run and document Home interaction regression for header navigation, search, language, cart, quick-add, contact actions and mobile quick navigation.
 - [x] Add focused source-contract coverage for every protected Home interaction not live-clicked because of the browser extension timeout.
+- [x] Embed the actual 375px and 1440px final homepage screenshots in the Pass 2 report with permanent web project asset links.

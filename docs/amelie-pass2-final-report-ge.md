@@ -31,6 +31,14 @@ Typography შეესაბამება visual geometry-ს legally usable 
 | 375px | `amelie-375.png`, `local-375.png`, `overlay-diff-375.png` | Header+hero იკავებს reference-ის y=0–792 region-ს. Footer-ს semantic boundary ზუსტად ემთხვევა y=5138 / h=929; local document მხოლოდ 61px-ით გრძელია განსხვავებული localized wrapping-ის გამო. |
 | 1440px | `amelie-1440.png`, `local-1440.png`, `overlay-diff-1440.png` | Product grid widths 295px, shelf cards 248px, services 609×343px და journal 399×312px match-დება. Contact-plus-footer dark region local y=4083–4536-ია reference y=4082–4534-ის წინააღმდეგ. |
 
+#### 375px final local homepage
+
+![375px final local homepage](/manus-storage/flowers-boutique-pass2-home-375_42adb506.png)
+
+#### 1440px final local homepage
+
+![1440px final local homepage](/manus-storage/flowers-boutique-pass2-home-1440_4a6ddf5e.png)
+
 ### Section-by-section parity table
 
 | Section | 375px | 430px | 768px | 1024px | 1440px | 1920px | დასკვნა |
