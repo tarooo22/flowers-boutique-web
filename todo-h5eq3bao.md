@@ -47,3 +47,16 @@
 - [x] Run and document Home interaction regression for header navigation, search, language, cart, quick-add, contact actions and mobile quick navigation.
 - [x] Add focused source-contract coverage for every protected Home interaction not live-clicked because of the browser extension timeout.
 - [x] Embed the actual 375px and 1440px final homepage screenshots in the Pass 2 report with permanent web project asset links.
+- [x] Build a deterministic identical screenshot protocol for Amelie and local Home at 375, 430, 768, 1024, 1280, 1440 and 1920 CSS pixels with fixed DPR, viewport height, font/image settling and no scaled comparisons.
+- [x] Capture fresh deterministic reference/local baselines and publish raw same-dimension, 50% overlay and diff evidence for 375px, 768px and 1440px.
+- [x] Audit Home DOM/CSS for legacy shell, max-width, container, grid and padding constraints; document each as reference-required or legacy residue.
+- [x] Create numerical 1440px, 768px and 375px reference geometry maps including all required header, hero, rail, editorial, contact and footer regions.
+- [x] Reconstruct global content width, header, hero and typography geometry from the deterministic reference measurements without changing business behavior.
+- [x] Reconstruct category, product rail, shared ProductCard, promo, editorial, journal, contact and footer geometry section-by-section from the deterministic reference measurements.
+- [x] Calibrate 1440px full-page Y-coordinate boundaries through footer and remove safe obsolete Home visual CSS residue without affecting other routes.
+- [x] Generate section geometry-based parity scores, require each major section to reach at least 90/100, and document remaining visual differences without claiming pixel perfection.
+- [x] Run protected Home functional regression plus TypeScript, full Vitest and production build; write and publish the Pass 3 evidence report, then stop before Catalog.
+- [x] Force-load and verify all critical lazy images before each deterministic reference/local screenshot, recording any genuinely unavailable asset as an explicit capture failure rather than valid baseline evidence.
+- [x] Eliminate the 768px document-width overflow, then re-run strict 375px/768px/1440px header/hero overlays and protected Home behavior regression before closing the shell/hero task.
+- [x] Run and document final deterministic 375px/430px section geometry and ProductCard/rail measurements; add explicit mobile PASS/FAIL metrics to the Phase 5 QA evidence before closing reconstruction.
+- [x] Resolve the remaining 430px Product rail 2 height variance and pre-footer/footer semantic boundary delta, then re-run deterministic 430px mobile geometry validation.
