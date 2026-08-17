@@ -33,7 +33,7 @@ export function BouquetPreviewCanvas({
 
   return (
     <div
-      className={`relative isolate mx-auto aspect-[1122/1402] w-full max-w-[560px] overflow-hidden rounded-[28px] border border-[#eadfce] ${
+      className={`builder-visual-canvas relative isolate mx-auto aspect-[1122/1402] w-full max-w-[560px] overflow-hidden rounded-[28px] border border-[#eadfce] ${
         ribbonOnly
           ? "bg-[radial-gradient(ellipse_at_50%_84%,rgba(83,61,40,0.11),transparent_31%),radial-gradient(circle_at_50%_24%,#fff_0%,#fbf7f0_48%,#eee5d8_100%)]"
           : "bg-[#f7f4ef]"

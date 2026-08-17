@@ -343,8 +343,8 @@ export function AIBouquetMode({
   ];
 
   return (
-    <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1.12fr)_minmax(430px,0.88fr)] xl:gap-8">
-      <div className="lg:sticky lg:top-[92px]">
+    <div className="builder-ai-workspace grid items-start gap-6 lg:grid-cols-[minmax(0,1.12fr)_minmax(430px,0.88fr)] xl:gap-8">
+      <div className="builder-ai-preview-wrap lg:sticky lg:top-[92px]">
         <AIFlowerPreviewStage
           language={language}
           products={products}
@@ -357,7 +357,7 @@ export function AIBouquetMode({
         />
       </div>
 
-      <section className="overflow-hidden rounded-[30px] border border-[#e8dccb] bg-[#fffdf9] shadow-[0_24px_65px_rgba(83,61,40,0.09)]">
+      <section className="builder-ai-selection-card overflow-hidden rounded-[30px] border border-[#e8dccb] bg-[#fffdf9] shadow-[0_24px_65px_rgba(83,61,40,0.09)]">
         <div className="p-4 sm:p-5">
           <header className="flex items-start justify-between gap-4">
             <div>

@@ -96,7 +96,7 @@ export function AIFlowerPreviewStage({
 
   return (
     <section
-      className="overflow-hidden rounded-[30px] border border-[#463c30] bg-[#2c261f] p-3 shadow-[0_30px_80px_rgba(44,38,31,0.2)] sm:p-4"
+      className="builder-ai-stage overflow-hidden rounded-[30px] border border-[#463c30] bg-[#2c261f] p-3 shadow-[0_30px_80px_rgba(44,38,31,0.2)] sm:p-4"
       aria-busy={isGenerating}
       aria-label={
         language === "ka"

@@ -76,3 +76,9 @@
 - [x] Verify computed runtime `font-family` on Home, Catalog and Product Detail heading/UI elements, then document the active fallback chain.
 - [x] Rebuild Home product rails and the shared ProductCard presentation as a cream gallery with tall media, white information base, floating wishlist, coral quick-add and reference-style title/price hierarchy while preserving product data and actions.
 - [x] Validate the revised ProductCard interactions and responsive Home rails at mobile/tablet/desktop widths with contracts, TypeScript and production build.
+- [x] Audit the existing Visual Bouquet and AI Bouquet flows, their flower data, live-price behavior and current component/style boundaries; record the failed ZIP upload as unavailable input.
+- [x] Rebuild the Bouquet Builder page in the requested dark editorial system while preserving both Visual Bouquet and AI Bouquet journeys, existing routes, selections, pricing and checkout handoff.
+- [x] Preserve the individual AI flower choices and add a clear live composition preview that updates from those real selections without mocked flower data.
+- [x] Validate builder interactions, live preview, accessibility and responsive rendering at mobile/tablet/desktop widths; run relevant contracts, TypeScript and production build.
+- [x] Verify both Visual Bouquet and AI Bouquet responsive layouts at 768px, including live preview rendering and 44px individual-flower controls, then record the tablet QA evidence.
+- [x] Persist 768px Visual/AI Builder QA evidence and verify that individual flower steppers remain 44px at tablet width before checkpoint.

@@ -49,11 +49,11 @@ export default function AIBouquetBuilder() {
   }, [categories, products]);
 
   return (
-    <div className="p2-builder-page min-h-screen bg-[#faf7f2]">
+    <div className="p2-builder-page builder-editorial-page min-h-screen bg-[#faf7f2]">
       <Navbar />
 
-      <main id="main-content" className="p2-builder-main mx-auto max-w-[1460px] px-4 py-6 sm:px-6 sm:py-8">
-        <section className="p2-builder-intro p2-builder-journey mb-6 grid gap-4 rounded-2xl border border-[#eadfce] bg-[#171717] p-5 text-[#f7f2e9] sm:grid-cols-[1fr_auto] sm:items-center sm:p-6" aria-labelledby="builder-page-title">
+      <main id="main-content" className="p2-builder-main builder-editorial-main mx-auto max-w-[1460px] px-4 py-6 sm:px-6 sm:py-8">
+        <section className="p2-builder-intro p2-builder-journey builder-editorial-hero mb-6 grid gap-4 rounded-2xl border border-[#eadfce] bg-[#171717] p-5 text-[#f7f2e9] sm:grid-cols-[1fr_auto] sm:items-center sm:p-6" aria-labelledby="builder-page-title">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#e2c58b]">01 · {language === "ka" ? "აირჩიეთ ყვავილები" : "Choose flowers first"}</p>
             <h1 id="builder-page-title" className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-[#f7f2e9] sm:text-3xl">{language === "ka" ? "შექმენით თქვენი თაიგული" : "Build your bouquet"}</h1>
@@ -67,7 +67,7 @@ export default function AIBouquetBuilder() {
           className="p2-builder-mode-switcher w-full"
           aria-labelledby="builder-page-title"
         >
-          <TabsList className="p2-builder-tabs mb-6 grid h-auto w-full grid-cols-2 rounded-2xl border border-[#eadfce] bg-white p-1.5 shadow-[0_10px_30px_rgba(83,61,40,0.05)] sm:mb-8">
+          <TabsList className="p2-builder-tabs builder-editorial-tabs mb-6 grid h-auto w-full grid-cols-2 rounded-2xl border border-[#eadfce] bg-white p-1.5 shadow-[0_10px_30px_rgba(83,61,40,0.05)] sm:mb-8">
             <TabsTrigger
               value="visual"
               className="min-h-12 gap-2 rounded-xl text-sm font-semibold text-[#74685c] data-[state=active]:bg-[#f2e7d7] data-[state=active]:text-[#8c6030] data-[state=active]:shadow-none"

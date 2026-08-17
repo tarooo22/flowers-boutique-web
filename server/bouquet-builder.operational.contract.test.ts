@@ -18,7 +18,7 @@ describe("bouquet builder operational surface", () => {
   });
 
   it("uses 44px quantity controls while blocking unavailable flower additions", async () => {
-    const [visualCard, visualBuilder, aiMode] = await Promise.all([
+    const [visualCard, visualBuilder, aiMode, page, previewStage] = await Promise.all([
       readFile(
         path.join(
           projectRoot,
@@ -40,6 +40,17 @@ describe("bouquet builder operational surface", () => {
         ),
         "utf8",
       ),
+      readFile(
+        path.join(projectRoot, "client/src/pages/AIBouquetBuilder.tsx"),
+        "utf8",
+      ),
+      readFile(
+        path.join(
+          projectRoot,
+          "client/src/components/bouquet-builder/AIFlowerPreviewStage.tsx",
+        ),
+        "utf8",
+      ),
     ]);
 
     expect(visualCard.match(/h-11 w-11/g)?.length).toBeGreaterThanOrEqual(2);
@@ -54,5 +65,10 @@ describe("bouquet builder operational surface", () => {
     expect(aiMode).toContain("const hasUnavailableSelection = selectedFlowers.some(");
     expect(aiMode).toContain("if (hasUnavailableSelection) {");
     expect(aiMode).toContain("if (product.isAvailable === false && delta > 0) return;");
+    expect(page).toContain("builder-editorial-page");
+    expect(page).toContain("builder-editorial-tabs");
+    expect(visualCard).toContain("builder-flower-picker-card");
+    expect(aiMode).toContain("builder-ai-selection-card");
+    expect(previewStage).toContain("builder-ai-stage");
   });
 });

@@ -167,9 +167,9 @@ export function VisualBouquetBuilder({
   };
 
   return (
-    <div className="p2-builder-workspace grid items-start gap-6 lg:grid-cols-[minmax(390px,0.92fr)_minmax(520px,1.08fr)] xl:gap-8">
+    <div className="p2-builder-workspace builder-visual-workspace grid items-start gap-6 lg:grid-cols-[minmax(390px,0.92fr)_minmax(520px,1.08fr)] xl:gap-8">
       <section className="p2-builder-preview-panel order-1 lg:sticky lg:top-28 lg:col-start-1 lg:row-start-1" aria-labelledby="visual-preview-title">
-        <div className="rounded-[28px] border border-[#eadfce] bg-white p-4 shadow-[0_18px_55px_rgba(83,61,40,0.08)] sm:p-5">
+        <div className="builder-visual-preview-card rounded-[28px] border border-[#eadfce] bg-white p-4 shadow-[0_18px_55px_rgba(83,61,40,0.08)] sm:p-5">
           <div className="mb-4 flex items-start justify-between gap-4">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#a47740]">
@@ -328,7 +328,7 @@ export function VisualBouquetBuilder({
 
       <section className="p2-builder-selection-panel order-2 flex flex-col gap-6 lg:col-start-2 lg:row-start-1" aria-labelledby="builder-selection-title">
         <aside
-          className="p2-builder-summary order-2 rounded-[24px] border border-[#d6c2a4] bg-[#30291f] p-5 text-[#fffaf2] shadow-[0_18px_45px_rgba(53,40,27,0.14)]"
+          className="p2-builder-summary builder-visual-summary-card order-2 rounded-[24px] border border-[#d6c2a4] bg-[#30291f] p-5 text-[#fffaf2] shadow-[0_18px_45px_rgba(53,40,27,0.14)]"
           aria-live="polite"
           aria-atomic="true"
           aria-labelledby="builder-summary-title"
@@ -421,7 +421,7 @@ export function VisualBouquetBuilder({
           </button>
         </aside>
 
-        <div className="order-1 rounded-[28px] border border-[#eadfce] bg-white p-4 shadow-[0_18px_55px_rgba(83,61,40,0.07)] sm:p-5">
+        <div className="builder-visual-selection-card order-1 rounded-[28px] border border-[#eadfce] bg-white p-4 shadow-[0_18px_55px_rgba(83,61,40,0.07)] sm:p-5">
           <div className="mb-4 flex items-end justify-between gap-4">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#a47740]">

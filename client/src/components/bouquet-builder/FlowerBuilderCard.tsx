@@ -32,7 +32,7 @@ export function FlowerBuilderCard({
   return (
     <article
       data-selected={quantity > 0 ? "true" : "false"}
-      className={`group grid min-h-[112px] grid-cols-[68px_minmax(0,1fr)] gap-3 rounded-2xl border p-3 transition duration-200 ${
+      className={`builder-flower-picker-card group grid min-h-[112px] grid-cols-[68px_minmax(0,1fr)] gap-3 rounded-2xl border p-3 transition duration-200 ${
         available
           ? quantity > 0
             ? "border-[#b98a53] bg-[#fdf7ee] shadow-[0_10px_24px_rgba(120,83,38,0.12)] ring-1 ring-[#b98a53]/20"

@@ -10,6 +10,7 @@ import "./index.css";
 import "./styles/header-refinement.css";
 import "./styles/wave1-reference.css";
 import "./styles/amelie-rebuild.css";
+import "./styles/bouquet-builder-editorial.css";
 
 // Initialize Facebook Pixel on app load
 initFacebookPixel();
