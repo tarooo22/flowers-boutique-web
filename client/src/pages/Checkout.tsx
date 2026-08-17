@@ -439,7 +439,7 @@ export default function Checkout() {
   const availableTimeSlots = getAvailableTimeSlots(selectedDate);
 
   return (
-    <div className="fb-checkout-page min-h-screen bg-[#f7f2e9]">
+    <div className="fb-checkout-page zip-checkout-page min-h-screen bg-[#f7f2e9]">
       <Navbar />
       {/* Map Pin Selector Modal */}
       <MapPinSelector

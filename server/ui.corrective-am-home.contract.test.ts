@@ -9,12 +9,14 @@ describe("Amelie-first corrective Home contract", () => {
   it("replaces the legacy home hierarchy with the measured public commerce sequence", async () => {
     const home = await source("client/src/pages/Home.tsx");
     const sequence = [
-      'className="am-home-hero"',
+      'className="am-home-hero zip-home-hero"',
+      'className="zip-home-marquee"',
       'className="am-occasion am-reveal"',
       'productRail(firstRail',
+      'className="am-promo-banner am-reveal"',
+      'className="zip-home-reward am-reveal"',
       'productRail(secondRail',
       'productRail(thirdRail',
-      'className="am-promo-banner am-reveal"',
       'className="am-services am-reveal"',
       'className="am-journal am-reveal"',
     ];

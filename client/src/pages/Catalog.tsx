@@ -206,7 +206,7 @@ export default function Catalog() {
     <div className="p1-site p2-catalog-page min-h-screen">
       <Navbar />
       <main>
-        <section className="fb-catalog-intro p3-catalog-amelie-hero">
+        <section className="fb-catalog-intro p3-catalog-amelie-hero zip-catalog-hero">
           <div className="fb-page-shell">
             <div className="fb-breadcrumbs">
               <Link href="/">{t("nav.home")}</Link>
@@ -229,6 +229,25 @@ export default function Catalog() {
                       ? `${totalProducts} შერჩეული თაიგული · ${categories.length} კოლექცია`
                       : `${totalProducts} considered bouquets · ${categories.length} collections`}
                 </p>
+                <div className="zip-catalog-hero__search">
+                  <Search size={18} aria-hidden="true" />
+                  <label className="sr-only" htmlFor="catalog-hero-search">{ka ? "თაიგულების ძიება" : "Search bouquets"}</label>
+                  <input
+                    id="catalog-hero-search"
+                    value={searchTerm}
+                    onChange={event => setSearchTerm(event.target.value)}
+                    placeholder={ka ? "მოძებნეთ თაიგული ან შემთხვევა" : "Search bouquets or occasions"}
+                  />
+                  {searchTerm && (
+                    <button
+                      type="button"
+                      onClick={() => setSearchTerm("")}
+                      aria-label={ka ? "ძიების გასუფთავება" : "Clear search"}
+                    >
+                      <X size={15} />
+                    </button>
+                  )}
+                </div>
               </div>
               <button
                 type="button"
@@ -271,7 +290,7 @@ export default function Catalog() {
           </div>
         </section>
 
-        <section className="fb-page-shell fb-catalog-layout">
+        <section className="fb-page-shell fb-catalog-layout zip-catalog-layout">
           <aside
             id="catalog-filters"
             className={`fb-catalog-filters p3-catalog-amelie-filters ${filtersOpen ? "is-open" : ""}`}
@@ -420,7 +439,7 @@ export default function Catalog() {
           )}
 
           <div
-            className="fb-catalog-results p3-catalog-amelie-results"
+            className="fb-catalog-results p3-catalog-amelie-results zip-catalog-results"
             data-has-active-filters={hasFilters ? "true" : "false"}
           >
             <div className="fb-catalog-toolbar p3-catalog-amelie-toolbar">

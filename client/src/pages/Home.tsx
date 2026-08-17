@@ -190,7 +190,7 @@ export default function Home() {
     <div className="am-site" ref={revealRootRef}>
       <Navbar />
       <main id="main-content" className="am-home">
-        <section className="am-home-hero" aria-labelledby="am-home-hero-title">
+        <section className="am-home-hero zip-home-hero" aria-labelledby="am-home-hero-title">
           <div className="am-home-hero__slides" aria-hidden="true">
             {heroSlides.map((hero, index) => (
               <figure key={hero.image} className={`am-home-hero__slide ${index === currentSlide ? "is-active" : ""}`}>
@@ -199,23 +199,52 @@ export default function Home() {
             ))}
           </div>
           <div className="am-home-hero__shade" />
-          <div className="am-home-hero__content">
+          <div className="am-home-hero__content zip-home-hero__content">
             <div className="am-home-hero__copy">
               <p className="am-hero-kicker"><Sparkles aria-hidden="true" />{ka ? "დღეს კარგი დღეა ყვავილების გასაგზავნად" : "Today is a good day to send flowers"}</p>
               <h1 id="am-home-hero-title">{ka ? slide.titleKa : slide.titleEn}</h1>
               <p className="am-home-hero__lede">{ka ? slide.copyKa : slide.copyEn}</p>
-              <Link href="/catalog" className="am-coral-button">{ka ? "კატალოგის ნახვა" : "Explore catalog"}<ArrowRight /></Link>
+              <div className="zip-home-hero__actions">
+                <Link href="/catalog" className="am-coral-button">{ka ? "კატალოგის ნახვა" : "Explore catalog"}<ArrowRight /></Link>
+                <a href="#am-occasion-title" className="zip-home-hero__secondary-action">{ka ? "შემთხვევის მიხედვით" : "Find by occasion"}</a>
+              </div>
+              <dl className="am-hero-metrics">
+                <div><dd>₾{DELIVERY_FEE_GEL}</dd><dt>{ka ? "მიწოდება თბილისში" : "Tbilisi delivery"}</dt></div>
+                <div><dd>₾{FREE_DELIVERY_THRESHOLD_GEL}+</dd><dt>{ka ? "უფასო მიწოდება" : "Free delivery"}</dt></div>
+                <div><dd>{products.length || "—"}</dd><dt>{ka ? "თაიგულები კატალოგში" : "Bouquets in catalog"}</dt></div>
+              </dl>
             </div>
-            <div className="am-hero-dots" role="group" aria-label={ka ? "Hero სლაიდების ნავიგაცია" : "Hero slide navigation"}>
-              {heroSlides.map((_, index) => (
-                <button key={index} type="button" onClick={() => setCurrentSlide(index)} className={index === currentSlide ? "is-active" : ""} aria-label={ka ? `სლაიდი ${index + 1}` : `Slide ${index + 1}`} aria-current={index === currentSlide ? "true" : undefined} />
-              ))}
+            <div className="zip-home-hero__visual">
+              <div className="zip-home-hero__back-card zip-home-hero__back-card--left" aria-hidden="true" />
+              <div className="zip-home-hero__back-card zip-home-hero__back-card--right" aria-hidden="true" />
+              <div className="zip-home-hero__image-card">
+                <div className="zip-home-hero__image-stage" aria-hidden="true">
+                  {heroSlides.map((hero, index) => (
+                    <img key={hero.image} src={hero.image} alt="" className={index === currentSlide ? "is-active" : ""} />
+                  ))}
+                </div>
+                <div className="zip-home-hero__image-meta">
+                  <span>{ka ? "დღის შთაგონება" : "Today's inspiration"}</span>
+                  <strong>{ka ? slide.titleKa : slide.titleEn}</strong>
+                </div>
+              </div>
+              <span className="zip-home-hero__floating-chip zip-home-hero__floating-chip--delivery">{ka ? "სწრაფი მიწოდება" : "Express delivery"}</span>
+              <span className="zip-home-hero__floating-chip zip-home-hero__floating-chip--fresh">{ka ? "ახალი ყოველდღე" : "Fresh daily"}</span>
+              <div className="am-hero-dots zip-home-hero__dots" role="group" aria-label={ka ? "Hero სლაიდების ნავიგაცია" : "Hero slide navigation"}>
+                {heroSlides.map((_, index) => (
+                  <button key={index} type="button" onClick={() => setCurrentSlide(index)} className={index === currentSlide ? "is-active" : ""} aria-label={ka ? `სლაიდი ${index + 1}` : `Slide ${index + 1}`} aria-current={index === currentSlide ? "true" : undefined} />
+                ))}
+              </div>
             </div>
-            <dl className="am-hero-metrics">
-              <div><dd>₾{DELIVERY_FEE_GEL}</dd><dt>{ka ? "მიწოდება თბილისში" : "Tbilisi delivery"}</dt></div>
-              <div><dd>₾{FREE_DELIVERY_THRESHOLD_GEL}+</dd><dt>{ka ? "უფასო მიწოდება" : "Free delivery"}</dt></div>
-              <div><dd>{products.length || "—"}</dd><dt>{ka ? "თაიგულები კატალოგში" : "Bouquets in catalog"}</dt></div>
-            </dl>
+          </div>
+        </section>
+
+        <section className="zip-home-marquee" aria-label={ka ? "სერვისის უპირატესობები" : "Service highlights"}>
+          <div className="zip-home-marquee__track">
+            <span>{ka ? "ახალი ყვავილები ყოველდღე" : "Fresh flowers daily"}</span><i aria-hidden="true" />
+            <span>{ka ? "მიწოდება თბილისში" : "Delivery across Tbilisi"}</span><i aria-hidden="true" />
+            <span>{ka ? "თქვენზე მორგებული თაიგულები" : "Bouquets made for you"}</span><i aria-hidden="true" />
+            <span>{ka ? "ახალი ყვავილები ყოველდღე" : "Fresh flowers daily"}</span>
           </div>
         </section>
 
@@ -230,11 +259,8 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="am-shell am-home__body">
-          {productRail(firstRail, "am-love-title", ka ? "სიყვარულისთვის" : "For love", true)}
-          {productRail(secondRail, "am-joy-title", ka ? "სიხარულისთვის" : "For joy")}
-          {productRail(thirdRail, "am-selection-title", ka ? "არჩეული თაიგულები" : "Selected bouquets", false, "shelf")}
-
+        <div className="am-shell am-home__body zip-home__body">
+          {productRail(firstRail, "am-love-title", ka ? "რჩეული თაიგულები" : "Bestselling bouquets", true)}
           <section className="am-promo-banner am-reveal" aria-labelledby="am-builder-title">
             <div className="am-promo-banner__copy">
               <p className="am-section-label">{ka ? "პერსონალური არჩევანი" : "A personal choice"}</p>
@@ -244,6 +270,21 @@ export default function Home() {
             </div>
             <img className="am-promo-banner__image" src="/manus-storage/flowers-boutique-experience-event-styling_07114441.jpg" alt="" />
           </section>
+
+          <section className="zip-home-reward am-reveal" aria-labelledby="zip-home-reward-title">
+            <div className="zip-home-reward__copy">
+              <p>{ka ? "ერთგული არჩევანი" : "A thoughtful return"}</p>
+              <h2 id="zip-home-reward-title">{ka ? "ყოველი მომენტი იმსახურებს პატარა სიხარულს" : "Every meaningful moment deserves a little joy"}</h2>
+            </div>
+            <div className="zip-home-reward__detail">
+              <strong>{ka ? "პერსონალური რჩევა" : "Personal guidance"}</strong>
+              <span>{ka ? "ჩვენი ფლორისტები დაგეხმარებიან სწორი კომპოზიციის არჩევაში." : "Our florists will help you choose the right composition."}</span>
+              <Link href="/contact">{ka ? "დაგვიკავშირდი" : "Talk to us"}<ArrowRight aria-hidden="true" /></Link>
+            </div>
+          </section>
+
+          {productRail(secondRail, "am-joy-title", ka ? "სიხარულისთვის" : "For joy")}
+          {productRail(thirdRail, "am-selection-title", ka ? "სეზონური არჩევანი" : "Seasonal selection", false, "shelf")}
 
           <section className="am-services am-reveal" aria-labelledby="am-services-title">
             <div className="am-home-rail__head">

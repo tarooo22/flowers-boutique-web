@@ -53,12 +53,14 @@ describe("Amelie-first public storefront contract", () => {
   it("replaces legacy Home composition with the measured hero-to-commerce-to-services structure", async () => {
     const home = await read("client/src/pages/Home.tsx");
     const order = [
-      'className="am-home-hero"',
+      'className="am-home-hero zip-home-hero"',
+      'className="zip-home-marquee"',
       'className="am-occasion am-reveal"',
       'productRail(firstRail',
+      'className="am-promo-banner am-reveal"',
+      'className="zip-home-reward am-reveal"',
       'productRail(secondRail',
       'productRail(thirdRail',
-      'className="am-promo-banner am-reveal"',
       'className="am-services am-reveal"',
       'className="am-journal am-reveal"',
     ];
@@ -106,7 +108,7 @@ describe("Amelie-first public storefront contract", () => {
   it("keeps Catalog discovery controls, URL state, product behavior and progressive card reveal intact", async () => {
     const catalog = await read("client/src/pages/Catalog.tsx");
 
-    expect(catalog).toContain('className="fb-catalog-intro p3-catalog-amelie-hero"');
+    expect(catalog).toContain('className="fb-catalog-intro p3-catalog-amelie-hero zip-catalog-hero"');
     expect(catalog).toContain('className="p3-catalog-amelie-hero__meta" aria-live="polite"');
     expect(catalog).toContain('p3-catalog-amelie-filters ${filtersOpen ? "is-open" : ""}');
     expect(catalog).toContain('className="fb-catalog-grid p3-catalog-amelie-grid"');
@@ -124,7 +126,7 @@ describe("Amelie-first public storefront contract", () => {
 
     expect(detail).toContain('import { DELIVERY_FEE_GEL, FREE_DELIVERY_THRESHOLD_GEL } from "@shared/checkoutPolicy";');
     expect(detail).toContain('className="fb-product-gallery p3-product-amelie-gallery"');
-    expect(detail).toContain('className="p3-product-amelie-purchase-card"');
+    expect(detail).toContain('className="p3-product-amelie-purchase-card zip-product-purchase-card"');
     expect(detail).toContain('className="fb-product-add p3-product-amelie-primary-cta"');
     expect(detail).toContain('className="p3-product-amelie-delivery-note"');
     expect(detail).toContain('className="fb-product-sticky p3-product-amelie-sticky"');

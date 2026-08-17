@@ -91,3 +91,15 @@
 - [x] Validate the complete ZIP-derived Builder replacement at 375px, 768px and 1440px, including live selected-flower preview updates, accessibility controls, contracts, TypeScript and production build.
 - [x] Reconcile the obsolete Builder heading source-contract expectation with the approved ZIP-derived page title, then re-run Builder validation.
 - [x] Diagnose and restore the 44px enabled AI flower increment touch target at desktop width after the ZIP-derived presentation replacement, then re-run live preview QA.
+- [x] Audit the live `/bouquet-builder` route, published deployment version and route access path to determine why the user does not see the ZIP-derived Builder replacement.
+- [x] Resolve the production Builder visibility issue or provide the verified public route and cache-refresh action after confirming the live render.
+- [ ] Provide the verified published Builder URL and explicit hard-refresh instructions after confirming the new UI on production.
+- [ ] If the user still sees the prior UI after refresh, reproduce their exact domain/path and resolve the remaining production visibility mismatch.
+- [x] Inventory the full uploaded ZIP design system, routes, shared components and public page surfaces; map each to the corresponding current Flower’s Boutique route without executing ZIP code.
+- [x] Write a clean-room presentation replacement roadmap that explicitly preserves current products, categories, Builder flows, cart, checkout, authentication, database, admin and SEO contracts.
+- [x] Replace global shell, navigation, typography, shared controls and footer presentation with ZIP-derived clean-room UI while preserving all active behavior.
+- [x] Replace Home, Catalog, collection/discovery and Product Detail visual presentation with ZIP-derived layouts using current Flower’s Boutique data and business logic.
+- [x] Replace Cart, Checkout, account/auth and utility/public page presentation with ZIP-derived UI while preserving workflows and route semantics.
+- [x] Complete Builder alignment and site-wide responsive visual parity at 375px, 768px, 1024px and 1440px; run protected contracts, full Vitest, TypeScript and production build.
+- [x] Replace the admin and payment/status page presentation with the ZIP-derived system while preserving access control and order/payment contracts.
+- [x] Document the completed ZIP-derived full-site presentation replacement, responsive QA matrix, protected-business boundary and final validation results.
