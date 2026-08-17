@@ -53,36 +53,44 @@ export default function AIBouquetBuilder() {
       <Navbar />
 
       <main id="main-content" className="p2-builder-main builder-editorial-main mx-auto max-w-[1460px] px-4 py-6 sm:px-6 sm:py-8">
-        <section className="p2-builder-intro p2-builder-journey builder-editorial-hero mb-6 grid gap-4 rounded-2xl border border-[#eadfce] bg-[#171717] p-5 text-[#f7f2e9] sm:grid-cols-[1fr_auto] sm:items-center sm:p-6" aria-labelledby="builder-page-title">
+        <section className="p2-builder-intro p2-builder-journey builder-editorial-hero" aria-labelledby="builder-page-title">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#e2c58b]">01 · {language === "ka" ? "აირჩიეთ ყვავილები" : "Choose flowers first"}</p>
-            <h1 id="builder-page-title" className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-[#f7f2e9] sm:text-3xl">{language === "ka" ? "შექმენით თქვენი თაიგული" : "Build your bouquet"}</h1>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-white/70">{language === "ka" ? "შემდეგ აირჩიეთ შეფუთვა და ლენტი, გადაამოწმეთ ფასი და დაამატეთ თაიგული კალათაში." : "Then choose wrapping and ribbon, review the price, and add your bouquet to cart."}</p>
+            <p className="builder-editorial-eyebrow">{language === "ka" ? "თაიგულის ატელიე" : "Bouquet atelier"}</p>
+            <h1 id="builder-page-title">{language === "ka" ? "შექმენი შენი თაიგული" : "Create your bouquet"}</h1>
+            <p>{language === "ka" ? "აირჩიეთ მზა ვიზუალური კომპოზიცია ან შექმენით AI თაიგული თქვენთვის სასურველი ყვავილებით." : "Choose a visual composition or create an AI bouquet from your preferred flowers."}</p>
           </div>
-          <div className="flex items-center gap-2 text-xs text-white/55"><span className="rounded-full bg-[#c9a86a] px-3 py-1.5 font-semibold text-[#171717]">1 {language === "ka" ? "ყვავილები" : "Flowers"}</span><span>→</span><span>2 {language === "ka" ? "შეფუთვა" : "Wrap"}</span><span>→</span><span>3 {language === "ka" ? "კალათა" : "Cart"}</span></div>
         </section>
         <Tabs
           value={mode}
           onValueChange={value => setMode(value as "visual" | "ai")}
-          className="p2-builder-mode-switcher w-full"
+          className="p2-builder-mode-switcher builder-zip-mode-switcher w-full"
           aria-labelledby="builder-page-title"
         >
-          <TabsList className="p2-builder-tabs builder-editorial-tabs mb-6 grid h-auto w-full grid-cols-2 rounded-2xl border border-[#eadfce] bg-white p-1.5 shadow-[0_10px_30px_rgba(83,61,40,0.05)] sm:mb-8">
+          <TabsList className="p2-builder-tabs builder-editorial-tabs mb-2 flex h-auto w-full justify-start gap-2 bg-transparent p-0 shadow-none sm:mb-2">
             <TabsTrigger
               value="visual"
-              className="min-h-12 gap-2 rounded-xl text-sm font-semibold text-[#74685c] data-[state=active]:bg-[#f2e7d7] data-[state=active]:text-[#8c6030] data-[state=active]:shadow-none"
+              className="min-h-11 gap-2 rounded-full border px-5 text-sm font-semibold"
             >
               <WandSparkles className="h-4 w-4" />
               {language === "ka" ? "ვიზუალური თაიგული" : "Visual bouquet"}
             </TabsTrigger>
             <TabsTrigger
               value="ai"
-              className="min-h-12 gap-2 rounded-xl text-sm font-semibold text-[#74685c] data-[state=active]:bg-[#30291f] data-[state=active]:text-white data-[state=active]:shadow-none"
+              className="min-h-11 gap-2 rounded-full border px-5 text-sm font-semibold"
             >
               <Sparkles className="h-4 w-4" />
               {language === "ka" ? "AI თაიგული" : "AI bouquet"}
             </TabsTrigger>
           </TabsList>
+          <p className="builder-zip-mode-hint" aria-live="polite">
+            {mode === "visual"
+              ? language === "ka"
+                ? "აირჩიეთ ყვავილები, შეფუთვა და ლენტი — კომპოზიცია მყისიერად განახლდება."
+                : "Choose flowers, wrapping and ribbon — your composition updates instantly."
+              : language === "ka"
+                ? "აირჩიეთ ცალკეული ყვავილები და დააკვირდით თქვენს ცოცხალ AI კომპოზიციას."
+                : "Choose individual flowers and follow your live AI composition."}
+          </p>
 
           <TabsContent value="visual" className="p2-builder-tab-panel mt-0">
             <VisualBouquetBuilder

@@ -643,7 +643,7 @@ export function AIBouquetMode({
                             type="button"
                             onClick={() => updateQuantity(product, -1)}
                             disabled={!selected || isGenerating}
-                            className="grid h-11 w-11 place-items-center rounded-full border border-[#ddcdb9] bg-white text-[#6f6256] transition hover:border-[#b99568] hover:bg-[#faf4eb] disabled:cursor-not-allowed disabled:opacity-30"
+                            className="builder-ai-quantity-button grid h-11 w-11 place-items-center rounded-full border border-[#ddcdb9] bg-white text-[#6f6256] transition hover:border-[#b99568] hover:bg-[#faf4eb] disabled:cursor-not-allowed disabled:opacity-30"
                             aria-label={
                               language === "ka"
                                 ? `${productName} — რაოდენობის შემცირება`
@@ -668,7 +668,7 @@ export function AIBouquetMode({
                               (!selected &&
                                 selectedFlowers.length >= MAX_AI_FLOWER_TYPES)
                             }
-                            className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a77a] bg-[#f6ead9] text-[#8e602e] transition hover:bg-[#eed9bc] disabled:cursor-not-allowed disabled:opacity-30"
+                            className="builder-ai-quantity-button grid h-11 w-11 place-items-center rounded-full border border-[#c9a77a] bg-[#f6ead9] text-[#8e602e] transition hover:bg-[#eed9bc] disabled:cursor-not-allowed disabled:opacity-30"
                             aria-label={
                               language === "ka"
                                 ? `${productName} — რაოდენობის გაზრდა`

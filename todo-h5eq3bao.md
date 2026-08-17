@@ -85,3 +85,9 @@
 - [x] Audit the uploaded `flower-shopv3.zip` structure and compare its bouquet-builder visual reference against the current published Builder implementation.
 - [x] Apply only ZIP-verified Bouquet Builder visual refinements while preserving Visual/AI modes, existing individual flower data, live preview, pricing, generation and checkout handoff.
 - [x] Validate ZIP-aligned Builder presentation and real selected-flower preview updates at mobile/tablet/desktop widths; run relevant tests, TypeScript and production build.
+- [x] Extract a detailed clean-room specification from the uploaded ZIP Builder design and compare it against the current Builder markup/styles to identify every presentation replacement required.
+- [x] Replace the current Visual Bouquet presentation with the ZIP-derived Builder layout, spacing, controls and preview surface while retaining existing Flower’s Boutique state, pricing and checkout contracts.
+- [x] Replace the current AI Bouquet presentation with the ZIP-derived two-column selection/composition layout and live preview treatment while retaining the existing real individual flowers and AI generation flow.
+- [x] Validate the complete ZIP-derived Builder replacement at 375px, 768px and 1440px, including live selected-flower preview updates, accessibility controls, contracts, TypeScript and production build.
+- [x] Reconcile the obsolete Builder heading source-contract expectation with the approved ZIP-derived page title, then re-run Builder validation.
+- [x] Diagnose and restore the 44px enabled AI flower increment touch target at desktop width after the ZIP-derived presentation replacement, then re-run live preview QA.

@@ -12,7 +12,7 @@ describe("bouquet builder operational surface", () => {
     );
 
     expect(source).toContain('canonical: "/bouquet-builder"');
-    expect(source).toContain("Build your bouquet");
+    expect(source).toContain("Create your bouquet");
     expect(source).toContain('<main id="main-content"');
     expect(source).toContain("<Footer />");
   });

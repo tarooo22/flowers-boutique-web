@@ -1,28 +1,36 @@
-# Bouquet Builder — ატვირთული ZIP-ის შედარებითი audit
+# Bouquet Builder — ZIP-derived დიზაინის ჩანაცვლების ანგარიში
 
 **თარიღი:** 2026-08-17  
 **ატვირთული package:** `flower-shopv3.zip`  
-**მეთოდი:** ZIP-ის source structure მხოლოდ read-only რეჟიმში შემოწმდა. მისი კოდი, assets ან მონაცემები project-ში არ დაკოპირებულა.
+**მეთოდი:** ატვირთული package-ის Builder source და layout structure გამოყენებულია როგორც ვიზუალური/UX specification. კოდი, assets, product data და business logic პირდაპირ არ დაკოპირებულა; Flower’s Boutique-ში განხორციელდა clean-room React/CSS replacement.
 
-## აღმოჩენილი დიზაინის სტრუქტურა
+## ჩანაცვლებული presentation
 
-ატვირთული პროექტი იყენებს `/builder` page-ს, `BuilderTabs`, `VisualBuilder`, `AIBouquet` და `BouquetCanvas` კომპონენტებს. მისი builder experience ორი mode-ის გარშემოა აგებული: ვიზუალური კონფიგურაცია და AI კომპოზიცია. AI mode-ის მთავარი signifier არის charcoal outer stage, cream radial preview canvas, center status card, orbit-style flower tokens და ქვედა composition/price summary.
+მოქმედი `/bouquet-builder` page ახლა მიჰყვება ZIP-ის მსუბუქ studio layout rhythm-ს. ზედა ნაწილი შეიცვალა compact editorial heading-ით, მცირე explanatory copy-ითა და pill-style Visual/AI mode tabs-ით. ძველი დიდი dark journey card და სრული სიგანის segmented control აღარ განსაზღვრავს Builder-ის პირველ ეკრანს.
 
-| ZIP reference-ის მახასიათებელი | მოქმედი Flower’s Boutique Builder |
+ორივე mode-ში დაინერგა მსუბუქი `#f7f4ed` workspace, თეთრი მცირე-radius panels, თბილი sand controls და უფრო ჰაეროვანი ორ-სვეტიანი desktop composition. AI mode-ის live composition stage დარჩა charcoal, რადგან ეს არის reference-ის მთავარი composition-focused visual anchor; მის შიგნით დარჩა cream radial canvas, orbit flowers, center status card და ქვედა quantity/price summary.
+
+| ZIP-derived area | განხორციელებული replacement |
 |---|---|
-| Visual და AI mode tabs | შენარჩუნებულია `Visual Bouquet` / `AI Bouquet` mode switcher-ით |
-| Dark editorial studio surface | მოქმედია scoped `.builder-editorial-*` system-ით |
-| Cream radial live-preview canvas | მოქმედია როგორც Visual Bouquet canvas-ში, ასევე AI stage-ში |
-| Individual flower selection | არსებული live inventory, asset mapping და availability guards სრულად შენარჩუნებულია |
-| Selected flower → preview update | მოქმედია რეალური selection state-ით, quantity badge-ით და orbit token-ით |
-| Composition და total summary | მოქმედია AI preview footer-სა და existing totals/purchase flow-ში |
+| Page shell | Compact atelier heading, subtitle, light surface და pill tabs |
+| Visual Bouquet | Light preview/selection panels, concise cards, cream bouquet canvas, wrapper/ribbon controls და summary surface |
+| AI Bouquet | Light flower-selection panel გვერდით dark composition studio-სთან, search/filter chips და real selected-flower palette |
+| Live preview | Existing real selected flower asset ემატება orbit preview-ს quantity badge-ით; mock flower data არ დამატებულა |
+| Controls | Explicit `46×46px` AI quantity button wrapper იცავს actual `≥44px` accessibility target-ს sub-pixel desktop sizing-ის შემთხვევაშიც |
 
-## ZIP-verified refinement verdict
+## დაცული behavior
 
-ატვირთული ZIP-ის საჯაროდ ხილული builder structure უკვე შესრულებულია მოქმედი დიზაინით clean-room წესით: მუქი rounded outer card, თბილი cream inset canvas, gold accent metadata, ორიანი mode selector და ცოცხალი composition preview. ამიტომ ამ audit-ის შემდეგ ახალი application code არ დამატებულა; ZIP-ის source პირდაპირი copying საჭირო არ იყო და გამორიცხულია.
+Visual Bouquet და AI Bouquet routes, mode switching, existing flower inventory, availability guards, wrapper/ribbon selections, price calculation, AI image generation, generated-image validity check და cart/checkout handoff უცვლელია. Presentation replacement არ ცვლის backend API, database, checkout, authentication ან cart payloads.
 
-მოქმედი implementation განზრახ ინარჩუნებს არსებული აპლიკაციის უფრო ძლიერი accessibility guarantee-ს: individual flower increment/decrement controls მინიმუმ `44×44px`-ია, მაშინ როცა ატვირთული source-ის ზოგი control უფრო პატარაა. ეს განსხვავება იცავს არსებულ operational contract-ს და არ ცვლის მომხმარებლის მოთხოვნილ individual flower flow-ს.
+## Responsive და functional validation
 
-## Validation status
+| შემოწმება | შედეგი |
+|---|---|
+| Visual Bouquet 375px / 768px / 1440px | PASS — compact header/tabs, canvas, cards და summary სწორად განლაგდა |
+| AI Bouquet 375px / 768px / 1440px | PASS — real tab switch, flower selection და live stage რენდერდება |
+| Real selected flower → preview update | PASS — enabled existing flower-ის `+` არჩევამ preview orbit და quantity badge განაახლა |
+| AI increment touch target | PASS — runtime DOM: `46×46px` desktop/mobile/tablet |
+| Focused Builder contract | PASS — 2 tests |
+| Full Vitest / TypeScript / production build / `git diff --check` | PASS |
 
-Real route QA უკვე დადასტურებულია 375px, 768px და 1440px-ზე. 768px-ზე enabled, available AI flower increment control runtime DOM-ით გაზომილია როგორც `44×44px`; მისმა დაჭერამ real selected flower დაამატა composition preview orbit-ში, quantity badge-ით. Focused Builder contract, სრული Vitest, TypeScript check და production build წარმატებით დასრულდა. დამატებითი დეტალები არის [`bouquet-builder-editorial-qa-ge.md`](./bouquet-builder-editorial-qa-ge.md)-ში.
+Production build-ში არსებული >500 kB shared chunk advisory უცვლელი, non-blocking warning-ია.
