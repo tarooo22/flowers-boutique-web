@@ -390,3 +390,9 @@
 ## Claude-local skill visibility synchronization — 2026-08-16
 - [x] Synchronize the 17 unique Claude-local skills into the Manus-visible skill root without overwriting already installed Manus skills.
 - [x] Verify that every synchronized skill includes valid metadata and report the resulting Manus-visible inventory to the user.
+
+## Amelie-inspired Catalog and Product Detail redesign — 2026-08-17
+- [x] Audit the latest shared Catalog and Product Detail source, existing UI contracts, persistent product imagery, and public Amelie reference patterns without copying brand assets or commercial claims.
+- [x] Define an original Flower’s Boutique discovery-and-purchase hierarchy using the current design-token system: catalog title/filter/sort/product grid states and detail gallery/purchase/variant/delivery context.
+- [x] Implement additive, responsive presentation improvements while preserving all real product data, product routes, availability, wishlist/cart behavior, checkout hand-off, authentication, centralized delivery values, and BOG sandbox mode.
+- [x] Add focused UI regression coverage; complete desktop, 390px, and 320px visual QA; run browser diagnostics, Vitest, TypeScript, and production build before checkpointing.

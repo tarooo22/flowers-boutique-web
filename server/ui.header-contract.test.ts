@@ -91,7 +91,7 @@ describe("Amelie-first public storefront contract", () => {
   it("keeps the shared ProductCard localized, media-safe and action-complete in the new geometry", async () => {
     const card = await read("client/src/components/product/ProductCard.tsx");
 
-    expect(card).toContain('className={`am-product-card ${isAvailable ? "" : "is-unavailable"}`}');
+    expect(card).toContain('className={`am-product-card ${isAvailable ? "" : "is-unavailable"} ${className}`.trim()}');
     expect(card).toContain('import FlowerImage from "@/components/FlowerImage"');
     expect(card).toContain("getProductName(product, language)");
     expect(card).toContain('₾${amount.toLocaleString("ka-GE"');
@@ -101,6 +101,56 @@ describe("Amelie-first public storefront contract", () => {
     expect(card).toContain('data-availability={isAvailable ? "available" : "unavailable"}');
     expect(card).toContain("const needsSelection = variants.length > 0;");
     expect(card).toContain("onClick={() => onAdd(product)}");
+  });
+
+  it("keeps Catalog discovery controls, URL state, product behavior and progressive card reveal intact", async () => {
+    const catalog = await read("client/src/pages/Catalog.tsx");
+
+    expect(catalog).toContain('className="fb-catalog-intro p3-catalog-amelie-hero"');
+    expect(catalog).toContain('className="p3-catalog-amelie-hero__meta" aria-live="polite"');
+    expect(catalog).toContain('p3-catalog-amelie-filters ${filtersOpen ? "is-open" : ""}');
+    expect(catalog).toContain('className="fb-catalog-grid p3-catalog-amelie-grid"');
+    expect(catalog).toContain('className="p3-catalog-amelie-card"');
+    expect(catalog).toContain('querySelectorAll<HTMLElement>(".p3-catalog-amelie-card")');
+    expect(catalog).toContain('"IntersectionObserver" in window');
+    expect(catalog).toContain('window.history.replaceState');
+    expect(catalog).toContain("trpc.products.catalog.useQuery");
+    expect(catalog).toContain("addToCart({");
+    expect(catalog).toContain("<ProductCard");
+  });
+
+  it("keeps Product Detail gallery, selected variant, cart CTA and canonical delivery context intact", async () => {
+    const detail = await read("client/src/pages/ProductDetail.tsx");
+
+    expect(detail).toContain('import { DELIVERY_FEE_GEL, FREE_DELIVERY_THRESHOLD_GEL } from "@shared/checkoutPolicy";');
+    expect(detail).toContain('className="fb-product-gallery p3-product-amelie-gallery"');
+    expect(detail).toContain('className="p3-product-amelie-purchase-card"');
+    expect(detail).toContain('className="fb-product-add p3-product-amelie-primary-cta"');
+    expect(detail).toContain('className="p3-product-amelie-delivery-note"');
+    expect(detail).toContain('className="fb-product-sticky p3-product-amelie-sticky"');
+    expect(detail).toContain("setSelectedVariantId(variant.id)");
+    expect(detail).toContain("onClick={addProduct}");
+    expect(detail).toContain("addToCart({");
+    expect(detail).toContain('href={`/contact?product=${product.id}`}');
+    expect(detail).toContain('selectedVariant?.available === false');
+  });
+
+  it("keeps the Catalog and Product Detail additive visual layers token-led and reduced-motion safe", async () => {
+    const styles = await read("client/src/index.css");
+
+    for (const selector of [
+      ".p3-catalog-amelie-hero",
+      ".p3-catalog-amelie-grid",
+      ".p3-catalog-amelie-card",
+      ".p3-product-amelie-gallery",
+      ".p3-product-amelie-purchase-card",
+      ".p3-product-amelie-sticky",
+    ]) {
+      expect(styles).toContain(selector);
+    }
+    expect(styles).toContain("var(--fb-token-coral)");
+    expect(styles).toContain("var(--fb-token-botanical)");
+    expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
   });
 
   it("keeps the rebuilt footer data-owned and policy/account-safe", async () => {

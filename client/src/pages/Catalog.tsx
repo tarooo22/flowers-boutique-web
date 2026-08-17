@@ -69,6 +69,8 @@ export default function Catalog() {
     return Number.isInteger(value) && value > 0 ? value : 1;
   });
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [revealReady, setRevealReady] = useState(false);
+  const catalogGridRef = useRef<HTMLDivElement | null>(null);
 
   useSEO({
     titleKa: "ყვავილების კატალოგი | Flower's Boutique",
@@ -100,6 +102,10 @@ export default function Catalog() {
   const totalProducts = productsQuery.data?.total ?? 0;
   const categoryCounts = productsQuery.data?.categoryCounts ?? {};
   const categories = categoriesQuery.data ?? [];
+  const productRevealKey = useMemo(
+    () => products.map((product: { id: number }) => product.id).join(","),
+    [products]
+  );
 
   const filterKey = [
     availability,
@@ -131,6 +137,40 @@ export default function Catalog() {
     const query = params.toString();
     window.history.replaceState(null, "", query ? `/catalog?${query}` : "/catalog");
   }, [availability, maxPrice, minPrice, page, searchTerm, selectedCategoryId, sort]);
+
+  useEffect(() => {
+    const grid = catalogGridRef.current;
+    if (!grid || productsQuery.isLoading || !productRevealKey) {
+      setRevealReady(false);
+      return;
+    }
+
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>(".p3-catalog-amelie-card"));
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+      cards.forEach(card => card.classList.add("is-revealed"));
+      setRevealReady(false);
+      return;
+    }
+
+    cards.forEach(card => card.classList.remove("is-revealed"));
+    const frame = window.requestAnimationFrame(() => setRevealReady(true));
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-revealed");
+        observer.unobserve(entry.target);
+      }),
+      { rootMargin: "0px 0px -8%", threshold: 0.08 }
+    );
+
+    cards.forEach(card => observer.observe(card));
+    return () => {
+      window.cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
+  }, [productRevealKey, productsQuery.isLoading]);
 
   const clearFilters = () => {
     setSelectedCategoryId(null);
@@ -166,15 +206,15 @@ export default function Catalog() {
     <div className="p1-site p2-catalog-page min-h-screen">
       <Navbar />
       <main>
-        <section className="fb-catalog-intro">
+        <section className="fb-catalog-intro p3-catalog-amelie-hero">
           <div className="fb-page-shell">
             <div className="fb-breadcrumbs">
               <Link href="/">{t("nav.home")}</Link>
               <ChevronRight size={14} />
               <span>{t("nav.catalog")}</span>
             </div>
-            <div className="fb-catalog-intro__row">
-              <div>
+            <div className="fb-catalog-intro__row p3-catalog-amelie-hero__row">
+              <div className="p3-catalog-amelie-hero__copy">
                 <p className="fb-eyebrow">FLOWER'S BOUTIQUE · COLLECTION</p>
                 <h1 className="fb-display">{ka ? "თაიგულები" : "Bouquets"}</h1>
                 <p>
@@ -182,10 +222,17 @@ export default function Catalog() {
                     ? "ჩვენი კოლექცია თქვენი მნიშვნელოვანი მომენტებისთვის."
                     : "A considered collection for your meaningful moments."}
                 </p>
+                <p className="p3-catalog-amelie-hero__meta" aria-live="polite">
+                  {productsQuery.isLoading
+                    ? ka ? "კოლექცია მზადდება" : "Preparing the collection"
+                    : ka
+                      ? `${totalProducts} შერჩეული თაიგული · ${categories.length} კოლექცია`
+                      : `${totalProducts} considered bouquets · ${categories.length} collections`}
+                </p>
               </div>
               <button
                 type="button"
-                className="fb-filter-trigger"
+                className="fb-filter-trigger p3-catalog-amelie-filter-trigger"
                 onClick={() => setFiltersOpen(open => !open)}
                 aria-expanded={filtersOpen}
                 aria-controls="catalog-filters"
@@ -195,7 +242,7 @@ export default function Catalog() {
               </button>
             </div>
             <nav
-              className="fb-catalog-collection-nav"
+              className="fb-catalog-collection-nav p3-catalog-amelie-collection-nav"
               aria-label={ka ? "კატალოგის კატეგორიები" : "Catalog categories"}
             >
               <button
@@ -227,7 +274,7 @@ export default function Catalog() {
         <section className="fb-page-shell fb-catalog-layout">
           <aside
             id="catalog-filters"
-            className={`fb-catalog-filters ${filtersOpen ? "is-open" : ""}`}
+            className={`fb-catalog-filters p3-catalog-amelie-filters ${filtersOpen ? "is-open" : ""}`}
             aria-label={ka ? "კატალოგის ფილტრები" : "Catalog filters"}
           >
             <div className="fb-catalog-filters__head">
@@ -373,20 +420,22 @@ export default function Catalog() {
           )}
 
           <div
-            className="fb-catalog-results"
+            className="fb-catalog-results p3-catalog-amelie-results"
             data-has-active-filters={hasFilters ? "true" : "false"}
           >
-            <div className="fb-catalog-toolbar">
-              <p className="fb-catalog-toolbar__count" role="status" aria-live="polite">
-                {productsQuery.isLoading
-                  ? "—"
-                  : `${totalProducts} ${ka ? "თაიგული" : "bouquets"}`}
-              </p>
-              <p className="fb-catalog-toolbar__context">
-                {ka
-                  ? "აირჩიეთ კოლექცია ან დააზუსტეთ შედეგი ფილტრებით."
-                  : "Choose a collection or refine the results with filters."}
-              </p>
+            <div className="fb-catalog-toolbar p3-catalog-amelie-toolbar">
+              <div className="p3-catalog-amelie-toolbar__summary">
+                <p className="fb-catalog-toolbar__count" role="status" aria-live="polite">
+                  {productsQuery.isLoading
+                    ? "—"
+                    : `${totalProducts} ${ka ? "თაიგული" : "bouquets"}`}
+                </p>
+                <p className="fb-catalog-toolbar__context">
+                  {ka
+                    ? "მოიძიეთ კომპოზიცია განწყობის, მომენტის ან ფერის მიხედვით."
+                    : "Find an arrangement by mood, moment, or colour."}
+                </p>
+              </div>
               <label>
                 {ka ? "დალაგება" : "Sort by"}
                 <span className="fb-sort-select">
@@ -414,7 +463,7 @@ export default function Catalog() {
             </div>
             {productsQuery.isLoading ? (
               <div
-                className="fb-catalog-grid"
+                className="fb-catalog-grid p3-catalog-amelie-grid"
                 aria-label={ka ? "იტვირთება" : "Loading products"}
               >
                 {Array.from({ length: 8 }).map((_, index) => (
@@ -454,13 +503,18 @@ export default function Catalog() {
                 )}
               </div>
             ) : (
-              <div className="fb-catalog-grid">
+              <div
+                ref={catalogGridRef}
+                className="fb-catalog-grid p3-catalog-amelie-grid"
+                data-reveal-ready={revealReady ? "true" : "false"}
+              >
                 {products.map((product: any) => (
                   <ProductCard
                     key={product.id}
                     product={product}
                     language={language}
                     onAdd={addProduct}
+                    className="p3-catalog-amelie-card"
                   />
                 ))}
               </div>

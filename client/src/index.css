@@ -14256,3 +14256,894 @@ body .auth-page button.auth-submit.auth-submit--boutique:hover:not(:disabled) {
     transform: none;
   }
 }
+
+/* --------------------------------------------------------------------------
+   P3 — Catalog discovery reconstruction
+   Additive-only, original Flower's Boutique expression using canonical tokens.
+   -------------------------------------------------------------------------- */
+.p2-catalog-page {
+  background: var(--fb-token-page);
+  color: var(--fb-token-ink);
+}
+
+.p2-catalog-page .p3-catalog-amelie-hero {
+  background:
+    radial-gradient(circle at 92% 20%, rgba(214, 92, 71, 0.12), transparent 22rem),
+    linear-gradient(180deg, var(--fb-token-surface), var(--fb-token-page));
+  border-bottom: var(--fb-line-hairline);
+  padding-block: clamp(36px, 5vw, 72px) clamp(26px, 3vw, 42px);
+}
+
+.p2-catalog-page .p3-catalog-amelie-hero__row {
+  align-items: end;
+  gap: var(--fb-token-space-6);
+}
+
+.p2-catalog-page .p3-catalog-amelie-hero__copy {
+  max-width: var(--fb-token-prose);
+}
+
+.p2-catalog-page .p3-catalog-amelie-hero h1 {
+  color: var(--fb-token-ink);
+  font-family: var(--font-heading);
+  font-size: clamp(2.75rem, 6vw, 5.75rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.94;
+  margin-block: var(--fb-token-space-3) var(--fb-token-space-4);
+}
+
+.p2-catalog-page .p3-catalog-amelie-hero__copy > p:not(.fb-eyebrow):not(.p3-catalog-amelie-hero__meta) {
+  color: var(--fb-token-muted);
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  line-height: var(--fb-leading-body);
+  max-width: 38rem;
+}
+
+.p2-catalog-page .p3-catalog-amelie-hero__meta {
+  align-items: center;
+  color: var(--fb-token-botanical);
+  display: flex;
+  font-size: var(--fb-type-small);
+  font-weight: 700;
+  gap: var(--fb-token-space-2);
+  letter-spacing: 0.015em;
+  margin-top: var(--fb-token-space-5);
+}
+
+.p2-catalog-page .p3-catalog-amelie-hero__meta::before {
+  background: var(--fb-token-botanical);
+  border-radius: var(--fb-radius-pill);
+  content: "";
+  height: 6px;
+  width: 6px;
+}
+
+.p2-catalog-page .p3-catalog-amelie-filter-trigger {
+  background: var(--fb-token-ink);
+  border: 1px solid var(--fb-token-ink);
+  border-radius: var(--fb-radius-pill);
+  color: var(--fb-token-inverse);
+  min-height: 48px;
+  padding-inline: 20px;
+  transition:
+    background-color var(--fb-duration-fast) var(--fb-ease-token),
+    border-color var(--fb-duration-fast) var(--fb-ease-token),
+    transform var(--fb-duration-fast) var(--fb-ease-token);
+}
+
+.p2-catalog-page .p3-catalog-amelie-filter-trigger:hover {
+  background: var(--fb-token-coral);
+  border-color: var(--fb-token-coral);
+  transform: translateY(-1px);
+}
+
+.p2-catalog-page .p3-catalog-amelie-filter-trigger:active {
+  transform: scale(0.97);
+}
+
+.p2-catalog-page .p3-catalog-amelie-filter-trigger:focus-visible,
+.p2-catalog-page .p3-catalog-amelie-collection-nav button:focus-visible,
+.p2-catalog-page .p3-catalog-amelie-filters button:focus-visible,
+.p2-catalog-page .p3-catalog-amelie-filters input:focus-visible,
+.p2-catalog-page .p3-catalog-amelie-toolbar select:focus-visible {
+  box-shadow: var(--fb-focus-token);
+  outline: none;
+}
+
+.p2-catalog-page .p3-catalog-amelie-collection-nav {
+  align-items: center;
+  border-top: var(--fb-line-hairline);
+  gap: 10px;
+  margin-top: var(--fb-token-space-7);
+  padding-top: var(--fb-token-space-4);
+  scrollbar-color: var(--fb-token-coral-soft) transparent;
+}
+
+.p2-catalog-page .p3-catalog-amelie-collection-nav button {
+  border: 1px solid transparent;
+  border-radius: var(--fb-radius-pill);
+  color: var(--fb-token-muted);
+  font-size: var(--fb-type-small);
+  font-weight: 700;
+  min-height: 40px;
+  padding: 8px 14px;
+  transition:
+    background-color var(--fb-duration-fast) var(--fb-ease-token),
+    border-color var(--fb-duration-fast) var(--fb-ease-token),
+    color var(--fb-duration-fast) var(--fb-ease-token),
+    transform var(--fb-duration-fast) var(--fb-ease-token);
+}
+
+.p2-catalog-page .p3-catalog-amelie-collection-nav button:hover,
+.p2-catalog-page .p3-catalog-amelie-collection-nav button.is-selected {
+  background: var(--fb-token-coral-soft);
+  border-color: rgba(214, 92, 71, 0.18);
+  color: var(--fb-token-coral-hover);
+}
+
+.p2-catalog-page .p3-catalog-amelie-collection-nav button:active {
+  transform: scale(0.97);
+}
+
+.p2-catalog-page .p3-catalog-amelie-filters {
+  background: color-mix(in srgb, var(--fb-token-surface) 94%, transparent);
+  border: var(--fb-line-hairline);
+  border-radius: var(--fb-radius-lg);
+  box-shadow: var(--fb-shadow-quiet);
+  top: 130px;
+}
+
+.p2-catalog-page .p3-catalog-amelie-filters fieldset {
+  border-top: var(--fb-line-hairline);
+  margin-top: var(--fb-token-space-5);
+  padding-top: var(--fb-token-space-5);
+}
+
+.p2-catalog-page .p3-catalog-amelie-filters legend,
+.p2-catalog-page .p3-catalog-amelie-filters .fb-field-label {
+  color: var(--fb-token-ink);
+  font-size: var(--fb-type-small);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.p2-catalog-page .p3-catalog-amelie-filters .fb-filter-list button.is-selected {
+  background: var(--fb-token-botanical-soft);
+  color: var(--fb-token-botanical);
+}
+
+.p2-catalog-page .p3-catalog-amelie-results {
+  min-width: 0;
+}
+
+.p2-catalog-page .p3-catalog-amelie-toolbar {
+  align-items: end;
+  border-bottom: var(--fb-line-hairline);
+  gap: var(--fb-token-space-5);
+  margin-bottom: var(--fb-token-space-6);
+  padding-bottom: var(--fb-token-space-4);
+}
+
+.p2-catalog-page .p3-catalog-amelie-toolbar__summary {
+  display: grid;
+  gap: 4px;
+}
+
+.p2-catalog-page .p3-catalog-amelie-toolbar__summary .fb-catalog-toolbar__count {
+  color: var(--fb-token-ink);
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 2vw, 1.75rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+.p2-catalog-page .p3-catalog-amelie-toolbar__context {
+  color: var(--fb-token-muted);
+  max-width: 36rem;
+}
+
+.p2-catalog-page .p3-catalog-amelie-toolbar label {
+  color: var(--fb-token-muted);
+  font-size: var(--fb-type-micro);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.p2-catalog-page .p3-catalog-amelie-toolbar select {
+  background: var(--fb-token-surface);
+  border: var(--fb-line-hairline);
+  border-radius: var(--fb-radius-sm);
+  color: var(--fb-token-ink);
+  font-size: var(--fb-type-small);
+  font-weight: 700;
+  min-height: 44px;
+}
+
+.p2-catalog-page .p3-catalog-amelie-grid {
+  gap: clamp(16px, 2.4vw, 32px);
+}
+
+.p2-catalog-page .p3-catalog-amelie-grid .am-product-card {
+  background: var(--fb-token-surface);
+  border: 1px solid transparent;
+  border-radius: var(--fb-radius-lg);
+  box-shadow: none;
+  overflow: hidden;
+  transition:
+    border-color var(--fb-duration-base) var(--fb-ease-token),
+    box-shadow var(--fb-duration-base) var(--fb-ease-token),
+    transform var(--fb-duration-base) var(--fb-ease-token);
+}
+
+.p2-catalog-page .p3-catalog-amelie-grid .am-product-card:hover {
+  border-color: rgba(214, 92, 71, 0.18);
+  box-shadow: var(--fb-shadow-quiet);
+  transform: translateY(-4px);
+}
+
+.p2-catalog-page .p3-catalog-amelie-grid .am-product-card__media {
+  background: var(--fb-token-panel);
+}
+
+.p2-catalog-page .p3-catalog-amelie-grid .am-product-card__body {
+  padding: var(--fb-token-space-4) var(--fb-token-space-4) var(--fb-token-space-5);
+}
+
+.p2-catalog-page .p3-catalog-amelie-grid .am-product-card__title {
+  color: var(--fb-token-ink);
+  font-family: var(--font-heading);
+  font-size: clamp(1.1rem, 1.6vw, 1.38rem);
+  font-weight: 600;
+  letter-spacing: -0.018em;
+}
+
+.p2-catalog-page .p3-catalog-amelie-grid .am-product-card__subtitle {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color: var(--fb-token-muted);
+  display: -webkit-box;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+.p2-catalog-page .p3-catalog-amelie-grid .am-product-card__prices strong {
+  color: var(--fb-token-coral-hover);
+  font-size: 1rem;
+}
+
+.p2-catalog-page .p3-catalog-amelie-grid[data-reveal-ready="true"] .p3-catalog-amelie-card:not(.is-revealed) {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.p2-catalog-page .p3-catalog-amelie-card {
+  transition:
+    opacity 260ms var(--fb-ease-token),
+    transform 260ms var(--fb-ease-token),
+    border-color var(--fb-duration-base) var(--fb-ease-token),
+    box-shadow var(--fb-duration-base) var(--fb-ease-token);
+}
+
+.p2-catalog-page .p3-catalog-amelie-card:nth-child(2) { transition-delay: 45ms; }
+.p2-catalog-page .p3-catalog-amelie-card:nth-child(3) { transition-delay: 90ms; }
+.p2-catalog-page .p3-catalog-amelie-card:nth-child(4) { transition-delay: 135ms; }
+.p2-catalog-page .p3-catalog-amelie-card:nth-child(n + 5) { transition-delay: 160ms; }
+
+.p2-catalog-page .p3-catalog-amelie-state {
+  background: var(--fb-token-surface);
+  border: var(--fb-line-hairline);
+  border-radius: var(--fb-radius-lg);
+  box-shadow: var(--fb-shadow-quiet);
+}
+
+@media (max-width: 900px) {
+  .p2-catalog-page .p3-catalog-amelie-filters {
+    top: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .p2-catalog-page .p3-catalog-amelie-hero {
+    padding-block: 28px 22px;
+  }
+
+  .p2-catalog-page .p3-catalog-amelie-hero__row,
+  .p2-catalog-page .p3-catalog-amelie-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .p2-catalog-page .p3-catalog-amelie-filter-trigger {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .p2-catalog-page .p3-catalog-amelie-collection-nav {
+    margin-top: var(--fb-token-space-5);
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  .p2-catalog-page .p3-catalog-amelie-collection-nav button {
+    flex: 0 0 auto;
+  }
+
+  .p2-catalog-page .p3-catalog-amelie-toolbar label {
+    align-items: stretch;
+    display: grid;
+    gap: 6px;
+  }
+
+  .p2-catalog-page .p3-catalog-amelie-toolbar .fb-sort-select,
+  .p2-catalog-page .p3-catalog-amelie-toolbar select {
+    width: 100%;
+  }
+
+  .p2-catalog-page .p3-catalog-amelie-grid {
+    gap: 14px;
+  }
+}
+
+@media (max-width: 340px) {
+  .p2-catalog-page .p3-catalog-amelie-hero h1 {
+    font-size: 2.45rem;
+  }
+
+  .p2-catalog-page .p3-catalog-amelie-hero__meta {
+    align-items: flex-start;
+    line-height: 1.45;
+  }
+
+  .p2-catalog-page .p3-catalog-amelie-grid .am-product-card__body {
+    padding: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p2-catalog-page .p3-catalog-amelie-filter-trigger,
+  .p2-catalog-page .p3-catalog-amelie-collection-nav button,
+  .p2-catalog-page .p3-catalog-amelie-grid .am-product-card,
+  .p2-catalog-page .p3-catalog-amelie-card {
+    transition: none !important;
+  }
+
+  .p2-catalog-page .p3-catalog-amelie-filter-trigger:hover,
+  .p2-catalog-page .p3-catalog-amelie-collection-nav button:active,
+  .p2-catalog-page .p3-catalog-amelie-grid .am-product-card:hover,
+  .p2-catalog-page .p3-catalog-amelie-card {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   P3 — Product detail purchase reconstruction
+   Additive-only, original Flower's Boutique expression using canonical tokens.
+   -------------------------------------------------------------------------- */
+.p3-product-amelie-page {
+  background: var(--fb-token-page) !important;
+  color: var(--fb-token-ink) !important;
+}
+
+.p3-product-amelie-page .p3-product-amelie-breadcrumbs {
+  color: var(--fb-token-muted);
+  padding-block: clamp(18px, 2.5vw, 32px);
+}
+
+.p3-product-amelie-page .p3-product-amelie-layout {
+  align-items: start;
+  gap: clamp(32px, 5vw, 80px);
+  padding-bottom: clamp(64px, 8vw, 110px);
+}
+
+.p3-product-amelie-page .p3-product-amelie-gallery {
+  min-width: 0;
+  position: relative;
+}
+
+.p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__main {
+  background:
+    radial-gradient(circle at 75% 18%, rgba(214, 92, 71, 0.11), transparent 33%),
+    var(--fb-token-panel);
+  border: 1px solid rgba(33, 30, 27, 0.06);
+  border-radius: var(--fb-radius-lg);
+  box-shadow: var(--fb-shadow-quiet);
+  overflow: hidden;
+}
+
+.p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__main > img {
+  mix-blend-mode: multiply;
+  transition: transform var(--fb-duration-base) var(--fb-ease-token);
+}
+
+.p3-product-amelie-page .p3-product-amelie-gallery:hover .fb-product-gallery__main > img {
+  transform: scale(1.018);
+}
+
+.p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__wish {
+  background: color-mix(in srgb, var(--fb-token-surface) 90%, transparent);
+  border: 1px solid rgba(33, 30, 27, 0.08);
+  border-radius: var(--fb-radius-pill);
+  box-shadow: var(--fb-shadow-quiet);
+  color: var(--fb-token-ink);
+  height: 46px;
+  right: 18px;
+  top: 18px;
+  transition:
+    background-color var(--fb-duration-fast) var(--fb-ease-token),
+    color var(--fb-duration-fast) var(--fb-ease-token),
+    transform var(--fb-duration-fast) var(--fb-ease-token);
+  width: 46px;
+}
+
+.p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__wish:hover,
+.p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__wish.is-active {
+  background: var(--fb-token-coral);
+  color: var(--fb-token-inverse);
+  transform: translateY(-1px);
+}
+
+.p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__wish:active {
+  transform: scale(0.97);
+}
+
+.p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__thumbs {
+  gap: 12px;
+  margin-top: var(--fb-token-space-4);
+}
+
+.p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__thumbs button {
+  background: var(--fb-token-surface);
+  border: 1px solid transparent;
+  border-radius: var(--fb-radius-sm);
+  box-shadow: none;
+  overflow: hidden;
+  transition:
+    border-color var(--fb-duration-fast) var(--fb-ease-token),
+    box-shadow var(--fb-duration-fast) var(--fb-ease-token),
+    transform var(--fb-duration-fast) var(--fb-ease-token);
+}
+
+.p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__thumbs button:hover,
+.p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__thumbs button.is-active {
+  border-color: var(--fb-token-coral);
+  box-shadow: var(--fb-focus-token);
+  transform: translateY(-2px);
+}
+
+.p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__thumbs button:focus-visible,
+.p3-product-amelie-page .p3-product-amelie-primary-cta:focus-visible,
+.p3-product-amelie-page .p3-product-amelie-sticky button:focus-visible,
+.p3-product-amelie-page .p3-product-amelie-related-card:focus-visible,
+.p3-product-amelie-page .fb-variant:focus-visible,
+.p3-product-amelie-page .fb-quantity button:focus-visible,
+.p3-product-amelie-page .fb-product-gallery__wish:focus-visible {
+  box-shadow: var(--fb-focus-token);
+  outline: none;
+}
+
+.p3-product-amelie-page .p3-product-amelie-copy {
+  align-self: center;
+  max-width: 560px;
+}
+
+.p3-product-amelie-page .p3-product-amelie-copy > .fb-eyebrow {
+  color: var(--fb-token-coral);
+}
+
+.p3-product-amelie-page .p3-product-amelie-copy h1 {
+  color: var(--fb-token-ink);
+  font-family: var(--font-heading);
+  font-size: clamp(2.6rem, 4.6vw, 4.75rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.96;
+  margin-block: var(--fb-token-space-3) var(--fb-token-space-4);
+}
+
+.p3-product-amelie-page .p3-product-amelie-copy .fb-product-description {
+  color: var(--fb-token-muted);
+  font-size: 1rem;
+  line-height: var(--fb-leading-body);
+  max-width: 52ch;
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card {
+  background: var(--fb-token-surface);
+  border: var(--fb-line-hairline);
+  border-radius: var(--fb-radius-lg);
+  box-shadow: var(--fb-shadow-quiet);
+  display: grid;
+  gap: var(--fb-token-space-4);
+  margin-top: var(--fb-token-space-6);
+  padding: clamp(20px, 3vw, 28px);
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-product-price-row {
+  align-items: baseline;
+  border-bottom: var(--fb-line-hairline);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fb-token-space-3);
+  justify-content: space-between;
+  padding-bottom: var(--fb-token-space-4);
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-product-price-row strong {
+  color: var(--fb-token-coral-hover);
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-product-price-row span {
+  color: var(--fb-token-muted);
+  font-size: var(--fb-type-small);
+  font-weight: 700;
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-product-availability {
+  background: var(--fb-token-botanical-soft);
+  border-radius: var(--fb-radius-pill);
+  color: var(--fb-token-botanical);
+  justify-self: start;
+  margin: 0;
+  padding: 7px 11px;
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-product-availability.is-unavailable {
+  background: var(--fb-token-coral-soft);
+  color: var(--fb-token-coral-hover);
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-variant-fieldset {
+  border-top: var(--fb-line-hairline);
+  margin-top: 2px;
+  padding-top: var(--fb-token-space-4);
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-variant-fieldset legend,
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-quantity-row > label {
+  color: var(--fb-token-ink);
+  font-size: var(--fb-type-small);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-variant {
+  background: var(--fb-token-panel);
+  border: 1px solid transparent;
+  border-radius: var(--fb-radius-sm);
+  color: var(--fb-token-ink);
+  min-height: 44px;
+  transition:
+    background-color var(--fb-duration-fast) var(--fb-ease-token),
+    border-color var(--fb-duration-fast) var(--fb-ease-token),
+    transform var(--fb-duration-fast) var(--fb-ease-token);
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-variant:hover,
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-variant.is-selected {
+  background: var(--fb-token-coral-soft);
+  border-color: var(--fb-token-coral);
+  color: var(--fb-token-coral-hover);
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-variant:active {
+  transform: scale(0.97);
+}
+
+.p3-product-amelie-page .p3-product-amelie-selection {
+  color: var(--fb-token-botanical);
+  font-size: var(--fb-type-small);
+  font-weight: 700;
+  margin: -4px 0 0;
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-quantity-row {
+  border-top: var(--fb-line-hairline);
+  margin-top: 2px;
+  padding-top: var(--fb-token-space-4);
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-quantity {
+  background: var(--fb-token-panel);
+  border: 1px solid var(--fb-token-line);
+  border-radius: var(--fb-radius-pill);
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-quantity button {
+  color: var(--fb-token-ink);
+  min-height: 42px;
+  min-width: 42px;
+  transition:
+    background-color var(--fb-duration-fast) var(--fb-ease-token),
+    transform var(--fb-duration-fast) var(--fb-ease-token);
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-quantity button:hover {
+  background: var(--fb-token-coral-soft);
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-quantity button:active {
+  transform: scale(0.97);
+}
+
+.p3-product-amelie-page .p3-product-amelie-primary-cta {
+  background: var(--fb-token-coral);
+  border: 1px solid var(--fb-token-coral);
+  border-radius: var(--fb-radius-sm);
+  box-shadow: none;
+  color: var(--fb-token-inverse);
+  min-height: 54px;
+  transition:
+    background-color var(--fb-duration-fast) var(--fb-ease-token),
+    border-color var(--fb-duration-fast) var(--fb-ease-token),
+    box-shadow var(--fb-duration-fast) var(--fb-ease-token),
+    transform var(--fb-duration-fast) var(--fb-ease-token);
+}
+
+.p3-product-amelie-page .p3-product-amelie-primary-cta:hover:not(:disabled) {
+  background: var(--fb-token-coral-hover);
+  border-color: var(--fb-token-coral-hover);
+  box-shadow: var(--fb-shadow-quiet);
+  transform: translateY(-1px);
+}
+
+.p3-product-amelie-page .p3-product-amelie-primary-cta:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.p3-product-amelie-page .p3-product-amelie-delivery-note {
+  align-items: flex-start;
+  background: var(--fb-token-botanical-soft);
+  border: 1px solid rgba(31, 92, 59, 0.14);
+  border-radius: var(--fb-radius-sm);
+  color: var(--fb-token-botanical);
+  display: flex;
+  gap: 10px;
+  padding: 12px 14px;
+}
+
+.p3-product-amelie-page .p3-product-amelie-delivery-note p {
+  font-size: var(--fb-type-small);
+  font-weight: 700;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-product-inquiry {
+  color: var(--fb-token-ink);
+  font-size: var(--fb-type-small);
+  font-weight: 800;
+  justify-self: start;
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-product-inquiry:hover {
+  color: var(--fb-token-coral-hover);
+}
+
+.p3-product-amelie-page .p3-product-amelie-purchase-card .fb-product-perks {
+  border-top: var(--fb-line-hairline);
+  gap: 12px;
+  margin-top: 0;
+  padding-top: var(--fb-token-space-4);
+}
+
+.p3-product-amelie-page .p3-product-amelie-information {
+  border-top: var(--fb-line-hairline);
+  padding-block: clamp(64px, 8vw, 112px);
+}
+
+.p3-product-amelie-page .p3-product-amelie-information h2,
+.p3-product-amelie-page .p3-product-amelie-related h2 {
+  color: var(--fb-token-ink);
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+.p3-product-amelie-page .p3-product-amelie-information .fb-product-information__grid article {
+  background: var(--fb-token-surface);
+  border: var(--fb-line-hairline);
+  border-radius: var(--fb-radius-md);
+  box-shadow: var(--fb-shadow-quiet);
+}
+
+.p3-product-amelie-page .p3-product-amelie-information .fb-product-information__grid h3 {
+  color: var(--fb-token-ink);
+  font-family: var(--font-heading);
+  font-size: var(--fb-type-title);
+  font-weight: 600;
+}
+
+.p3-product-amelie-page .p3-product-amelie-information .fb-product-information__grid p {
+  color: var(--fb-token-muted);
+}
+
+.p3-product-amelie-page .p3-product-amelie-related {
+  border-top: var(--fb-line-hairline);
+  padding-top: clamp(52px, 7vw, 96px);
+}
+
+.p3-product-amelie-page .p3-product-amelie-related .fb-section-heading > a {
+  color: var(--fb-token-coral-hover);
+  font-size: var(--fb-type-small);
+  font-weight: 800;
+}
+
+.p3-product-amelie-page .p3-product-amelie-related-card {
+  background: var(--fb-token-surface);
+  border: 1px solid transparent;
+  border-radius: var(--fb-radius-md);
+  box-shadow: none;
+  overflow: hidden;
+  transition:
+    border-color var(--fb-duration-base) var(--fb-ease-token),
+    box-shadow var(--fb-duration-base) var(--fb-ease-token),
+    transform var(--fb-duration-base) var(--fb-ease-token);
+}
+
+.p3-product-amelie-page .p3-product-amelie-related-card:hover {
+  border-color: rgba(214, 92, 71, 0.2);
+  box-shadow: var(--fb-shadow-quiet);
+  transform: translateY(-3px);
+}
+
+.p3-product-amelie-page .p3-product-amelie-related-card h3 {
+  color: var(--fb-token-ink);
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+.p3-product-amelie-page .p3-product-amelie-related-card span {
+  color: var(--fb-token-coral-hover);
+  font-weight: 800;
+}
+
+.p3-product-amelie-page .p3-product-amelie-sticky {
+  background: color-mix(in srgb, var(--fb-token-surface) 93%, transparent);
+  border: 1px solid rgba(33, 30, 27, 0.09);
+  border-radius: var(--fb-radius-pill);
+  box-shadow: var(--fb-shadow-raised);
+  color: var(--fb-token-ink);
+  padding: 8px;
+}
+
+.p3-product-amelie-page .p3-product-amelie-sticky button {
+  background: var(--fb-token-coral);
+  border-radius: var(--fb-radius-pill);
+  color: var(--fb-token-inverse);
+  min-height: 44px;
+  transition:
+    background-color var(--fb-duration-fast) var(--fb-ease-token),
+    transform var(--fb-duration-fast) var(--fb-ease-token);
+}
+
+.p3-product-amelie-page .p3-product-amelie-sticky button:hover:not(:disabled) {
+  background: var(--fb-token-coral-hover);
+}
+
+.p3-product-amelie-page .p3-product-amelie-sticky button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+@media (min-width: 900px) {
+  .p3-product-amelie-page .p3-product-amelie-sticky {
+    display: none;
+  }
+}
+
+@media (max-width: 899px) {
+  .p3-product-amelie-page .p3-product-amelie-layout {
+    gap: clamp(28px, 6vw, 48px);
+  }
+
+  .p3-product-amelie-page .p3-product-amelie-copy {
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .p3-product-amelie-page .p3-product-amelie-breadcrumbs {
+    padding-block: 14px 18px;
+  }
+
+  .p3-product-amelie-page .p3-product-amelie-layout {
+    padding-bottom: 84px;
+  }
+
+  .p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__main {
+    border-radius: var(--fb-radius-md);
+  }
+
+  .p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__wish {
+    right: 12px;
+    top: 12px;
+  }
+
+  .p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__thumbs {
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  .p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__thumbs button {
+    flex: 0 0 66px;
+  }
+
+  .p3-product-amelie-page .p3-product-amelie-copy h1 {
+    font-size: clamp(2.45rem, 12vw, 3.4rem);
+  }
+
+  .p3-product-amelie-page .p3-product-amelie-purchase-card {
+    border-radius: var(--fb-radius-md);
+    gap: 14px;
+    margin-top: var(--fb-token-space-5);
+    padding: 18px;
+  }
+
+  .p3-product-amelie-page .p3-product-amelie-purchase-card .fb-quantity-row {
+    align-items: center;
+  }
+
+  .p3-product-amelie-page .p3-product-amelie-primary-cta {
+    min-height: 52px;
+  }
+
+  .p3-product-amelie-page .p3-product-amelie-sticky {
+    bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+    left: max(12px, env(safe-area-inset-left, 0px));
+    right: max(12px, env(safe-area-inset-right, 0px));
+    width: auto;
+  }
+
+  .p3-product-amelie-page .p3-product-amelie-information {
+    padding-block: 56px;
+  }
+
+  .p3-product-amelie-page .p3-product-amelie-related {
+    padding-top: 52px;
+  }
+}
+
+@media (max-width: 340px) {
+  .p3-product-amelie-page .p3-product-amelie-copy h1 {
+    font-size: 2.28rem;
+  }
+
+  .p3-product-amelie-page .p3-product-amelie-purchase-card .fb-product-price-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .p3-product-amelie-page .p3-product-amelie-delivery-note p {
+    font-size: 0.78rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__main > img,
+  .p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__wish,
+  .p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__thumbs button,
+  .p3-product-amelie-page .p3-product-amelie-purchase-card .fb-variant,
+  .p3-product-amelie-page .p3-product-amelie-purchase-card .fb-quantity button,
+  .p3-product-amelie-page .p3-product-amelie-primary-cta,
+  .p3-product-amelie-page .p3-product-amelie-related-card,
+  .p3-product-amelie-page .p3-product-amelie-sticky button {
+    transition: none !important;
+  }
+
+  .p3-product-amelie-page .p3-product-amelie-gallery:hover .fb-product-gallery__main > img,
+  .p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__wish:hover,
+  .p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__thumbs button:hover,
+  .p3-product-amelie-page .p3-product-amelie-gallery .fb-product-gallery__thumbs button.is-active,
+  .p3-product-amelie-page .p3-product-amelie-purchase-card .fb-variant:active,
+  .p3-product-amelie-page .p3-product-amelie-primary-cta:active:not(:disabled),
+  .p3-product-amelie-page .p3-product-amelie-related-card:hover,
+  .p3-product-amelie-page .p3-product-amelie-sticky button:active:not(:disabled) {
+    transform: none !important;
+  }
+}

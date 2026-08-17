@@ -25,9 +25,10 @@ type ProductCardProps = {
   language: string;
   onAdd?: (product: StorefrontProduct) => void;
   priority?: boolean;
+  className?: string;
 };
 
-export default function ProductCard({ product, language, onAdd, priority = false }: ProductCardProps) {
+export default function ProductCard({ product, language, onAdd, priority = false, className = "" }: ProductCardProps) {
   const ka = language === "ka";
   const name = getProductName(product, language);
   const salePrice = product.salePrice ?? product.discountPrice;
@@ -65,7 +66,7 @@ export default function ProductCard({ product, language, onAdd, priority = false
     : ka ? `${name} პროდუქტის ნახვა` : `View ${name}`;
 
   return (
-    <article className={`am-product-card ${isAvailable ? "" : "is-unavailable"}`} data-availability={isAvailable ? "available" : "unavailable"}>
+    <article className={`am-product-card ${isAvailable ? "" : "is-unavailable"} ${className}`.trim()} data-availability={isAvailable ? "available" : "unavailable"}>
       <div className="am-product-card__media">
         <Link href={`/product/${product.id}`} className="am-product-card__image-link" aria-label={name}>
           <FlowerImage src={product.imageUrl} alt={`${name} — Flower’s Boutique`} className="am-product-card__image" loading={priority ? "eager" : "lazy"} fetchPriority={priority ? "high" : "auto"} width={800} height={1000} />
