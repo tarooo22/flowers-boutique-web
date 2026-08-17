@@ -82,3 +82,6 @@
 - [x] Validate builder interactions, live preview, accessibility and responsive rendering at mobile/tablet/desktop widths; run relevant contracts, TypeScript and production build.
 - [x] Verify both Visual Bouquet and AI Bouquet responsive layouts at 768px, including live preview rendering and 44px individual-flower controls, then record the tablet QA evidence.
 - [x] Persist 768px Visual/AI Builder QA evidence and verify that individual flower steppers remain 44px at tablet width before checkpoint.
+- [x] Audit the uploaded `flower-shopv3.zip` structure and compare its bouquet-builder visual reference against the current published Builder implementation.
+- [x] Apply only ZIP-verified Bouquet Builder visual refinements while preserving Visual/AI modes, existing individual flower data, live preview, pricing, generation and checkout handoff.
+- [x] Validate ZIP-aligned Builder presentation and real selected-flower preview updates at mobile/tablet/desktop widths; run relevant tests, TypeScript and production build.
