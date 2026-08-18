@@ -111,4 +111,5 @@
 - [x] Run dependency installation, type checks, linting where configured, tests, production build, runtime checks and responsive main-flow verification for the new primary codebase.
 - [ ] Replace the incompatible static `dist/public` deployment path with a validated Next.js server container path so the public domain can run the new primary codebase.
 - [ ] Verify the existing production domain deploys the new codebase with retained environment configuration, data access and critical customer/admin/payment flows.
+- [ ] Restore the published `/bouquet-builder` compatibility route as a safe redirect to the new Next.js `/builder` journey.
 - [ ] Write the final new-codebase migration report covering replacement, preservation, configuration mapping, database changes, removed code, validation and deployment status.
