@@ -1,2 +1,0 @@
-ALTER TABLE `customerOrders` MODIFY COLUMN `status` enum('pending','pending_payment','paid','failed','confirmed','preparing','delivered','cancelled') DEFAULT 'pending';--> statement-breakpoint
-ALTER TABLE `orders` MODIFY COLUMN `status` enum('pending','pending_payment','paid','failed','confirmed','preparing','delivered','cancelled') DEFAULT 'pending';

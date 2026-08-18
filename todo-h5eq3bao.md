@@ -107,7 +107,7 @@
 - [x] Audit current database, authentication, storage, API integrations, analytics/tracking, secrets, production domain and persistent-data contracts; write a non-destructive migration-preservation matrix.
 - [x] Determine whether the new project can safely use the existing production database, auth, storage and integrations; define any necessary adapter or schema migration without resetting or seeding production data.
 - [x] Create a checkpointed, isolated replacement strategy in which the new project is validated before the active production codebase is replaced.
-- [ ] Replace the active codebase with the new project only after migration compatibility validation; remove obsolete old UI/code/dependencies only when no production contract depends on them.
-- [ ] Run dependency installation, type checks, linting where configured, tests, production build, runtime checks and responsive main-flow verification for the new primary codebase.
+- [x] Replace the active codebase with the new project only after migration compatibility validation; remove obsolete old UI/code/dependencies only when no production contract depends on them.
+- [x] Run dependency installation, type checks, linting where configured, tests, production build, runtime checks and responsive main-flow verification for the new primary codebase.
 - [ ] Verify the existing production domain deploys the new codebase with retained environment configuration, data access and critical customer/admin/payment flows.
 - [ ] Write the final new-codebase migration report covering replacement, preservation, configuration mapping, database changes, removed code, validation and deployment status.

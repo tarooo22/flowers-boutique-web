@@ -1,1 +1,0 @@
-ALTER TABLE `orders` MODIFY COLUMN `paymentStatus` enum('pending','pending_payment','paid','failed','cancelled','refunded') DEFAULT 'pending';

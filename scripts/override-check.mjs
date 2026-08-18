@@ -1,0 +1,10 @@
+import { chromium } from "playwright";
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+await page.goto("http://localhost:3000/product/rosewood-romance", { waitUntil: "networkidle" });
+await page.waitForTimeout(1200);
+const txt = await page.locator("h1").first().innerText();
+const price = await page.locator("main").innerText();
+const m = price.match(/(\d+)\s*₾/);
+console.log("product:", txt, "| price shown:", m ? m[1] : "?");
+await browser.close();

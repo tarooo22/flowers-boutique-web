@@ -1,1 +1,0 @@
-ALTER TABLE `products` ADD `published` boolean DEFAULT true;
