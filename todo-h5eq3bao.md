@@ -109,5 +109,6 @@
 - [x] Create a checkpointed, isolated replacement strategy in which the new project is validated before the active production codebase is replaced.
 - [x] Replace the active codebase with the new project only after migration compatibility validation; remove obsolete old UI/code/dependencies only when no production contract depends on them.
 - [x] Run dependency installation, type checks, linting where configured, tests, production build, runtime checks and responsive main-flow verification for the new primary codebase.
+- [ ] Replace the incompatible static `dist/public` deployment path with a validated Next.js server container path so the public domain can run the new primary codebase.
 - [ ] Verify the existing production domain deploys the new codebase with retained environment configuration, data access and critical customer/admin/payment flows.
 - [ ] Write the final new-codebase migration report covering replacement, preservation, configuration mapping, database changes, removed code, validation and deployment status.
