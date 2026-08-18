@@ -117,4 +117,4 @@
 - [x] Define clean, consistent floral art direction and final generation prompts for each approved non-product media slot, preserving actual catalog/product images.
 - [x] Generate the approved bespoke floral visual assets, review them for quality and upload selected assets to managed web storage.
 - [x] Integrate generated asset URLs into the mapped storefront components without changing product data, checkout, auth, cart or admin behavior.
-- [ ] Run responsive visual QA, TypeScript/tests/build and live production verification; document the asset mapping and final results.
+- [x] Run responsive visual QA, TypeScript/tests/build and live production verification; document the asset mapping and final results.

@@ -51,3 +51,14 @@ The first reference image completed successfully and was retained for the About 
 ## Implementation outcome
 
 The `AboutView`, `EditorialSection`, `JournalSection`, public Journal list and Journal detail route now use direct, unoptimized image rendering for the selected managed-storage assets. `CashbackBanner` was also placed on the same direct-delivery path because its inherited editorial image was the remaining non-product surface emitting the redirect/optimizer empty-response log. Actual product card imagery and all commerce, account, payment, admin and AI bouquet behavior were preserved.
+
+## Validation record
+
+| Check | Result |
+|---|---|
+| Local desktop visual QA | Passed: Home, About and Journal showed the selected studio, service and journal images without failed-generation placeholders. |
+| Local mobile visual QA | Passed at 375px: About service cards and Journal’s three editorial images stacked/cropped cleanly. |
+| Vitest | Passed: 2 files and 20 tests, including the new managed Journal media mapping contract. |
+| TypeScript | Passed: `pnpm exec tsc --noEmit`. |
+| Production build | Passed: `NODE_ENV=production pnpm build`. |
+| Published production verification | Passed: after normal rollout propagation, cache-busted live About and Journal routes displayed the studio/service set and all three Journal images in My Browser. |
