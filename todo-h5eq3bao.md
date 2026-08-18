@@ -93,8 +93,8 @@
 - [x] Diagnose and restore the 44px enabled AI flower increment touch target at desktop width after the ZIP-derived presentation replacement, then re-run live preview QA.
 - [x] Audit the live `/bouquet-builder` route, published deployment version and route access path to determine why the user does not see the ZIP-derived Builder replacement.
 - [x] Resolve the production Builder visibility issue or provide the verified public route and cache-refresh action after confirming the live render.
-- [ ] Provide the verified published Builder URL and explicit hard-refresh instructions after confirming the new UI on production.
-- [ ] If the user still sees the prior UI after refresh, reproduce their exact domain/path and resolve the remaining production visibility mismatch.
+- [x] Provide the verified published Builder URL and explicit hard-refresh instructions after confirming the new UI on production.
+- [x] If the user still sees the prior UI after refresh, reproduce their exact domain/path and resolve the remaining production visibility mismatch.
 - [x] Inventory the full uploaded ZIP design system, routes, shared components and public page surfaces; map each to the corresponding current Flower’s Boutique route without executing ZIP code.
 - [x] Write a clean-room presentation replacement roadmap that explicitly preserves current products, categories, Builder flows, cart, checkout, authentication, database, admin and SEO contracts.
 - [x] Replace global shell, navigation, typography, shared controls and footer presentation with ZIP-derived clean-room UI while preserving all active behavior.
@@ -109,7 +109,7 @@
 - [x] Create a checkpointed, isolated replacement strategy in which the new project is validated before the active production codebase is replaced.
 - [x] Replace the active codebase with the new project only after migration compatibility validation; remove obsolete old UI/code/dependencies only when no production contract depends on them.
 - [x] Run dependency installation, type checks, linting where configured, tests, production build, runtime checks and responsive main-flow verification for the new primary codebase.
-- [ ] Replace the incompatible static `dist/public` deployment path with a validated Next.js server container path so the public domain can run the new primary codebase.
-- [ ] Verify the existing production domain deploys the new codebase with retained environment configuration, data access and critical customer/admin/payment flows.
-- [ ] Restore the published `/bouquet-builder` compatibility route as a safe redirect to the new Next.js `/builder` journey.
-- [ ] Write the final new-codebase migration report covering replacement, preservation, configuration mapping, database changes, removed code, validation and deployment status.
+- [x] Replace the incompatible static `dist/public` deployment path with a validated Next.js server container path so the public domain can run the new primary codebase.
+- [x] Verify the existing production domain deploys the new codebase with retained environment configuration, data access and critical customer/admin/payment flows.
+- [x] Restore the published `/bouquet-builder` compatibility route as a safe redirect to the new Next.js `/builder` journey.
+- [x] Write the final new-codebase migration report covering replacement, preservation, configuration mapping, database changes, removed code, validation and deployment status.
