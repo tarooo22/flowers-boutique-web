@@ -50,7 +50,7 @@ export default async function JournalArticle({
         <p className="mt-4 text-[16px] leading-relaxed text-[var(--muted)]">{post.excerpt}</p>
 
         <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-[var(--radius-lg)] bg-[var(--surface-warm)]">
-          <Image src={post.image} alt="" fill priority sizes="(max-width:768px) 100vw, 768px" className="object-cover" />
+          <Image src={post.image} alt="" fill priority unoptimized sizes="(max-width:768px) 100vw, 768px" className="object-cover" />
         </div>
 
         <div className="mt-8 grid gap-5">

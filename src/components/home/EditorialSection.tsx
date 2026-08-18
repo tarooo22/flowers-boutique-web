@@ -18,14 +18,14 @@ export function EditorialSection() {
       title: t("ed.school.title"),
       text: t("ed.school.text"),
       href: "/about#school",
-      image: "/manus-storage/editorial-mixed_89b233bb.webp",
+      image: "/manus-storage/fb-floristry-school-v2_4cc3b90e.jpg",
     },
     {
       eyebrow: t("ed.events.eyebrow"),
       title: t("ed.events.title"),
       text: t("ed.events.text"),
       href: "/about#events",
-      image: "/manus-storage/editorial-roses_39a060f9.webp",
+      image: "/manus-storage/fb-event-florals-v2_506c3067.jpg",
     },
   ];
 
@@ -51,6 +51,7 @@ export function EditorialSection() {
                   src={c.image}
                   alt=""
                   fill
+                  unoptimized
                   sizes="(max-width:768px) 100vw, 50vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />

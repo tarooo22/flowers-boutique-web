@@ -29,6 +29,7 @@ export function JournalSection() {
                   src={post.image}
                   alt=""
                   fill
+                  unoptimized
                   sizes="(max-width:640px) 100vw, 33vw"
                   className="object-cover"
                 />

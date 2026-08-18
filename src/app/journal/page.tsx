@@ -26,6 +26,7 @@ export default function JournalPage() {
                 alt=""
                 fill
                 priority={i === 0}
+                unoptimized
                 sizes="(max-width:640px) 100vw, 33vw"
                 className="object-cover"
               />

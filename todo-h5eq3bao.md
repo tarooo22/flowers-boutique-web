@@ -113,3 +113,8 @@
 - [x] Verify the existing production domain deploys the new codebase with retained environment configuration, data access and critical customer/admin/payment flows.
 - [x] Restore the published `/bouquet-builder` compatibility route as a safe redirect to the new Next.js `/builder` journey.
 - [x] Write the final new-codebase migration report covering replacement, preservation, configuration mapping, database changes, removed code, validation and deployment status.
+- [x] Audit the active Next.js storefront for missing, blank, low-quality or visually weak non-product imagery; map each safe replacement target to its component and responsive ratio.
+- [x] Define clean, consistent floral art direction and final generation prompts for each approved non-product media slot, preserving actual catalog/product images.
+- [x] Generate the approved bespoke floral visual assets, review them for quality and upload selected assets to managed web storage.
+- [x] Integrate generated asset URLs into the mapped storefront components without changing product data, checkout, auth, cart or admin behavior.
+- [ ] Run responsive visual QA, TypeScript/tests/build and live production verification; document the asset mapping and final results.

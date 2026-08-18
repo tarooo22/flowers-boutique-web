@@ -17,6 +17,7 @@ export function CashbackBanner() {
               src="/manus-storage/editorial-collection_fd67f2f1.webp"
               alt="A gift bouquet"
               fill
+              unoptimized
               sizes="(max-width:768px) 100vw, 40vw"
               className="object-cover transition-transform duration-700 hover:scale-105"
             />

@@ -35,7 +35,7 @@ export function AboutView() {
       text: t("ed.school.text"),
       href: "/builder",
       cta: t("common.learnMore"),
-      image: "/manus-storage/shot-1_c1aaea3a.webp",
+      image: "/manus-storage/fb-floristry-school-v2_4cc3b90e.jpg",
     },
     {
       id: "school",
@@ -44,7 +44,7 @@ export function AboutView() {
       text: t("ed.events.text"),
       href: "/catalog?category=wedding",
       cta: t("common.learnMore"),
-      image: "/manus-storage/editorial-roses_39a060f9.webp",
+      image: "/manus-storage/fb-event-florals-v2_506c3067.jpg",
     },
     {
       id: "events",
@@ -53,7 +53,7 @@ export function AboutView() {
       text: t("cb.text"),
       href: "/rewards",
       cta: t("cb.cta"),
-      image: "/manus-storage/editorial-mixed_89b233bb.webp",
+      image: "/manus-storage/fb-about-studio-reference_85c9ad71.jpg",
     },
   ];
 
@@ -101,10 +101,11 @@ export function AboutView() {
               <Tilt max={7}>
                 <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-lg)] shadow-[var(--shadow-pop)]">
                   <Image
-                    src="/manus-storage/hero-studio_bdd6f4fe.webp"
+                    src="/manus-storage/fb-about-studio-reference_85c9ad71.jpg"
                     alt={brand.name}
                     fill
                     priority
+                    unoptimized
                     sizes="(max-width:1024px) 92vw, 520px"
                     className="object-cover"
                   />
@@ -165,6 +166,7 @@ export function AboutView() {
                     src={s.image}
                     alt=""
                     fill
+                    unoptimized
                     sizes="(max-width:768px) 100vw, 33vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
@@ -197,6 +199,7 @@ export function AboutView() {
                 src="/manus-storage/editorial-collection_fd67f2f1.webp"
                 alt=""
                 fill
+                unoptimized
                 sizes="(max-width:768px) 100vw, 50vw"
                 className="object-cover"
               />

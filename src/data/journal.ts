@@ -9,7 +9,7 @@ export const journalPosts: JournalPost[] = [
     category: "Care",
     date: "2026-08-02",
     readMinutes: 4,
-    image: "/manus-storage/shot-1_c1aaea3a.webp",
+    image: "/manus-storage/fb-journal-care-v2_236c8f7f.jpg",
     body: [
       "The single biggest difference between a bouquet that lasts three days and one that lasts ten is the water — how clean it is, how often you change it, and how cold the room stays.",
       "Start by recutting every stem at a sharp angle before the flowers go into the vase. A slanted cut exposes more surface area and stops the stem from sealing flat against the bottom of the vase, which is what quietly starves a bouquet of water.",
@@ -25,7 +25,7 @@ export const journalPosts: JournalPost[] = [
     category: "Seasonal",
     date: "2026-07-18",
     readMinutes: 5,
-    image: "/manus-storage/studio-5_c8839d18.png",
+    image: "/manus-storage/fb-journal-peony-v2_3af4ce7f.jpg",
     body: [
       "Peonies are a study in patience. For most of the year they simply aren't available, and then for a few short weeks in late spring and early summer they arrive all at once, impossibly full and impossibly fragrant.",
       "When you choose peonies, look for buds that give slightly when you press them — like a marshmallow rather than a golf ball. A rock-hard bud may never open; one that is already soft and showing colour will bloom within a day or two.",
@@ -41,7 +41,7 @@ export const journalPosts: JournalPost[] = [
     category: "Ideas",
     date: "2026-06-30",
     readMinutes: 6,
-    image: "/manus-storage/editorial-mixed_89b233bb.webp",
+    image: "/manus-storage/fb-journal-colour-v2_bbae4f4e.jpg",
     body: [
       "Colour is the fastest way a bouquet communicates, often before anyone reads the card. Choosing it deliberately is one of the simplest ways to make a gift feel considered.",
       "Warm corals and peaches read as friendly and optimistic — a good choice for a new job, a housewarming, or a thank-you where red might feel too intense. They flatter almost every room and photograph beautifully in daylight.",
