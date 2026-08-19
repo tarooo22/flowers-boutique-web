@@ -143,3 +143,6 @@
 - [x] Inventory the prior approved Admin panel implementation and map its preserved workflows against the current manager workspace.
 - [x] Restore the requested legacy Admin presentation and navigation while retaining current production orders, products, role guard and sign-out behavior.
 - [x] Run focused Admin regression, responsive manager QA, TypeScript, full tests, production build and published verification for the restored panel.
+- [x] Locate and inventory the original pre-redesign project's Admin panel, distinct from the recent compact and manager-workspace variants.
+- [x] Map the original Admin panel's supported UI and workflows to current production data, role guard, session and safe API contracts.
+- [ ] Restore the original pre-redesign Admin presentation and supported controls; validate locally and on the published manager route.

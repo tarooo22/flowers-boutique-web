@@ -5,12 +5,14 @@ const source = readFileSync(new URL("./AdminDashboard.tsx", import.meta.url), "u
 
 describe("Restored Admin panel contract", () => {
   it("keeps the legacy Admin panel tabs and live management capability surfaces", () => {
-    expect(source).toContain("Admin panel");
-    expect(source).toContain("Overview");
+    expect(source).toContain("Admin Panel");
     expect(source).toContain("Orders");
     expect(source).toContain("Products");
+    expect(source).toContain("Categories");
+    expect(source).toContain("Banners");
+    expect(source).toContain("Settings");
     expect(source).toContain("Set fulfilment status");
-    expect(source).toContain("Search products…");
+    expect(source).toContain("Search…");
     expect(source).toContain("Saving status…");
   });
 

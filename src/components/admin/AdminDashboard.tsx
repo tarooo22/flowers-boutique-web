@@ -30,7 +30,7 @@ interface Stats {
   productCount: number;
 }
 
-type Tab = "overview" | "orders" | "products";
+type Tab = "products" | "categories" | "orders" | "banners" | "settings";
 
 const STATUSES: OrderStatus[] = ["new", "confirmed", "delivering", "completed", "cancelled"];
 
@@ -44,12 +44,14 @@ const STATUS_STYLE: Record<OrderStatus, string> = {
 
 export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }) {
   const router = useRouter();
-  const [tab, setTab] = useState<Tab>("overview");
+  const [tab, setTab] = useState<Tab>("products");
   const [orders, setOrders] = useState<Order[]>([]);
   const [products, setProducts] = useState<AdminProduct[]>([]);
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
+  const [availabilityFilter, setAvailabilityFilter] = useState<"all" | "available" | "unavailable">("all");
+  const [categoryFilter, setCategoryFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState<OrderStatus | "all">("all");
   const [openOrder, setOpenOrder] = useState<string | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
@@ -145,34 +147,55 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
     [orders, query, statusFilter],
   );
 
-  const visibleProducts = useMemo(
-    () => products.filter((product) => (!query.trim() ? true : product.name.toLowerCase().includes(query.toLowerCase()))),
-    [products, query],
+  const categories = useMemo(
+    () => Array.from(products.reduce((groups, product) => {
+      const key = product.category || "Uncategorised";
+      groups.set(key, (groups.get(key) ?? 0) + 1);
+      return groups;
+    }, new Map<string, number>()).entries()).map(([name, count]) => ({ name, count })),
+    [products],
   );
 
+  const visibleProducts = useMemo(() => products.filter((product) => {
+    const matchesQuery = !query.trim() || product.name.toLowerCase().includes(query.toLowerCase()) || product.subtitle?.toLowerCase().includes(query.toLowerCase());
+    const matchesAvailability = availabilityFilter === "all" || (availabilityFilter === "available" ? product.available : !product.available);
+    const matchesCategory = categoryFilter === "all" || product.category === categoryFilter;
+    return matchesQuery && matchesAvailability && matchesCategory;
+  }), [availabilityFilter, categoryFilter, products, query]);
+
   return (
-    <div className="container-fb py-8 pb-24">
-      <header className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <p className="mono text-[11px] uppercase tracking-[0.18em] text-[var(--muted)]">Flower&rsquo;s Boutique</p>
-          <h1 className="font-display mt-1 text-[30px] leading-none tracking-[-0.015em] sm:text-[36px]">Admin panel</h1>
+    <div className="min-h-screen bg-gradient-to-br from-[#FAF8F5] to-[#F5F0E8] py-8 pb-24 sm:py-12">
+      <div className="mx-auto w-full max-w-7xl px-4">
+        <header className="flex flex-wrap items-center justify-between gap-5">
+          <div className="flex items-start gap-3">
+            <span className="grid h-10 w-10 place-items-center rounded-full bg-[#C4603A] text-lg text-white" aria-hidden="true">◆</span>
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8E705F]">Flower&rsquo;s Boutique · Control room</p>
+              <h1 className="mt-1 font-display text-[30px] leading-none text-[#1C1917] sm:text-[38px]">Admin Panel</h1>
+              <p className="mt-2 text-[13px] text-[#76685F]">Manage products, orders and storefront content</p>
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center gap-2.5">
+            <Button href="/" variant="outline" size="sm">View storefront</Button>
+            <Button variant="dark" size="sm" onClick={signOut}>Sign out</Button>
+          </div>
+        </header>
+        {demoCredentials ? <p className="mt-5 rounded-lg border border-[#C4603A]/30 bg-[#C4603A]/8 px-4 py-3 text-[12.5px] leading-relaxed text-[#6D5142]"><strong>Demo credentials are active.</strong> Configure real administrator credentials before sharing access.</p> : null}
+        <div role="tablist" className="mt-8 overflow-x-auto border-b border-[#E8E4DF]">
+          <div className="flex min-w-max gap-2 sm:gap-4">
+            {(["products", "categories", "orders", "banners", "settings"] as Tab[]).map((id) => {
+              const label = id === "products" ? "Products" : id === "categories" ? "Categories" : id === "orders" ? `Orders${stats?.newCount ? ` (${stats.newCount} new)` : ""}` : id === "banners" ? "Banners" : "Settings";
+              return <button key={id} type="button" role="tab" aria-selected={tab === id} onClick={() => { setTab(id); setQuery(""); setFeedback(null); }} className={`border-b-2 px-3 py-3 text-sm font-medium transition sm:px-4 ${tab === id ? "border-[#C4603A] text-[#C4603A]" : "border-transparent text-[#76685F] hover:text-[#1C1917]"}`}>{label}</button>;
+            })}
+          </div>
         </div>
-        <div className="flex items-center gap-2.5">
-          <Button href="/" variant="outline" size="sm">View site</Button>
-          <Button variant="dark" size="sm" onClick={signOut}>Sign out</Button>
-        </div>
-      </header>
-      {demoCredentials ? <p className="mt-4 rounded-lg border border-[var(--action)]/30 bg-[var(--action)]/8 px-4 py-3 text-[12.5px] leading-relaxed"><strong>Demo credentials are active.</strong> Configure real administrator credentials before sharing access.</p> : null}
-      <div role="tablist" className="mt-7 flex gap-2 border-b border-[var(--line)]">
-        {(["overview", "orders", "products"] as Tab[]).map((id) => {
-          const label = id === "overview" ? "Overview" : id === "orders" ? `Orders${stats?.newCount ? ` (${stats.newCount} new)` : ""}` : "Products";
-          return <button key={id} type="button" role="tab" aria-selected={tab === id} onClick={() => { setTab(id); setQuery(""); setFeedback(null); }} className={`-mb-px border-b-2 px-4 py-2.5 text-[13.5px] font-semibold transition ${tab === id ? "border-[var(--action)] text-[var(--ink)]" : "border-transparent text-[var(--muted)] hover:text-[var(--ink)]"}`}>{label}</button>;
-        })}
-      </div>
       {feedback ? <div role="status" className="mt-4 rounded-[var(--radius)] border border-[var(--line-strong)] bg-[var(--surface)] px-4 py-3 text-[12.5px] text-[var(--muted)]">{feedback}</div> : null}
-      {tab === "overview" ? <Overview stats={stats} orders={orders} loading={loading} onOpenOrders={() => setTab("orders")} onOpenOrder={(id) => { setOpenOrder(id); setTab("orders"); }} /> : null}
+      {tab === "products" ? <ProductsWorkspace loading={loading} products={visibleProducts} query={query} setQuery={setQuery} availabilityFilter={availabilityFilter} setAvailabilityFilter={setAvailabilityFilter} categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter} categories={categories} patchProduct={patchProduct} busy={busy} /> : null}
+      {tab === "categories" ? <CategoriesPanel categories={categories} /> : null}
       {tab === "orders" ? <OrdersWorkspace loading={loading} orders={visibleOrders} query={query} setQuery={setQuery} statusFilter={statusFilter} setStatusFilter={setStatusFilter} openOrder={openOrder} setOpenOrder={setOpenOrder} setStatus={setStatus} busy={busy} /> : null}
-      {tab === "products" ? <ProductsWorkspace loading={loading} products={visibleProducts} query={query} setQuery={setQuery} patchProduct={patchProduct} busy={busy} /> : null}
+      {tab === "banners" ? <LegacyNotice title="Banners" text="Current storefront editorial blocks are published from protected project content. Their live assets remain available on the storefront without exposing unsafe public editing controls." /> : null}
+      {tab === "settings" ? <LegacyNotice title="Storefront settings" text="Delivery, payments and account security remain protected configuration. Use the current manager order and product controls for day-to-day storefront operations." /> : null}
+    </div>
     </div>
   );
 }
@@ -289,26 +312,38 @@ function OrderCard({ order, open, setOpenOrder, setStatus, busy }: { order: Orde
   );
 }
 
-function ProductsWorkspace({ loading, products, query, setQuery, patchProduct, busy }: { loading: boolean; products: AdminProduct[]; query: string; setQuery: (value: string) => void; patchProduct: (id: string, patch: Partial<AdminProduct>) => void; busy: string | null }) {
+function ProductsWorkspace({ loading, products, query, setQuery, availabilityFilter, setAvailabilityFilter, categoryFilter, setCategoryFilter, categories, patchProduct, busy }: { loading: boolean; products: AdminProduct[]; query: string; setQuery: (value: string) => void; availabilityFilter: "all" | "available" | "unavailable"; setAvailabilityFilter: (value: "all" | "available" | "unavailable") => void; categoryFilter: string; setCategoryFilter: (value: string) => void; categories: Array<{ name: string; count: number }>; patchProduct: (id: string, patch: Partial<AdminProduct>) => void; busy: string | null }) {
   return (
-    <div>
-      <SectionHeading eyebrow="Catalog control" title="Products customers can buy" text="Update price, availability and bestseller placement. Changes apply on top of the production catalog." />
-      <Toolbar query={query} setQuery={setQuery} placeholder="Search products…" />
+    <div className="pt-8">
+      <div className="mb-8"><h2 className="text-3xl font-bold text-[#1C1917]">Manage Products</h2><p className="mt-2 text-sm text-[#76685F]">Add, edit and manage Flower&rsquo;s Boutique products</p></div>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
+        <Toolbar query={query} setQuery={setQuery} placeholder="Search…" />
+        <select value={availabilityFilter} onChange={(event) => setAvailabilityFilter(event.target.value as "all" | "available" | "unavailable")} className="h-11 rounded-lg border border-[#E8E4DF] bg-white px-3 text-sm outline-none focus:ring-2 focus:ring-[#C4603A]"><option value="all">All availability</option><option value="available">Available</option><option value="unavailable">Unavailable</option></select>
+        <select value={categoryFilter} onChange={(event) => setCategoryFilter(event.target.value)} className="h-11 rounded-lg border border-[#E8E4DF] bg-white px-3 text-sm outline-none focus:ring-2 focus:ring-[#C4603A]"><option value="all">All categories</option>{categories.map((category) => <option key={category.name} value={category.name}>{category.name}</option>)}</select>
+      </div>
       {loading ? <LoadingRows /> : products.length === 0 ? <EmptyState title="No matching products" text="Change the search term to find another catalog item." /> : (
-        <div className="mt-4 overflow-x-auto rounded-[var(--radius)] border border-[var(--line)]">
-          <table className="w-full min-w-[720px] text-left"><thead><tr className="border-b border-[var(--line)] bg-[var(--surface-warm)]/70 text-[11px] uppercase tracking-wide text-[var(--muted)]"><th className="px-5 py-3 font-semibold">Product</th><th className="px-3 py-3 font-semibold">Price ₾</th><th className="px-3 py-3 font-semibold">Available</th><th className="px-3 py-3 font-semibold">Bestseller</th></tr></thead><tbody>{products.map((product) => <tr key={product.id} className="border-b border-[var(--line)] last:border-b-0"><td className="px-5 py-3"><div className="flex items-center gap-3"><span className="relative h-12 w-10 shrink-0 overflow-hidden rounded-md bg-[var(--surface-warm)]"><Image src={product.image} alt="" fill sizes="40px" unoptimized={product.image.startsWith("/manus-storage/")} className="object-cover" /></span><span className="min-w-0"><span className="block truncate text-[13px] font-semibold">{product.name}</span><span className="block truncate text-[12px] text-[var(--muted)]">{product.subtitle}{product.edited ? <span className="ml-2 text-[var(--action-deep)]">edited</span> : null}</span></span></div></td><td className="px-3 py-3"><input type="number" min={0} defaultValue={product.price} disabled={busy === `product:${product.id}`} onBlur={(event) => { const value = Number(event.target.value); if (value !== product.price) void patchProduct(product.id, { price: value }); }} className="h-10 w-24 rounded-md border border-[var(--line-strong)] bg-white px-2.5 text-[13px] tabular-nums outline-none transition focus:border-[var(--ink)] disabled:opacity-50" /></td><td className="px-3 py-3"><Toggle checked={product.available} disabled={busy === `product:${product.id}`} onChange={(value) => patchProduct(product.id, { available: value })} /></td><td className="px-3 py-3"><Toggle checked={product.bestseller} disabled={busy === `product:${product.id}`} onChange={(value) => patchProduct(product.id, { bestseller: value })} /></td></tr>)}</tbody></table>
+        <div className="mt-6 overflow-x-auto rounded-lg border border-[#E8E4DF] bg-white shadow-sm">
+          <table className="w-full min-w-[780px] text-left"><thead><tr className="border-b border-[#E8E4DF] bg-[#FAFAF8] text-[11px] uppercase tracking-wide text-[#76685F]"><th className="px-5 py-3 font-semibold">Product</th><th className="px-3 py-3 font-semibold">Category</th><th className="px-3 py-3 font-semibold">Price ₾</th><th className="px-3 py-3 font-semibold">Available</th><th className="px-3 py-3 font-semibold">Featured</th></tr></thead><tbody>{products.map((product) => <tr key={product.id} className="border-b border-[#F1EEEA] last:border-b-0"><td className="px-5 py-3"><div className="flex items-center gap-3"><span className="relative h-12 w-10 shrink-0 overflow-hidden rounded-md bg-[#F5F0E8]"><Image src={product.image} alt="" fill sizes="40px" unoptimized={product.image.startsWith("/manus-storage/")} className="object-cover" /></span><span className="min-w-0"><span className="block truncate text-[13px] font-semibold text-[#1C1917]">{product.name}</span><span className="block truncate text-[12px] text-[#76685F]">{product.subtitle}{product.edited ? <span className="ml-2 text-[#C4603A]">edited</span> : null}</span></span></div></td><td className="px-3 py-3 text-[12px] text-[#76685F]">{product.category}</td><td className="px-3 py-3"><input type="number" min={0} defaultValue={product.price} disabled={busy === `product:${product.id}`} onBlur={(event) => { const value = Number(event.target.value); if (value !== product.price) void patchProduct(product.id, { price: value }); }} className="h-9 w-24 rounded-md border border-[#E8E4DF] bg-white px-2.5 text-[13px] tabular-nums outline-none focus:ring-2 focus:ring-[#C4603A] disabled:opacity-50" /></td><td className="px-3 py-3"><Toggle checked={product.available} disabled={busy === `product:${product.id}`} onChange={(value) => patchProduct(product.id, { available: value })} /></td><td className="px-3 py-3"><Toggle checked={product.bestseller} disabled={busy === `product:${product.id}`} onChange={(value) => patchProduct(product.id, { bestseller: value })} /></td></tr>)}</tbody></table>
         </div>
       )}
-      <p className="mt-3 text-[12px] leading-relaxed text-[var(--muted-2)]">Price, availability and bestseller updates are stored as catalog overrides and apply immediately across the storefront.</p>
+      <p className="mt-3 text-[12px] leading-relaxed text-[#8B817A]">Price, availability and featured updates are stored as catalog overrides and apply immediately across the storefront.</p>
     </div>
   );
+}
+
+function CategoriesPanel({ categories }: { categories: Array<{ name: string; count: number }> }) {
+  return <div className="pt-8"><div className="mb-8"><h2 className="text-3xl font-bold text-[#1C1917]">Manage Categories</h2><p className="mt-2 text-sm text-[#76685F]">Live catalog taxonomy used by the current storefront</p></div><div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{categories.map((category) => <div key={category.name} className="rounded-lg border border-[#E8E4DF] bg-white p-5 shadow-sm"><p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#C4603A]">Category</p><h3 className="mt-2 text-[17px] font-semibold text-[#1C1917]">{category.name}</h3><p className="mt-2 text-[13px] text-[#76685F]">{category.count} product{category.count === 1 ? "" : "s"} in the live catalog</p></div>)}</div></div>;
+}
+
+function LegacyNotice({ title, text }: { title: string; text: string }) {
+  return <div className="pt-8"><div className="rounded-lg border border-[#E8E4DF] bg-white p-6 shadow-sm"><h2 className="text-3xl font-bold text-[#1C1917]">{title}</h2><p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#76685F]">{text}</p></div></div>;
 }
 
 function SectionHeading({ eyebrow, title, text }: { eyebrow: string; title: string; text: string }) { return <div><p className="eyebrow">{eyebrow}</p><h2 className="font-display mt-2 text-[24px] leading-none sm:text-[29px]">{title}</h2><p className="mt-2 max-w-[66ch] text-[13px] leading-relaxed text-[var(--muted)]">{text}</p></div>; }
 function StatusPill({ status }: { status: OrderStatus }) { return <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ${STATUS_STYLE[status]}`}>{status}</span>; }
 function Line({ label, value, strong }: { label: string; value: string; strong?: boolean }) { return <div className={`flex justify-between gap-4 ${strong ? "border-t border-[var(--line)] pt-2 font-semibold" : ""}`}><dt className="shrink-0 text-[var(--muted)]">{label}</dt><dd className="text-right">{value}</dd></div>; }
 function Toggle({ checked, disabled, onChange }: { checked: boolean; disabled: boolean; onChange: (value: boolean) => void }) { return <button type="button" role="switch" aria-checked={checked} disabled={disabled} onClick={() => onChange(!checked)} className={`relative h-10 w-12 rounded-full transition disabled:cursor-not-allowed disabled:opacity-50 ${checked ? "bg-[var(--action)]" : "bg-black/15"}`}><span className={`absolute top-1 h-8 w-8 rounded-full bg-white shadow transition-all ${checked ? "left-3" : "left-1"}`} /></button>; }
-function Toolbar({ query, setQuery, placeholder, children }: { query: string; setQuery: (value: string) => void; placeholder: string; children?: React.ReactNode }) { return <div className="mt-5 flex flex-wrap items-center gap-3"><div className="flex min-w-[220px] flex-1 items-center gap-2 rounded-full border border-[var(--line-strong)] bg-white px-4"><SearchIcon className="h-[18px] w-[18px] shrink-0 text-[var(--muted)]" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={placeholder} className="h-11 w-full bg-transparent text-[13.5px] outline-none placeholder:text-[var(--muted-2)]" /></div>{children}</div>; }
+function Toolbar({ query, setQuery, placeholder, children }: { query: string; setQuery: (value: string) => void; placeholder: string; children?: React.ReactNode }) { return <div className="flex min-w-[220px] items-center gap-2 rounded-lg border border-[#E8E4DF] bg-white px-3"><SearchIcon className="h-[18px] w-[18px] shrink-0 text-[#8B817A]" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={placeholder} className="h-11 w-full bg-transparent text-[13.5px] outline-none placeholder:text-[#A69B92]" />{children}</div>; }
 function EmptyState({ title, text }: { title: string; text: string }) { return <div className="mt-4 rounded-[var(--radius)] border border-dashed border-[var(--line-strong)] bg-[var(--surface-warm)]/35 py-14 text-center"><p className="font-display text-[19px]">{title}</p><p className="mx-auto mt-2 max-w-[42ch] text-[13px] leading-relaxed text-[var(--muted)]">{text}</p></div>; }
 function LoadingRows() { return <div className="mt-4 grid gap-3"><div className="h-16 animate-pulse rounded-[var(--radius)] bg-[var(--surface-warm)]" /><div className="h-16 animate-pulse rounded-[var(--radius)] bg-[var(--surface-warm)]" /><div className="h-16 animate-pulse rounded-[var(--radius)] bg-[var(--surface-warm)]" /></div>; }
 function OrderItemImage({ image }: { image?: string }) { return image ? <span className="relative h-12 w-10 shrink-0 overflow-hidden rounded-md bg-[var(--surface-warm)]"><Image src={image} alt="" fill sizes="40px" unoptimized={image.startsWith("data:") || image.startsWith("/manus-storage/")} className="object-cover" /></span> : <span className="h-12 w-10 shrink-0 rounded-md bg-[var(--surface-warm)]" />; }
