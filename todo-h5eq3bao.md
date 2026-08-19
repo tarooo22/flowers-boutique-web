@@ -139,4 +139,4 @@
 - [x] Add regression coverage and verify the post-login customer experience on the published release.
 - [x] Diagnose why the Admin panel is not visible or accessible for the intended manager account.
 - [x] Repair Admin role recognition or route navigation while preserving non-admin protection and the existing manager UI.
-- [ ] Add focused regression coverage and verify Admin access/non-admin denial on the published release.
+- [x] Add focused regression coverage and verify Admin access/non-admin denial on the published release.
