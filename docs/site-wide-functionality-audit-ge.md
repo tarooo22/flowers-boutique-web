@@ -124,10 +124,12 @@ The following Dev Server captures were inspected after the functional repairs. H
 
 ### F. დასრულების criteria
 
-ყველა public customer journey, Cart/Checkout/Builder critical flow, mobile menu/filter drawer, live search, navigation, product interactions, Cart persistence და active-looking public CTA გადამოწმებულია. დარჩენილია მხოლოდ rebuilt bundle-ის published-domain final verification და checkpoint publication; ეს ქვემოთ განახლდება მას შემდეგ, რაც ეს exact audited build production-ზე აიტვირთება.
+ყველა public customer journey, Cart/Checkout/Builder critical flow, mobile menu/filter drawer, live search, navigation, product interactions, Cart persistence და active-looking public CTA გადამოწმებულია. Initial audit release checkpoint `85531238` და Catalog follow-up checkpoint `67afa2e4` ავტომატურად გამოქვეყნდა production-ზე.
 
 ## Production follow-up — live category label correction
 
 Initial published-domain Catalog inspection found one additional **incorrect** presentation/data-binding behavior: the database sends legacy raw names (`category.bouquet`, `category.single-stems`) and CatalogView displayed `Category.name` directly. This did not affect filtering or URLs, but it exposed an implementation key to customers in the English sidebar and active-filter pills.
 
-The correction adds `localizedCategoryName()`: it resolves every live category by its existing `category.<id>` translation and deliberately falls back to the server name only for a future unknown category. `src/lib/categoryLabels.test.ts` covers both the raw-key replacement and the unknown-category fallback. TypeScript, all **28 Vitest assertions**, and the production build pass. The post-deployment domain check for `Bouquets` and `Single stems` is the final pending verification step.
+The correction adds `localizedCategoryName()`: it resolves every live category by its existing `category.<id>` translation and deliberately falls back to the server name only for a future unknown category. `src/lib/categoryLabels.test.ts` covers both the raw-key replacement and the unknown-category fallback. TypeScript, all **28 Vitest assertions**, and the production build pass.
+
+**Published verification:** `https://flower-shop-jx9auvvz.manus.space/catalog?label-audit=67afa2e4` was opened after the second deployment. The sidebar rendered customer-facing Georgian taxonomy labels (`თაიგული`, `ცალკეული ყვავილები`) with the correct 64/43 live counts; neither raw implementation key appeared. The production Home `Shop the catalog` CTA also navigated successfully to Catalog, and loaded Catalog product media rendered after its normal initial skeleton state.
