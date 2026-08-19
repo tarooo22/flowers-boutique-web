@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { brand } from "@/config/brand";
 import { authFeedback } from "@/lib/authFeedback";
+import { postAuthDestination } from "@/lib/authRedirect";
 
 type Mode = "login" | "register";
 
@@ -64,7 +65,8 @@ export function AuthForm({ mode }: { mode: Mode }) {
                 return;
               }
               setDone(true);
-              router.replace(params.get("next") || "/");
+              router.replace(postAuthDestination(params.get("next")));
+              router.refresh();
             }}
             className="mt-8 grid gap-4 rounded-[var(--radius-lg)] border bg-[var(--surface)] p-6 sm:p-7"
           >

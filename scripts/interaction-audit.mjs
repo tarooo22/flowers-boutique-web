@@ -248,6 +248,15 @@ async function run() {
     assert(!(await registerForm.evaluate((form) => form.checkValidity())), "Empty registration form bypasses browser validation.");
     results.push("account-forms-and-validation");
 
+    // A guest must not see account identity, while a post-auth default has a protected account destination.
+    const guestSession = await page.request.get(`${baseUrl}/api/auth/me`);
+    assert(guestSession.status() === 200, "Guest session endpoint does not return a safe response.");
+    assert((await guestSession.json()).user === null, "Guest session endpoint exposes an unexpected customer payload.");
+    await page.goto(`${baseUrl}/account`, { waitUntil: "networkidle" });
+    assert(new URL(page.url()).pathname === "/account/login", "Unauthenticated account route is not redirected to login.");
+    assert(new URL(page.url()).searchParams.get("next") === "/account", "Account login redirect loses its return destination.");
+    results.push("account-session-boundary");
+
     // Admin remains protected; the public storefront does not expose manager controls.
     await page.goto(`${baseUrl}/admin`, { waitUntil: "networkidle" });
     assert(new URL(page.url()).pathname === "/account/login", "Admin route is not protected by the customer/auth entry boundary.");

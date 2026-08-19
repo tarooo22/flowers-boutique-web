@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useStore } from "@/lib/store";
 import { useI18n } from "@/lib/i18n";
 import { IconButton } from "@/components/ui/IconButton";
@@ -40,6 +40,24 @@ function IconLink({
 export function HeaderActions() {
   const { openCart, setSearchOpen, cartCount, favCount, hydrated } = useStore();
   const { t } = useI18n();
+  const [customerName, setCustomerName] = useState<string | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    fetch("/api/auth/me", { credentials: "same-origin" })
+      .then(async (response) => {
+        if (!response.ok) return null;
+        const payload = await response.json() as { user?: { name?: unknown } };
+        return typeof payload.user?.name === "string" ? payload.user.name.trim() : null;
+      })
+      .catch(() => null)
+      .then((name) => {
+        if (active) setCustomerName(name || null);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <div className="flex items-center gap-0.5 sm:gap-1">
@@ -49,7 +67,11 @@ export function HeaderActions() {
 
       <LanguageSelector />
 
-      <IconLink href="/account/login" label={t("header.account")} className="hidden sm:grid">
+      <IconLink
+        href={customerName ? "/account" : "/account/login"}
+        label={customerName ? `Account: ${customerName}` : t("header.account")}
+        className="hidden sm:grid"
+      >
         <UserIcon />
       </IconLink>
 

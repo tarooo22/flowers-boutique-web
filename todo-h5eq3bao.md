@@ -134,3 +134,6 @@
 - [x] Diagnose the reported customer registration and login failure on the public storefront without changing visual design.
 - [x] Repair the authentication flow and add focused API/browser regression coverage for valid and invalid registration/login paths.
 - [x] Validate the repaired public authentication flow, production build and published release; document the outcome.
+- [x] Diagnose why a valid customer session redirects to Home but remains represented as a guest.
+- [x] Implement session-aware customer identity, name display and authenticated account navigation without changing the storefront design.
+- [ ] Add regression coverage and verify the post-login customer experience on the published release.
