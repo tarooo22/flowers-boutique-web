@@ -142,4 +142,4 @@
 - [x] Add focused regression coverage and verify Admin access/non-admin denial on the published release.
 - [x] Inventory the prior approved Admin panel implementation and map its preserved workflows against the current manager workspace.
 - [x] Restore the requested legacy Admin presentation and navigation while retaining current production orders, products, role guard and sign-out behavior.
-- [ ] Run focused Admin regression, responsive manager QA, TypeScript, full tests, production build and published verification for the restored panel.
+- [x] Run focused Admin regression, responsive manager QA, TypeScript, full tests, production build and published verification for the restored panel.
