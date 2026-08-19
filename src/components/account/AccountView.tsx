@@ -5,7 +5,15 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 
-export function AccountView({ name, email }: { name: string | null; email: string | null }) {
+export function AccountView({
+  name,
+  email,
+  isAdmin = false,
+}: {
+  name: string | null;
+  email: string | null;
+  isAdmin?: boolean;
+}) {
   const router = useRouter();
   const [signingOut, setSigningOut] = useState(false);
   const displayName = name?.trim() || "there";
@@ -30,6 +38,11 @@ export function AccountView({ name, email }: { name: string | null; email: strin
           <Link href="/catalog">
             <Button type="button" variant="primary">Continue shopping</Button>
           </Link>
+          {isAdmin ? (
+            <Link href="/admin">
+              <Button type="button" variant="outline">Open admin panel</Button>
+            </Link>
+          ) : null}
           <Button type="button" variant="outline" onClick={signOut} disabled={signingOut}>
             {signingOut ? "Signing out…" : "Sign out"}
           </Button>

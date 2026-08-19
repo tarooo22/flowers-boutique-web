@@ -5,6 +5,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { useStore } from "@/lib/store";
 import { useI18n } from "@/lib/i18n";
 import { IconButton } from "@/components/ui/IconButton";
+import { isAdminRole } from "@/lib/accountAccess";
 import { LanguageSelector } from "./LanguageSelector";
 import { SearchIcon, UserIcon, HeartIcon, BagIcon } from "@/components/ui/Icons";
 
@@ -40,19 +41,20 @@ function IconLink({
 export function HeaderActions() {
   const { openCart, setSearchOpen, cartCount, favCount, hydrated } = useStore();
   const { t } = useI18n();
-  const [customerName, setCustomerName] = useState<string | null>(null);
+  const [customer, setCustomer] = useState<{ name: string; role: string } | null>(null);
 
   useEffect(() => {
     let active = true;
     fetch("/api/auth/me", { credentials: "same-origin" })
       .then(async (response) => {
         if (!response.ok) return null;
-        const payload = await response.json() as { user?: { name?: unknown } };
-        return typeof payload.user?.name === "string" ? payload.user.name.trim() : null;
+        const payload = await response.json() as { user?: { name?: unknown; role?: unknown } };
+        if (typeof payload.user?.name !== "string") return null;
+        return { name: payload.user.name.trim(), role: typeof payload.user.role === "string" ? payload.user.role : "user" };
       })
       .catch(() => null)
-      .then((name) => {
-        if (active) setCustomerName(name || null);
+      .then((value) => {
+        if (active) setCustomer(value?.name ? value : null);
       });
     return () => {
       active = false;
@@ -68,8 +70,8 @@ export function HeaderActions() {
       <LanguageSelector />
 
       <IconLink
-        href={customerName ? "/account" : "/account/login"}
-        label={customerName ? `Account: ${customerName}` : t("header.account")}
+        href={isAdminRole(customer?.role) ? "/admin" : customer ? "/account" : "/account/login"}
+        label={isAdminRole(customer?.role) ? "Open admin panel" : customer ? `Account: ${customer.name}` : t("header.account")}
         className="hidden sm:grid"
       >
         <UserIcon />

@@ -4620,3 +4620,247 @@
 [2026-08-19T14:01:32.977Z] GET /?from_webdev=1 200 in 118ms (next.js: 2.0ms, application-code: 116ms)
 [2026-08-19T14:01:33.318Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 135ms (next.js: 10ms, application-code: 125ms)
 [2026-08-19T14:01:33.346Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 147ms (next.js: 1.5ms, application-code: 145ms)
+[2026-08-19T14:01:47.776Z] GET / 200 in 117ms (next.js: 2ms, application-code: 115ms)
+[2026-08-19T14:01:47.957Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 161ms (next.js: 15ms, application-code: 146ms)
+[2026-08-19T14:01:47.982Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 165ms (next.js: 2ms, application-code: 163ms)
+[2026-08-19T14:01:48.019Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 137ms (next.js: 7ms, application-code: 130ms)
+[2026-08-19T14:01:48.047Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 166ms (next.js: 3ms, application-code: 163ms)
+[2026-08-19T14:01:48.062Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 179ms (next.js: 11ms, application-code: 168ms)
+[2026-08-19T14:01:48.132Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 248ms (next.js: 19ms, application-code: 228ms)
+[2026-08-19T14:01:48.258Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 54ms (next.js: 1.6ms, application-code: 53ms)
+[2026-08-19T14:01:48.261Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 45ms (next.js: 1.5ms, application-code: 43ms)
+[2026-08-19T14:01:48.269Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 59ms (next.js: 1.4ms, application-code: 58ms)
+[2026-08-19T14:01:48.274Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 57ms (next.js: 8ms, application-code: 49ms)
+[2026-08-19T14:01:48.282Z] GET /manus-storage/editorial-collection_fd67f2f1.webp 307 in 54ms (next.js: 2ms, application-code: 52ms)
+[2026-08-19T14:02:34.538Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 165ms (next.js: 11ms, application-code: 154ms)
+[2026-08-19T14:02:34.555Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 165ms (next.js: 1.6ms, application-code: 163ms)
+[2026-08-19T14:38:21.986Z] GET /?from_webdev=1 200 in 1838ms (next.js: 2ms, application-code: 1836ms)
+[2026-08-19T14:38:22.396Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 161ms (next.js: 1.5ms, application-code: 159ms)
+[2026-08-19T14:38:22.407Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 212ms (next.js: 11ms, application-code: 201ms)
+[2026-08-19T14:38:22.421Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 176ms (next.js: 4ms, application-code: 172ms)
+[2026-08-19T14:38:22.423Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 210ms (next.js: 1.3ms, application-code: 208ms)
+[2026-08-19T14:38:22.430Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 172ms (next.js: 6ms, application-code: 166ms)
+[2026-08-19T14:38:22.442Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 196ms (next.js: 9ms, application-code: 187ms)
+[2026-08-19T14:38:22.443Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 180ms (next.js: 8ms, application-code: 172ms)
+[2026-08-19T14:38:22.462Z] GET /manus-storage/img_7346_6dc1e00a_caa980d5.webp 307 in 183ms (next.js: 4ms, application-code: 179ms)
+[2026-08-19T14:38:22.467Z] GET /manus-storage/img_7344_05295024_7ecf3054.webp 307 in 186ms (next.js: 11ms, application-code: 175ms)
+[2026-08-19T14:38:22.483Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 230ms (next.js: 7ms, application-code: 224ms)
+[2026-08-19T14:38:22.484Z] GET /manus-storage/editorial-collection_fd67f2f1.webp 307 in 195ms (next.js: 8ms, application-code: 187ms)
+[2026-08-19T14:38:22.494Z] GET /manus-storage/img_7347_8b70b6a5_904b94c3.webp 307 in 199ms (next.js: 7ms, application-code: 192ms)
+[2026-08-19T14:38:22.499Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 174ms (next.js: 7ms, application-code: 167ms)
+[2026-08-19T14:38:22.509Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 208ms (next.js: 27ms, application-code: 181ms)
+[2026-08-19T14:38:22.531Z] GET /manus-storage/img_7354_8dec9ac4_76712fd9.webp 307 in 195ms (next.js: 6ms, application-code: 189ms)
+[2026-08-19T14:38:22.542Z] GET /manus-storage/img_7345_21d3ef2d_592744ea.webp 307 in 195ms (next.js: 7ms, application-code: 188ms)
+[2026-08-19T14:38:22.543Z] GET /manus-storage/fb-journal-colour-v2_bbae4f4e.jpg 307 in 198ms (next.js: 4ms, application-code: 194ms)
+[2026-08-19T14:38:22.548Z] GET /manus-storage/fb-journal-peony-v2_3af4ce7f.jpg 307 in 217ms (next.js: 7ms, application-code: 210ms)
+[2026-08-19T14:38:22.573Z] GET /manus-storage/img_7357_c9c21a13_ee62784a.webp 307 in 214ms (next.js: 6ms, application-code: 209ms)
+[2026-08-19T14:38:22.585Z] GET /manus-storage/fb-floristry-school-v2_4cc3b90e.jpg 307 in 233ms (next.js: 7ms, application-code: 226ms)
+[2026-08-19T14:38:22.595Z] GET /manus-storage/img_7348_642de59f_da46e323.webp 307 in 232ms (next.js: 4ms, application-code: 227ms)
+[2026-08-19T14:38:22.596Z] GET /manus-storage/fb-event-florals-v2_506c3067.jpg 307 in 248ms (next.js: 9ms, application-code: 239ms)
+[2026-08-19T14:38:22.597Z] GET /manus-storage/fb-journal-care-v2_236c8f7f.jpg 307 in 226ms (next.js: 4ms, application-code: 223ms)
+[2026-08-19T14:38:22.615Z] GET /manus-storage/img_7356_d8c86f08_198aa88a.webp 307 in 249ms (next.js: 5ms, application-code: 244ms)
+[2026-08-19T14:38:24.353Z] HEAD / 200 in 115ms (next.js: 2ms, application-code: 113ms)
+[2026-08-19T14:38:24.992Z] GET /?from_webdev=1 200 in 108ms (next.js: 1.7ms, application-code: 106ms)
+[2026-08-19T14:38:25.654Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 59ms (next.js: 12ms, application-code: 47ms)
+[2026-08-19T14:38:25.665Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 54ms (next.js: 1.4ms, application-code: 52ms)
+[2026-08-19T14:38:25.672Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 43ms (next.js: 2ms, application-code: 41ms)
+[2026-08-19T14:38:25.686Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 56ms (next.js: 7ms, application-code: 49ms)
+[2026-08-19T14:38:25.693Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 48ms (next.js: 1.8ms, application-code: 46ms)
+[2026-08-19T14:38:25.694Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 44ms (next.js: 0.8ms, application-code: 43ms)
+[2026-08-19T14:38:25.718Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 72ms (next.js: 3ms, application-code: 69ms)
+[2026-08-19T14:38:25.746Z] GET /manus-storage/img_7348_642de59f_da46e323.webp 307 in 51ms (next.js: 3ms, application-code: 48ms)
+[2026-08-19T14:38:25.749Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 49ms (next.js: 4ms, application-code: 45ms)
+[2026-08-19T14:38:25.751Z] GET /manus-storage/img_7354_8dec9ac4_76712fd9.webp 307 in 49ms (next.js: 5ms, application-code: 44ms)
+[2026-08-19T14:38:25.752Z] GET /manus-storage/img_7356_d8c86f08_198aa88a.webp 307 in 43ms (next.js: 4ms, application-code: 39ms)
+[2026-08-19T14:38:25.757Z] GET /manus-storage/editorial-collection_fd67f2f1.webp 307 in 46ms (next.js: 4ms, application-code: 42ms)
+[2026-08-19T14:38:25.759Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 54ms (next.js: 5ms, application-code: 49ms)
+[2026-08-19T14:38:25.766Z] GET /manus-storage/fb-floristry-school-v2_4cc3b90e.jpg 307 in 52ms (next.js: 5ms, application-code: 47ms)
+[2026-08-19T14:38:25.768Z] GET /manus-storage/fb-journal-peony-v2_3af4ce7f.jpg 307 in 50ms (next.js: 9ms, application-code: 42ms)
+[2026-08-19T14:38:25.772Z] GET /manus-storage/img_7347_8b70b6a5_904b94c3.webp 307 in 43ms (next.js: 5ms, application-code: 38ms)
+[2026-08-19T14:38:25.775Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 78ms (next.js: 4ms, application-code: 74ms)
+[2026-08-19T14:38:25.778Z] GET /manus-storage/fb-event-florals-v2_506c3067.jpg 307 in 53ms (next.js: 6ms, application-code: 48ms)
+[2026-08-19T14:38:25.780Z] GET /manus-storage/img_7346_6dc1e00a_caa980d5.webp 307 in 43ms (next.js: 3ms, application-code: 40ms)
+[2026-08-19T14:38:25.781Z] GET /manus-storage/fb-journal-colour-v2_bbae4f4e.jpg 307 in 46ms (next.js: 3ms, application-code: 43ms)
+[2026-08-19T14:38:25.786Z] GET /manus-storage/img_7357_c9c21a13_ee62784a.webp 307 in 54ms (next.js: 4ms, application-code: 50ms)
+[2026-08-19T14:38:25.795Z] GET /manus-storage/img_7344_05295024_7ecf3054.webp 307 in 54ms (next.js: 2ms, application-code: 51ms)
+[2026-08-19T14:38:25.798Z] GET /manus-storage/fb-journal-care-v2_236c8f7f.jpg 307 in 55ms (next.js: 3ms, application-code: 52ms)
+[2026-08-19T14:38:25.802Z] GET /manus-storage/img_7345_21d3ef2d_592744ea.webp 307 in 63ms (next.js: 3ms, application-code: 60ms)
+[2026-08-19T14:38:27.021Z] GET /?from_webdev=1 200 in 116ms (next.js: 2ms, application-code: 114ms)
+[2026-08-19T14:38:27.289Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 67ms (next.js: 14ms, application-code: 53ms)
+[2026-08-19T14:38:27.312Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 56ms (next.js: 2ms, application-code: 54ms)
+[2026-08-19T14:38:27.313Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 65ms (next.js: 2ms, application-code: 63ms)
+[2026-08-19T14:38:27.319Z] GET /manus-storage/fb-event-florals-v2_506c3067.jpg 307 in 53ms (next.js: 3ms, application-code: 50ms)
+[2026-08-19T14:38:27.329Z] GET /manus-storage/editorial-collection_fd67f2f1.webp 307 in 54ms (next.js: 4ms, application-code: 50ms)
+[2026-08-19T14:38:27.334Z] GET /manus-storage/img_7354_8dec9ac4_76712fd9.webp 307 in 56ms (next.js: 4ms, application-code: 52ms)
+[2026-08-19T14:38:27.339Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 72ms (next.js: 6ms, application-code: 66ms)
+[2026-08-19T14:38:27.340Z] GET /manus-storage/img_7345_21d3ef2d_592744ea.webp 307 in 50ms (next.js: 5ms, application-code: 45ms)
+[2026-08-19T14:38:27.344Z] GET /manus-storage/img_7348_642de59f_da46e323.webp 307 in 61ms (next.js: 4ms, application-code: 57ms)
+[2026-08-19T14:38:27.347Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 51ms (next.js: 4ms, application-code: 47ms)
+[2026-08-19T14:38:27.350Z] GET /manus-storage/fb-journal-colour-v2_bbae4f4e.jpg 307 in 79ms (next.js: 6ms, application-code: 74ms)
+[2026-08-19T14:38:27.352Z] GET /manus-storage/fb-journal-peony-v2_3af4ce7f.jpg 307 in 58ms (next.js: 4ms, application-code: 55ms)
+[2026-08-19T14:38:27.353Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 54ms (next.js: 9ms, application-code: 45ms)
+[2026-08-19T14:38:27.360Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 79ms (next.js: 4ms, application-code: 75ms)
+[2026-08-19T14:38:27.368Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 54ms (next.js: 8ms, application-code: 46ms)
+[2026-08-19T14:38:27.368Z] GET /manus-storage/img_7356_d8c86f08_198aa88a.webp 307 in 63ms (next.js: 10ms, application-code: 52ms)
+[2026-08-19T14:38:27.375Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 51ms (next.js: 8ms, application-code: 43ms)
+[2026-08-19T14:38:27.376Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 57ms (next.js: 7ms, application-code: 50ms)
+[2026-08-19T14:38:27.377Z] GET /manus-storage/fb-floristry-school-v2_4cc3b90e.jpg 307 in 48ms (next.js: 7ms, application-code: 41ms)
+[2026-08-19T14:38:27.392Z] GET /manus-storage/img_7357_c9c21a13_ee62784a.webp 307 in 48ms (next.js: 4ms, application-code: 44ms)
+[2026-08-19T14:38:27.393Z] GET /manus-storage/fb-journal-care-v2_236c8f7f.jpg 307 in 107ms (next.js: 6ms, application-code: 101ms)
+[2026-08-19T14:38:27.395Z] GET /manus-storage/img_7344_05295024_7ecf3054.webp 307 in 60ms (next.js: 7ms, application-code: 54ms)
+[2026-08-19T14:38:27.398Z] GET /manus-storage/img_7347_8b70b6a5_904b94c3.webp 307 in 58ms (next.js: 5ms, application-code: 53ms)
+[2026-08-19T14:38:27.399Z] GET /manus-storage/img_7346_6dc1e00a_caa980d5.webp 307 in 51ms (next.js: 3ms, application-code: 48ms)
+[2026-08-19T14:39:13.711Z] [ELIFECYCLE] Command failed.
+[2026-08-19T14:39:13.778Z] [?25h
+[2026-08-19T14:39:13.780Z] Dev server exited with code -1
+[2026-08-19T14:39:14.811Z] Starting dev server with command: pnpm run dev
+[2026-08-19T14:39:15.085Z] $ next dev
+[2026-08-19T14:39:15.468Z] ▲ Next.js 16.3.1 (Turbopack)
+[2026-08-19T14:39:15.468Z] - Local:         http://localhost:3000
+[2026-08-19T14:39:15.468Z] - Network:       http://169.254.0.21:3000
+[2026-08-19T14:39:15.468Z] ✓ Ready in 304ms
+[2026-08-19T14:39:15.488Z] ✓ Running next.config.ts took 19ms
+[2026-08-19T14:39:16.269Z] ⚠ Blocked cross-origin request to Next.js dev resource /_next/hmr from "3000-i2pfjamc2e6vvxjvr0sej-59b127c0.us3.manus.computer".
+[2026-08-19T14:39:16.269Z] Cross-origin access to Next.js dev resources is blocked by default for safety.
+[2026-08-19T14:39:16.269Z] To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+[2026-08-19T14:39:16.269Z] // next.config.js
+[2026-08-19T14:39:16.269Z] module.exports = {
+[2026-08-19T14:39:16.269Z] allowedDevOrigins: ['3000-i2pfjamc2e6vvxjvr0sej-59b127c0.us3.manus.computer'],
+[2026-08-19T14:39:16.269Z] }
+[2026-08-19T14:39:16.269Z] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[2026-08-19T14:39:19.400Z] GET / 200 in 2.5s (next.js: 1761ms, application-code: 789ms)
+[2026-08-19T14:39:19.495Z] ⚠ Blocked cross-origin request to Next.js dev resource /_next/static/chunks/src_1ml08to._.js from "127.0.0.1".
+[2026-08-19T14:39:19.495Z] Cross-origin access to Next.js dev resources is blocked by default for safety.
+[2026-08-19T14:39:19.495Z] To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+[2026-08-19T14:39:19.495Z] // next.config.js
+[2026-08-19T14:39:19.495Z] module.exports = {
+[2026-08-19T14:39:19.495Z] allowedDevOrigins: ['127.0.0.1'],
+[2026-08-19T14:39:19.495Z] }
+[2026-08-19T14:39:19.495Z] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[2026-08-19T14:39:19.496Z] ⚠ Blocked cross-origin request to Next.js dev resource /_next/static/chunks/1ls4_next_1f7r-f_._.js from "127.0.0.1".
+[2026-08-19T14:39:19.496Z] Cross-origin access to Next.js dev resources is blocked by default for safety.
+[2026-08-19T14:39:19.496Z] To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+[2026-08-19T14:39:19.496Z] // next.config.js
+[2026-08-19T14:39:19.496Z] module.exports = {
+[2026-08-19T14:39:19.496Z] allowedDevOrigins: ['127.0.0.1'],
+[2026-08-19T14:39:19.496Z] }
+[2026-08-19T14:39:19.496Z] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[2026-08-19T14:39:19.659Z] ⚠ Blocked cross-origin request to Next.js dev resource /_next/hmr from "127.0.0.1".
+[2026-08-19T14:39:19.659Z] Cross-origin access to Next.js dev resources is blocked by default for safety.
+[2026-08-19T14:39:19.659Z] To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+[2026-08-19T14:39:19.659Z] // next.config.js
+[2026-08-19T14:39:19.659Z] module.exports = {
+[2026-08-19T14:39:19.659Z] allowedDevOrigins: ['127.0.0.1'],
+[2026-08-19T14:39:19.659Z] }
+[2026-08-19T14:39:19.659Z] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[2026-08-19T14:39:20.084Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 661ms (next.js: 502ms, application-code: 159ms)
+[2026-08-19T14:39:20.085Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 664ms (next.js: 502ms, application-code: 161ms)
+[2026-08-19T14:39:20.101Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 592ms (next.js: 415ms, application-code: 177ms)
+[2026-08-19T14:39:20.115Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 606ms (next.js: 416ms, application-code: 190ms)
+[2026-08-19T14:39:20.116Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 596ms (next.js: 405ms, application-code: 191ms)
+[2026-08-19T14:39:20.126Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 608ms (next.js: 406ms, application-code: 202ms)
+[2026-08-19T14:39:20.261Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 71ms (next.js: 26ms, application-code: 45ms)
+[2026-08-19T14:39:20.273Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 49ms (next.js: 4ms, application-code: 45ms)
+[2026-08-19T14:39:20.285Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 60ms (next.js: 6ms, application-code: 54ms)
+[2026-08-19T14:39:20.286Z] GET /manus-storage/editorial-collection_fd67f2f1.webp 307 in 60ms (next.js: 9ms, application-code: 50ms)
+[2026-08-19T14:39:20.317Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 91ms (next.js: 8ms, application-code: 83ms)
+[2026-08-19T14:39:37.604Z] GET /?from_webdev=1 200 in 187ms (next.js: 6ms, application-code: 181ms)
+[2026-08-19T14:39:37.849Z] ⚠ Blocked cross-origin request to Next.js dev resource /_next/static/chunks/1ls4_next_1f7r-f_._.js from "3000-i2pfjamc2e6vvxjvr0sej-59b127c0.us3.manus.computer".
+[2026-08-19T14:39:37.850Z] Cross-origin access to Next.js dev resources is blocked by default for safety.
+[2026-08-19T14:39:37.850Z] To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+[2026-08-19T14:39:37.850Z] // next.config.js
+[2026-08-19T14:39:37.850Z] module.exports = {
+[2026-08-19T14:39:37.850Z] allowedDevOrigins: ['3000-i2pfjamc2e6vvxjvr0sej-59b127c0.us3.manus.computer'],
+[2026-08-19T14:39:37.850Z] }
+[2026-08-19T14:39:37.850Z] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[2026-08-19T14:39:37.875Z] ⚠ Blocked cross-origin request to Next.js dev resource /_next/static/chunks/src_1ml08to._.js from "3000-i2pfjamc2e6vvxjvr0sej-59b127c0.us3.manus.computer".
+[2026-08-19T14:39:37.875Z] Cross-origin access to Next.js dev resources is blocked by default for safety.
+[2026-08-19T14:39:37.875Z] To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+[2026-08-19T14:39:37.875Z] // next.config.js
+[2026-08-19T14:39:37.875Z] module.exports = {
+[2026-08-19T14:39:37.875Z] allowedDevOrigins: ['3000-i2pfjamc2e6vvxjvr0sej-59b127c0.us3.manus.computer'],
+[2026-08-19T14:39:37.875Z] }
+[2026-08-19T14:39:37.875Z] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[2026-08-19T14:39:37.984Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 177ms (next.js: 10ms, application-code: 167ms)
+[2026-08-19T14:39:37.985Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 161ms (next.js: 2.0ms, application-code: 159ms)
+[2026-08-19T14:39:37.986Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 152ms (next.js: 3ms, application-code: 149ms)
+[2026-08-19T14:39:38.028Z] GET /manus-storage/img_7357_c9c21a13_ee62784a.webp 307 in 43ms (next.js: 1.9ms, application-code: 41ms)
+[2026-08-19T14:39:38.047Z] GET /manus-storage/fb-floristry-school-v2_4cc3b90e.jpg 307 in 201ms (next.js: 6ms, application-code: 196ms)
+[2026-08-19T14:39:38.063Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 202ms (next.js: 5ms, application-code: 198ms)
+[2026-08-19T14:39:38.077Z] GET /manus-storage/fb-journal-care-v2_236c8f7f.jpg 307 in 218ms (next.js: 3ms, application-code: 215ms)
+[2026-08-19T14:39:38.086Z] GET /manus-storage/img_7347_8b70b6a5_904b94c3.webp 307 in 222ms (next.js: 4ms, application-code: 218ms)
+[2026-08-19T14:39:38.088Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 252ms (next.js: 7ms, application-code: 245ms)
+[2026-08-19T14:39:38.089Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 239ms (next.js: 5ms, application-code: 234ms)
+[2026-08-19T14:39:38.090Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 249ms (next.js: 6ms, application-code: 243ms)
+[2026-08-19T14:39:38.102Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 227ms (next.js: 47ms, application-code: 180ms)
+[2026-08-19T14:39:38.113Z] GET /manus-storage/fb-event-florals-v2_506c3067.jpg 307 in 240ms (next.js: 6ms, application-code: 234ms)
+[2026-08-19T14:39:38.114Z] GET /manus-storage/fb-journal-colour-v2_bbae4f4e.jpg 307 in 175ms (next.js: 5ms, application-code: 169ms)
+[2026-08-19T14:39:38.137Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 255ms (next.js: 52ms, application-code: 203ms)
+[2026-08-19T14:39:38.139Z] GET /manus-storage/img_7348_642de59f_da46e323.webp 307 in 188ms (next.js: 3ms, application-code: 185ms)
+[2026-08-19T14:39:38.145Z] GET /manus-storage/fb-journal-peony-v2_3af4ce7f.jpg 307 in 202ms (next.js: 6ms, application-code: 196ms)
+[2026-08-19T14:39:38.157Z] GET /manus-storage/img_7345_21d3ef2d_592744ea.webp 307 in 204ms (next.js: 5ms, application-code: 199ms)
+[2026-08-19T14:39:38.165Z] GET /manus-storage/editorial-collection_fd67f2f1.webp 307 in 203ms (next.js: 4ms, application-code: 198ms)
+[2026-08-19T14:39:38.190Z] GET /manus-storage/img_7344_05295024_7ecf3054.webp 307 in 230ms (next.js: 3ms, application-code: 227ms)
+[2026-08-19T14:39:38.201Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 236ms (next.js: 5ms, application-code: 231ms)
+[2026-08-19T14:39:38.221Z] GET /manus-storage/img_7346_6dc1e00a_caa980d5.webp 307 in 252ms (next.js: 6ms, application-code: 247ms)
+[2026-08-19T14:39:38.239Z] GET /manus-storage/img_7356_d8c86f08_198aa88a.webp 307 in 266ms (next.js: 4ms, application-code: 261ms)
+[2026-08-19T14:39:38.246Z] GET /manus-storage/img_7354_8dec9ac4_76712fd9.webp 307 in 269ms (next.js: 3ms, application-code: 266ms)
+[2026-08-19T14:39:38.979Z] HEAD / 200 in 168ms (next.js: 1.6ms, application-code: 167ms)
+[2026-08-19T14:39:39.657Z] GET /?from_webdev=1 200 in 168ms (next.js: 1.5ms, application-code: 166ms)
+[2026-08-19T14:39:39.917Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 59ms (next.js: 8ms, application-code: 51ms)
+[2026-08-19T14:39:39.924Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 47ms (next.js: 1.2ms, application-code: 46ms)
+[2026-08-19T14:39:39.931Z] GET /manus-storage/img_7346_6dc1e00a_caa980d5.webp 307 in 45ms (next.js: 3ms, application-code: 42ms)
+[2026-08-19T14:39:39.941Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 48ms (next.js: 4ms, application-code: 43ms)
+[2026-08-19T14:39:39.948Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 62ms (next.js: 5ms, application-code: 57ms)
+[2026-08-19T14:39:39.949Z] GET /manus-storage/img_7356_d8c86f08_198aa88a.webp 307 in 47ms (next.js: 4ms, application-code: 43ms)
+[2026-08-19T14:39:39.955Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 59ms (next.js: 5ms, application-code: 54ms)
+[2026-08-19T14:39:39.955Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 57ms (next.js: 5ms, application-code: 52ms)
+[2026-08-19T14:39:39.958Z] GET /manus-storage/img_7347_8b70b6a5_904b94c3.webp 307 in 53ms (next.js: 4ms, application-code: 49ms)
+[2026-08-19T14:39:39.964Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 51ms (next.js: 6ms, application-code: 45ms)
+[2026-08-19T14:39:39.965Z] GET /manus-storage/img_7348_642de59f_da46e323.webp 307 in 77ms (next.js: 6ms, application-code: 71ms)
+[2026-08-19T14:39:39.966Z] GET /manus-storage/img_7344_05295024_7ecf3054.webp 307 in 45ms (next.js: 5ms, application-code: 40ms)
+[2026-08-19T14:39:39.967Z] GET /manus-storage/img_7354_8dec9ac4_76712fd9.webp 307 in 59ms (next.js: 7ms, application-code: 52ms)
+[2026-08-19T14:39:39.970Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 52ms (next.js: 4ms, application-code: 48ms)
+[2026-08-19T14:39:39.971Z] GET /manus-storage/img_7357_c9c21a13_ee62784a.webp 307 in 43ms (next.js: 5ms, application-code: 38ms)
+[2026-08-19T14:39:39.973Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 48ms (next.js: 4ms, application-code: 44ms)
+[2026-08-19T14:39:39.976Z] GET /manus-storage/fb-journal-care-v2_236c8f7f.jpg 307 in 44ms (next.js: 4ms, application-code: 40ms)
+[2026-08-19T14:39:39.986Z] GET /manus-storage/fb-event-florals-v2_506c3067.jpg 307 in 51ms (next.js: 4ms, application-code: 47ms)
+[2026-08-19T14:39:39.986Z] GET /manus-storage/editorial-collection_fd67f2f1.webp 307 in 49ms (next.js: 6ms, application-code: 43ms)
+[2026-08-19T14:39:39.993Z] GET /manus-storage/fb-journal-colour-v2_bbae4f4e.jpg 307 in 44ms (next.js: 3ms, application-code: 41ms)
+[2026-08-19T14:39:39.998Z] GET /manus-storage/fb-journal-peony-v2_3af4ce7f.jpg 307 in 58ms (next.js: 5ms, application-code: 52ms)
+[2026-08-19T14:39:40.002Z] GET /manus-storage/fb-floristry-school-v2_4cc3b90e.jpg 307 in 50ms (next.js: 4ms, application-code: 46ms)
+[2026-08-19T14:39:40.003Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 58ms (next.js: 5ms, application-code: 53ms)
+[2026-08-19T14:39:40.008Z] GET /manus-storage/img_7345_21d3ef2d_592744ea.webp 307 in 52ms (next.js: 3ms, application-code: 49ms)
+[2026-08-19T14:40:29.605Z] GET /?from_webdev=1 200 in 1415ms (next.js: 2ms, application-code: 1413ms)
+[2026-08-19T14:40:29.993Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 174ms (next.js: 20ms, application-code: 154ms)
+[2026-08-19T14:40:30.031Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 186ms (next.js: 2ms, application-code: 183ms)
+[2026-08-19T14:40:30.820Z] HEAD / 200 in 174ms (next.js: 1.6ms, application-code: 172ms)
+[2026-08-19T14:40:31.536Z] GET /?from_webdev=1 200 in 167ms (next.js: 1.5ms, application-code: 166ms)
+[2026-08-19T14:40:31.781Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 46ms (next.js: 9ms, application-code: 37ms)
+[2026-08-19T14:40:31.796Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 45ms (next.js: 2ms, application-code: 43ms)
+[2026-08-19T14:43:23.793Z] GET /?from_webdev=1 200 in 966ms (next.js: 1.8ms, application-code: 965ms)
+[2026-08-19T14:43:24.180Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 167ms (next.js: 14ms, application-code: 154ms)
+[2026-08-19T14:43:24.192Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 159ms (next.js: 1.4ms, application-code: 158ms)
+[2026-08-19T14:46:30.644Z] GET /?from_webdev=1 200 in 1394ms (next.js: 4ms, application-code: 1390ms)
+[2026-08-19T14:46:31.039Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 124ms (next.js: 1.2ms, application-code: 123ms)
+[2026-08-19T14:46:31.071Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 179ms (next.js: 17ms, application-code: 162ms)
+[2026-08-19T14:46:32.318Z] ⚠ Blocked cross-origin request to Next.js dev resource /_next/static/chunks/src_057p72o._.js from "3000-i2pfjamc2e6vvxjvr0sej-59b127c0.us3.manus.computer".
+[2026-08-19T14:46:32.318Z] Cross-origin access to Next.js dev resources is blocked by default for safety.
+[2026-08-19T14:46:32.318Z] To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+[2026-08-19T14:46:32.318Z] // next.config.js
+[2026-08-19T14:46:32.318Z] module.exports = {
+[2026-08-19T14:46:32.318Z] allowedDevOrigins: ['3000-i2pfjamc2e6vvxjvr0sej-59b127c0.us3.manus.computer'],
+[2026-08-19T14:46:32.318Z] }
+[2026-08-19T14:46:32.318Z] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[2026-08-19T14:46:35.208Z] HEAD / 200 in 178ms (next.js: 1.7ms, application-code: 176ms)
+[2026-08-19T14:46:36.040Z] GET /?from_webdev=1 200 in 177ms (next.js: 1.9ms, application-code: 175ms)
+[2026-08-19T14:46:36.408Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 172ms (next.js: 16ms, application-code: 156ms)
+[2026-08-19T14:46:36.420Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 165ms (next.js: 1.7ms, application-code: 163ms)
+[2026-08-19T14:48:28.953Z] GET /?from_webdev=1 200 in 134ms (next.js: 2ms, application-code: 132ms)
+[2026-08-19T14:48:29.581Z] GET /?from_webdev=1 200 in 612ms (next.js: 1.5ms, application-code: 610ms)
+[2026-08-19T14:48:30.001Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 163ms (next.js: 1.5ms, application-code: 162ms)
+[2026-08-19T14:48:30.020Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 210ms (next.js: 22ms, application-code: 188ms)
+[2026-08-19T14:48:32.367Z] HEAD / 200 in 160ms (next.js: 1.6ms, application-code: 158ms)
+[2026-08-19T14:48:35.003Z] GET /?from_webdev=1 200 in 159ms (next.js: 2.0ms, application-code: 157ms)
+[2026-08-19T14:48:35.352Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 136ms (next.js: 20ms, application-code: 116ms)
+[2026-08-19T14:48:35.367Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 152ms (next.js: 17ms, application-code: 136ms)
