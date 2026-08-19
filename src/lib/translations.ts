@@ -149,6 +149,8 @@ const en: Dict = {
 
   // categories
   "category.signature": "Signature",
+  "category.bouquet": "Bouquets",
+  "category.single-stems": "Single stems",
   "category.roses": "Roses",
   "category.peonies": "Peonies",
   "category.seasonal": "Seasonal",
@@ -412,6 +414,8 @@ const ka: Dict = {
   "cat.anyPrice": "ნებისმიერი ფასი",
 
   "category.signature": "სიგნატურა",
+  "category.bouquet": "თაიგულები",
+  "category.single-stems": "ცალკეული ყვავილები",
   "category.roses": "ვარდები",
   "category.peonies": "პიონები",
   "category.seasonal": "სეზონური",
@@ -673,6 +677,8 @@ const ru: Dict = {
   "cat.anyPrice": "Любая цена",
 
   "category.signature": "Сигнатура",
+  "category.bouquet": "Букеты",
+  "category.single-stems": "Отдельные цветы",
   "category.roses": "Розы",
   "category.peonies": "Пионы",
   "category.seasonal": "Сезонные",

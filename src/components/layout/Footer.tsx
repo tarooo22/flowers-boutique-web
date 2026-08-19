@@ -28,12 +28,22 @@ export function Footer() {
               <ul className="grid gap-2">
                 {group.links.map((l) => (
                   <li key={l.href}>
-                    <Link
-                      href={l.href}
-                      className="text-[13px] text-[var(--footer-ink)] transition hover:text-white"
-                    >
-                      {l.key ? t(l.key) : l.label}
-                    </Link>
+                    {l.available === false ? (
+                      <span
+                        aria-disabled="true"
+                        title="This collection currently has no published products."
+                        className="cursor-not-allowed text-[13px] text-[var(--footer-muted)]"
+                      >
+                        {l.key ? t(l.key) : l.label}
+                      </span>
+                    ) : (
+                      <Link
+                        href={l.href}
+                        className="text-[13px] text-[var(--footer-ink)] transition hover:text-white"
+                      >
+                        {l.key ? t(l.key) : l.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>

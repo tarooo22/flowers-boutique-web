@@ -124,3 +124,9 @@
 - [x] Audit customer-facing and admin UI actions for dead or placeholder buttons; implement or repair the corresponding safe behavior without changing payment, authentication or data contracts.
 - [x] Rework the existing Admin into a cohesive manager workspace, retaining old administrative capabilities while applying the approved visual system and efficient workflows.
 - [x] Add focused regression coverage; run responsive UI checks, TypeScript, production build and live production verification for Builder, repaired actions and Admin.
+- [x] Create a complete interaction inventory and audit matrix for every public route, reusable control and public-impact Admin action; classify each as working, broken, dead, incorrect, placeholder or missing before fixes.
+- [x] Verify and repair all Header, desktop/mobile navigation, Footer, contact, social, phone, WhatsApp, search, modal, drawer and CTA actions without altering the approved visual system.
+- [x] Verify and repair Catalog/Product Card/Product Detail/Cart/Checkout/Builder critical user journeys, including data correctness, disabled/loading/error states and cart persistence.
+- [x] Verify and repair all public forms, filters, dropdowns, tabs, gallery controls, mobile interactions and Admin controls that affect storefront behavior; document safe limitations where a destination cannot be inferred.
+- [ ] Add interaction regression tests; run console/network/runtime diagnostics, responsive checks at 375/390/768/1024/1440, TypeScript, production build and published-flow verification.
+- [ ] Publish a complete functionality audit report with the interaction matrix, fixes, remaining safe limitations and production validation evidence.

@@ -18,6 +18,8 @@ export function CheckoutView() {
   const [sending, setSending] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
+  const hasCartItems = lines.length > 0 || customLines.length > 0;
+
   const items = lines
     .map((l) => {
       const p = getProduct(l.productId);
@@ -31,6 +33,10 @@ export function CheckoutView() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (sending) return;
+    if (!hydrated || !hasCartItems) {
+      setSubmitError("Your cart is empty. Add a bouquet before placing an order.");
+      return;
+    }
     setSending(true);
     setSubmitError(null);
 
@@ -109,7 +115,16 @@ export function CheckoutView() {
     );
   }
 
-  if (hydrated && items.length === 0 && customLines.length === 0) {
+  if (!hydrated) {
+    return (
+      <div className="container-fb pt-10 pb-28" aria-busy="true">
+        <h1 className="font-display text-[30px]">Checkout</h1>
+        <div className="mt-6 h-52 animate-pulse rounded-[var(--radius-lg)] bg-[var(--surface-warm)]" />
+      </div>
+    );
+  }
+
+  if (items.length === 0 && customLines.length === 0) {
     return (
       <div className="container-fb pt-10 pb-28 text-center">
         <h1 className="font-display text-[30px]">Checkout</h1>
@@ -193,7 +208,7 @@ export function CheckoutView() {
                       fill
                       sizes="48px"
                       className="object-cover"
-                      unoptimized={line.image.startsWith("data:")}
+                      unoptimized
                     />
                   ) : null}
                   <span className="mono absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--ink)] px-1 text-[10px] font-bold text-white">
@@ -214,7 +229,7 @@ export function CheckoutView() {
             {items.map(({ line, product, unit }) => (
               <li key={`${line.productId}-${line.variantId}`} className="flex items-center gap-3">
                 <div className="relative h-14 w-12 shrink-0 overflow-hidden rounded-md bg-[var(--surface-warm)]">
-                  <Image src={product.images[0]} alt="" fill sizes="48px" className="object-cover" />
+                  <Image src={product.images[0]} alt="" fill sizes="48px" unoptimized className="object-cover" />
                   <span className="mono absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--ink)] px-1 text-[10px] font-bold text-white">
                     {line.quantity}
                   </span>
@@ -255,7 +270,7 @@ export function CheckoutView() {
             fullWidth
             size="lg"
             className="mt-5"
-            disabled={sending}
+            disabled={sending || !hasCartItems}
           >
             {sending ? "Placing order…" : "Place order"}
           </Button>

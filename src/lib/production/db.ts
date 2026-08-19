@@ -1,6 +1,7 @@
 import "server-only";
 
 import { drizzle } from "drizzle-orm/mysql2";
+import { createPool } from "mysql2/promise";
 import { mysqlTable, int, varchar, text, decimal, boolean, json, timestamp } from "drizzle-orm/mysql-core";
 
 export const categories = mysqlTable("categories", {
@@ -81,11 +82,20 @@ export const authSessions = mysqlTable("authSessions", {
   revokedAt: timestamp("revokedAt"),
 });
 
-let database: ReturnType<typeof drizzle> | null = null;
+function createProductionDb(url: string) {
+  return drizzle({ client: createPool(url) });
+}
+
+let database: ReturnType<typeof createProductionDb> | null = null;
 
 export function getProductionDb() {
   const url = process.env.DATABASE_URL;
   if (!url) throw new Error("DATABASE_URL is required for the production storefront adapter");
-  if (!database) database = drizzle(url);
+  if (!database) {
+    // A single mysql connection can be closed by the server between dynamic
+    // page requests, which surfaced as PROTOCOL_CONNECTION_LOST during the
+    // real browser audit. A pool acquires a healthy connection per query.
+    database = createProductionDb(url);
+  }
   return database;
 }

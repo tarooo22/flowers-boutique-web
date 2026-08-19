@@ -5,6 +5,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -118,13 +119,13 @@ export function StoreProvider({ children, products }: { children: ReactNode; pro
   }, []);
 
   // persist
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (hydrated) window.localStorage.setItem(CART_KEY, JSON.stringify(lines));
   }, [lines, hydrated]);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (hydrated) window.localStorage.setItem(CUSTOM_KEY, JSON.stringify(customLines));
   }, [customLines, hydrated]);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (hydrated) window.localStorage.setItem(FAV_KEY, JSON.stringify(favorites));
   }, [favorites, hydrated]);
 

@@ -23,7 +23,18 @@ export function CartView() {
     getUnitPrice,
   } = useStore();
 
-  if (hydrated && lines.length === 0 && customLines.length === 0) {
+  const isEmpty = lines.length === 0 && customLines.length === 0;
+
+  if (!hydrated) {
+    return (
+      <div className="container-fb pt-8 pb-24" aria-busy="true">
+        <h1 className="font-display text-[30px] leading-none sm:text-[38px]">Cart</h1>
+        <div className="mt-8 h-44 animate-pulse rounded-[var(--radius-lg)] bg-[var(--surface-warm)]" />
+      </div>
+    );
+  }
+
+  if (isEmpty) {
     return (
       <div className="container-fb pt-8 pb-24">
         <h1 className="font-display text-[30px] leading-none sm:text-[38px]">Cart</h1>
@@ -60,7 +71,7 @@ export function CartView() {
                     fill
                     sizes="96px"
                     className="object-cover"
-                    unoptimized={line.image.startsWith("data:")}
+                    unoptimized
                   />
                 ) : (
                   <span className="grid h-full place-items-center px-2 text-center text-[10px] font-semibold uppercase tracking-wide text-[var(--muted)]">
@@ -114,7 +125,7 @@ export function CartView() {
                   href={`/product/${p.slug}`}
                   className="relative h-28 w-24 shrink-0 overflow-hidden rounded-lg bg-[var(--surface-warm)]"
                 >
-                  <Image src={p.images[0]} alt={p.name} fill sizes="96px" className="object-cover" />
+                  <Image src={p.images[0]} alt={p.name} fill sizes="96px" unoptimized className="object-cover" />
                 </Link>
                 <div className="flex flex-1 flex-col">
                   <div className="flex items-start justify-between gap-3">

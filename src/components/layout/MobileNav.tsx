@@ -6,15 +6,21 @@ import { usePathname } from "next/navigation";
 import { useStore } from "@/lib/store";
 import { useI18n } from "@/lib/i18n";
 import { mainNav } from "@/config/nav";
-import { categories } from "@/data/categories";
 import { brand } from "@/config/brand";
 import { Logo } from "./Logo";
 import { CloseIcon, ChevronRight, PhoneIcon, WhatsappIcon } from "@/components/ui/Icons";
 
 export function MobileNav() {
-  const { mobileNavOpen, setMobileNavOpen } = useStore();
+  const { mobileNavOpen, setMobileNavOpen, catalogProducts } = useStore();
   const { t } = useI18n();
   const pathname = usePathname();
+  const catalogCategories = [
+    { id: "bouquet", href: "/catalog?category=bouquet", key: "category.bouquet" },
+    { id: "single-stems", href: "/catalog?category=single-stems", key: "category.single-stems" },
+  ].map((category) => ({
+    ...category,
+    count: catalogProducts.filter((product) => product.category === category.id).length,
+  })).filter((category) => category.count > 0);
 
   // close on route change
   useEffect(() => {
@@ -65,14 +71,14 @@ export function MobileNav() {
 
           <p className="eyebrow mt-6 mb-2">{t("nav.categories")}</p>
           <ul className="grid gap-0.5">
-            {categories.map((c) => (
-              <li key={c.id}>
+            {catalogCategories.map((category) => (
+              <li key={category.id}>
                 <Link
-                  href={`/catalog?category=${c.id}`}
+                  href={category.href}
                   className="flex items-center justify-between rounded-lg py-2 text-[14px] text-[var(--ink)]/85"
                 >
-                  {t(`category.${c.id}`)}
-                  <span className="mono text-[12px] text-[var(--muted-2)]">{c.count}</span>
+                  {t(category.key)}
+                  <span className="mono text-[12px] text-[var(--muted-2)]">{category.count}</span>
                 </Link>
               </li>
             ))}

@@ -61,6 +61,7 @@ export function BuilderPromo() {
                     alt=""
                     fill
                     sizes="56px"
+                    unoptimized
                     className="object-contain object-top drop-shadow-[0_10px_20px_rgba(0,0,0,0.35)]"
                   />
                 </div>

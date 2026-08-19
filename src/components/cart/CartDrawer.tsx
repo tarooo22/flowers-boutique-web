@@ -106,7 +106,7 @@ export function CartDrawer() {
                         fill
                         sizes="72px"
                         className="object-cover"
-                        unoptimized={line.image.startsWith("data:")}
+                        unoptimized
                       />
                     ) : (
                       <span className="grid h-full place-items-center text-[10px] font-semibold uppercase tracking-wide text-[var(--muted)]">
@@ -162,7 +162,7 @@ export function CartDrawer() {
                       onClick={closeCart}
                       className="relative h-24 w-[72px] shrink-0 overflow-hidden rounded-lg bg-[var(--surface-warm)]"
                     >
-                      <Image src={p.images[0]} alt={p.name} fill sizes="72px" className="object-cover" />
+                      <Image src={p.images[0]} alt={p.name} fill sizes="72px" unoptimized className="object-cover" />
                     </Link>
                     <div className="flex min-w-0 flex-1 flex-col">
                       <div className="flex items-start justify-between gap-2">

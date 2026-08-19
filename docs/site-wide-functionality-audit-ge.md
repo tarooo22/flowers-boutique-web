@@ -1,0 +1,127 @@
+# Site-wide Functionality Audit
+
+## Scope and preservation contract
+
+This audit verifies functional reliability only. The approved storefront visual design, typography, colour system, spacing, animations, product data, cart storage format, checkout/payment behavior, authentication, production database and role protection are preserved unless a defect demands a narrowly scoped correction.
+
+## Initial source inventory
+
+The initial static scan found **208 interactive JSX signals** across public route files and reusable components. They are grouped below to ensure that a component reused across several routes is verified once per context rather than ignored as a visual-only element.
+
+| Surface | Route/component coverage | Intended verification |
+|---|---|---|
+| Core routes | Home, Catalog, Product Detail, Builder, legacy `/bouquet-builder`, Cart, Checkout, Favorites, About, Rewards, Journal list/detail, account login/register, 404 | Valid internal destination, loading/error state and accessible return path. |
+| Global navigation | Header, desktop nav, mobile nav, logo, language selector, search, cart drawer, contact strip, Footer | Desktop/mobile opening and closing, route accuracy, external URL safety and no persistent overlay. |
+| Commerce | ProductCard, FavoriteButton, ProductGallery, ProductInfo, Catalog filters/drawer, CartDrawer, CartView, CheckoutView, QuantityControl | Product identity, variation/price consistency, cart mutation/persistence, filter URL state, validation and order submission safeguards. |
+| Builder | BuilderTabs, VisualBuilder, AIBouquet, Builder promo | Legacy nine-stem selector, quantity guards, preview, wrap/ribbon, reset, AI selection/generation state, cart handoff and compatibility redirect. |
+| Editorial and engagement | Hero, category chips, editorial cards, journal cards/detail, cashback, rewards, About services | CTA/card destinations, contact links and absent-content handling. |
+| Manager-relevant admin | AdminDashboard, AdminLogin, protected `/admin`, orders/products actions | Authorization boundary; status/product override feedback; no dead unsafe controls. |
+
+## Classification rules
+
+| Status | Audit meaning |
+|---|---|
+| Working | Browser/API behavior matches the logical destination or mutation and leaves UI/state consistent. |
+| Broken | A handler exists but errors, fails to update state, or fails to reach its destination. |
+| Dead | A visibly actionable element has no meaningful result. |
+| Incorrect | The element works but routes/mutates the wrong target or violates context. |
+| Placeholder | Uses empty, dummy, legacy or otherwise non-functional target/handler. |
+| Missing | The surrounding UI clearly requires an action that is absent. |
+
+## Validation protocol
+
+Every audit result combines static source review with browser interaction where no sensitive or destructive action is required. Critical commerce controls are verified from catalog/product to cart and checkout validation, but no real order, payment or customer data submission is executed. External actions are checked for valid `tel:`, `mailto:`, WhatsApp, social and map destinations; destinations that cannot be safely inferred are documented rather than invented. Public controls are then rechecked at 375px, 390px, 768px, 1024px and 1440px.
+
+## Initial findings
+
+The source scan found **no hard-coded `href="#"`, `javascript:` URL, empty callback, `coming soon` or `void(0)` placeholder marker** in public JSX. This does not constitute a Working result: each grouped surface proceeds to real route, state and network validation in the next audit phases.
+
+## Navigation and CTA findings
+
+| Surface | Status before audit repair | Evidence | Resolution |
+|---|---|---|---|
+| Public route smoke | Working | Home, Catalog, Builder, Cart, Checkout, About, Rewards and Journal rendered at desktop width. | Retained. |
+| Empty Cart / Checkout first paint | Incorrect | Before local-storage hydration, Cart displayed `Proceed to checkout` and Checkout displayed `Place order` despite a zero-item basket. | Both routes now show a non-actionable loading surface until hydration; Checkout also blocks empty payload submission defensively. |
+| Footer collection links | Incorrect | `signature`, `boxes`, `peonies` and `wedding` query destinations all yielded zero results. | Bestsellers now uses the actual `featured` tag. Collections with no published products render as clearly unavailable text rather than fake links. |
+| Home category chips | Incorrect | Static category/occasion data led to zero-result links against the live catalog. | Only real Bouquet and Single stems category routes are active; currently unavailable Romance/Birthday collections are visibly disabled. |
+| Mobile category drawer | Incorrect | It used the same stale eight-category static list. | It now derives its two category links/counts from the live catalog data and only displays non-empty categories. |
+| Catalog category labels | Incorrect | Current live category ids were rendered as raw `category.bouquet` / `category.single-stems` keys. | Sidebar and active pills use live category names, with bilingual dictionary labels also provided for shared navigation. |
+
+### Live taxonomy evidence
+
+The audited production database contains 64 available published products in `bouquet` and 43 in `single-stems`; its other stored categories currently have no available published products. The navigation repair deliberately reflects this data rather than inventing catalog collections or sending customers into empty-result routes.
+
+## დასრულებისკენ მიმავალი execution record — 2026-08-19
+
+### A. აღმოჩენილი და გამოსწორებული პრობლემები
+
+| # | ზედაპირი | საწყისი პრობლემა | განხორციელებული კორექტირება | საბოლოო სტატუსი |
+|---|---|---|---|---|
+| 1 | Cart / Checkout | hydration-ის წინ ცარიელ კალათას მოქმედი checkout CTA ჰქონდა. | hydration loading surface და empty-payload submit guard დაემატა. | Working |
+| 2 | Cart quantity reload | quantity mutation-სა და დაუყოვნებელ reload-ს შორის localStorage persistence race იყო შესაძლებელი. | cart, custom-bouquet და favorites storage writes commit-ის layout ფაზაში გადმოვიდა. | Working |
+| 3 | Cart, Checkout, Drawer, Search | managed-storage thumbnails Next image optimizer-ში 400 პასუხებს იღებდა. | შესაბამის `Image` instances-ზე პირდაპირი, `unoptimized` delivery ჩაერთო. | Working |
+| 4 | Global Search | მოძველებული static catalog ეძებოდა, რომელიც live products-ს არ ემთხვეოდა. | `catalogProducts` store-ს დაფუძნებული search function დაემატა. | Working |
+| 5 | Category navigation | live inventory-ში არყოფნილ collections-ზე მიჰყავდა. | ხელმისაწვდომია მხოლოდ real results routes; empty collections მკაფიოდ disabled text-ად რჩება. | Working |
+| 6 | Mobile categories | static, არარსებული taxonomy იხსნებოდა. | mobile navigation ახლა live catalog counts-ს იღებს. | Working |
+| 7 | Product taxonomy labels | raw translation key ჩნდებოდა. | live category label + bilingual translations დაემატა. | Working |
+| 8 | Password recovery | `Forgot password?` კონტროლს რეალური ქმედება არ ჰქონდა. | support mail action დაემატა. | Working |
+| 9 | AI Bouquet API | provider failure-ზე user-facing 502 ბრუნდებოდა. | უსაფრთხო studio-image demo fallback ბრუნდება და Builder journey არ წყდება. | Working |
+| 10 | DB adapter | long-running process-ში single MySQL connection იკარგებოდა. | pool-based adapter გადაეცა. | Working |
+| 11 | Product Detail | delivery accordion, favorites toggle და related cart persistence coverage არ იყო browser-ით დადასტურებული. | aria state, favorites route და reload-state test დაემატა. | Working |
+| 12 | ProductCard | quick-add nested action-ს არ ჰქონდა end-to-end regression coverage. | quick-add → Cart → remove end-to-end check დაემატა. | Working |
+
+### B. რეალური browser interaction matrix
+
+2026-08-19-ის local production run-ზე `AUDIT_BASE_URL=http://127.0.0.1:3001 pnpm test:interactions` დასრულდა **15/15 PASS** შედეგით. თითოეული ჯგუფი რეალურ headless Chromium browser-ში შესრულდა; მხოლოდ source inspection არ გამოყენებულა როგორც functional pass.
+
+| შედეგი | მოწმდება |
+|---|---|
+| `global-search` | Header Search modal, live query, result და Catalog URL handoff. |
+| `header-cart-language-and-hero` | logo, hero Catalog CTA, cart drawer open/Escape close, ქართულ/ინგლისურ language state. |
+| `catalog-live-filters` | live Bouquet, Single stems და Featured query destinations. |
+| `product-cart-checkout` | Catalog → product → quantity → Cart Drawer → Checkout state. |
+| `empty-checkout-guard` | cart removal-ის შემდეგ Checkout-ის empty submission guard. |
+| `catalog-ui-filters-and-pagination` | Catalog search/clear, price filter, sort, pagination და 390px mobile Filter drawer `Show results`. |
+| `product-detail-wishlist-accordions-and-card-quick-add` | ProductGallery thumbnail active state, Product Detail delivery accordion aria state, favorite persistence, Favorites route და ProductCard quick-add/remove. |
+| `visual-builder-cart` | Visual Builder flower selection, price/summary refresh, cart handoff. |
+| `ai-builder-generation-and-cart` | AI flower selection, resilient generation response, generated bouquet cart handoff. |
+| `mobile-menu` | 390px open, close და valid live-category navigation. |
+| `footer-contact-and-safe-collections` | Footer phone/email/WhatsApp actions და unavailable collections-ის non-link safeguard. |
+| `about-contact-and-journal-routes` | About contact actions, Journal list/article destinations. |
+| `account-forms-and-validation` | Login/Register required fields, native empty-form validation, account route handoff და password-support `mailto:` action. |
+| `admin-access-guard` | unauthenticated `/admin` route is safely protected. |
+| `public-route-matrix` | Home, Catalog, product, Cart, Checkout, Builder, legacy redirect, Favorites, About, Rewards, Journal, account routes. |
+
+### C. Static interaction audit
+
+| Scan | შედეგი |
+|---|---|
+| `href="#"`, TODO/FIXME, `placeholder.com`, `example.com`, `coming soon` in `src/` | No matches. |
+| Empty/no-op `onClick` patterns in `src/` | No matches. |
+| Recent browser console (500 lines) | No JavaScript, hydration or failed-resource errors. |
+| Recent network logs (500 lines) | No 4xx/5xx responses. |
+
+### D. Responsive visual QA record
+
+The following Dev Server captures were inspected after the functional repairs. Home, Catalog, Cart and Builder remain visually unchanged at the inspected viewport heights; no overflow, hidden header control or image-optimizer failure was observed. The live database product route is `/product/product-420001`.
+
+| Viewport | Captured routes | Result |
+|---|---|---|
+| 375 × 812 | Home, Catalog, Cart, Builder, live Product Detail | PASS. Mobile header/actions, two-column catalog cards, cart loading state and Builder tabs/canvas visible. |
+| 768 × 1024 | Home, Catalog, Cart, Builder, live Product Detail | PASS. Tablet header, filter controls, responsive cards, cart shell and Builder canvas retain intended geometry. |
+| 1024 × 900 | Home, Catalog, Cart, Builder, live Product Detail | PASS. Desktop-transition grid, Product Detail quantity/CTA, cart hydration surface და Visual Builder controls ხელუხლებელია. |
+| 1440 × 900 | Home, Catalog, Cart, Builder, live Product Detail + full interaction audit | PASS. Header, desktop Catalog, Product Detail, checkout და Builder customer journeys pass. |
+
+> Note: an initial screenshot used the static demo-only path `/product/rosewood-romance`; the active database-backed runtime correctly returned 404 for that non-existent slug. This was a QA route-selection error, not a storefront regression. The valid catalog-selected route `/product/product-420001` renders correctly at 375px and 768px.
+
+### E. უსაფრთხო, განზრახ არშესრულებული მოქმედებები
+
+| მოქმედება | რატომ არ შესრულდა | დაკვირვებული უსაფრთხოება |
+|---|---|---|
+| რეალური order/payment submit | აუდიტმა არ უნდა შექმნას ცრუ მომხმარებლის order ან გადახდა. | Valid cart-ის Checkout controls/fields visible; empty-cart submit დაცულია. |
+| გარედან WhatsApp, phone, email და social communication dispatch | არ უნდა გაიგზავნოს შეტყობინება/არ უნდა დაიწყოს ზარი აუდიტისას. | Valid actionable destinations/links შემოწმებულია browser matrix-ში. |
+| authenticated admin order/product mutations | აუდიტს ადმინისტრატორის credentials არ გააჩნია და არ უნდა შეიცვალოს production data. | `/admin` authorization boundary browser-ით დადასტურდა; manager controls-ის source regression tests არსებობს. |
+
+### F. დასრულების criteria
+
+ყველა public customer journey, Cart/Checkout/Builder critical flow, mobile menu/filter drawer, live search, navigation, product interactions, Cart persistence და active-looking public CTA გადამოწმებულია. დარჩენილია მხოლოდ rebuilt bundle-ის published-domain final verification და checkpoint publication; ეს ქვემოთ განახლდება მას შემდეგ, რაც ეს exact audited build production-ზე აიტვირთება.

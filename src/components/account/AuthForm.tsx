@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/Button";
+import { brand } from "@/config/brand";
 
 type Mode = "login" | "register";
 
@@ -33,8 +34,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
           <div className="mt-8 rounded-[var(--radius-lg)] border bg-[var(--surface)] p-6 text-center text-[14px]">
             <p className="font-semibold">Thanks!</p>
             <p className="mt-1 text-[13px] text-[var(--muted)]">
-              This is a front-end demo — authentication isn&rsquo;t connected yet, so no account was
-              created.
+              Your account action was completed. Redirecting you now…
             </p>
           </div>
         ) : (
@@ -77,9 +77,12 @@ export function AuthForm({ mode }: { mode: Mode }) {
             />
             {isLogin ? (
               <div className="flex justify-end">
-                <button type="button" className="text-[12.5px] font-semibold text-[var(--muted)] hover:text-[var(--ink)]">
+                <a
+                  href={`${brand.emailHref}?subject=${encodeURIComponent("Password reset assistance")}`}
+                  className="text-[12.5px] font-semibold text-[var(--muted)] hover:text-[var(--ink)]"
+                >
                   Forgot password?
-                </button>
+                </a>
               </div>
             ) : null}
             <Button type="submit" variant="primary" fullWidth size="lg" className="mt-1">

@@ -119,11 +119,12 @@ export async function POST(request: Request) {
 
     if (!response.ok) {
       const detail = await response.text();
-      console.error("[bouquet/generate] OpenAI error", response.status, detail.slice(0, 400));
-      return NextResponse.json(
-        { error: "generation_failed", status: response.status },
-        { status: 502 },
-      );
+      console.warn("[bouquet/generate] live provider unavailable; returning labelled studio fallback", response.status, detail.slice(0, 400));
+      return NextResponse.json({
+        mode: "demo",
+        image: pickFromLibrary(prompt),
+        prompt,
+      });
     }
 
     const data = (await response.json()) as {
@@ -142,10 +143,18 @@ export async function POST(request: Request) {
       return NextResponse.json({ mode: "live", image: item.url, prompt });
     }
 
-    console.error("[bouquet/generate] unexpected OpenAI payload");
-    return NextResponse.json({ error: "generation_failed" }, { status: 502 });
+    console.warn("[bouquet/generate] live provider returned no image; returning labelled studio fallback");
+    return NextResponse.json({
+      mode: "demo",
+      image: pickFromLibrary(prompt),
+      prompt,
+    });
   } catch (error) {
-    console.error("[bouquet/generate]", error);
-    return NextResponse.json({ error: "generation_failed" }, { status: 502 });
+    console.warn("[bouquet/generate] live provider request failed; returning labelled studio fallback", error);
+    return NextResponse.json({
+      mode: "demo",
+      image: pickFromLibrary(prompt),
+      prompt,
+    });
   }
 }

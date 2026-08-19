@@ -5,12 +5,12 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { useStore } from "@/lib/store";
-import { filterProducts } from "@/lib/catalog";
+import { searchProducts } from "@/lib/productSearch";
 import { formatPrice } from "@/lib/format";
 import { SearchIcon, CloseIcon } from "@/components/ui/Icons";
 
 export function SearchOverlay() {
-  const { searchOpen, setSearchOpen } = useStore();
+  const { searchOpen, setSearchOpen, catalogProducts } = useStore();
   const [q, setQ] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -33,8 +33,8 @@ export function SearchOverlay() {
   }, [searchOpen, setSearchOpen]);
 
   const results = useMemo(
-    () => (q.trim() ? filterProducts({ query: q }).slice(0, 6) : []),
-    [q],
+    () => searchProducts(catalogProducts, q).slice(0, 6),
+    [catalogProducts, q],
   );
 
   if (!searchOpen) return null;
@@ -83,7 +83,7 @@ export function SearchOverlay() {
                       className="flex items-center gap-3 rounded-lg p-2 transition hover:bg-black/5"
                     >
                       <div className="relative h-14 w-11 overflow-hidden rounded-md bg-[var(--surface-warm)]">
-                        <Image src={p.images[0]} alt="" fill sizes="44px" className="object-cover" />
+                        <Image src={p.images[0]} alt="" fill sizes="44px" unoptimized className="object-cover" />
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-[13px] font-semibold">{p.name}</p>

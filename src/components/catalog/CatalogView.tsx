@@ -70,6 +70,7 @@ export function CatalogView({ products, categories }: { products: Product[]; cat
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const category = (params.get("category") ?? "all") as CategoryId | "all";
+  const categoryName = categories.find((item) => item.id === category)?.name ?? category;
   const tag = params.get("occasion") ?? undefined;
   const query = params.get("q") ?? "";
   const colors = params.get("colors")?.split(",").filter(Boolean) ?? [];
@@ -136,7 +137,7 @@ export function CatalogView({ products, categories }: { products: Product[]; cat
                 <FilterRow
                   active={category === c.id}
                   onClick={() => setParams({ category: c.id, occasion: null })}
-                  label={t(`category.${c.id}`)}
+                  label={c.name}
                   count={n}
                 />
               </li>
@@ -321,7 +322,7 @@ export function CatalogView({ products, categories }: { products: Product[]; cat
             <div className="mt-4 flex flex-wrap items-center gap-2">
               {category !== "all" ? (
                 <Pill onClear={() => setParams({ category: null })}>
-                  {t(`category.${category}`)}
+                  {categoryName}
                 </Pill>
               ) : null}
               {colors.map((c) => (
