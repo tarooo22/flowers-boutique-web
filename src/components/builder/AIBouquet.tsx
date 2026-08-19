@@ -138,6 +138,7 @@ export function AIBouquet({ flowers }: { flowers: LiveBuilderFlower[] }) {
                       fill
                       sizes="64px"
                       className="object-contain object-top drop-shadow-[0_8px_16px_rgba(65,41,27,0.16)]"
+                      unoptimized
                     />
                     <span className="mono absolute -top-2 left-1/2 -translate-x-1/2 rounded-full bg-white px-1.5 py-0.5 text-[10px] font-bold shadow-sm">
                       {counts[f.key]}
