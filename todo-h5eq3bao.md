@@ -130,3 +130,4 @@
 - [x] Verify and repair all public forms, filters, dropdowns, tabs, gallery controls, mobile interactions and Admin controls that affect storefront behavior; document safe limitations where a destination cannot be inferred.
 - [ ] Add interaction regression tests; run console/network/runtime diagnostics, responsive checks at 375/390/768/1024/1440, TypeScript, production build and published-flow verification.
 - [ ] Publish a complete functionality audit report with the interaction matrix, fixes, remaining safe limitations and production validation evidence.
+- [ ] Resolve the production Catalog raw category-key labels and re-verify localized live labels after deployment.

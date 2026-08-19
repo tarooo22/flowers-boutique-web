@@ -7,6 +7,7 @@ import type { Category, CategoryId, Product, SortKey } from "@/types";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
+import { localizedCategoryName } from "@/lib/categoryLabels";
 import {
   SearchIcon,
   ChevronLeft,
@@ -70,7 +71,8 @@ export function CatalogView({ products, categories }: { products: Product[]; cat
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const category = (params.get("category") ?? "all") as CategoryId | "all";
-  const categoryName = categories.find((item) => item.id === category)?.name ?? category;
+  const activeCategory = categories.find((item) => item.id === category);
+  const categoryName = activeCategory ? localizedCategoryName(activeCategory, t) : category;
   const tag = params.get("occasion") ?? undefined;
   const query = params.get("q") ?? "";
   const colors = params.get("colors")?.split(",").filter(Boolean) ?? [];
@@ -137,7 +139,7 @@ export function CatalogView({ products, categories }: { products: Product[]; cat
                 <FilterRow
                   active={category === c.id}
                   onClick={() => setParams({ category: c.id, occasion: null })}
-                  label={c.name}
+                  label={localizedCategoryName(c, t)}
                   count={n}
                 />
               </li>
