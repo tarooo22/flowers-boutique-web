@@ -123,4 +123,4 @@
 - [x] Restore legacy AI Bouquet flower choices, generated-composition behavior and live preview while retaining the current visual direction.
 - [x] Audit customer-facing and admin UI actions for dead or placeholder buttons; implement or repair the corresponding safe behavior without changing payment, authentication or data contracts.
 - [x] Rework the existing Admin into a cohesive manager workspace, retaining old administrative capabilities while applying the approved visual system and efficient workflows.
-- [ ] Add focused regression coverage; run responsive UI checks, TypeScript, production build and live production verification for Builder, repaired actions and Admin.
+- [x] Add focused regression coverage; run responsive UI checks, TypeScript, production build and live production verification for Builder, repaired actions and Admin.

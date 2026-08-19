@@ -38,3 +38,16 @@ This scope must not change real product catalog records, database schema, authen
 Visual Builder და AI Bouquet ახლა ორივე იყენებს ერთიან, ძველ nine-stem source of truth-ს: rose, spray rose, peony, lily, hydrangea, eustoma, alstroemeria, sunflower და moluccella. Visual mode-ში wrapper/ribbon assets, paper/ribbon-only mode, live composition canvas, 36-stem/24-per-flower guard და სრული reset აღდგენილია. AI mode ინარჩუნებს live fan preview, selected-only filter, selection fingerprint, generated result-ის freshness check და მხოლოდ შედეგის შემდეგ cart handoff-ს.
 
 Admin შეიცვალა ერთიან manager workspace-ად: სამუშაოს პრიორიტეტი არის ახალი/მიმდინარე შეკვეთები, ხოლო orders და products ერთი workflow shell-დან იკონტროლება. სტატუსისა და product override-ის ცვლილებებს დაემატა saving/error feedback; dead `Delete order` ღილაკი მოიხსნა, რადგან production backend deletion-ს მიზანმიმართულად არ უჭერს მხარს. მენეჯერი cancellation-ს კვლავ სტატუსის არჩევით მართავს.
+
+## საბოლოო validation record
+
+| შემოწმება | შედეგი |
+|---|---|
+| Builder responsive QA | Passed: restored Visual Builder მოწმდება desktop, 375px და 768px განლაგებებში; ცხრა stem control, canvas, wrapping/ribbon და summary არ კარგავს hierarchy-ს. |
+| Production Visual Builder | Passed: live route-ზე გამოჩნდა მხოლოდ legacy nine-stem set და `Clear`, wrapper/ribbon controls, Visual/AI tabs. |
+| Production AI Bouquet | Passed: live AI tab შეიცავს nine-stem selector-ს; Red rose-ის რეალურმა `+` click-მა განაახლა count, `Selected 1`, live fan preview, price და enabled generation flow. |
+| Production image delivery | Passed: selected rose cutout რეალურად გამოჩნდა AI fan preview-ში პირდაპირი delivery-ის შემდეგ. |
+| Admin access boundary | Passed: არასანქცირებული public `/admin` request გადამისამართდება existing account-login flow-ზე; manager workspace საჯაროდ არ იხსნება. |
+| Automated checks | Passed: 4 Vitest files / 24 tests, `tsc --noEmit`, და production build. |
+
+Admin-ის detail workspace view უკვე მოითხოვს ნამდვილ admin-role session-ს; production უსაფრთხოების გამო იგი ამ საჯარო verification-ში არ იმიტირდება. მმართველის სესიის შემდეგ არსებული overview, order status და product override შესაძლებლობები იმავე authorization boundary-ის შიგნით ხელმისაწვდომია.
