@@ -133,4 +133,4 @@
 - [x] Resolve the production Catalog raw category-key labels and re-verify localized live labels after deployment.
 - [x] Diagnose the reported customer registration and login failure on the public storefront without changing visual design.
 - [x] Repair the authentication flow and add focused API/browser regression coverage for valid and invalid registration/login paths.
-- [ ] Validate the repaired public authentication flow, production build and published release; document the outcome.
+- [x] Validate the repaired public authentication flow, production build and published release; document the outcome.
