@@ -117,7 +117,7 @@ export function AIBouquet({ flowers }: { flowers: LiveBuilderFlower[] }) {
               fill
               sizes="(max-width:1024px) 92vw, 520px"
               className={`object-cover transition-opacity duration-500 ${stale ? "opacity-60" : ""}`}
-              unoptimized={image.startsWith("data:")}
+              unoptimized={image.startsWith("data:") || image.startsWith("/manus-storage/")}
             />
           ) : selected.length ? (
             // idle: show the chosen stems as a fanned preview
@@ -255,9 +255,10 @@ export function AIBouquet({ flowers }: { flowers: LiveBuilderFlower[] }) {
                     src={f.asset}
                     alt=""
                     width={44}
-                    height={44}
-                    className="h-11 w-11 object-contain object-top"
-                    style={{ objectPosition: "50% 8%" }}
+                      height={44}
+                      className="h-11 w-11 object-contain object-top"
+                      style={{ objectPosition: "50% 8%" }}
+                      unoptimized
                   />
                   {active ? (
                     <span className="absolute -right-0.5 -top-0.5 grid h-4 w-4 place-items-center rounded-full bg-[var(--action)]">

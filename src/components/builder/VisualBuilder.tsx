@@ -49,6 +49,13 @@ export function VisualBuilder({ flowers }: { flowers: LiveBuilderFlower[] }) {
     setCounts((prev) => ({ ...prev, [key]: clamped }));
   };
 
+  const resetBuilder = () => {
+    setCounts({});
+    setWrapperId(wrappers[0].id);
+    setRibbonId(ribbons.find((ribbon) => ribbon.id === "burgundy")?.id ?? ribbons[0].id);
+    setWrapMode("paper");
+  };
+
   const handleAdd = () => {
     if (totalStems === 0) return;
     addCustomBouquet({
@@ -66,6 +73,22 @@ export function VisualBuilder({ flowers }: { flowers: LiveBuilderFlower[] }) {
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-10">
       {/* preview */}
       <div className="lg:sticky lg:top-24 lg:self-start">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <p className="eyebrow">{t("builder.tabVisual")}</p>
+          <button
+            type="button"
+            onClick={resetBuilder}
+            disabled={
+              totalStems === 0 &&
+              wrapperId === wrappers[0].id &&
+              ribbonId === (ribbons.find((ribbon) => ribbon.id === "burgundy")?.id ?? ribbons[0].id) &&
+              wrapMode === "paper"
+            }
+            className="rounded-full border border-[var(--line-strong)] bg-white px-3 py-1.5 text-[12px] font-semibold text-[var(--muted)] transition hover:border-[var(--ink)] hover:text-[var(--ink)] disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            {t("builder.clear")}
+          </button>
+        </div>
         <BouquetCanvas
           wrapperId={wrapperId}
           ribbonId={ribbonId}
@@ -221,7 +244,7 @@ export function VisualBuilder({ flowers }: { flowers: LiveBuilderFlower[] }) {
             <h3 className="font-display text-[17px]">{t("builder.summary")}</h3>
             {totalStems > 0 && (
               <button
-                onClick={() => setCounts({})}
+                onClick={resetBuilder}
                 className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-[var(--muted)] hover:text-[var(--action-deep)]"
               >
                 <CloseIcon className="h-3.5 w-3.5" />
