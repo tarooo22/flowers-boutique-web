@@ -3,11 +3,14 @@ import { describe, expect, it } from "vitest";
 
 const source = readFileSync(new URL("./AdminDashboard.tsx", import.meta.url), "utf8");
 
-describe("Admin manager workspace contract", () => {
-  it("keeps the manager workspace capability surfaces and feedback states", () => {
-    expect(source).toContain("manager workspace");
+describe("Restored Admin panel contract", () => {
+  it("keeps the legacy Admin panel tabs and live management capability surfaces", () => {
+    expect(source).toContain("Admin panel");
+    expect(source).toContain("Overview");
+    expect(source).toContain("Orders");
+    expect(source).toContain("Products");
     expect(source).toContain("Set fulfilment status");
-    expect(source).toContain("Products customers can buy");
+    expect(source).toContain("Search products…");
     expect(source).toContain("Saving status…");
   });
 

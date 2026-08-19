@@ -42,12 +42,6 @@ const STATUS_STYLE: Record<OrderStatus, string> = {
   cancelled: "bg-black/8 text-[var(--muted)]",
 };
 
-const NAV: Array<{ id: Tab; label: string; note: string }> = [
-  { id: "overview", label: "Today", note: "At-a-glance operations" },
-  { id: "orders", label: "Orders", note: "Fulfilment and delivery" },
-  { id: "products", label: "Products", note: "Price and availability" },
-];
-
 export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }) {
   const router = useRouter();
   const [tab, setTab] = useState<Tab>("overview");
@@ -87,12 +81,6 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
   useEffect(() => {
     void refresh();
   }, [refresh]);
-
-  const changeTab = (next: Tab) => {
-    setTab(next);
-    setQuery("");
-    setFeedback(null);
-  };
 
   const setStatus = async (id: string, status: OrderStatus) => {
     setBusy(`status:${id}`);
@@ -134,8 +122,11 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
   };
 
   const signOut = async () => {
-    await fetch("/api/admin/login", { method: "DELETE" });
-    router.replace("/admin/login");
+    await Promise.all([
+      fetch("/api/auth/logout", { method: "POST", credentials: "same-origin" }),
+      fetch("/api/admin/login", { method: "DELETE", credentials: "same-origin" }),
+    ]);
+    router.replace("/");
     router.refresh();
   };
 
@@ -159,203 +150,69 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
     [products, query],
   );
 
-  const pendingOrders = orders.filter((order) => ["new", "confirmed", "delivering"].includes(order.status));
-
   return (
-    <div className="min-h-[calc(100vh-5rem)] bg-[var(--surface-warm)]/75 py-5 sm:py-8">
-      <div className="container-fb pb-14">
-        <header className="rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] px-5 py-5 shadow-[var(--shadow-card)] sm:px-7 sm:py-6">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <p className="eyebrow">Flower&rsquo;s Boutique · manager workspace</p>
-              <h1 className="font-display mt-2 text-[30px] leading-none tracking-[-0.015em] sm:text-[38px]">
-                Keep today in bloom.
-              </h1>
-              <p className="mt-2 max-w-[60ch] text-[13.5px] leading-relaxed text-[var(--muted)]">
-                Prioritise new orders, move delivery status forward, and keep the catalog ready without leaving one operational workspace.
-              </p>
-            </div>
-            <div className="flex items-center gap-2.5">
-              <Button href="/" variant="outline" size="sm">View site</Button>
-              <Button variant="dark" size="sm" onClick={signOut}>Sign out</Button>
-            </div>
-          </div>
-          {demoCredentials ? (
-            <p className="mt-5 rounded-[var(--radius)] border border-[var(--action)]/30 bg-[var(--action)]/8 px-4 py-3 text-[12.5px] leading-relaxed">
-              <strong>Demo credentials are active.</strong> Configure <code className="mono">ADMIN_PASSWORD</code> and <code className="mono">ADMIN_SESSION_SECRET</code> before giving any team member access.
-            </p>
-          ) : null}
-        </header>
-
-        <div className="mt-5 grid gap-5 lg:grid-cols-[220px_minmax(0,1fr)]">
-          <aside className="hidden rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] p-3 shadow-[var(--shadow-card)] lg:block">
-            <p className="px-3 pb-2 pt-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">Workspace</p>
-            <nav className="grid gap-1.5" aria-label="Manager workspace">
-              {NAV.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => changeTab(item.id)}
-                  aria-current={tab === item.id ? "page" : undefined}
-                  className={`min-h-14 rounded-[var(--radius)] px-3.5 py-2.5 text-left transition ${
-                    tab === item.id
-                      ? "bg-[var(--ink)] text-white shadow-[var(--shadow-card)]"
-                      : "text-[var(--ink)] hover:bg-[var(--surface-sand)]"
-                  }`}
-                >
-                  <span className="flex items-center justify-between gap-2 text-[13px] font-semibold">
-                    {item.label}
-                    {item.id === "orders" && stats?.newCount ? (
-                      <span className={`mono rounded-full px-2 py-0.5 text-[10px] ${tab === item.id ? "bg-white/15 text-white" : "bg-[var(--action)]/15 text-[var(--action-deep)]"}`}>{stats.newCount}</span>
-                    ) : null}
-                  </span>
-                  <span className={`mt-0.5 block text-[11px] ${tab === item.id ? "text-white/70" : "text-[var(--muted)]"}`}>{item.note}</span>
-                </button>
-              ))}
-            </nav>
-            <div className="mt-5 border-t border-[var(--line)] px-3 pt-4 text-[12px] leading-relaxed text-[var(--muted)]">
-              {stats?.newCount ? `${stats.newCount} new order${stats.newCount === 1 ? "" : "s"} need attention.` : "No new orders are waiting."}
-            </div>
-          </aside>
-
-          <div>
-            <nav className="flex gap-2 overflow-x-auto pb-1 lg:hidden" aria-label="Manager workspace">
-              {NAV.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => changeTab(item.id)}
-                  aria-pressed={tab === item.id}
-                  className={`min-h-11 shrink-0 rounded-full border px-4 text-[12.5px] font-semibold transition ${
-                    tab === item.id ? "border-[var(--ink)] bg-[var(--ink)] text-white" : "border-[var(--line-strong)] bg-[var(--surface)]"
-                  }`}
-                >
-                  {item.label}{item.id === "orders" && stats?.newCount ? ` · ${stats.newCount}` : ""}
-                </button>
-              ))}
-            </nav>
-
-            {feedback ? (
-              <div role="status" className="mt-3 rounded-[var(--radius)] border border-[var(--line-strong)] bg-[var(--surface)] px-4 py-3 text-[12.5px] text-[var(--muted)]">
-                {feedback}
-              </div>
-            ) : null}
-
-            <section className="mt-3 rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] p-4 shadow-[var(--shadow-card)] sm:mt-0 sm:p-6">
-              {tab === "overview" ? (
-                <Overview
-                  stats={stats}
-                  pendingOrders={pendingOrders}
-                  loading={loading}
-                  onOpenOrders={() => changeTab("orders")}
-                  onOpenOrder={(id) => {
-                    setOpenOrder(id);
-                    changeTab("orders");
-                  }}
-                />
-              ) : null}
-              {tab === "orders" ? (
-                <OrdersWorkspace
-                  loading={loading}
-                  orders={visibleOrders}
-                  query={query}
-                  setQuery={setQuery}
-                  statusFilter={statusFilter}
-                  setStatusFilter={setStatusFilter}
-                  openOrder={openOrder}
-                  setOpenOrder={setOpenOrder}
-                  setStatus={setStatus}
-                  busy={busy}
-                />
-              ) : null}
-              {tab === "products" ? (
-                <ProductsWorkspace
-                  loading={loading}
-                  products={visibleProducts}
-                  query={query}
-                  setQuery={setQuery}
-                  patchProduct={patchProduct}
-                  busy={busy}
-                />
-              ) : null}
-            </section>
-          </div>
+    <div className="container-fb py-8 pb-24">
+      <header className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p className="mono text-[11px] uppercase tracking-[0.18em] text-[var(--muted)]">Flower&rsquo;s Boutique</p>
+          <h1 className="font-display mt-1 text-[30px] leading-none tracking-[-0.015em] sm:text-[36px]">Admin panel</h1>
         </div>
+        <div className="flex items-center gap-2.5">
+          <Button href="/" variant="outline" size="sm">View site</Button>
+          <Button variant="dark" size="sm" onClick={signOut}>Sign out</Button>
+        </div>
+      </header>
+      {demoCredentials ? <p className="mt-4 rounded-lg border border-[var(--action)]/30 bg-[var(--action)]/8 px-4 py-3 text-[12.5px] leading-relaxed"><strong>Demo credentials are active.</strong> Configure real administrator credentials before sharing access.</p> : null}
+      <div role="tablist" className="mt-7 flex gap-2 border-b border-[var(--line)]">
+        {(["overview", "orders", "products"] as Tab[]).map((id) => {
+          const label = id === "overview" ? "Overview" : id === "orders" ? `Orders${stats?.newCount ? ` (${stats.newCount} new)` : ""}` : "Products";
+          return <button key={id} type="button" role="tab" aria-selected={tab === id} onClick={() => { setTab(id); setQuery(""); setFeedback(null); }} className={`-mb-px border-b-2 px-4 py-2.5 text-[13.5px] font-semibold transition ${tab === id ? "border-[var(--action)] text-[var(--ink)]" : "border-transparent text-[var(--muted)] hover:text-[var(--ink)]"}`}>{label}</button>;
+        })}
       </div>
+      {feedback ? <div role="status" className="mt-4 rounded-[var(--radius)] border border-[var(--line-strong)] bg-[var(--surface)] px-4 py-3 text-[12.5px] text-[var(--muted)]">{feedback}</div> : null}
+      {tab === "overview" ? <Overview stats={stats} orders={orders} loading={loading} onOpenOrders={() => setTab("orders")} onOpenOrder={(id) => { setOpenOrder(id); setTab("orders"); }} /> : null}
+      {tab === "orders" ? <OrdersWorkspace loading={loading} orders={visibleOrders} query={query} setQuery={setQuery} statusFilter={statusFilter} setStatusFilter={setStatusFilter} openOrder={openOrder} setOpenOrder={setOpenOrder} setStatus={setStatus} busy={busy} /> : null}
+      {tab === "products" ? <ProductsWorkspace loading={loading} products={visibleProducts} query={query} setQuery={setQuery} patchProduct={patchProduct} busy={busy} /> : null}
     </div>
   );
 }
 
 function Overview({
   stats,
-  pendingOrders,
+  orders,
   loading,
   onOpenOrders,
   onOpenOrder,
 }: {
   stats: Stats | null;
-  pendingOrders: Order[];
+  orders: Order[];
   loading: boolean;
   onOpenOrders: () => void;
   onOpenOrder: (id: string) => void;
 }) {
   return (
-    <div>
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Today</p>
-          <h2 className="font-display mt-2 text-[24px] leading-none sm:text-[29px]">The operating picture</h2>
-        </div>
-        <button type="button" onClick={onOpenOrders} className="min-h-11 rounded-full border border-[var(--line-strong)] px-4 text-[12.5px] font-semibold transition hover:border-[var(--ink)]">
-          Open all orders
-        </button>
-      </div>
-
-      <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+    <div className="mt-7">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[
-          { label: "All orders", value: stats?.orderCount ?? 0, note: "Recorded storefront orders" },
-          { label: "Revenue", value: formatPrice(stats?.revenue ?? 0), note: "Current order total" },
-          { label: "Average order", value: formatPrice(stats?.averageOrder ?? 0), note: "Average checkout value" },
-          { label: "Products", value: stats?.productCount ?? 0, note: "Catalog items managed here" },
+          { label: "Orders", value: stats?.orderCount ?? 0 },
+          { label: "Revenue", value: formatPrice(stats?.revenue ?? 0) },
+          { label: "Average order", value: formatPrice(stats?.averageOrder ?? 0) },
+          { label: "Products", value: stats?.productCount ?? 0 },
         ].map((stat) => (
-          <div key={stat.label} className="rounded-[var(--radius)] border border-[var(--line)] bg-[var(--surface-warm)]/55 p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--muted)]">{stat.label}</p>
-            <p className="mono mt-3 text-[25px] font-bold leading-none">{stat.value}</p>
-            <p className="mt-2 text-[11.5px] leading-relaxed text-[var(--muted)]">{stat.note}</p>
+          <div key={stat.label} className="rounded-[var(--radius-lg)] border bg-[var(--surface)] p-5">
+            <p className="text-[12px] uppercase tracking-wide text-[var(--muted)]">{stat.label}</p>
+            <p className="mono mt-2 text-[26px] font-bold leading-none">{stat.value}</p>
           </div>
         ))}
       </div>
-
-      <div className="mt-7 grid gap-5 xl:grid-cols-[minmax(0,1.25fr)_minmax(260px,0.75fr)]">
-        <div>
-          <div className="flex items-center justify-between gap-3">
-            <h3 className="font-display text-[19px]">Latest orders</h3>
-            <span className="text-[12px] text-[var(--muted)]">Select one to manage fulfilment</span>
-          </div>
-          {loading ? <LoadingRows /> : pendingOrders.length === 0 ? (
-            <EmptyState title="The queue is clear" text="New orders will appear here as soon as checkout completes." />
+      <h2 className="font-display mt-9 text-[19px]">Latest orders</h2>
+      {loading ? <LoadingRows /> : orders.length === 0 ? (
+        <EmptyState title="No orders yet" text="Orders placed through checkout will appear here." />
           ) : (
-            <div className="mt-3 overflow-hidden rounded-[var(--radius)] border border-[var(--line)]">
-              {pendingOrders.slice(0, 5).map((order) => (
-                <button key={order.id} type="button" onClick={() => onOpenOrder(order.id)} className="flex min-h-16 w-full items-center gap-3 border-b border-[var(--line)] px-4 text-left transition last:border-b-0 hover:bg-[var(--surface-warm)]">
-                  <span className="mono text-[12px] font-semibold">{order.id}</span>
-                  <span className="min-w-0 flex-1 truncate text-[13px] font-medium">{order.customer.name}</span>
-                  <StatusPill status={order.status} />
-                  <span className="text-[13px] font-semibold tabular-nums">{formatPrice(order.total)}</span>
-                </button>
-              ))}
-            </div>
-          )}
+        <div className="mt-3 overflow-hidden rounded-[var(--radius-lg)] border bg-[var(--surface)]">
+          {orders.slice(0, 5).map((order) => <button key={order.id} type="button" onClick={() => onOpenOrder(order.id)} className="flex w-full items-center gap-4 border-b px-5 py-3.5 text-left last:border-b-0 hover:bg-black/[0.02]"><span className="mono text-[12.5px] font-semibold">{order.id}</span><span className="min-w-0 flex-1 truncate text-[13px]">{order.customer.name}</span><StatusPill status={order.status} /><span className="text-[13px] font-semibold tabular-nums">{formatPrice(order.total)}</span></button>)}
         </div>
-        <div className="rounded-[var(--radius)] bg-[var(--ink)] p-5 text-white">
-          <p className="mono text-[11px] uppercase tracking-[0.16em] text-white/55">Attention needed</p>
-          <p className="font-display mt-3 text-[31px] leading-none">{stats?.newCount ?? 0}</p>
-          <p className="mt-2 text-[13px] leading-relaxed text-white/70">New orders are ready for confirmation. Move each order through status directly from its delivery details.</p>
-          <button type="button" onClick={onOpenOrders} className="mt-5 min-h-11 rounded-full bg-white px-4 text-[12.5px] font-semibold text-[var(--ink)] transition hover:bg-[var(--surface-sand)]">
-            Manage new orders
-          </button>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
