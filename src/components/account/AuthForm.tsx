@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { brand } from "@/config/brand";
+import { authFeedback } from "@/lib/authFeedback";
 
 type Mode = "login" | "register";
 
@@ -48,6 +49,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
               const res = await fetch(`/api/auth/${isLogin ? "login" : "register"}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "same-origin",
                 body: JSON.stringify({
                   name: form.get("name"),
                   email: form.get("email"),
@@ -55,7 +57,9 @@ export function AuthForm({ mode }: { mode: Mode }) {
                 }),
               }).catch(() => null);
               if (!res?.ok) {
-                setError("Authentication could not be completed. Check your details and try again.");
+                const payload = await res?.json().catch(() => null) as { error?: unknown } | null;
+                const code = typeof payload?.error === "string" ? payload.error : "authentication_failed";
+                setError(authFeedback(code, isLogin));
                 setSubmitting(false);
                 return;
               }
@@ -72,6 +76,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
               label="Password"
               name="password"
               type="password"
+              minLength={isLogin ? undefined : 8}
               autoComplete={isLogin ? "current-password" : "new-password"}
               required
             />
@@ -119,12 +124,14 @@ function Field({
   name,
   type = "text",
   required,
+  minLength,
   autoComplete,
 }: {
   label: string;
   name: string;
   type?: string;
   required?: boolean;
+  minLength?: number;
   autoComplete?: string;
 }) {
   return (
@@ -137,6 +144,7 @@ function Field({
         name={name}
         type={type}
         required={required}
+        minLength={minLength}
         autoComplete={autoComplete}
         className="h-11 rounded-[var(--radius)] border border-[var(--line-strong)] bg-white px-3 text-[14px] outline-none transition focus:border-[var(--ink)]"
       />

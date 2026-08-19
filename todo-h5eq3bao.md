@@ -131,3 +131,6 @@
 - [x] Add interaction regression tests; run console/network/runtime diagnostics, responsive checks at 375/390/768/1024/1440, TypeScript, production build and published-flow verification.
 - [x] Publish a complete functionality audit report with the interaction matrix, fixes, remaining safe limitations and production validation evidence.
 - [x] Resolve the production Catalog raw category-key labels and re-verify localized live labels after deployment.
+- [x] Diagnose the reported customer registration and login failure on the public storefront without changing visual design.
+- [x] Repair the authentication flow and add focused API/browser regression coverage for valid and invalid registration/login paths.
+- [ ] Validate the repaired public authentication flow, production build and published release; document the outcome.

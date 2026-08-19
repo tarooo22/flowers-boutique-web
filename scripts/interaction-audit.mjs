@@ -244,6 +244,7 @@ async function run() {
     for (const label of ["Full name", "Email", "Password"]) {
       assert((await registerForm.getByLabel(label).getAttribute("required")) !== null, `Register ${label} is not required.`);
     }
+    assert((await registerForm.getByLabel("Password").getAttribute("minlength")) === "8", "Registration password does not enforce the backend minimum length.");
     assert(!(await registerForm.evaluate((form) => form.checkValidity())), "Empty registration form bypasses browser validation.");
     results.push("account-forms-and-validation");
 
