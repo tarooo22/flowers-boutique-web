@@ -2,7 +2,7 @@ import "server-only";
 
 import { drizzle } from "drizzle-orm/mysql2";
 import { createPool } from "mysql2/promise";
-import { mysqlTable, int, varchar, text, decimal, boolean, json, timestamp } from "drizzle-orm/mysql-core";
+import { mysqlTable, int, varchar, text, decimal, boolean, json, timestamp, uniqueIndex } from "drizzle-orm/mysql-core";
 
 export const categories = mysqlTable("categories", {
   id: int("id").autoincrement().primaryKey(),
@@ -40,6 +40,15 @@ export const productImages = mysqlTable("productImages", {
   imageKey: varchar("imageKey", { length: 512 }).notNull(),
   sortOrder: int("sortOrder").default(0),
 });
+
+/** Metadata registry for uploaded reusable managed-media objects. Bytes remain in managed storage. */
+export const adminMediaAssets = mysqlTable("adminMediaAssets", {
+  id: int("id").autoincrement().primaryKey(),
+  storageKey: varchar("storageKey", { length: 512 }).notNull(),
+  storageUrl: varchar("storageUrl", { length: 512 }).notNull(),
+  mimeType: varchar("mimeType", { length: 128 }).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => [uniqueIndex("adminMediaAssets_storageKey_unique").on(table.storageKey)]);
 
 /** Storefront-managed editorial banners. This maps the pre-existing production table to preserve legacy content. */
 export const banners = mysqlTable("banners", {

@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import { isProductionAdmin } from "@/lib/production/auth";
-import { listProductionAdminMedia } from "@/lib/production/admin";
+import { listProductionAdminMedia, recordProductionAdminMedia } from "@/lib/production/admin";
 
 export const runtime = "nodejs";
 
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
       if (!presignResponse.ok || !presignPayload.url) throw new Error("presign_failed");
       const uploadResponse = await fetch(presignPayload.url, { method: "PUT", headers: { "Content-Type": file.type }, body: await file.arrayBuffer() });
       if (!uploadResponse.ok) throw new Error("upload_failed");
-      return { id: `upload-${key}`, key, url: `/manus-storage/${key}`, sortOrder: 0 };
+      return recordProductionAdminMedia({ key, url: `/manus-storage/${key}`, mimeType: file.type });
     }));
     return NextResponse.json({ media: uploaded }, { status: 201 });
   } catch {

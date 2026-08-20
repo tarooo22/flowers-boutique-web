@@ -15,6 +15,24 @@
 > Persistence test-ის შექმნამდე editor-ში შეტანილია მხოლოდ სათაურები „ტექნიკური შემოწმება — წასაშლელია“ და „Temporary QA banner — delete after test“. Publish toggle არ ჩართულა.
 
 > **შეჩერებული უსაფრთხოების აღმოჩენა:** media library-ში არჩევისთვის გამოჩნდა legacy external asset (`https://example.com/rose1.jpg`). Banner API მიზანმიმართულად მიიღებს მხოლოდ `/manus-storage/` + `admin-media/` წყვილს, ამიტომ ამ არჩევნით შენახვა არ გაგრძელებულა. საჭიროა client-side filter, რათა Banner editor-ში მხოლოდ API-სთან თავსებადი managed media ჩანდეს.
+
+> Compatibility filter-ის production release `fe1c6897`-ის შემდეგ authenticated manager session ხელახლა დადასტურდა; Banner workspace ამჟამად ცარიელია და წინა შეუნახავი QA draft არ შექმნილა.
+
+> **Filter verification — PASS:** Banner editor-ის media library უკვე ცარიელია იმ გარემოში, სადაც ადრე legacy external catalog images ჩანდა. ეს ადასტურებს, რომ picker მხოლოდ `/manus-storage/` + `admin-media/` assets-ს ეძებს; ამჟამად ასეთი წინასწარ არსებული asset არ არის, ამიტომ დროებითი Banner-ის persistence test-ს ახალი managed ფოტო სჭირდება.
+
+> **Upload handoff:** Banner-ის native device upload control ხელმისაწვდომია და საჭიროებს ერთი JPG/PNG/WebP ფაილის არჩევას. Remote QA browser-ში hidden `<input type="file">` ინდექსად არ ჩანს, ამიტომ ამ automated channel-იდან ფაილის მიმაგრება ვერ შესრულდა; Banner ჩანაწერი და მედია არც შექმნილა.
+
+> **Managed upload — PASS:** მომხმარებელმა native selector-ით ატვირთა ერთი QA image; UI-მ დაადასტურა `1 ფოტო აიტვირთა და მედია ბიბლიოთეკაში დაემატა`, ხოლო editor-ში არჩეული key არის `admin-media/2026-08-20/42d0f4c3-c894-486b-a1dd-6882f8ab9ace.png`. დროებითი draft-ის active toggle გამორთულია.
+
+> **Create — PASS:** დროებითი Banner `ტექნიკური შემოწმება — წასაშლელია` / `Temporary QA banner — delete after test` შეიქმნა `/catalog` CTA-ითა და რიგითობით `0`. UI ადასტურებს „ახალი ბანერი შეიქმნა. გამოსაჩენად ჩართეთ publish.“ და card არის `draft`/`არ ჩანს` — არ გამოქვეყნებულა.
+
+> **Publish → storefront — PASS:** publish toggle-მა Banner card გადაიყვანა „გამოქვეყნებულია / მთავარ გვერდზე ჩანს“ მდგომარეობაში. Public homepage-მ ამ მოკლე QA ინტერვალში რეალურად აჩვენა დროებითი ქართული სათაური `ტექნიკური შემოწმება — წასაშლელია`, რაც ადასტურებს active-only homepage feed-ს. შემდეგი ნაბიჯი: დროებითი ჩანაწერის დაუყოვნებლივ წაშლა.
+
+> **Delete — PASS:** My Browser extension-მა delete click-ზე 504 timeout დააბრუნა, ამიტომ მისი მდგომარეობა ჯერ read-only database query-ით დავადგინე: არსებობდა მხოლოდ `id = 1`, active QA Banner. მომხმარებლის წინასწარი დადასტურების შესაბამისად, ზუსტად ეს record წაიშალა `id` + სრული temporary title-ით. შემდგომმა read-only count query-მ დააბრუნა `0`; reusable managed image დარჩა media library-ში.
+
+> **Post-delete UI confirmation — PASS:** manager Banner workspace კვლავ აჩვენებს „ბანერი ჯერ არ არის“, რაც database count-ის `0` შედეგს ემთხვევა. შემდეგი, narrowly scoped QA ნაბიჯი შეამოწმებს editor-ის text update/save interaction-ს იმავე reusable managed image-ით.
+
+> **New media-library persistence defect:** QA upload-ისას `admin-media/...42d0f4c3...png` წარმატებით აირჩა Banner editor-ში, მაგრამ ახალი editor session-ის media library ცარიელია. ეს ნიშნავს, რომ upload response დროებით არსებობს client state-ში, თუმცა managed asset persistent admin-media listing-ში არ ინახება/იბრუნება. Editor update QA შეჩერდა, რათა workflow defect ჯერ გამოსწორდეს.
 | Orders analytics — desktop | PASS | Published workspace-ში რეალური ერთი შეკვეთიდან გამოითვალა 164 ₾ შემოსავალი, 164 ₾ საშუალო, 1 ახალი რიგში; status chart, date chart და recent-orders table აჩვენებს იმავე `FLR-600001` ჩანაწერს. |
 | Chart rendering | PASS | Desktop render-ში status chart-ის მხოლოდ „ახალი“ სვეტი არის 1, ხოლო daily trend-ის `Aug 20` სვეტი არის 1; chart values ემთხვევა metric card-სა და order table-ს. |
 | Orders queue consistency | PASS | ანალიტიკის ქვემოთ არსებული სამუშაო queue ასევე აჩვენებს 1 ახალ შეკვეთას და იმავე customer/total/status მნიშვნელობებს; დამატებითი demo/mock order არ არის. |

@@ -1,7 +1,7 @@
 import "server-only";
 
 import { asc, desc, eq, sql } from "drizzle-orm";
-import { banners, categories, getProductionDb, orders, productImages, products } from "@/lib/production/db";
+import { adminMediaAssets, banners, categories, getProductionDb, orders, productImages, products } from "@/lib/production/db";
 
 const toNumber = (value: unknown) => Number(value ?? 0) || 0;
 
@@ -138,9 +138,10 @@ export async function listProductionAdminCategories() {
 
 export async function listProductionAdminMedia(): Promise<AdminMediaAsset[]> {
   const database = getProductionDb();
-  const [coverRows, galleryRows] = await Promise.all([
+  const [coverRows, galleryRows, managedRows] = await Promise.all([
     database.select({ id: products.id, name: products.nameKa, imageUrl: products.imageUrl, imageKey: products.imageKey }).from(products),
     database.select({ image: productImages, name: products.nameKa }).from(productImages).leftJoin(products, eq(productImages.productId, products.id)).orderBy(desc(productImages.id)),
+    database.select().from(adminMediaAssets).orderBy(desc(adminMediaAssets.createdAt)),
   ]);
   const assets: AdminMediaAsset[] = [];
   const seen = new Set<string>();
@@ -154,7 +155,21 @@ export async function listProductionAdminMedia(): Promise<AdminMediaAsset[]> {
     seen.add(row.image.imageUrl);
     assets.push({ id: `gallery-${row.image.id}`, url: row.image.imageUrl, key: row.image.imageKey, productId: String(row.image.productId), productName: row.name ?? undefined, sortOrder: Number(row.image.sortOrder ?? 0) });
   }
+  for (const media of managedRows) {
+    if (seen.has(media.storageUrl)) continue;
+    seen.add(media.storageUrl);
+    assets.push({ id: `managed-${media.id}`, url: media.storageUrl, key: media.storageKey, productName: "ატვირთული ფოტო", sortOrder: 0 });
+  }
   return assets.slice(0, 120);
+}
+
+export async function recordProductionAdminMedia(input: Pick<AdminMediaAsset, "url" | "key"> & { mimeType: string }): Promise<AdminMediaAsset> {
+  const database = getProductionDb();
+  await database.insert(adminMediaAssets).values({ storageKey: input.key, storageUrl: input.url, mimeType: input.mimeType });
+  const rows = await database.select().from(adminMediaAssets).where(eq(adminMediaAssets.storageKey, input.key)).limit(1);
+  const media = rows[0];
+  if (!media) throw new Error("media_registry_failed");
+  return { id: `managed-${media.id}`, url: media.storageUrl, key: media.storageKey, productName: "ატვირთული ფოტო", sortOrder: 0 };
 }
 
 export async function productionAdminStats() {

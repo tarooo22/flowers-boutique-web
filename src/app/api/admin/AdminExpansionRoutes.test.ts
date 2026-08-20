@@ -5,6 +5,8 @@ const mediaRoute = readFileSync(new URL("./media/route.ts", import.meta.url), "u
 const categoryRoute = readFileSync(new URL("./categories/route.ts", import.meta.url), "utf8");
 const productRoute = readFileSync(new URL("./products/route.ts", import.meta.url), "utf8");
 const bannerRoute = readFileSync(new URL("./banners/route.ts", import.meta.url), "utf8");
+const productionAdmin = readFileSync(new URL("../../../lib/production/admin.ts", import.meta.url), "utf8");
+const productionDb = readFileSync(new URL("../../../lib/production/db.ts", import.meta.url), "utf8");
 
 describe("Admin expansion route contract", () => {
   it("keeps media upload behind the production admin guard with safe image limits", () => {
@@ -14,6 +16,15 @@ describe("Admin expansion route contract", () => {
     expect(mediaRoute).toContain('formData.getAll("files")');
     expect(mediaRoute).toContain("v1/storage/presign/put");
     expect(mediaRoute).toContain("/manus-storage/${key}");
+    expect(mediaRoute).toContain("recordProductionAdminMedia");
+  });
+
+  it("persists managed uploads for reuse across admin editor sessions", () => {
+    expect(productionDb).toContain('mysqlTable("adminMediaAssets"');
+    expect(productionDb).toContain('uniqueIndex("adminMediaAssets_storageKey_unique")');
+    expect(productionAdmin).toContain("recordProductionAdminMedia");
+    expect(productionAdmin).toContain("database.select().from(adminMediaAssets)");
+    expect(productionAdmin).toContain("assets.push({ id: `managed-${media.id}`");
   });
 
   it("supports category CRUD while preserving referenced-category safety", () => {
