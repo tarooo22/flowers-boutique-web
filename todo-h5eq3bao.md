@@ -161,4 +161,5 @@
 - [x] Audit Journal list/detail routes and article data to identify every English-only customer-facing field under the Georgian locale.
 - [x] Add Georgian and Russian Journal content plus direct-load persisted-language rendering without changing article routes, imagery, CTA destination, or visual layout.
 - [x] Align Journal list/detail body rendering with the already-hydrated shared I18n context used by the Georgian header.
+- [x] Replace English month abbreviations in Georgian Journal dates with deterministic Georgian month labels.
 - [ ] Add focused regression coverage; validate all Journal articles in Georgian, TypeScript, full tests, production build, and published direct-load behavior.

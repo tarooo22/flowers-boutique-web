@@ -110,5 +110,6 @@ describe("formatting", () => {
 
   it("formats ISO dates", () => {
     expect(formatDate("2026-08-02")).toBe("2 Aug 2026");
+    expect(formatDate("2026-08-02", "ka")).toBe("2 აგვ 2026");
   });
 });

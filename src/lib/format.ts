@@ -9,6 +9,10 @@ export function formatPrice(value: number): string {
 /** Format a date in the active storefront locale. */
 export function formatDate(iso: string, lang: Lang = "en"): string {
   const d = new Date(iso);
+  if (lang === "ka") {
+    const months = ["იან", "თებ", "მარ", "აპრ", "მაი", "ივნ", "ივლ", "აგვ", "სექ", "ოქტ", "ნოე", "დეკ"];
+    return `${d.getUTCDate()} ${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+  }
   const locale: Record<Lang, string> = { en: "en-GB", ka: "ka-GE", ru: "ru-RU" };
   return d.toLocaleDateString(locale[lang], {
     day: "numeric",
