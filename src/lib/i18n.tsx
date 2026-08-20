@@ -17,7 +17,8 @@ interface I18nValue {
 }
 
 const I18nContext = createContext<I18nValue | null>(null);
-const LS_KEY = "fb_lang_v1";
+export const LANGUAGE_STORAGE_KEY = "fb_lang_v1";
+export const LANGUAGE_CHANGE_EVENT = "fb_language_change";
 const isLang = (v: unknown): v is Lang => languages.some((l) => l.code === v);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
@@ -25,7 +26,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   // Restore the saved language after mount (keeps SSR/first paint = "en").
   useEffect(() => {
-    const stored = window.localStorage.getItem(LS_KEY);
+    const stored = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (isLang(stored)) setLangState(stored);
   }, []);
@@ -38,7 +39,8 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   const setLang = useCallback((l: Lang) => {
     setLangState(l);
     try {
-      window.localStorage.setItem(LS_KEY, l);
+      window.localStorage.setItem(LANGUAGE_STORAGE_KEY, l);
+      window.dispatchEvent(new CustomEvent(LANGUAGE_CHANGE_EVENT));
     } catch {
       /* ignore */
     }

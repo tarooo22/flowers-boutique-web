@@ -17,8 +17,11 @@ const rewardKeys = [
 ] as const;
 
 describe("Rewards locale contract", () => {
-  it("reads all customer-facing Rewards content from the shared client locale provider", () => {
-    expect(source).toContain('const { lang, t } = useI18n()');
+  it("reads all customer-facing Rewards content from the persisted client locale contract", () => {
+    expect(source).toContain("LANGUAGE_STORAGE_KEY");
+    expect(source).toContain("LANGUAGE_CHANGE_EVENT");
+    expect(source).toContain("readPersistedLocale");
+    expect(source).toContain('window.addEventListener(LANGUAGE_CHANGE_EVENT, syncLocale)');
     expect(source).toContain('document.title = `${t("rewards.metaTitle")} · Flower\'s Boutique`');
     expect(source).not.toContain(">Rewards in petals<");
     expect(source).not.toContain(">Start earning — shop bouquets<");

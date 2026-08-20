@@ -1,12 +1,32 @@
 "use client";
 
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Button } from "@/components/ui/Button";
-import { useI18n } from "@/lib/i18n";
+import { LANGUAGE_CHANGE_EVENT, LANGUAGE_STORAGE_KEY } from "@/lib/i18n";
+import { translations } from "@/lib/translations";
+
+type RewardsLocale = keyof typeof translations;
+
+function readPersistedLocale(): RewardsLocale {
+  const stored = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+  return stored && stored in translations ? (stored as RewardsLocale) : "en";
+}
 
 export function RewardsView() {
-  const { lang, t } = useI18n();
+  const [locale, setLocale] = useState<RewardsLocale>("en");
+  const t = useCallback(
+    (key: string) => translations[locale][key] ?? translations.en[key] ?? key,
+    [locale],
+  );
+
+  useEffect(() => {
+    const syncLocale = () => setLocale(readPersistedLocale());
+    syncLocale();
+    window.addEventListener(LANGUAGE_CHANGE_EVENT, syncLocale);
+    return () => window.removeEventListener(LANGUAGE_CHANGE_EVENT, syncLocale);
+  }, []);
+
   const tiers = [
     { n: 1, label: t("rewards.tier1Label"), note: t("rewards.tier1Note"), pct: "1%", active: true },
     { n: 2, label: t("rewards.tier2Label"), note: "", pct: "3%" },
@@ -16,7 +36,7 @@ export function RewardsView() {
 
   useEffect(() => {
     document.title = `${t("rewards.metaTitle")} · Flower's Boutique`;
-  }, [lang, t]);
+  }, [t]);
 
   return (
     <div className="container-fb pt-6 pb-20 sm:pb-28">

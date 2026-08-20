@@ -156,4 +156,5 @@
 - [x] Validate and publish the revised location card copy.
 - [x] Audit the Rewards page language source and identify why Georgian UI state leaves its reward-content strings in English.
 - [x] Add complete Georgian Rewards content through the shared localization contract without changing Rewards layout, calculations, or actions.
+- [x] Synchronize Rewards with the persisted language on direct page-load, not only after client-side navigation.
 - [ ] Add focused regression coverage and validate Georgian/English Rewards rendering, TypeScript, tests, production build, and published page behavior.
