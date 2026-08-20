@@ -10,17 +10,51 @@ import type { Order, OrderStatus } from "@/lib/server/store";
 
 interface AdminProduct {
   id: string;
+  categoryId: string;
   slug: string;
   name: string;
+  nameKa: string;
+  nameEn: string;
+  descriptionKa: string;
+  descriptionEn: string;
   subtitle?: string;
   category: string;
   image: string;
   price: number;
+  priceMax: number;
   basePrice: number;
+  priceOnRequest: boolean;
+  unitType: string;
   available: boolean;
   bestseller: boolean;
+  published: boolean;
   edited: boolean;
 }
+
+interface AdminCategory {
+  id: string;
+  nameKa: string;
+  nameEn: string;
+  descriptionKa: string;
+  descriptionEn: string;
+  slug: string;
+}
+
+type ProductDraft = {
+  nameKa: string;
+  nameEn: string;
+  descriptionKa: string;
+  descriptionEn: string;
+  price: number;
+  priceMax: number;
+  priceOnRequest: boolean;
+  unitType: string;
+  categoryId: number;
+  imageUrl: string;
+  available: boolean;
+  published: boolean;
+  bestseller: boolean;
+};
 
 interface Stats {
   orderCount: number;
@@ -47,6 +81,7 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
   const [tab, setTab] = useState<Tab>("products");
   const [orders, setOrders] = useState<Order[]>([]);
   const [products, setProducts] = useState<AdminProduct[]>([]);
+  const [adminCategories, setAdminCategories] = useState<AdminCategory[]>([]);
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
@@ -56,6 +91,8 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
   const [openOrder, setOpenOrder] = useState<string | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [editingProduct, setEditingProduct] = useState<AdminProduct | null>(null);
+  const [creatingProduct, setCreatingProduct] = useState(false);
 
   const refresh = useCallback(async () => {
     setLoading(true);
@@ -72,6 +109,7 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
       ]);
       setOrders(ordersPayload.orders ?? []);
       setProducts(productsPayload.products ?? []);
+      setAdminCategories(productsPayload.categories ?? []);
       setStats(productsPayload.stats ?? null);
     } catch {
       setFeedback("Could not refresh manager data. Please try again.");
@@ -123,6 +161,46 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
     }
   };
 
+  const saveProduct = async (draft: ProductDraft, id?: string) => {
+    setBusy(id ? `editor:${id}` : "editor:create");
+    setFeedback(null);
+    try {
+      const response = await fetch("/api/admin/products", {
+        method: id ? "PATCH" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...draft, ...(id ? { id } : {}) }),
+      });
+      const payload = await response.json();
+      if (!response.ok || !payload.products) throw new Error("Product save failed");
+      setProducts(payload.products);
+      setEditingProduct(null);
+      setCreatingProduct(false);
+      setFeedback(id ? "Product changes were saved." : "Product was added to the catalog.");
+    } catch {
+      setFeedback("Could not save the product. Please review the required fields and try again.");
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const deleteProduct = async (id: string) => {
+    if (!window.confirm("Delete this product from the catalog? This cannot be undone.")) return;
+    setBusy(`delete:${id}`);
+    setFeedback(null);
+    try {
+      const response = await fetch(`/api/admin/products?id=${encodeURIComponent(id)}`, { method: "DELETE" });
+      const payload = await response.json();
+      if (!response.ok || !payload.products) throw new Error("Product deletion failed");
+      setProducts(payload.products);
+      setEditingProduct(null);
+      setFeedback("Product was deleted from the catalog.");
+    } catch {
+      setFeedback("Could not delete the product. Please try again.");
+    } finally {
+      setBusy(null);
+    }
+  };
+
   const signOut = async () => {
     await Promise.all([
       fetch("/api/auth/logout", { method: "POST", credentials: "same-origin" }),
@@ -147,7 +225,7 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
     [orders, query, statusFilter],
   );
 
-  const categories = useMemo(
+  const categorySummaries = useMemo(
     () => Array.from(products.reduce((groups, product) => {
       const key = product.category || "Uncategorised";
       groups.set(key, (groups.get(key) ?? 0) + 1);
@@ -164,37 +242,34 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
   }), [availabilityFilter, categoryFilter, products, query]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FAF8F5] to-[#F5F0E8] py-8 pb-24 sm:py-12">
-      <div className="mx-auto w-full max-w-7xl px-4">
-        <header className="flex flex-wrap items-center justify-between gap-5">
-          <div className="flex items-start gap-3">
-            <span className="grid h-10 w-10 place-items-center rounded-full bg-[#C4603A] text-lg text-white" aria-hidden="true">◆</span>
+    <div className="min-h-screen bg-[var(--surface-warm)] py-6 pb-24 sm:py-8">
+      <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
+        <header className="rounded-[var(--radius-lg)] bg-[var(--ink)] px-6 py-6 text-white shadow-[var(--shadow-card)] sm:px-8 sm:py-7">
+          <div className="flex flex-wrap items-start justify-between gap-5">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8E705F]">Flower&rsquo;s Boutique · Control room</p>
-              <h1 className="mt-1 font-display text-[30px] leading-none text-[#1C1917] sm:text-[38px]">Admin Panel</h1>
-              <p className="mt-2 text-[13px] text-[#76685F]">Manage products, orders and storefront content</p>
+              <p className="mono text-[10px] font-bold uppercase tracking-[0.16em] text-white/60">Flower&rsquo;s Boutique · Operations</p>
+              <h1 className="mt-2 font-display text-[31px] leading-none sm:text-[40px]">ადმინისტრირების პანელი</h1>
+              <p className="mt-2 max-w-2xl text-[13px] leading-relaxed text-white/72">პროდუქტების, კატეგორიების, შეკვეთებისა და storefront-ის ოპერაციული მართვა ერთ სივრცეში.</p>
             </div>
-          </div>
-          <div className="flex flex-wrap items-center gap-2.5">
-            <Button href="/" variant="outline" size="sm">View storefront</Button>
-            <Button variant="dark" size="sm" onClick={signOut}>Sign out</Button>
+            <Button href="/" variant="light" size="sm">მაღაზია</Button>
           </div>
         </header>
-        {demoCredentials ? <p className="mt-5 rounded-lg border border-[#C4603A]/30 bg-[#C4603A]/8 px-4 py-3 text-[12.5px] leading-relaxed text-[#6D5142]"><strong>Demo credentials are active.</strong> Configure real administrator credentials before sharing access.</p> : null}
-        <div role="tablist" className="mt-8 overflow-x-auto border-b border-[#E8E4DF]">
-          <div className="flex min-w-max gap-2 sm:gap-4">
+        <div role="tablist" className="mt-5 overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] p-1.5 shadow-[var(--shadow-card)]">
+          <div className="flex min-w-max gap-1.5">
             {(["products", "categories", "orders", "banners", "settings"] as Tab[]).map((id) => {
-              const label = id === "products" ? "Products" : id === "categories" ? "Categories" : id === "orders" ? `Orders${stats?.newCount ? ` (${stats.newCount} new)` : ""}` : id === "banners" ? "Banners" : "Settings";
-              return <button key={id} type="button" role="tab" aria-selected={tab === id} onClick={() => { setTab(id); setQuery(""); setFeedback(null); }} className={`border-b-2 px-3 py-3 text-sm font-medium transition sm:px-4 ${tab === id ? "border-[#C4603A] text-[#C4603A]" : "border-transparent text-[#76685F] hover:text-[#1C1917]"}`}>{label}</button>;
+              const label = id === "products" ? "პროდუქტები" : id === "categories" ? "კატეგორიები" : id === "orders" ? `შეკვეთები${stats?.newCount ? ` · ${stats.newCount}` : ""}` : id === "banners" ? "ბანერები" : "პარამეტრები";
+              return <button key={id} type="button" role="tab" aria-selected={tab === id} onClick={() => { setTab(id); setQuery(""); setFeedback(null); }} className={`min-h-10 rounded-[var(--radius)] px-4 text-[12.5px] font-semibold transition ${tab === id ? "bg-[var(--ink)] text-white shadow-sm" : "text-[var(--muted)] hover:bg-[var(--surface-sand)] hover:text-[var(--ink)]"}`}>{label}</button>;
             })}
           </div>
         </div>
+        {demoCredentials ? <p className="mt-4 rounded-[var(--radius)] border border-[var(--action)]/30 bg-[var(--action)]/8 px-4 py-3 text-[12.5px] leading-relaxed text-[var(--action-deep)]"><strong>Demo credentials are active.</strong> Configure real administrator credentials before sharing access.</p> : null}
       {feedback ? <div role="status" className="mt-4 rounded-[var(--radius)] border border-[var(--line-strong)] bg-[var(--surface)] px-4 py-3 text-[12.5px] text-[var(--muted)]">{feedback}</div> : null}
-      {tab === "products" ? <ProductsWorkspace loading={loading} products={visibleProducts} query={query} setQuery={setQuery} availabilityFilter={availabilityFilter} setAvailabilityFilter={setAvailabilityFilter} categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter} categories={categories} patchProduct={patchProduct} busy={busy} /> : null}
-      {tab === "categories" ? <CategoriesPanel categories={categories} /> : null}
+      {tab === "products" ? <ProductsWorkspace loading={loading} products={visibleProducts} query={query} setQuery={setQuery} availabilityFilter={availabilityFilter} setAvailabilityFilter={setAvailabilityFilter} categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter} categories={categorySummaries} patchProduct={patchProduct} onAdd={() => setCreatingProduct(true)} onEdit={setEditingProduct} onDelete={deleteProduct} busy={busy} /> : null}
+      {tab === "categories" ? <CategoriesPanel categories={adminCategories} summaries={categorySummaries} /> : null}
       {tab === "orders" ? <OrdersWorkspace loading={loading} orders={visibleOrders} query={query} setQuery={setQuery} statusFilter={statusFilter} setStatusFilter={setStatusFilter} openOrder={openOrder} setOpenOrder={setOpenOrder} setStatus={setStatus} busy={busy} /> : null}
       {tab === "banners" ? <LegacyNotice title="Banners" text="Current storefront editorial blocks are published from protected project content. Their live assets remain available on the storefront without exposing unsafe public editing controls." /> : null}
       {tab === "settings" ? <LegacyNotice title="Storefront settings" text="Delivery, payments and account security remain protected configuration. Use the current manager order and product controls for day-to-day storefront operations." /> : null}
+      {(editingProduct || creatingProduct) ? <ProductEditor product={editingProduct} categories={adminCategories} busy={busy === (editingProduct ? `editor:${editingProduct.id}` : "editor:create")} onClose={() => { setEditingProduct(null); setCreatingProduct(false); }} onSave={(draft) => saveProduct(draft, editingProduct?.id)} onDelete={editingProduct ? () => deleteProduct(editingProduct.id) : undefined} /> : null}
     </div>
     </div>
   );
@@ -312,28 +387,47 @@ function OrderCard({ order, open, setOpenOrder, setStatus, busy }: { order: Orde
   );
 }
 
-function ProductsWorkspace({ loading, products, query, setQuery, availabilityFilter, setAvailabilityFilter, categoryFilter, setCategoryFilter, categories, patchProduct, busy }: { loading: boolean; products: AdminProduct[]; query: string; setQuery: (value: string) => void; availabilityFilter: "all" | "available" | "unavailable"; setAvailabilityFilter: (value: "all" | "available" | "unavailable") => void; categoryFilter: string; setCategoryFilter: (value: string) => void; categories: Array<{ name: string; count: number }>; patchProduct: (id: string, patch: Partial<AdminProduct>) => void; busy: string | null }) {
-  return (
-    <div className="pt-8">
-      <div className="mb-8"><h2 className="text-3xl font-bold text-[#1C1917]">Manage Products</h2><p className="mt-2 text-sm text-[#76685F]">Add, edit and manage Flower&rsquo;s Boutique products</p></div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
-        <Toolbar query={query} setQuery={setQuery} placeholder="Search…" />
-        <select value={availabilityFilter} onChange={(event) => setAvailabilityFilter(event.target.value as "all" | "available" | "unavailable")} className="h-11 rounded-lg border border-[#E8E4DF] bg-white px-3 text-sm outline-none focus:ring-2 focus:ring-[#C4603A]"><option value="all">All availability</option><option value="available">Available</option><option value="unavailable">Unavailable</option></select>
-        <select value={categoryFilter} onChange={(event) => setCategoryFilter(event.target.value)} className="h-11 rounded-lg border border-[#E8E4DF] bg-white px-3 text-sm outline-none focus:ring-2 focus:ring-[#C4603A]"><option value="all">All categories</option>{categories.map((category) => <option key={category.name} value={category.name}>{category.name}</option>)}</select>
-      </div>
-      {loading ? <LoadingRows /> : products.length === 0 ? <EmptyState title="No matching products" text="Change the search term to find another catalog item." /> : (
-        <div className="mt-6 overflow-x-auto rounded-lg border border-[#E8E4DF] bg-white shadow-sm">
-          <table className="w-full min-w-[780px] text-left"><thead><tr className="border-b border-[#E8E4DF] bg-[#FAFAF8] text-[11px] uppercase tracking-wide text-[#76685F]"><th className="px-5 py-3 font-semibold">Product</th><th className="px-3 py-3 font-semibold">Category</th><th className="px-3 py-3 font-semibold">Price ₾</th><th className="px-3 py-3 font-semibold">Available</th><th className="px-3 py-3 font-semibold">Featured</th></tr></thead><tbody>{products.map((product) => <tr key={product.id} className="border-b border-[#F1EEEA] last:border-b-0"><td className="px-5 py-3"><div className="flex items-center gap-3"><span className="relative h-12 w-10 shrink-0 overflow-hidden rounded-md bg-[#F5F0E8]"><Image src={product.image} alt="" fill sizes="40px" unoptimized={product.image.startsWith("/manus-storage/")} className="object-cover" /></span><span className="min-w-0"><span className="block truncate text-[13px] font-semibold text-[#1C1917]">{product.name}</span><span className="block truncate text-[12px] text-[#76685F]">{product.subtitle}{product.edited ? <span className="ml-2 text-[#C4603A]">edited</span> : null}</span></span></div></td><td className="px-3 py-3 text-[12px] text-[#76685F]">{product.category}</td><td className="px-3 py-3"><input type="number" min={0} defaultValue={product.price} disabled={busy === `product:${product.id}`} onBlur={(event) => { const value = Number(event.target.value); if (value !== product.price) void patchProduct(product.id, { price: value }); }} className="h-9 w-24 rounded-md border border-[#E8E4DF] bg-white px-2.5 text-[13px] tabular-nums outline-none focus:ring-2 focus:ring-[#C4603A] disabled:opacity-50" /></td><td className="px-3 py-3"><Toggle checked={product.available} disabled={busy === `product:${product.id}`} onChange={(value) => patchProduct(product.id, { available: value })} /></td><td className="px-3 py-3"><Toggle checked={product.bestseller} disabled={busy === `product:${product.id}`} onChange={(value) => patchProduct(product.id, { bestseller: value })} /></td></tr>)}</tbody></table>
-        </div>
-      )}
-      <p className="mt-3 text-[12px] leading-relaxed text-[#8B817A]">Price, availability and featured updates are stored as catalog overrides and apply immediately across the storefront.</p>
+function ProductsWorkspace({ loading, products, query, setQuery, availabilityFilter, setAvailabilityFilter, categoryFilter, setCategoryFilter, categories, patchProduct, onAdd, onEdit, onDelete, busy }: { loading: boolean; products: AdminProduct[]; query: string; setQuery: (value: string) => void; availabilityFilter: "all" | "available" | "unavailable"; setAvailabilityFilter: (value: "all" | "available" | "unavailable") => void; categoryFilter: string; setCategoryFilter: (value: string) => void; categories: Array<{ name: string; count: number }>; patchProduct: (id: string, patch: Partial<AdminProduct>) => void; onAdd: () => void; onEdit: (product: AdminProduct) => void; onDelete: (id: string) => void; busy: string | null }) {
+  return <div className="pt-7">
+    <div className="mb-5"><p className="mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--muted)]">Catalog operations</p><div className="mt-2 flex flex-wrap items-end justify-between gap-4"><div><h2 className="font-display text-[30px] leading-none text-[var(--ink)]">პროდუქტების მართვა</h2><p className="mt-2 text-sm text-[var(--muted)]">დაამატეთ, შეცვალეთ და მართეთ Flower&rsquo;s Boutique-ის პროდუქტები</p></div><Button type="button" variant="dark" size="sm" onClick={onAdd}>+ ახალი პროდუქტი</Button></div></div>
+    <div className="grid gap-3 rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] p-3 shadow-[var(--shadow-card)] md:grid-cols-[1.25fr_0.9fr_0.9fr]">
+      <Toolbar query={query} setQuery={setQuery} placeholder="ძებნა…" />
+      <select aria-label="Filter product availability" value={availabilityFilter} onChange={(event) => setAvailabilityFilter(event.target.value as "all" | "available" | "unavailable")} className="h-11 rounded-[var(--radius)] border border-[var(--line)] bg-[var(--surface)] px-3 text-sm outline-none focus:ring-2 focus:ring-[var(--action)]"><option value="all">ყველა სტატუსი</option><option value="available">მხოლოდ მარაგში</option><option value="unavailable">არ არის მარაგში</option></select>
+      <select aria-label="Filter product category" value={categoryFilter} onChange={(event) => setCategoryFilter(event.target.value)} className="h-11 rounded-[var(--radius)] border border-[var(--line)] bg-[var(--surface)] px-3 text-sm outline-none focus:ring-2 focus:ring-[var(--action)]"><option value="all">ყველა კატეგორია</option>{categories.map((category) => <option key={category.name} value={category.name}>{category.name}</option>)}</select>
     </div>
-  );
+    <p className="mt-4 text-[12px] text-[var(--muted)]">{products.length} პროდუქტი ამ ფილტრებით</p>
+    {loading ? <LoadingRows /> : products.length === 0 ? <EmptyState title="No matching products" text="Change the search term to find another catalog item." /> : <div className="mt-3 overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] shadow-[var(--shadow-card)]"><table className="w-full min-w-[940px] text-left"><thead><tr className="border-b border-[var(--line)] bg-[var(--surface-sand)] text-[11px] font-semibold uppercase tracking-wide text-[var(--muted)]"><th className="px-4 py-3">სურ.</th><th className="px-4 py-3">სახელი</th><th className="px-4 py-3">კატეგორია</th><th className="px-4 py-3">ფასი</th><th className="px-4 py-3">სტატუსი</th><th className="px-4 py-3">მოქმედებები</th></tr></thead><tbody>{products.map((product) => <tr key={product.id} className="border-b border-[var(--line)] last:border-b-0"><td className="px-4 py-3"><span className="relative block h-11 w-10 overflow-hidden rounded-md bg-[var(--surface-sand)]"><Image src={product.image} alt="" fill sizes="40px" unoptimized={product.image.startsWith("/manus-storage/")} className="object-cover" /></span></td><td className="px-4 py-3"><p className="text-[13px] font-semibold text-[var(--ink)]">{product.name}</p><p className="mt-0.5 text-[12px] text-[var(--muted)]">{product.subtitle}</p></td><td className="px-4 py-3 text-[12px] text-[var(--muted)]">{product.category}</td><td className="px-4 py-3"><input aria-label={`Price for ${product.name}`} type="number" min={0} defaultValue={product.price} disabled={busy === `product:${product.id}`} onBlur={(event) => { const value = Number(event.target.value); if (value !== product.price) void patchProduct(product.id, { price: value }); }} className="h-9 w-24 rounded-md border border-[var(--line)] bg-white px-2.5 text-[13px] tabular-nums outline-none focus:ring-2 focus:ring-[var(--action)] disabled:opacity-50" /></td><td className="px-4 py-3"><div className="flex items-center gap-2"><Toggle checked={product.available} disabled={busy === `product:${product.id}`} onChange={(value) => patchProduct(product.id, { available: value })} /><span className="text-[11px] text-[var(--muted)]">{product.available ? "მარაგშია" : "არაა მარაგში"}</span></div></td><td className="px-4 py-3"><div className="flex items-center gap-2"><button type="button" aria-label={`Edit ${product.name}`} onClick={() => onEdit(product)} className="min-h-10 rounded-[var(--radius)] border border-[var(--line)] px-3 text-[12px] font-semibold text-[var(--ink)] transition hover:border-[var(--ink)]">რედაქტირება</button><button type="button" aria-label={`Delete ${product.name}`} disabled={busy === `delete:${product.id}`} onClick={() => onDelete(product.id)} className="min-h-10 rounded-[var(--radius)] border border-[var(--action)]/35 px-3 text-[12px] font-semibold text-[var(--action-deep)] transition hover:bg-[var(--action)]/10 disabled:opacity-50">წაშლა</button></div></td></tr>)}</tbody></table></div>}
+  </div>;
 }
 
-function CategoriesPanel({ categories }: { categories: Array<{ name: string; count: number }> }) {
-  return <div className="pt-8"><div className="mb-8"><h2 className="text-3xl font-bold text-[#1C1917]">Manage Categories</h2><p className="mt-2 text-sm text-[#76685F]">Live catalog taxonomy used by the current storefront</p></div><div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{categories.map((category) => <div key={category.name} className="rounded-lg border border-[#E8E4DF] bg-white p-5 shadow-sm"><p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#C4603A]">Category</p><h3 className="mt-2 text-[17px] font-semibold text-[#1C1917]">{category.name}</h3><p className="mt-2 text-[13px] text-[#76685F]">{category.count} product{category.count === 1 ? "" : "s"} in the live catalog</p></div>)}</div></div>;
+function CategoriesPanel({ categories, summaries }: { categories: AdminCategory[]; summaries: Array<{ name: string; count: number }> }) {
+  return <div className="pt-7"><div className="rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] p-5 shadow-[var(--shadow-card)]"><p className="mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--muted)]">Catalog structure</p><h2 className="mt-2 font-display text-[30px] leading-none">კატეგორიების მართვა</h2><p className="mt-2 text-sm text-[var(--muted)]">მიმდინარე კატალოგის სტრუქტურა და პროდუქტების რაოდენობა</p></div><div className="mt-4 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] shadow-[var(--shadow-card)]">{categories.map((category) => { const summary = summaries.find((item) => item.name === category.nameKa || item.name === category.nameEn); return <div key={category.id} className="flex items-center justify-between gap-4 border-b border-[var(--line)] px-5 py-4 last:border-b-0"><div><p className="font-semibold text-[var(--ink)]">{category.nameKa}</p><p className="mt-1 text-[12px] text-[var(--muted)]">/{category.slug} · {category.nameEn}</p></div><span className="rounded-full bg-[var(--green-soft)] px-3 py-1 text-[12px] font-semibold text-[var(--green)]">{summary?.count ?? 0} პროდუქტი</span></div>; })}</div></div>;
 }
+
+function ProductEditor({ product, categories, busy, onClose, onSave, onDelete }: { product: AdminProduct | null; categories: AdminCategory[]; busy: boolean; onClose: () => void; onSave: (draft: ProductDraft) => void; onDelete?: () => void }) {
+  const [draft, setDraft] = useState<ProductDraft>(() => ({
+    nameKa: product?.nameKa ?? "",
+    nameEn: product?.nameEn ?? "",
+    descriptionKa: product?.descriptionKa ?? "",
+    descriptionEn: product?.descriptionEn ?? "",
+    price: product?.price ?? 0,
+    priceMax: product?.priceMax ?? product?.price ?? 0,
+    priceOnRequest: product?.priceOnRequest ?? false,
+    unitType: product?.unitType ?? "single stem",
+    categoryId: Number(product?.categoryId ?? categories[0]?.id ?? 0),
+    imageUrl: product?.image ?? "",
+    available: product?.available ?? true,
+    published: product?.published ?? true,
+    bestseller: product?.bestseller ?? false,
+  }));
+  const update = <K extends keyof ProductDraft>(key: K, value: ProductDraft[K]) => setDraft((previous) => ({ ...previous, [key]: value }));
+  const submit = (event: React.FormEvent<HTMLFormElement>) => { event.preventDefault(); if (!draft.nameKa.trim() || !draft.nameEn.trim() || !draft.categoryId) return; onSave({ ...draft, nameKa: draft.nameKa.trim(), nameEn: draft.nameEn.trim() }); };
+  return <div role="dialog" aria-modal="true" aria-label={product ? "Edit product" : "Add product"} className="fixed inset-0 z-50 flex items-end bg-black/35 p-0 sm:items-center sm:justify-center sm:p-6"><form onSubmit={submit} className="flex max-h-[94vh] w-full max-w-3xl flex-col overflow-hidden rounded-t-[var(--radius-lg)] bg-[var(--surface-warm)] shadow-2xl sm:rounded-[var(--radius-lg)]"><header className="flex items-start justify-between gap-4 bg-[var(--ink)] px-5 py-5 text-white sm:px-7"><div><p className="mono text-[10px] font-bold uppercase tracking-[0.14em] text-white/60">Flower&rsquo;s Boutique · Catalog studio</p><h2 className="mt-2 font-display text-[27px] leading-none">{product ? "პროდუქტის რედაქტირება" : "ახალი პროდუქტი"}</h2><p className="mt-2 text-[12px] text-white/70">შეავსეთ მხოლოდ რეალური პროდუქტის მონაცემები.</p></div><button type="button" onClick={onClose} className="min-h-10 rounded-[var(--radius)] border border-white/25 px-3 text-[12px] font-semibold hover:bg-white/10">დახურვა</button></header><div className="grid gap-4 overflow-y-auto p-5 sm:p-7"><EditorSection title="ძირითადი ინფორმაცია" text="ორენოვანი სახელი, აღწერა და კატალოგის კატეგორია."><div className="grid gap-3 sm:grid-cols-2"><Field label="სახელი (ქართული)"><input required value={draft.nameKa} onChange={(event) => update("nameKa", event.target.value)} /></Field><Field label="სახელი (ინგლისურად)"><input required value={draft.nameEn} onChange={(event) => update("nameEn", event.target.value)} /></Field></div><div className="grid gap-3 sm:grid-cols-2"><Field label="აღწერა (ქართული)"><textarea value={draft.descriptionKa} onChange={(event) => update("descriptionKa", event.target.value)} /></Field><Field label="აღწერა (ინგლისურად)"><textarea value={draft.descriptionEn} onChange={(event) => update("descriptionEn", event.target.value)} /></Field></div><Field label="კატეგორია"><select required value={draft.categoryId} onChange={(event) => update("categoryId", Number(event.target.value))}>{categories.map((category) => <option key={category.id} value={category.id}>{category.nameKa} · {category.nameEn}</option>)}</select></Field></EditorSection><EditorSection title="ფასი და მარაგი" text="ფასის დიაპაზონი და storefront visibility."><div className="grid gap-3 sm:grid-cols-2"><Field label="მინიმალური ფასი"><input required type="number" min={0} value={draft.price} onChange={(event) => update("price", Number(event.target.value))} /></Field><Field label="მაქსიმალური ფასი"><input required type="number" min={0} value={draft.priceMax} onChange={(event) => update("priceMax", Number(event.target.value))} /></Field></div><Field label="ერთეული"><input value={draft.unitType} onChange={(event) => update("unitType", event.target.value)} /></Field><div className="grid gap-2 sm:grid-cols-3"><CheckField label="ფასი მოთხოვნით" checked={draft.priceOnRequest} onChange={(value) => update("priceOnRequest", value)} /><CheckField label="მარაგშია" checked={draft.available} onChange={(value) => update("available", value)} /><CheckField label="გამორჩეული" checked={draft.bestseller} onChange={(value) => update("bestseller", value)} /></div></EditorSection><EditorSection title="მთავარი ფოტო" text="გამოიყენეთ მხოლოდ existing managed-storage ან licensed image URL."><Field label="Image URL"><input type="url" value={draft.imageUrl} onChange={(event) => update("imageUrl", event.target.value)} placeholder="https://… ან /manus-storage/…" /></Field></EditorSection></div><footer className="flex flex-wrap items-center justify-between gap-3 border-t border-[var(--line)] bg-[var(--surface)] px-5 py-4 sm:px-7"><div>{onDelete ? <button type="button" disabled={busy} onClick={onDelete} className="min-h-10 rounded-[var(--radius)] border border-[var(--action)]/35 px-3 text-[12px] font-semibold text-[var(--action-deep)] hover:bg-[var(--action)]/10 disabled:opacity-50">წაშლა</button> : null}</div><div className="flex gap-2"><Button type="button" variant="outline" size="sm" onClick={onClose}>გაუქმება</Button><Button type="submit" variant="dark" size="sm" disabled={busy}>{busy ? "ინახება…" : "შენახვა"}</Button></div></footer></form></div>;
+}
+
+function EditorSection({ title, text, children }: { title: string; text: string; children: React.ReactNode }) { return <section className="rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)]"><div className="border-b border-[var(--line)] px-5 py-4"><h3 className="font-semibold text-[var(--ink)]">{title}</h3><p className="mt-1 text-[12px] text-[var(--muted)]">{text}</p></div><div className="grid gap-4 p-5">{children}</div></section>; }
+function Field({ label, children }: { label: string; children: React.ReactNode }) { return <label className="grid gap-1.5 text-[12px] font-semibold text-[var(--ink)]">{label}<span className="[&>input]:h-11 [&>input]:w-full [&>input]:rounded-[var(--radius)] [&>input]:border [&>input]:border-[var(--line)] [&>input]:bg-white [&>input]:px-3 [&>input]:font-normal [&>input]:outline-none [&>input]:focus:ring-2 [&>input]:focus:ring-[var(--action)] [&>select]:h-11 [&>select]:w-full [&>select]:rounded-[var(--radius)] [&>select]:border [&>select]:border-[var(--line)] [&>select]:bg-white [&>select]:px-3 [&>select]:font-normal [&>textarea]:min-h-24 [&>textarea]:w-full [&>textarea]:rounded-[var(--radius)] [&>textarea]:border [&>textarea]:border-[var(--line)] [&>textarea]:bg-white [&>textarea]:p-3 [&>textarea]:font-normal [&>textarea]:outline-none [&>textarea]:focus:ring-2 [&>textarea]:focus:ring-[var(--action)]">{children}</span></label>; }
+function CheckField({ label, checked, onChange }: { label: string; checked: boolean; onChange: (value: boolean) => void }) { return <label className="flex min-h-11 items-center gap-2 rounded-[var(--radius)] border border-[var(--line)] px-3 text-[12px] font-semibold text-[var(--ink)]"><input type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} className="h-4 w-4 accent-[var(--ink)]" />{label}</label>; }
 
 function LegacyNotice({ title, text }: { title: string; text: string }) {
   return <div className="pt-8"><div className="rounded-lg border border-[#E8E4DF] bg-white p-6 shadow-sm"><h2 className="text-3xl font-bold text-[#1C1917]">{title}</h2><p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#76685F]">{text}</p></div></div>;

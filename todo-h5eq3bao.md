@@ -146,3 +146,6 @@
 - [x] Locate and inventory the original pre-redesign project's Admin panel, distinct from the recent compact and manager-workspace variants.
 - [x] Map the original Admin panel's supported UI and workflows to current production data, role guard, session and safe API contracts.
 - [x] Restore the original pre-redesign Admin presentation and supported controls; validate locally and on the published manager route.
+- [x] Audit the supplied operational Admin UX references and map their header, tabs, filters, table, editor and order-workspace patterns to current manager data/actions.
+- [x] Rebuild the Admin interface in the reference-inspired operational UX while retaining Flower’s Boutique color/typography system and supported legacy logic.
+- [ ] Validate the upgraded Admin workflows at desktop/mobile, run focused/full regression checks and publish the verified manager route.
