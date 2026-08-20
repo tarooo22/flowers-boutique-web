@@ -195,3 +195,11 @@ The About map regression contract verifies the iframe, central configuration and
 The location-value card next to the pin icon now communicates a practical reason to visit the studio rather than the prior generic floristry claim. Its Georgian copy is **გვიპოვე ვაკეში** with a concise invitation to visit the Chavchavadze Avenue studio and use the map for directions. Matching English and Russian messages remain in the same translation contract. The icon, card geometry and surrounding value-card layout remain unchanged. TypeScript, **37 Vitest tests**, and the production build pass.
 
 **Published verification:** after rollout propagation, the cache-busted production About page rendered the new **გვიპოვე ვაკეში** heading and its Chavchavadze Avenue/map-description verbatim. The prior florist/algorithm copy no longer appears in that card.
+
+## Rewards locale consistency repair — 2026-08-20
+
+The Rewards route previously rendered its body copy from hardcoded English strings, even when the saved storefront language was Georgian. Its breadcrumb, heading, loyalty-balance card, tier labels, cashback example, disclaimer, CTA, and browser title now resolve through the shared English/Georgian/Russian translation contract. Tier percentages, spend thresholds, balances, catalog CTA destination, visual layout, and styling remain unchanged.
+
+The initial implementation localized client-side navigation. A direct reload exposed the App Router first-paint boundary: the existing persisted language made the shared chrome Georgian but left the page body's static server markup English. The locale provider now publishes a language-change event after a selector update, while the Rewards view reads the persisted language on mount and listens for later language changes. This covers both a direct URL open/refresh and in-app navigation.
+
+**Validation:** focused Rewards regression coverage, TypeScript, **39 Vitest tests**, and `NODE_ENV=production pnpm build` pass. Published direct-load verification in the existing Georgian browser session rendered **ქეშბექი ფურცლებით**, **შენი ბალანსი**, localized tiers/example copy, and **დაიწყე დაგროვება — აირჩიე თაიგული** on `/rewards`; client-side navigation from About was verified as well.
