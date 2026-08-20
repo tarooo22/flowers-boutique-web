@@ -5,14 +5,12 @@ import Image from "next/image";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Button } from "@/components/ui/Button";
 import { formatDate } from "@/lib/format";
-import { usePersistedLanguage } from "@/lib/i18n";
-import { translations } from "@/lib/translations";
+import { useI18n } from "@/lib/i18n";
 import type { JournalPost } from "@/types";
 
 export function JournalArticleView({ post }: { post: JournalPost }) {
-  const lang = usePersistedLanguage();
+  const { lang, t } = useI18n();
   const content = post.content[lang];
-  const t = (key: string, value?: number) => (translations[lang][key] ?? translations.en[key] ?? key).replace("{n}", String(value ?? ""));
 
   useEffect(() => {
     document.title = `${content.title} · Flower's Boutique`;
@@ -25,7 +23,7 @@ export function JournalArticleView({ post }: { post: JournalPost }) {
       </div>
 
       <div className="container-fb mx-auto mt-6 max-w-3xl">
-        <p className="mono text-[11px] uppercase tracking-[0.16em] text-[var(--muted)]">{content.category} · {t("journal.minRead", post.readMinutes)} · {formatDate(post.date, lang)}</p>
+        <p className="mono text-[11px] uppercase tracking-[0.16em] text-[var(--muted)]">{content.category} · {t("journal.minRead", { n: post.readMinutes })} · {formatDate(post.date, lang)}</p>
         <h1 className="font-display mt-3 text-[30px] leading-tight sm:text-[40px]">{content.title}</h1>
         <p className="mt-4 text-[16px] leading-relaxed text-[var(--muted)]">{content.excerpt}</p>
 

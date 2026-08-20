@@ -4,13 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { journalPosts } from "@/data/journal";
 import { formatDate } from "@/lib/format";
-import { usePersistedLanguage } from "@/lib/i18n";
-import { translations } from "@/lib/translations";
+import { useI18n } from "@/lib/i18n";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 
 export function JournalListView() {
-  const lang = usePersistedLanguage();
-  const t = (key: string, value?: number) => (translations[lang][key] ?? translations.en[key] ?? key).replace("{n}", String(value ?? ""));
+  const { lang, t } = useI18n();
 
   return (
     <div className="container-fb pt-6 pb-20 sm:pb-28">
@@ -27,7 +25,7 @@ export function JournalListView() {
                 <Image src={post.image} alt={content.title} fill priority={i === 0} unoptimized sizes="(max-width:640px) 100vw, 33vw" className="object-cover" />
               </div>
               <div className="pt-3">
-                <p className="mono text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">{content.category} · {t("journal.min", post.readMinutes)}</p>
+                <p className="mono text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">{content.category} · {t("journal.min", { n: post.readMinutes })}</p>
                 <h2 className="font-display mt-1.5 text-[19px] leading-snug transition-colors group-hover:text-[var(--action-deep)]">{content.title}</h2>
                 <p className="mt-1.5 text-[13.5px] leading-relaxed text-[var(--muted)] line-clamp-2">{content.excerpt}</p>
                 <p className="mono mt-2 text-[11px] text-[var(--muted-2)]">{formatDate(post.date, lang)}</p>

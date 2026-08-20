@@ -25,11 +25,11 @@ describe("Journal locale contract", () => {
     expect(journalPosts[2]?.content.ka.title).toBe("როგორ ავარჩიოთ ყვავილები ფერისა და მნიშვნელობის მიხედვით");
   });
 
-  it("uses the persisted language for both list and direct article views", () => {
-    expect(listSource).toContain("usePersistedLanguage");
+  it("uses the shared hydrated language context for list, detail and home views", () => {
+    expect(listSource).toContain("useI18n");
     expect(listSource).toContain("post.content[lang]");
     expect(listSource).toContain("formatDate(post.date, lang)");
-    expect(detailSource).toContain("usePersistedLanguage");
+    expect(detailSource).toContain("useI18n");
     expect(detailSource).toContain("post.content[lang]");
     expect(detailSource).toContain("journal.shopFreshBouquets");
     expect(homeSource).toContain("post.content[lang]");

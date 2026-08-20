@@ -6016,3 +6016,134 @@
 [2026-08-20T10:42:52.335Z] GET /?from_webdev=1 200 in 146ms (next.js: 1.7ms, application-code: 145ms)
 [2026-08-20T10:42:52.700Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 157ms (next.js: 10ms, application-code: 146ms)
 [2026-08-20T10:42:52.706Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 148ms (next.js: 1.1ms, application-code: 147ms)
+[2026-08-20T10:43:58.207Z] GET / 200 in 1181ms (next.js: 1.8ms, application-code: 1179ms)
+[2026-08-20T10:43:58.403Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 173ms (next.js: 24ms, application-code: 148ms)
+[2026-08-20T10:43:58.412Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 182ms (next.js: 19ms, application-code: 163ms)
+[2026-08-20T10:43:58.461Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 135ms (next.js: 3ms, application-code: 132ms)
+[2026-08-20T10:43:58.471Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 136ms (next.js: 1.4ms, application-code: 135ms)
+[2026-08-20T10:43:58.471Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 137ms (next.js: 4ms, application-code: 132ms)
+[2026-08-20T10:43:58.497Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 159ms (next.js: 3ms, application-code: 155ms)
+[2026-08-20T10:43:58.619Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 50ms (next.js: 1.6ms, application-code: 48ms)
+[2026-08-20T10:43:58.624Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 48ms (next.js: 1.4ms, application-code: 46ms)
+[2026-08-20T10:43:58.629Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 45ms (next.js: 1.7ms, application-code: 44ms)
+[2026-08-20T10:43:58.641Z] GET /manus-storage/editorial-collection_fd67f2f1.webp 307 in 40ms (next.js: 1.3ms, application-code: 39ms)
+[2026-08-20T10:43:58.646Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 53ms (next.js: 1.7ms, application-code: 51ms)
+[2026-08-20T10:48:03.329Z] GET /journal/how-to-keep-cut-flowers-fresh 200 in 489ms (next.js: 16ms, generate-params: 333ms, application-code: 141ms)
+[2026-08-20T10:48:03.405Z] ⚠ Blocked cross-origin request to Next.js dev resource /_next/static/chunks/src_components_1kdvzqh._.js from "127.0.0.1".
+[2026-08-20T10:48:03.405Z] Cross-origin access to Next.js dev resources is blocked by default for safety.
+[2026-08-20T10:48:03.405Z] To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+[2026-08-20T10:48:03.405Z] // next.config.js
+[2026-08-20T10:48:03.405Z] module.exports = {
+[2026-08-20T10:48:03.405Z] allowedDevOrigins: ['127.0.0.1'],
+[2026-08-20T10:48:03.405Z] }
+[2026-08-20T10:48:03.405Z] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[2026-08-20T10:48:03.522Z] GET /manus-storage/fb-journal-care-v2_236c8f7f.jpg 307 in 172ms (next.js: 18ms, application-code: 154ms)
+[2026-08-20T10:48:45.755Z] [ELIFECYCLE] Command failed.
+[2026-08-20T10:48:45.800Z] [?25h
+[2026-08-20T10:48:45.803Z] Dev server exited with code -1
+[2026-08-20T10:48:46.849Z] Starting dev server with command: pnpm run dev
+[2026-08-20T10:48:47.150Z] $ next dev
+[2026-08-20T10:48:47.533Z] ▲ Next.js 16.3.1 (Turbopack)
+[2026-08-20T10:48:47.533Z] - Local:         http://localhost:3000
+[2026-08-20T10:48:47.533Z] - Network:       http://169.254.0.21:3000
+[2026-08-20T10:48:47.533Z] ✓ Ready in 291ms
+[2026-08-20T10:48:47.565Z] ✓ Running next.config.ts took 30ms
+[2026-08-20T10:48:50.311Z] GET / 200 in 1410ms (next.js: 633ms, application-code: 778ms)
+[2026-08-20T10:48:50.440Z] ⚠ Blocked cross-origin request to Next.js dev resource /_next/static/chunks/src_057p72o._.js from "127.0.0.1".
+[2026-08-20T10:48:50.440Z] Cross-origin access to Next.js dev resources is blocked by default for safety.
+[2026-08-20T10:48:50.440Z] To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+[2026-08-20T10:48:50.440Z] // next.config.js
+[2026-08-20T10:48:50.440Z] module.exports = {
+[2026-08-20T10:48:50.440Z] allowedDevOrigins: ['127.0.0.1'],
+[2026-08-20T10:48:50.440Z] }
+[2026-08-20T10:48:50.440Z] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[2026-08-20T10:48:50.440Z] ⚠ Blocked cross-origin request to Next.js dev resource /_next/static/chunks/1ls4_next_1f7r-f_._.js from "127.0.0.1".
+[2026-08-20T10:48:50.440Z] Cross-origin access to Next.js dev resources is blocked by default for safety.
+[2026-08-20T10:48:50.440Z] To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+[2026-08-20T10:48:50.440Z] // next.config.js
+[2026-08-20T10:48:50.440Z] module.exports = {
+[2026-08-20T10:48:50.441Z] allowedDevOrigins: ['127.0.0.1'],
+[2026-08-20T10:48:50.441Z] }
+[2026-08-20T10:48:50.441Z] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[2026-08-20T10:48:50.649Z] ⚠ Blocked cross-origin request to Next.js dev resource /_next/hmr from "127.0.0.1".
+[2026-08-20T10:48:50.649Z] Cross-origin access to Next.js dev resources is blocked by default for safety.
+[2026-08-20T10:48:50.649Z] To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+[2026-08-20T10:48:50.649Z] // next.config.js
+[2026-08-20T10:48:50.649Z] module.exports = {
+[2026-08-20T10:48:50.649Z] allowedDevOrigins: ['127.0.0.1'],
+[2026-08-20T10:48:50.649Z] }
+[2026-08-20T10:48:50.649Z] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[2026-08-20T10:48:51.067Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 724ms (next.js: 554ms, application-code: 169ms)
+[2026-08-20T10:48:51.076Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 631ms (next.js: 454ms, application-code: 177ms)
+[2026-08-20T10:48:51.101Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 759ms (next.js: 557ms, application-code: 202ms)
+[2026-08-20T10:48:51.110Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 649ms (next.js: 438ms, application-code: 211ms)
+[2026-08-20T10:48:51.113Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 662ms (next.js: 448ms, application-code: 214ms)
+[2026-08-20T10:48:51.126Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 662ms (next.js: 435ms, application-code: 227ms)
+[2026-08-20T10:48:51.377Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 102ms (next.js: 55ms, application-code: 48ms)
+[2026-08-20T10:48:51.387Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 46ms (next.js: 4ms, application-code: 42ms)
+[2026-08-20T10:48:51.387Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 48ms (next.js: 6ms, application-code: 41ms)
+[2026-08-20T10:48:51.392Z] GET /manus-storage/editorial-collection_fd67f2f1.webp 307 in 51ms (next.js: 11ms, application-code: 40ms)
+[2026-08-20T10:48:51.396Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 55ms (next.js: 9ms, application-code: 46ms)
+[2026-08-20T10:49:00.422Z] GET /journal/how-to-keep-cut-flowers-fresh 200 in 502ms (next.js: 24ms, generate-params: 304ms, application-code: 174ms)
+[2026-08-20T10:49:00.495Z] ⚠ Blocked cross-origin request to Next.js dev resource /_next/static/chunks/src_components_1kdvzqh._.js from "127.0.0.1".
+[2026-08-20T10:49:00.495Z] Cross-origin access to Next.js dev resources is blocked by default for safety.
+[2026-08-20T10:49:00.495Z] To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+[2026-08-20T10:49:00.495Z] // next.config.js
+[2026-08-20T10:49:00.495Z] module.exports = {
+[2026-08-20T10:49:00.495Z] allowedDevOrigins: ['127.0.0.1'],
+[2026-08-20T10:49:00.495Z] }
+[2026-08-20T10:49:00.495Z] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[2026-08-20T10:49:00.584Z] GET /manus-storage/fb-journal-care-v2_236c8f7f.jpg 307 in 139ms (next.js: 13ms, application-code: 126ms)
+[2026-08-20T10:49:31.754Z] GET /journal/how-to-keep-cut-flowers-fresh 200 in 179ms (next.js: 1.9ms, generate-params: 12ms, application-code: 166ms)
+[2026-08-20T10:49:31.982Z] GET /manus-storage/fb-journal-care-v2_236c8f7f.jpg 307 in 196ms (next.js: 14ms, application-code: 181ms)
+[2026-08-20T10:49:46.738Z] GET /journal/how-to-keep-cut-flowers-fresh 200 in 174ms (next.js: 3ms, generate-params: 9ms, application-code: 162ms)
+[2026-08-20T10:49:46.768Z] ⚠ Blocked cross-origin request to Next.js dev resource /_next/static/chunks/src_057p72o._.js from "3000-i2pfjamc2e6vvxjvr0sej-59b127c0.us3.manus.computer".
+[2026-08-20T10:49:46.768Z] Cross-origin access to Next.js dev resources is blocked by default for safety.
+[2026-08-20T10:49:46.768Z] To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+[2026-08-20T10:49:46.768Z] // next.config.js
+[2026-08-20T10:49:46.768Z] module.exports = {
+[2026-08-20T10:49:46.768Z] allowedDevOrigins: ['3000-i2pfjamc2e6vvxjvr0sej-59b127c0.us3.manus.computer'],
+[2026-08-20T10:49:46.768Z] }
+[2026-08-20T10:49:46.768Z] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[2026-08-20T10:49:46.788Z] ⚠ Blocked cross-origin request to Next.js dev resource /_next/static/chunks/src_components_1kdvzqh._.js from "3000-i2pfjamc2e6vvxjvr0sej-59b127c0.us3.manus.computer".
+[2026-08-20T10:49:46.788Z] Cross-origin access to Next.js dev resources is blocked by default for safety.
+[2026-08-20T10:49:46.788Z] To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+[2026-08-20T10:49:46.788Z] // next.config.js
+[2026-08-20T10:49:46.788Z] module.exports = {
+[2026-08-20T10:49:46.788Z] allowedDevOrigins: ['3000-i2pfjamc2e6vvxjvr0sej-59b127c0.us3.manus.computer'],
+[2026-08-20T10:49:46.788Z] }
+[2026-08-20T10:49:46.788Z] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[2026-08-20T10:49:46.796Z] ⚠ Blocked cross-origin request to Next.js dev resource /_next/static/chunks/1ls4_next_1f7r-f_._.js from "3000-i2pfjamc2e6vvxjvr0sej-59b127c0.us3.manus.computer".
+[2026-08-20T10:49:46.796Z] Cross-origin access to Next.js dev resources is blocked by default for safety.
+[2026-08-20T10:49:46.796Z] To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+[2026-08-20T10:49:46.796Z] // next.config.js
+[2026-08-20T10:49:46.796Z] module.exports = {
+[2026-08-20T10:49:46.796Z] allowedDevOrigins: ['3000-i2pfjamc2e6vvxjvr0sej-59b127c0.us3.manus.computer'],
+[2026-08-20T10:49:46.796Z] }
+[2026-08-20T10:49:46.796Z] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[2026-08-20T10:49:46.982Z] GET /manus-storage/fb-journal-care-v2_236c8f7f.jpg 307 in 213ms (next.js: 12ms, application-code: 201ms)
+[2026-08-20T10:49:47.285Z] ⚠ Blocked cross-origin request to Next.js dev resource /_next/hmr from "3000-i2pfjamc2e6vvxjvr0sej-59b127c0.us3.manus.computer".
+[2026-08-20T10:49:47.285Z] Cross-origin access to Next.js dev resources is blocked by default for safety.
+[2026-08-20T10:49:47.285Z] To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+[2026-08-20T10:49:47.285Z] // next.config.js
+[2026-08-20T10:49:47.285Z] module.exports = {
+[2026-08-20T10:49:47.285Z] allowedDevOrigins: ['3000-i2pfjamc2e6vvxjvr0sej-59b127c0.us3.manus.computer'],
+[2026-08-20T10:49:47.285Z] }
+[2026-08-20T10:49:47.286Z] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[2026-08-20T10:50:05.370Z] GET /?from_webdev=1 200 in 186ms (next.js: 5ms, application-code: 181ms)
+[2026-08-20T10:50:05.729Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 157ms (next.js: 23ms, application-code: 134ms)
+[2026-08-20T10:50:05.730Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 159ms (next.js: 15ms, application-code: 144ms)
+[2026-08-20T10:50:08.491Z] HEAD / 200 in 163ms (next.js: 2ms, application-code: 161ms)
+[2026-08-20T10:50:09.347Z] GET /?from_webdev=1 200 in 165ms (next.js: 2.0ms, application-code: 163ms)
+[2026-08-20T10:50:09.605Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 53ms (next.js: 12ms, application-code: 40ms)
+[2026-08-20T10:50:09.610Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 57ms (next.js: 16ms, application-code: 41ms)
+[2026-08-20T10:50:16.284Z] GET /?from_webdev=1 200 in 161ms (next.js: 1.8ms, application-code: 159ms)
+[2026-08-20T10:50:16.462Z] GET /?from_webdev=1 200 in 123ms (next.js: 1.8ms, application-code: 122ms)
+[2026-08-20T10:50:16.670Z] GET /?from_webdev=1 200 in 148ms (next.js: 2ms, application-code: 145ms)
+[2026-08-20T10:50:16.833Z] GET /?from_webdev=1 200 in 125ms (next.js: 2.0ms, application-code: 123ms)
+[2026-08-20T10:50:17.786Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 147ms (next.js: 12ms, application-code: 135ms)
+[2026-08-20T10:50:17.827Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 187ms (next.js: 17ms, application-code: 170ms)
+[2026-08-20T10:50:19.891Z] HEAD / 200 in 164ms (next.js: 3ms, application-code: 161ms)
+[2026-08-20T10:50:21.338Z] GET /?from_webdev=1 200 in 161ms (next.js: 2ms, application-code: 159ms)
+[2026-08-20T10:50:21.619Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 60ms (next.js: 15ms, application-code: 45ms)
+[2026-08-20T10:50:21.623Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 46ms (next.js: 1.2ms, application-code: 45ms)
