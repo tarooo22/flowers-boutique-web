@@ -40,6 +40,24 @@ describe("Operational Admin panel contract", () => {
     expect(source).toContain("tel:${order.customer.phone}");
   });
 
+  it("provides live banner management and image selection through the existing protected media workflow", () => {
+    expect(source).toContain("/api/admin/banners");
+    expect(source).toContain("ბანერების მართვა");
+    expect(source).toContain("ბანერის რედაქტირება");
+    expect(source).toContain("ბანერი გამოჩნდეს მთავარ გვერდზე");
+    expect(source).toContain("მედია ბიბლიოთეკა");
+    expect(source).not.toContain("Storefront editorial blocks დაცულია project content-ში");
+  });
+
+  it("calculates order insights only from the live orders collection", () => {
+    expect(source).toContain("function OrdersAnalytics");
+    expect(source).toContain("orders.reduce");
+    expect(source).toContain("order.createdAt");
+    expect(source).toContain("სტატუსების განაწილება");
+    expect(source).toContain("შეკვეთების დინამიკა");
+    expect(source).toContain("ბოლო შეკვეთები");
+  });
+
   it("keeps the expanded manager workspace usable from a phone through desktop breakpoints", () => {
     expect(source).toContain('type="file"');
     expect(source).toContain("multiple");

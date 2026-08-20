@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { formatDate, formatPrice } from "@/lib/format";
 import { Button } from "@/components/ui/Button";
 import { ChevronDown, SearchIcon } from "@/components/ui/Icons";
@@ -49,6 +50,23 @@ interface AdminCategory {
   slug: string;
 }
 
+interface AdminBanner {
+  id: string;
+  placement: "homepage";
+  titleKa: string;
+  titleEn: string;
+  subtitleKa: string;
+  subtitleEn: string;
+  ctaLabelKa: string;
+  ctaLabelEn: string;
+  ctaHref: string;
+  imageUrl: string;
+  imageKey: string;
+  active: boolean;
+  sortOrder: number;
+  updatedAt: string;
+}
+
 type ProductDraft = {
   nameKa: string;
   nameEn: string;
@@ -66,6 +84,7 @@ type ProductDraft = {
 };
 
 type CategoryDraft = { nameKa: string; nameEn: string; descriptionKa: string; descriptionEn: string; slug: string };
+type BannerDraft = Omit<AdminBanner, "id" | "updatedAt" | "imageUrl" | "imageKey"> & { image: AdminMedia | null };
 type Tab = "products" | "categories" | "orders" | "banners" | "settings";
 
 interface Stats { orderCount: number; revenue: number; averageOrder: number; newCount: number; productCount: number }
@@ -81,6 +100,7 @@ const STATUS_STYLE: Record<OrderStatus, string> = {
 };
 
 function newCategoryDraft(): CategoryDraft { return { nameKa: "", nameEn: "", descriptionKa: "", descriptionEn: "", slug: "" }; }
+function newBannerDraft(): BannerDraft { return { placement: "homepage", titleKa: "", titleEn: "", subtitleKa: "", subtitleEn: "", ctaLabelKa: "", ctaLabelEn: "", ctaHref: "/catalog", image: null, active: false, sortOrder: 0 }; }
 
 export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }) {
   const router = useRouter();
@@ -89,6 +109,7 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
   const [products, setProducts] = useState<AdminProduct[]>([]);
   const [categories, setCategories] = useState<AdminCategory[]>([]);
   const [media, setMedia] = useState<AdminMedia[]>([]);
+  const [banners, setBanners] = useState<AdminBanner[]>([]);
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
@@ -102,18 +123,21 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
   const [creatingProduct, setCreatingProduct] = useState(false);
   const [editingCategory, setEditingCategory] = useState<AdminCategory | null>(null);
   const [creatingCategory, setCreatingCategory] = useState(false);
+  const [editingBanner, setEditingBanner] = useState<AdminBanner | null>(null);
+  const [creatingBanner, setCreatingBanner] = useState(false);
 
   const refresh = useCallback(async () => {
     setLoading(true);
     try {
-      const [ordersResponse, productsResponse] = await Promise.all([fetch("/api/admin/orders"), fetch("/api/admin/products")]);
-      if (!ordersResponse.ok || !productsResponse.ok) throw new Error("refresh_failed");
-      const [ordersPayload, productsPayload] = await Promise.all([ordersResponse.json(), productsResponse.json()]);
+      const [ordersResponse, productsResponse, bannersResponse] = await Promise.all([fetch("/api/admin/orders"), fetch("/api/admin/products"), fetch("/api/admin/banners")]);
+      if (!ordersResponse.ok || !productsResponse.ok || !bannersResponse.ok) throw new Error("refresh_failed");
+      const [ordersPayload, productsPayload, bannersPayload] = await Promise.all([ordersResponse.json(), productsResponse.json(), bannersResponse.json()]);
       setOrders(ordersPayload.orders ?? []);
       setProducts(productsPayload.products ?? []);
       setCategories(productsPayload.categories ?? []);
       setMedia(productsPayload.media ?? []);
       setStats(productsPayload.stats ?? null);
+      setBanners(bannersPayload.banners ?? []);
     } catch {
       setFeedback("მონაცემების განახლება ვერ მოხერხდა. სცადეთ ხელახლა.");
     } finally {
@@ -199,6 +223,33 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
     finally { setBusy(null); }
   };
 
+  const saveBanner = async (draft: BannerDraft, id?: string) => {
+    setBusy(id ? `banner:${id}` : "banner:create"); setFeedback(null);
+    try {
+      const response = await fetch("/api/admin/banners", {
+        method: id ? "PATCH" : "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...draft, imageUrl: draft.image?.url ?? "", imageKey: draft.image?.key ?? "", ...(id ? { id } : {}) }),
+      });
+      const payload = await response.json();
+      if (!response.ok || !payload.banners) throw new Error("banner_save_failed");
+      setBanners(payload.banners); setEditingBanner(null); setCreatingBanner(false);
+      setFeedback(id ? "ბანერი განახლდა." : "ახალი ბანერი შეიქმნა. გამოსაჩენად ჩართეთ publish.");
+    } catch { setFeedback("ბანერის შენახვა ვერ მოხერხდა. ველები, სურათი და ბმული გადაამოწმეთ."); }
+    finally { setBusy(null); }
+  };
+
+  const deleteBanner = async (banner: AdminBanner) => {
+    if (!window.confirm(`წავშალოთ „${banner.titleKa}“?`)) return;
+    setBusy(`banner:delete:${banner.id}`); setFeedback(null);
+    try {
+      const response = await fetch(`/api/admin/banners?id=${encodeURIComponent(banner.id)}`, { method: "DELETE" });
+      const payload = await response.json();
+      if (!response.ok || !payload.banners) throw new Error("banner_delete_failed");
+      setBanners(payload.banners); setFeedback("ბანერი წაიშალა.");
+    } catch { setFeedback("ბანერის წაშლა ვერ მოხერხდა."); }
+    finally { setBusy(null); }
+  };
+
   const setStatus = async (id: string, status: OrderStatus) => {
     setBusy(`status:${id}`); setFeedback(null);
     try {
@@ -236,11 +287,12 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
       {feedback ? <div role="status" className="mt-4 rounded-[var(--radius)] border border-[var(--line-strong)] bg-[var(--surface)] px-4 py-3 text-[12.5px] text-[var(--muted)]">{feedback}</div> : null}
       {tab === "products" ? <ProductsWorkspace loading={loading} products={visibleProducts} query={query} setQuery={setQuery} availabilityFilter={availabilityFilter} setAvailabilityFilter={setAvailabilityFilter} categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter} categories={categorySummaries} patchProduct={patchProduct} onAdd={() => setCreatingProduct(true)} onEdit={setEditingProduct} onDelete={deleteProduct} busy={busy} /> : null}
       {tab === "categories" ? <CategoriesWorkspace categories={categorySummaries} loading={loading} onCreate={() => setCreatingCategory(true)} onEdit={setEditingCategory} onDelete={deleteCategory} busy={busy} /> : null}
-      {tab === "orders" ? <OrdersWorkspace loading={loading} orders={visibleOrders} allOrders={orders} query={query} setQuery={setQuery} statusFilter={statusFilter} setStatusFilter={setStatusFilter} openOrder={openOrder} setOpenOrder={setOpenOrder} setStatus={setStatus} busy={busy} /> : null}
-      {tab === "banners" ? <LegacyNotice title="ბანერები" text="Storefront editorial blocks დაცულია project content-ში. ყოველდღიური მუშაობისთვის გამოიყენეთ კატალოგი, მედია და შეკვეთების ინსტრუმენტები." /> : null}
+      {tab === "orders" ? <><OrdersAnalytics orders={orders} /><OrdersWorkspace loading={loading} orders={visibleOrders} allOrders={orders} query={query} setQuery={setQuery} statusFilter={statusFilter} setStatusFilter={setStatusFilter} openOrder={openOrder} setOpenOrder={setOpenOrder} setStatus={setStatus} busy={busy} /></> : null}
+      {tab === "banners" ? <BannersWorkspace banners={banners} loading={loading} busy={busy} onCreate={() => setCreatingBanner(true)} onEdit={setEditingBanner} onDelete={deleteBanner} onToggle={(banner, active) => saveBanner({ placement: "homepage", titleKa: banner.titleKa, titleEn: banner.titleEn, subtitleKa: banner.subtitleKa, subtitleEn: banner.subtitleEn, ctaLabelKa: banner.ctaLabelKa, ctaLabelEn: banner.ctaLabelEn, ctaHref: banner.ctaHref, image: banner.imageUrl ? { id: `banner-${banner.id}`, url: banner.imageUrl, key: banner.imageKey, sortOrder: 0 } : null, active, sortOrder: banner.sortOrder }, banner.id)} /> : null}
       {tab === "settings" ? <LegacyNotice title="პარამეტრები" text="მიწოდების, გადახდისა და account security-ის კონფიგურაცია დაცულია. აქ არსებული სამუშაო ინსტრუმენტები storefront-ის ყოველდღიურ მართვას ემსახურება." /> : null}
       {(editingProduct || creatingProduct) ? <ProductEditor product={editingProduct} categories={categories} media={media} busy={busy?.startsWith("editor:") || busy === "media:upload"} onUpload={uploadMedia} onClose={() => { setEditingProduct(null); setCreatingProduct(false); }} onSave={(draft) => saveProduct(draft, editingProduct?.id)} onDelete={editingProduct ? () => deleteProduct(editingProduct.id) : undefined} /> : null}
       {(editingCategory || creatingCategory) ? <CategoryEditor category={editingCategory} busy={busy?.startsWith("category:") ?? false} onClose={() => { setEditingCategory(null); setCreatingCategory(false); }} onSave={(draft) => saveCategory(draft, editingCategory?.id)} /> : null}
+      {(editingBanner || creatingBanner) ? <BannerEditor banner={editingBanner} media={media} busy={busy === "media:upload" || busy?.startsWith("banner:") === true} onUpload={uploadMedia} onClose={() => { setEditingBanner(null); setCreatingBanner(false); }} onSave={(draft) => saveBanner(draft, editingBanner?.id)} /> : null}
     </div>
   </div>;
 }
@@ -258,6 +310,31 @@ function CategoriesWorkspace({ categories, loading, onCreate, onEdit, onDelete, 
     {loading ? <LoadingRows /> : <div className="mt-5 grid gap-3 md:grid-cols-2">{categories.map(({ category, count }) => <article key={category.id} className="rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] p-5 shadow-[var(--shadow-card)]"><div className="flex items-start justify-between gap-3"><div><p className="font-display text-[22px] leading-none">{category.nameKa}</p><p className="mt-1 text-[12px] text-[var(--muted)]">{category.nameEn} · /{category.slug}</p></div><span className="rounded-full bg-[var(--green-soft)] px-3 py-1 text-[11px] font-semibold text-[var(--green)]">{count} პროდუქტი</span></div><p className="mt-4 min-h-9 text-[12.5px] leading-relaxed text-[var(--muted)]">{category.descriptionKa || "აღწერა არ არის დამატებული."}</p><div className="mt-5 flex gap-2 border-t border-[var(--line)] pt-4"><button type="button" className={minorButton} onClick={() => onEdit(category)}>რედაქტირება</button><button type="button" disabled={busy === `category:delete:${category.id}`} className={`${minorButton} border-[var(--action)]/35 text-[var(--action-deep)] hover:bg-[var(--action)]/10 disabled:opacity-50`} onClick={() => onDelete(category)}>წაშლა</button></div></article>)}</div>}
   </div>;
 }
+
+function BannersWorkspace({ banners, loading, busy, onCreate, onEdit, onDelete, onToggle }: { banners: AdminBanner[]; loading: boolean; busy: string | null; onCreate: () => void; onEdit: (banner: AdminBanner) => void; onDelete: (banner: AdminBanner) => void; onToggle: (banner: AdminBanner, active: boolean) => void }) {
+  return <div className="pt-7"><div className="flex flex-wrap items-end justify-between gap-4"><SectionHeading eyebrow="Storefront editorial" title="ბანერების მართვა" text="შექმენით მთავარი გვერდის ბანერები, აირჩიეთ მედია ბიბლიოთეკიდან და ჩართეთ მხოლოდ დამტკიცებული ვერსია." /><Button type="button" variant="dark" size="sm" onClick={onCreate}>+ ახალი ბანერი</Button></div>{loading ? <LoadingRows /> : banners.length === 0 ? <div className="mt-5"><EmptyState title="ბანერი ჯერ არ არის" text="შექმენით პირველი homepage ბანერი და მხოლოდ ჩართვის შემდეგ გამოჩნდება მაღაზიის მთავარ გვერდზე." /></div> : <div className="mt-5 grid gap-4 lg:grid-cols-2">{banners.map((banner) => <article key={banner.id} className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] shadow-[var(--shadow-card)]"><div className="grid sm:grid-cols-[168px_1fr]"><div className="relative min-h-36 bg-[var(--surface-sand)]">{banner.imageUrl ? <Image src={banner.imageUrl} alt="" fill unoptimized={banner.imageUrl.startsWith("/manus-storage/")} sizes="(max-width: 640px) 100vw, 168px" className="object-cover" /> : <span className="absolute inset-0 grid place-items-center text-[12px] text-[var(--muted)]">ფოტო არ არის</span>}</div><div className="p-5"><div className="flex items-start justify-between gap-3"><div><p className="font-display text-[23px] leading-none">{banner.titleKa || "უსათაურო ბანერი"}</p><p className="mt-1 text-[12px] text-[var(--muted)]">{banner.titleEn || "—"}</p></div><span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${banner.active ? "bg-[var(--green-soft)] text-[var(--green)]" : "bg-[var(--surface-sand)] text-[var(--muted)]"}`}>{banner.active ? "გამოქვეყნებულია" : "draft"}</span></div><p className="mt-3 line-clamp-2 min-h-9 text-[12.5px] leading-relaxed text-[var(--muted)]">{banner.subtitleKa || "ქვესათაური არ არის დამატებული."}</p><p className="mt-3 text-[11px] text-[var(--muted)]">ბმული: {banner.ctaHref || "—"} · რიგი: {banner.sortOrder}</p><div className="mt-4 flex flex-wrap gap-2 border-t border-[var(--line)] pt-4"><Toggle checked={banner.active} disabled={busy?.startsWith("banner:") === true} onChange={(value) => onToggle(banner, value)} /><span className="self-center text-[11px] text-[var(--muted)]">{banner.active ? "მთავარ გვერდზე ჩანს" : "არ ჩანს"}</span><div className="ml-auto flex gap-2"><button type="button" className={minorButton} onClick={() => onEdit(banner)}>რედაქტირება</button><button type="button" disabled={busy === `banner:delete:${banner.id}`} className={`${minorButton} border-[var(--action)]/35 text-[var(--action-deep)] hover:bg-[var(--action)]/10 disabled:opacity-50`} onClick={() => onDelete(banner)}>წაშლა</button></div></div></div></div></article>)}</div>}</div>;
+}
+
+function OrdersAnalytics({ orders }: { orders: Order[] }) {
+  const analytics = useMemo(() => {
+    const totalRevenue = orders.reduce((sum, order) => sum + Number(order.total || 0), 0);
+    const statusData = STATUSES.map((status) => ({ status: STATUS_LABEL[status], count: orders.filter((order) => order.status === status).length, color: status === "new" ? "var(--action)" : status === "confirmed" ? "#7fa8d9" : status === "delivering" ? "#f0be2c" : status === "completed" ? "var(--green)" : "#9a9a9a" }));
+    const byDay = new Map<string, { key: string; day: string; orders: number; revenue: number }>();
+    orders.forEach((order) => {
+      const date = new Date(order.createdAt);
+      if (Number.isNaN(date.getTime())) return;
+      const key = date.toISOString().slice(0, 10);
+      const current = byDay.get(key) ?? { key, day: date.toLocaleDateString("ka-GE", { day: "2-digit", month: "short" }), orders: 0, revenue: 0 };
+      current.orders += 1; current.revenue += Number(order.total || 0); byDay.set(key, current);
+    });
+    return { totalRevenue, average: orders.length ? totalRevenue / orders.length : 0, newCount: orders.filter((order) => order.status === "new").length, statusData, trend: [...byDay.values()].sort((a, b) => a.key.localeCompare(b.key)).slice(-14) };
+  }, [orders]);
+  return <section className="pt-7"><SectionHeading eyebrow="Real-time order insights" title="შეკვეთების მიმოხილვა" text="მაჩვენებლები, სტატუსის განაწილება და დინამიკა გამოითვლება პირდაპირ შენახული შეკვეთებიდან." /><div className="mt-5 grid gap-3 sm:grid-cols-3"><MetricCard label="შემოსავალი" value={formatPrice(analytics.totalRevenue)} /><MetricCard label="საშუალო შეკვეთა" value={formatPrice(analytics.average)} /><MetricCard label="ახალი რიგში" value={String(analytics.newCount)} /></div><div className="mt-4 grid gap-4 xl:grid-cols-[0.88fr_1.12fr]"><ChartPanel title="სტატუსების განაწილება" note="ყველა აქტიური და ისტორიული შეკვეთა"><div className="h-64">{orders.length ? <ResponsiveContainer width="100%" height="100%"><BarChart data={analytics.statusData} margin={{ top: 8, right: 6, left: -28, bottom: 0 }}><XAxis dataKey="status" tick={{ fontSize: 10, fill: "#76716b" }} tickLine={false} axisLine={false} interval={0} /><YAxis allowDecimals={false} tick={{ fontSize: 10, fill: "#76716b" }} tickLine={false} axisLine={false} /><Tooltip cursor={{ fill: "rgba(0,0,0,0.04)" }} formatter={(value) => [value, "შეკვეთა"]} /><Bar dataKey="count" radius={[5, 5, 0, 0]}>{analytics.statusData.map((entry) => <Cell key={entry.status} fill={entry.color} />)}</Bar></BarChart></ResponsiveContainer> : <ChartEmpty text="დიაგრამა გამოჩნდება პირველი შეკვეთის შემდეგ." />}</div></ChartPanel><ChartPanel title="შეკვეთების დინამიკა" note="ბოლო 14 აქტიური კალენდარული დღე"><div className="h-64">{analytics.trend.length ? <ResponsiveContainer width="100%" height="100%"><BarChart data={analytics.trend} margin={{ top: 8, right: 6, left: -28, bottom: 0 }}><XAxis dataKey="day" tick={{ fontSize: 10, fill: "#76716b" }} tickLine={false} axisLine={false} /><YAxis allowDecimals={false} tick={{ fontSize: 10, fill: "#76716b" }} tickLine={false} axisLine={false} /><Tooltip cursor={{ fill: "rgba(0,0,0,0.04)" }} formatter={(value) => [value, "შეკვეთა"]} /><Bar dataKey="orders" fill="var(--ink)" radius={[5, 5, 0, 0]} /></BarChart></ResponsiveContainer> : <ChartEmpty text="დინამიკისთვის ჯერ თარიღიანი შეკვეთები არ არის." />}</div></ChartPanel></div><div className="mt-4 overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] shadow-[var(--shadow-card)]"><div className="flex items-center justify-between gap-3 border-b border-[var(--line)] px-5 py-4"><div><h3 className="font-semibold">ბოლო შეკვეთები</h3><p className="mt-1 text-[12px] text-[var(--muted)]">სიის ზუსტი თანხები და სტატუსები სწრაფი კონტროლისთვის.</p></div><span className="mono text-[11px] text-[var(--muted)]">{orders.length} სულ</span></div>{orders.length ? <table className="w-full min-w-[640px] text-left"><thead><tr className="border-b border-[var(--line)] bg-[var(--surface-sand)] text-[10px] font-bold uppercase tracking-wide text-[var(--muted)]"><th className="px-5 py-3">შეკვეთა</th><th className="px-5 py-3">კლიენტი</th><th className="px-5 py-3">შექმნის დრო</th><th className="px-5 py-3">სტატუსი</th><th className="px-5 py-3 text-right">სულ</th></tr></thead><tbody>{orders.slice(0, 8).map((order) => <tr key={order.id} className="border-b border-[var(--line)] last:border-0"><td className="mono px-5 py-3.5 text-[12px] font-semibold">{order.id}</td><td className="px-5 py-3.5 text-[12.5px]">{order.customer.name}</td><td className="px-5 py-3.5 text-[12px] text-[var(--muted)]">{formatDate(order.createdAt)}</td><td className="px-5 py-3.5"><StatusPill status={order.status} /></td><td className="px-5 py-3.5 text-right text-[13px] font-semibold tabular-nums">{formatPrice(order.total)}</td></tr>)}</tbody></table> : <ChartEmpty text="ცხრილი შეივსება ახალი შეკვეთებით." />}</div></section>;
+}
+
+function MetricCard({ label, value }: { label: string; value: string }) { return <article className="rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] p-5 shadow-[var(--shadow-card)]"><p className="text-[11px] font-semibold uppercase tracking-wide text-[var(--muted)]">{label}</p><p className="mono mt-3 text-[28px] font-bold leading-none tabular-nums">{value}</p></article>; }
+function ChartPanel({ title, note, children }: { title: string; note: string; children: React.ReactNode }) { return <article className="rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] p-5 shadow-[var(--shadow-card)]"><h3 className="font-semibold">{title}</h3><p className="mt-1 text-[12px] text-[var(--muted)]">{note}</p><div className="mt-4">{children}</div></article>; }
+function ChartEmpty({ text }: { text: string }) { return <div className="grid h-full min-h-28 place-items-center rounded-[var(--radius)] bg-[var(--surface-sand)] px-5 text-center text-[12px] leading-relaxed text-[var(--muted)]">{text}</div>; }
 
 function OrdersWorkspace({ loading, orders, allOrders, query, setQuery, statusFilter, setStatusFilter, openOrder, setOpenOrder, setStatus, busy }: { loading: boolean; orders: Order[]; allOrders: Order[]; query: string; setQuery: (value: string) => void; statusFilter: OrderStatus | "all"; setStatusFilter: (value: OrderStatus | "all") => void; openOrder: string | null; setOpenOrder: (id: string | null) => void; setStatus: (id: string, status: OrderStatus) => void; busy: string | null }) {
   const counts = Object.fromEntries(STATUSES.map((status) => [status, allOrders.filter((order) => order.status === status).length])) as Record<OrderStatus, number>;
@@ -289,6 +366,16 @@ function MediaPicker({ media, selected, onClose, onSelect }: { media: AdminMedia
 function CategoryEditor({ category, busy, onClose, onSave }: { category: AdminCategory | null; busy: boolean; onClose: () => void; onSave: (draft: CategoryDraft) => void }) { const [draft, setDraft] = useState<CategoryDraft>(() => category ? { nameKa: category.nameKa, nameEn: category.nameEn, descriptionKa: category.descriptionKa, descriptionEn: category.descriptionEn, slug: category.slug } : newCategoryDraft()); const update = <K extends keyof CategoryDraft>(key: K, value: CategoryDraft[K]) => setDraft((previous) => ({ ...previous, [key]: value })); return <div role="dialog" aria-modal="true" aria-label="Category editor" className="fixed inset-0 z-50 flex items-end bg-black/40 sm:items-center sm:justify-center sm:p-6"><form onSubmit={(event) => { event.preventDefault(); onSave(draft); }} className="w-full max-w-2xl overflow-hidden rounded-t-[var(--radius-lg)] bg-[var(--surface-warm)] shadow-2xl sm:rounded-[var(--radius-lg)]"><header className="flex items-start justify-between gap-4 bg-[var(--ink)] px-5 py-5 text-white"><div><p className="mono text-[10px] font-bold uppercase tracking-[0.14em] text-white/60">Catalog structure</p><h2 className="mt-2 font-display text-[27px] leading-none">{category ? "კატეგორიის რედაქტირება" : "ახალი კატეგორია"}</h2></div><button type="button" onClick={onClose} className="min-h-10 rounded-[var(--radius)] border border-white/25 px-3 text-[12px] font-semibold">დახურვა</button></header><div className="grid gap-4 p-5"><div className="grid gap-3 sm:grid-cols-2"><Field label="სახელი (ქართული)"><input required value={draft.nameKa} onChange={(event) => update("nameKa", event.target.value)} /></Field><Field label="სახელი (ინგლისურად)"><input required value={draft.nameEn} onChange={(event) => update("nameEn", event.target.value)} /></Field></div><Field label="Slug (ლათინური, უნიკალური)"><input required value={draft.slug} onChange={(event) => update("slug", event.target.value)} placeholder="seasonal-bouquets" /></Field><div className="grid gap-3 sm:grid-cols-2"><Field label="აღწერა (ქართული)"><textarea value={draft.descriptionKa} onChange={(event) => update("descriptionKa", event.target.value)} /></Field><Field label="აღწერა (ინგლისურად)"><textarea value={draft.descriptionEn} onChange={(event) => update("descriptionEn", event.target.value)} /></Field></div></div><footer className="flex justify-end gap-2 border-t border-[var(--line)] bg-[var(--surface)] px-5 py-4"><Button type="button" variant="outline" size="sm" onClick={onClose}>გაუქმება</Button><Button type="submit" variant="dark" size="sm" disabled={busy}>{busy ? "ინახება…" : "შენახვა"}</Button></footer></form></div>; }
 
 function MediaStrip({ images, onRemove, onMove }: { images: AdminMedia[]; onRemove: (url: string) => void; onMove: (url: string, direction: -1 | 1) => void }) { return images.length ? <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">{images.map((image, index) => <div key={image.url} className="overflow-hidden rounded-[var(--radius)] border border-[var(--line)] bg-[var(--surface)]"><div className="relative aspect-square"><Image src={image.url} alt="" fill unoptimized={image.url.startsWith("/manus-storage/")} sizes="160px" className="object-cover" />{index === 0 ? <span className="absolute left-2 top-2 rounded-full bg-[var(--ink)] px-2 py-1 text-[9px] font-bold text-white">მთავარი</span> : null}</div><div className="flex gap-1 p-2"><button type="button" onClick={() => onMove(image.url, -1)} disabled={index === 0} className="min-h-9 flex-1 rounded border text-[12px] disabled:opacity-35">←</button><button type="button" onClick={() => onMove(image.url, 1)} disabled={index === images.length - 1} className="min-h-9 flex-1 rounded border text-[12px] disabled:opacity-35">→</button><button type="button" onClick={() => onRemove(image.url)} className="min-h-9 flex-1 rounded border border-[var(--action)]/35 text-[12px] text-[var(--action-deep)]">წაშლა</button></div></div>)}</div> : <p className="rounded-[var(--radius)] bg-[var(--surface-sand)] px-4 py-3 text-[12px] text-[var(--muted)]">ჯერ ფოტო არ არის არჩეული. პირველი ფოტო პროდუქტის მთავარ გამოსახულებად გამოჩნდება.</p>; }
+
+function BannerEditor({ banner, media, busy, onUpload, onClose, onSave }: { banner: AdminBanner | null; media: AdminMedia[]; busy: boolean; onUpload: (files: File[]) => Promise<AdminMedia[]>; onClose: () => void; onSave: (draft: BannerDraft) => void }) {
+  const [draft, setDraft] = useState<BannerDraft>(() => banner ? { placement: "homepage", titleKa: banner.titleKa, titleEn: banner.titleEn, subtitleKa: banner.subtitleKa, subtitleEn: banner.subtitleEn, ctaLabelKa: banner.ctaLabelKa, ctaLabelEn: banner.ctaLabelEn, ctaHref: banner.ctaHref, image: banner.imageUrl ? { id: `banner-${banner.id}`, url: banner.imageUrl, key: banner.imageKey, sortOrder: 0 } : null, active: banner.active, sortOrder: banner.sortOrder } : newBannerDraft());
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const fileInput = useRef<HTMLInputElement>(null);
+  const update = <K extends keyof BannerDraft>(key: K, value: BannerDraft[K]) => setDraft((previous) => ({ ...previous, [key]: value }));
+  const receiveFile = async (file?: File) => { if (!file) return; const created = await onUpload([file]); if (created[0]) update("image", created[0]); };
+  const submit = (event: React.FormEvent<HTMLFormElement>) => { event.preventDefault(); if (!draft.titleKa.trim() || !draft.titleEn.trim() || !draft.image) return; onSave({ ...draft, titleKa: draft.titleKa.trim(), titleEn: draft.titleEn.trim(), ctaHref: draft.ctaHref.trim() || "/catalog" }); };
+  return <div role="dialog" aria-modal="true" aria-label={banner ? "Banner editor" : "Create banner"} className="fixed inset-0 z-50 flex items-end bg-black/40 sm:items-center sm:justify-center sm:p-6"><form onSubmit={submit} className="flex max-h-[94vh] w-full max-w-3xl flex-col overflow-hidden rounded-t-[var(--radius-lg)] bg-[var(--surface-warm)] shadow-2xl sm:rounded-[var(--radius-lg)]"><header className="flex items-start justify-between gap-4 bg-[var(--ink)] px-5 py-5 text-white sm:px-7"><div><p className="mono text-[10px] font-bold uppercase tracking-[0.14em] text-white/60">Flower&rsquo;s Boutique · Editorial</p><h2 className="mt-2 font-display text-[27px] leading-none">{banner ? "ბანერის რედაქტირება" : "ახალი ბანერი"}</h2><p className="mt-2 text-[12px] text-white/70">მთავარი გვერდისთვის სურათი, ტექსტი, CTA და გამოქვეყნების კონტროლი.</p></div><button type="button" onClick={onClose} className="min-h-10 rounded-[var(--radius)] border border-white/25 px-3 text-[12px] font-semibold hover:bg-white/10">დახურვა</button></header><div className="grid gap-4 overflow-y-auto p-5 sm:p-7"><EditorSection title="ბანერის ტექსტი" text="ქართულ და ინგლისურ storefront ვერსიებში შესაბამისი ველი გამოჩნდება."><div className="grid gap-3 sm:grid-cols-2"><Field label="სათაური (ქართული)"><input required value={draft.titleKa} onChange={(event) => update("titleKa", event.target.value)} /></Field><Field label="სათაური (ინგლისურად)"><input required value={draft.titleEn} onChange={(event) => update("titleEn", event.target.value)} /></Field></div><div className="grid gap-3 sm:grid-cols-2"><Field label="ქვესათაური (ქართული)"><textarea value={draft.subtitleKa} onChange={(event) => update("subtitleKa", event.target.value)} /></Field><Field label="ქვესათაური (ინგლისურად)"><textarea value={draft.subtitleEn} onChange={(event) => update("subtitleEn", event.target.value)} /></Field></div></EditorSection><EditorSection title="CTA და გამოჩენა" text="CTA button გადავა იმავე შიდა მისამართზე, რომელსაც აქ მიუთითებთ."><div className="grid gap-3 sm:grid-cols-2"><Field label="ღილაკი (ქართული)"><input value={draft.ctaLabelKa} onChange={(event) => update("ctaLabelKa", event.target.value)} /></Field><Field label="ღილაკი (ინგლისურად)"><input value={draft.ctaLabelEn} onChange={(event) => update("ctaLabelEn", event.target.value)} /></Field></div><div className="grid gap-3 sm:grid-cols-[1fr_140px]"><Field label="CTA ბმული"><input value={draft.ctaHref} onChange={(event) => update("ctaHref", event.target.value)} placeholder="/catalog" /></Field><Field label="რიგითობა"><input type="number" min={0} value={draft.sortOrder} onChange={(event) => update("sortOrder", Number(event.target.value))} /></Field></div><CheckField label="ბანერი გამოჩნდეს მთავარ გვერდზე" checked={draft.active} onChange={(value) => update("active", value)} /></EditorSection><EditorSection title="მთავარი სურათი" text="აირჩიეთ existing media library-დან ან ატვირთეთ მოწყობილობიდან. საჭიროა ერთი სურათი."><input ref={fileInput} type="file" accept="image/jpeg,image/png,image/webp" className="sr-only" onChange={(event) => { void receiveFile(event.target.files?.[0]); event.target.value = ""; }} />{draft.image ? <div className="grid gap-4 rounded-[var(--radius)] border border-[var(--line)] bg-[var(--surface-warm)] p-3 sm:grid-cols-[180px_1fr]"><div className="relative aspect-[4/3] overflow-hidden rounded-md bg-[var(--surface-sand)]"><Image src={draft.image.url} alt="არჩეული ბანერი" fill unoptimized={draft.image.url.startsWith("/manus-storage/")} sizes="180px" className="object-cover" /></div><div className="flex flex-col items-start justify-center"><p className="text-[12px] font-semibold">სურათი არჩეულია</p><p className="mt-1 break-all text-[11px] text-[var(--muted)]">{draft.image.key}</p><div className="mt-4 flex flex-wrap gap-2"><button type="button" disabled={busy} onClick={() => fileInput.current?.click()} className={minorButton}>შეცვლა ატვირთვით</button><button type="button" onClick={() => setPickerOpen(true)} className={minorButton}>ბიბლიოთეკიდან შეცვლა</button><button type="button" onClick={() => update("image", null)} className={`${minorButton} border-[var(--action)]/35 text-[var(--action-deep)]`}>მოხსნა</button></div></div></div> : <div className="rounded-[var(--radius)] border-2 border-dashed border-[var(--line-strong)] bg-[var(--surface-warm)] p-5 text-center"><p className="font-semibold">აირჩიეთ ბანერის სურათი</p><p className="mt-1 text-[12px] text-[var(--muted)]">JPG, PNG ან WebP; ტელეფონის გალერეა და კამერაც მხარდაჭერილია.</p><div className="mt-4 flex flex-wrap justify-center gap-2"><button type="button" disabled={busy} onClick={() => fileInput.current?.click()} className={minorButton}>{busy ? "იტვირთება…" : "ფოტოს ატვირთვა"}</button><button type="button" onClick={() => setPickerOpen(true)} className={minorButton}>მედია ბიბლიოთეკა</button></div></div>}</EditorSection></div><footer className="flex flex-wrap justify-end gap-2 border-t border-[var(--line)] bg-[var(--surface)] px-5 py-4 sm:px-7"><Button type="button" variant="outline" size="sm" onClick={onClose}>გაუქმება</Button><Button type="submit" variant="dark" size="sm" disabled={busy}>{busy ? "ინახება…" : "შენახვა"}</Button></footer></form>{pickerOpen ? <MediaPicker media={media} selected={draft.image ? [draft.image] : []} onClose={() => setPickerOpen(false)} onSelect={(asset) => { update("image", asset); setPickerOpen(false); }} /> : null}</div>;
+}
 
 function MediaThumb({ media, fallback }: { media?: AdminMedia; fallback?: string }) { const source = media?.url || fallback; return <span className="relative block h-11 w-10 shrink-0 overflow-hidden rounded-md bg-[var(--surface-sand)]">{source ? <Image src={source} alt="" fill sizes="40px" unoptimized={source.startsWith("/manus-storage/")} className="object-cover" /> : null}</span>; }
 function EditorSection({ title, text, children }: { title: string; text: string; children: React.ReactNode }) { return <section className="rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)]"><div className="border-b border-[var(--line)] px-5 py-4"><h3 className="font-semibold">{title}</h3><p className="mt-1 text-[12px] text-[var(--muted)]">{text}</p></div><div className="grid gap-4 p-5">{children}</div></section>; }

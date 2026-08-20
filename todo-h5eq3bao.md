@@ -177,3 +177,9 @@
 - [x] Add safe Checkout-only interaction state for delivery method, chosen delivery date, recipient personalization and consent options while preserving existing `/api/orders` field names and payload compatibility.
 - [x] Replace Checkout presentation with the reference-inspired six-step flow, calendar and persistent order summary in Flower’s Boutique visual tokens and three locales.
 - [x] Add focused Checkout regression coverage and validate 375/768/1440 responsive flow, cart handoff, TypeScript, full tests, production build and published route.
+- [x] Audit every Admin product, category, order, media and banner action against its real protected API/data contract; record broken or unavailable behavior before fixes.
+- [x] Add safe banner management (list, create, edit, publish toggle and delete) with valid storefront-facing content and media references.
+- [x] Repair confirmed Admin product/category/order/media defects while preserving role checks, existing catalog data, order history and customer-facing routes.
+- [x] Build an order operations dashboard from real order data with status counts, revenue metrics, time/status charts, search and a detailed accessible table.
+- [ ] Add regression tests and validate all Admin workflows at 375/768/1440, TypeScript, full tests, production build and published manager route.
+- [ ] Perform final authenticated production-manager visual verification of Banner create/edit/publish and Orders analytics at 375/768/1440.

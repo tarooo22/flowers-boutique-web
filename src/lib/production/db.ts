@@ -41,6 +41,23 @@ export const productImages = mysqlTable("productImages", {
   sortOrder: int("sortOrder").default(0),
 });
 
+/** Storefront-managed editorial banners. This maps the pre-existing production table to preserve legacy content. */
+export const banners = mysqlTable("banners", {
+  id: int("id").autoincrement().primaryKey(),
+  titleKa: varchar("titleKa", { length: 255 }),
+  titleEn: varchar("titleEn", { length: 255 }),
+  descriptionKa: text("descriptionKa"),
+  descriptionEn: text("descriptionEn"),
+  imageUrl: varchar("imageUrl", { length: 512 }).notNull(),
+  imageKey: varchar("imageKey", { length: 512 }).notNull(),
+  ctaText: varchar("ctaText", { length: 255 }),
+  ctaLink: varchar("ctaLink", { length: 512 }),
+  sortOrder: int("sortOrder").default(0),
+  isActive: boolean("isActive").default(true),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
 export const orders = mysqlTable("orders", {
   id: int("id").autoincrement().primaryKey(),
   userId: int("userId"),

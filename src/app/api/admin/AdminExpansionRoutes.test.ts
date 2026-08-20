@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 const mediaRoute = readFileSync(new URL("./media/route.ts", import.meta.url), "utf8");
 const categoryRoute = readFileSync(new URL("./categories/route.ts", import.meta.url), "utf8");
 const productRoute = readFileSync(new URL("./products/route.ts", import.meta.url), "utf8");
+const bannerRoute = readFileSync(new URL("./banners/route.ts", import.meta.url), "utf8");
 
 describe("Admin expansion route contract", () => {
   it("keeps media upload behind the production admin guard with safe image limits", () => {
@@ -27,5 +28,14 @@ describe("Admin expansion route contract", () => {
     expect(productRoute).toContain("imageUrls");
     expect(productRoute).toContain('item.url.startsWith("/manus-storage/")');
     expect(productRoute).toContain('item.key.startsWith("admin-media/")');
+  });
+
+  it("keeps banner CRUD protected and confines new banner images to managed media storage", () => {
+    expect(bannerRoute).toContain("isProductionAdmin");
+    expect(bannerRoute).toContain("createProductionAdminBanner");
+    expect(bannerRoute).toContain("updateProductionAdminBanner");
+    expect(bannerRoute).toContain("deleteProductionAdminBanner");
+    expect(bannerRoute).toContain('imageUrl.startsWith("/manus-storage/")');
+    expect(bannerRoute).toContain('imageKey.startsWith("admin-media/")');
   });
 });

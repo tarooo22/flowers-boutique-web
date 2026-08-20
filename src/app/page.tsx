@@ -6,12 +6,14 @@ import { CashbackBanner } from "@/components/home/CashbackBanner";
 import { BuilderPromo } from "@/components/home/BuilderPromo";
 import { EditorialSection } from "@/components/home/EditorialSection";
 import { JournalSection } from "@/components/home/JournalSection";
+import { ManagedBanners } from "@/components/home/ManagedBanners";
+import { listProductionHomepageBanners } from "@/lib/production/admin";
 import { listLiveProducts } from "@/lib/production/catalog";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const products = await listLiveProducts(12);
+  const [products, managedBanners] = await Promise.all([listLiveProducts(12), listProductionHomepageBanners()]);
   const bestsellers = products.filter((product) => product.bestseller).slice(0, 4);
   const leadProducts = (bestsellers.length ? bestsellers : products).slice(0, 4);
   const nextProducts = products.filter((product) => !leadProducts.some((lead) => lead.id === product.id)).slice(0, 4);
@@ -21,6 +23,7 @@ export default async function HomePage() {
       <Hero />
       <Marquee />
       <CategoryChips />
+      <ManagedBanners banners={managedBanners} />
       {/* Bestsellers lead, then the rewards banner breaks up the product rows */}
       <ProductSection
         titleKey="sec.best.title"

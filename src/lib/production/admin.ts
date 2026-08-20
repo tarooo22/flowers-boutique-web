@@ -1,7 +1,7 @@
 import "server-only";
 
 import { asc, desc, eq, sql } from "drizzle-orm";
-import { categories, getProductionDb, orders, productImages, products } from "@/lib/production/db";
+import { banners, categories, getProductionDb, orders, productImages, products } from "@/lib/production/db";
 
 const toNumber = (value: unknown) => Number(value ?? 0) || 0;
 
@@ -20,6 +20,21 @@ export type AdminCategoryInput = {
   descriptionKa?: string;
   descriptionEn?: string;
   slug: string;
+};
+
+export type AdminBannerInput = {
+  placement?: string;
+  titleKa: string;
+  titleEn: string;
+  subtitleKa?: string;
+  subtitleEn?: string;
+  ctaLabelKa?: string;
+  ctaLabelEn?: string;
+  ctaHref?: string;
+  imageUrl?: string;
+  imageKey?: string;
+  active?: boolean;
+  sortOrder?: number;
 };
 
 function normalizeMedia(items: Array<Pick<AdminMediaAsset, "url" | "key">> | undefined) {
@@ -177,6 +192,60 @@ export async function deleteProductionAdminCategory(id: number) {
   const linked = await database.select({ count: sql<number>`count(*)` }).from(products).where(eq(products.categoryId, id));
   if (Number(linked[0]?.count ?? 0) > 0) throw new Error("category_in_use");
   await database.delete(categories).where(eq(categories.id, id));
+}
+
+export async function listProductionAdminBanners() {
+  const rows = await getProductionDb().select().from(banners).orderBy(asc(banners.sortOrder), desc(banners.updatedAt));
+  return rows.map((banner) => ({
+    id: String(banner.id), placement: "homepage" as const, titleKa: banner.titleKa ?? "", titleEn: banner.titleEn ?? "",
+    subtitleKa: banner.descriptionKa ?? "", subtitleEn: banner.descriptionEn ?? "",
+    ctaLabelKa: banner.ctaText ?? "", ctaLabelEn: banner.ctaText ?? "",
+    ctaHref: banner.ctaLink ?? "/catalog", imageUrl: banner.imageUrl, imageKey: banner.imageKey,
+    active: banner.isActive === true, sortOrder: Number(banner.sortOrder ?? 0), updatedAt: banner.updatedAt.toISOString(),
+  }));
+}
+
+export async function listProductionHomepageBanners() {
+  const rows = await getProductionDb().select().from(banners)
+    .where(eq(banners.isActive, true))
+    .orderBy(asc(banners.sortOrder), desc(banners.updatedAt));
+  return rows.map((banner) => ({
+    id: String(banner.id), titleKa: banner.titleKa ?? "", titleEn: banner.titleEn ?? "",
+    subtitleKa: banner.descriptionKa ?? "", subtitleEn: banner.descriptionEn ?? "",
+    ctaLabelKa: banner.ctaText ?? "", ctaLabelEn: banner.ctaText ?? "",
+    ctaHref: banner.ctaLink ?? "/catalog", imageUrl: banner.imageUrl,
+  }));
+}
+
+function bannerValues(input: AdminBannerInput) {
+  return {
+    titleKa: input.titleKa.trim(), titleEn: input.titleEn.trim(),
+    descriptionKa: input.subtitleKa?.trim() || null, descriptionEn: input.subtitleEn?.trim() || null,
+    ctaText: input.ctaLabelKa?.trim() || input.ctaLabelEn?.trim() || null,
+    ctaLink: input.ctaHref?.trim() || "/catalog", imageUrl: input.imageUrl?.trim() || "", imageKey: input.imageKey?.trim() || "",
+    isActive: input.active === true, sortOrder: Number.isSafeInteger(input.sortOrder) ? input.sortOrder : 0,
+  };
+}
+
+export async function createProductionAdminBanner(input: AdminBannerInput) {
+  await getProductionDb().insert(banners).values(bannerValues(input));
+}
+
+export async function updateProductionAdminBanner(id: number, input: Partial<AdminBannerInput>) {
+  const current = await getProductionDb().select().from(banners).where(eq(banners.id, id)).limit(1);
+  const existing = current[0];
+  if (!existing) throw new Error("banner_not_found");
+  await getProductionDb().update(banners).set(bannerValues({
+    titleKa: input.titleKa ?? existing.titleKa ?? "", titleEn: input.titleEn ?? existing.titleEn ?? "",
+    subtitleKa: input.subtitleKa ?? existing.descriptionKa ?? "", subtitleEn: input.subtitleEn ?? existing.descriptionEn ?? "",
+    ctaLabelKa: input.ctaLabelKa ?? existing.ctaText ?? "", ctaLabelEn: input.ctaLabelEn ?? existing.ctaText ?? "",
+    ctaHref: input.ctaHref ?? existing.ctaLink ?? "/catalog", imageUrl: input.imageUrl ?? existing.imageUrl, imageKey: input.imageKey ?? existing.imageKey,
+    active: input.active ?? existing.isActive ?? false, sortOrder: input.sortOrder ?? existing.sortOrder ?? 0,
+  })).where(eq(banners.id, id));
+}
+
+export async function deleteProductionAdminBanner(id: number) {
+  await getProductionDb().delete(banners).where(eq(banners.id, id));
 }
 
 export async function updateProductionProduct(id: number, patch: { price?: number; available?: boolean; bestseller?: boolean }) {
