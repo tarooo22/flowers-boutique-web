@@ -154,3 +154,6 @@
 - [x] Validate map/contact behavior at mobile and desktop, run regression/build checks and publish the verified update.
 - [x] Replace the requested About location-value card title and description with clearer bilingual customer-facing copy while preserving its icon and visual layout.
 - [x] Validate and publish the revised location card copy.
+- [x] Audit the Rewards page language source and identify why Georgian UI state leaves its reward-content strings in English.
+- [x] Add complete Georgian Rewards content through the shared localization contract without changing Rewards layout, calculations, or actions.
+- [ ] Add focused regression coverage and validate Georgian/English Rewards rendering, TypeScript, tests, production build, and published page behavior.
