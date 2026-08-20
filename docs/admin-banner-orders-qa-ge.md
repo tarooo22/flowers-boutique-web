@@ -37,6 +37,12 @@
 > **Registry release:** `885547f5` ამატებს persistent `adminMediaAssets` registry-სა და უკვე ატვირთული QA asset-ის ერთჯერად backfill-ს. გამოქვეყნებული authenticated Banner workspace განახლების შემდეგ სუფთად იტვირთება; ახლა მოწმდება cross-session picker-იდან არსებული managed asset-ის დაბრუნება.
 
 > **Registry ordering defect:** persistent registry უკვე იკითხება, მაგრამ მის assets-ს media list-ში legacy product cover/gallery entries-ის შემდეგ ამატებს. 120-item list limit-ის გამო managed asset Banner picker-მდე ვერ აღწევს. გამოსწორება: managed uploads უნდა იყოს list-ის სათავეში, რათა ყველაზე ახალი reusable uploads პრიორიტეტულად გამოჩნდეს.
+
+> **Ordering repair release:** `cb12096d` გამოაქვეყნებს managed assets-first ordering-ს. Publish შემდეგ authenticated Banner workspace სუფთად იტვირთება და შემდგომი picker check მზადაა.
+
+> **Deployment timing note:** deployment completion-მდე გაკეთებულ authenticated `/api/admin/media` შემოწმებაში QA key ჯერ არ გამოჩნდა. Release-ის deploy success notification ამის შემდეგ მივიღეთ; შესაბამისად, picker/API validation მეორდება ახლად დასრულებული production release-ის წინააღმდეგ და წინარე cache პასუხი საბოლოო მტკიცებულებად არ ითვლება.
+
+> **Runtime mismatch diagnosis:** direct database query ადასტურებს `adminMediaAssets`-ში QA row-ის არსებობას, მაგრამ authenticated production `/api/admin/media?release=cb12096d-final` პასუხი ისევ `cover-1`-ით იწყება და key არ შეიცავს. ეს მიუთითებს ძველი route runtime-ის ან release-propagation mismatch-ზე და არა დაკარგულ metadata-ზე; საჭიროა release retry, შემდეგ კი API/picker-ის ხელახალი check.
 | Orders analytics — desktop | PASS | Published workspace-ში რეალური ერთი შეკვეთიდან გამოითვალა 164 ₾ შემოსავალი, 164 ₾ საშუალო, 1 ახალი რიგში; status chart, date chart და recent-orders table აჩვენებს იმავე `FLR-600001` ჩანაწერს. |
 | Chart rendering | PASS | Desktop render-ში status chart-ის მხოლოდ „ახალი“ სვეტი არის 1, ხოლო daily trend-ის `Aug 20` სვეტი არის 1; chart values ემთხვევა metric card-სა და order table-ს. |
 | Orders queue consistency | PASS | ანალიტიკის ქვემოთ არსებული სამუშაო queue ასევე აჩვენებს 1 ახალ შეკვეთას და იმავე customer/total/status მნიშვნელობებს; დამატებითი demo/mock order არ არის. |
