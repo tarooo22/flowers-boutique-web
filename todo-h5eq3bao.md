@@ -149,3 +149,6 @@
 - [x] Audit the supplied operational Admin UX references and map their header, tabs, filters, table, editor and order-workspace patterns to current manager data/actions.
 - [x] Rebuild the Admin interface in the reference-inspired operational UX while retaining Flower’s Boutique color/typography system and supported legacy logic.
 - [x] Validate the upgraded Admin workflows at desktop/mobile, run focused/full regression checks and publish the verified manager route.
+- [x] Inspect the existing contact block and live address source; define a safe responsive map placement that preserves current contact actions.
+- [x] Add an interactive map and a resilient external directions fallback to the contact area without changing Flower’s Boutique branding or contact content.
+- [ ] Validate map/contact behavior at mobile and desktop, run regression/build checks and publish the verified update.

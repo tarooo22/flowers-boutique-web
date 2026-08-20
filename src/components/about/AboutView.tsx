@@ -256,6 +256,25 @@ export function AboutView() {
                 {brand.legalName} · {brand.taxId}
               </p>
             </div>
+
+            <div className="relative min-h-[250px] border-t border-[var(--line)] bg-[var(--surface-warm)] md:col-span-2 sm:min-h-[320px]">
+              <iframe
+                title={`${brand.name} map`}
+                src={brand.mapEmbedUrl}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="absolute inset-0 h-full w-full border-0 grayscale-[0.12]"
+              />
+              <a
+                href={brand.directionsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute bottom-4 left-4 inline-flex h-10 items-center gap-2 rounded-[var(--radius-sm)] bg-[var(--ink)] px-4 text-[13px] font-semibold text-white shadow-[var(--shadow-float)] transition hover:bg-[var(--ink-2)]"
+              >
+                <PinIcon className="h-4 w-4" />
+                {t("about.getDirections")}
+              </a>
+            </div>
           </div>
         </Reveal>
       </section>
