@@ -123,6 +123,10 @@ const en: Dict = {
   // journal
   "journal.title": "Journal",
   "journal.eyebrow": "Notes from the studio",
+  "journal.home": "Home",
+  "journal.minRead": "{n} min read",
+  "journal.min": "{n} min",
+  "journal.shopFreshBouquets": "Shop fresh bouquets",
 
   // contact strip
   "cs.title": "Call us — we'll find your perfect bouquet",
@@ -418,6 +422,10 @@ const ka: Dict = {
 
   "journal.title": "ჟურნალი",
   "journal.eyebrow": "ჩანაწერები სტუდიიდან",
+  "journal.home": "მთავარი",
+  "journal.minRead": "{n} წთ წასაკითხად",
+  "journal.min": "{n} წთ",
+  "journal.shopFreshBouquets": "ახალი თაიგულების ნახვა",
 
   "cs.title": "დაგვირეკე — ვიპოვით შენს იდეალურ თაიგულს",
   "cs.openNow": "ახლა ღიაა",
@@ -707,6 +715,10 @@ const ru: Dict = {
 
   "journal.title": "Журнал",
   "journal.eyebrow": "Заметки из студии",
+  "journal.home": "Главная",
+  "journal.minRead": "{n} мин чтения",
+  "journal.min": "{n} мин",
+  "journal.shopFreshBouquets": "Выбрать свежие букеты",
 
   "cs.title": "Позвоните нам — подберём идеальный букет",
   "cs.openNow": "Сейчас открыто",

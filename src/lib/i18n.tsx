@@ -21,6 +21,24 @@ export const LANGUAGE_STORAGE_KEY = "fb_lang_v1";
 export const LANGUAGE_CHANGE_EVENT = "fb_language_change";
 const isLang = (v: unknown): v is Lang => languages.some((l) => l.code === v);
 
+/** Reads the selected language for client page bodies that originate in static server markup. */
+export function usePersistedLanguage(): Lang {
+  const [lang, setLang] = useState<Lang>("en");
+
+  useEffect(() => {
+    const syncLanguage = () => {
+      const stored = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+      setLang(isLang(stored) ? stored : "en");
+    };
+
+    syncLanguage();
+    window.addEventListener(LANGUAGE_CHANGE_EVENT, syncLanguage);
+    return () => window.removeEventListener(LANGUAGE_CHANGE_EVENT, syncLanguage);
+  }, []);
+
+  return lang;
+}
+
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("en");
 

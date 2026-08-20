@@ -158,3 +158,6 @@
 - [x] Add complete Georgian Rewards content through the shared localization contract without changing Rewards layout, calculations, or actions.
 - [x] Synchronize Rewards with the persisted language on direct page-load, not only after client-side navigation.
 - [x] Add focused regression coverage and validate Georgian/English Rewards rendering, TypeScript, tests, production build, and published page behavior.
+- [x] Audit Journal list/detail routes and article data to identify every English-only customer-facing field under the Georgian locale.
+- [x] Add Georgian and Russian Journal content plus direct-load persisted-language rendering without changing article routes, imagery, CTA destination, or visual layout.
+- [ ] Add focused regression coverage; validate all Journal articles in Georgian, TypeScript, full tests, production build, and published direct-load behavior.

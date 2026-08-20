@@ -56,16 +56,22 @@ export interface CustomBouquetLine {
   quantity: number;
 }
 
-export interface JournalPost {
-  id: string;
-  slug: string;
+import type { Lang } from "@/lib/translations";
+
+export interface JournalPostContent {
   title: string;
   excerpt: string;
   category: string;
+  body: string[];
+}
+
+export interface JournalPost {
+  id: string;
+  slug: string;
   date: string;
   readMinutes: number;
   image: string;
-  body: string[];
+  content: Record<Lang, JournalPostContent>;
 }
 
 export type SortKey =
