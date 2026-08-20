@@ -164,3 +164,6 @@
 - [x] Replace English month abbreviations in Georgian Journal dates with deterministic Georgian month labels.
 - [x] Bind each Journal card/detail date to the same locale-specific article content that updates the Georgian title and body after hydration.
 - [x] Add focused regression coverage; validate all Journal articles in Georgian, TypeScript, full tests, production build, and published direct-load behavior.
+- [x] Audit the existing Checkout form, summary, delivery/payment fields, validation and submit contracts before a presentation-only reconstruction.
+- [x] Rebuild Checkout into a reference-inspired staged form with an adjacent order summary, retaining Flower’s Boutique colors, button styling, localized copy and existing order/payment behavior.
+- [ ] Add focused Checkout presentation/interaction coverage; validate form submission safeguards, cart handoff, responsive 375/768/1440 layouts, TypeScript, full tests, production build and published route.
