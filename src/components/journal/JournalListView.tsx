@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { journalPosts } from "@/data/journal";
-import { formatDate } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 
@@ -28,7 +27,7 @@ export function JournalListView() {
                 <p className="mono text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">{content.category} · {t("journal.min", { n: post.readMinutes })}</p>
                 <h2 className="font-display mt-1.5 text-[19px] leading-snug transition-colors group-hover:text-[var(--action-deep)]">{content.title}</h2>
                 <p className="mt-1.5 text-[13.5px] leading-relaxed text-[var(--muted)] line-clamp-2">{content.excerpt}</p>
-                <p className="mono mt-2 text-[11px] text-[var(--muted-2)]">{formatDate(post.date, lang)}</p>
+                <p className="mono mt-2 text-[11px] text-[var(--muted-2)]">{content.date}</p>
               </div>
             </Link>
           );

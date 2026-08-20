@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { journalPosts } from "@/data/journal";
-import { formatDate } from "@/lib/format";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Reveal } from "@/components/ui/Reveal";
 import { useI18n } from "@/lib/i18n";
@@ -46,7 +45,7 @@ export function JournalSection() {
                 <p className="mt-1.5 text-[13px] leading-relaxed text-[var(--muted)] line-clamp-2">
                   {content.excerpt}
                 </p>
-                <p className="mono mt-2 text-[11px] text-[var(--muted-2)]">{formatDate(post.date, lang)}</p>
+                <p className="mono mt-2 text-[11px] text-[var(--muted-2)]">{content.date}</p>
               </div>
             </Link>
           </Reveal>

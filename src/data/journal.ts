@@ -12,6 +12,7 @@ export const journalPosts: JournalPost[] = [
         title: "How to keep your cut flowers fresh for longer",
         excerpt: "Five florist habits that add days to any bouquet — from water temperature to where you place the vase.",
         category: "Care",
+        date: "2 Aug 2026",
         body: [
           "The single biggest difference between a bouquet that lasts three days and one that lasts ten is the water — how clean it is, how often you change it, and how cold the room stays.",
           "Start by recutting every stem at a sharp angle before the flowers go into the vase. A slanted cut exposes more surface area and stops the stem from sealing flat against the bottom of the vase, which is what quietly starves a bouquet of water.",
@@ -23,6 +24,7 @@ export const journalPosts: JournalPost[] = [
         title: "როგორ შევინარჩუნოთ მოჭრილი ყვავილები უფრო დიდხანს",
         excerpt: "ფლორისტის ხუთი ჩვევა, რომლებიც ნებისმიერ თაიგულს დღეებს უმატებს — წყლის ტემპერატურიდან ვაზის ადგილმდებარეობამდე.",
         category: "მოვლა",
+        date: "2 აგვ 2026",
         body: [
           "სამ დღეში ჩამჭკნარ და ათ დღემდე გამძლე თაიგულს შორის ყველაზე დიდი განსხვავება წყალია — რამდენად სუფთაა, რამდენად ხშირად უცვლი და რამდენად გრილია ოთახი.",
           "ვაზაში ჩადებამდე თითოეული ღერო მკვეთრი კუთხით ხელახლა მოჭერი. დახრილი ჭრილი მეტ ზედაპირს ხსნის და ღეროს ვაზის ფსკერზე ბრტყლად მიბჯენას უშლის ხელს, რაც თაიგულს წყალს ნელა აკლებს.",
@@ -34,6 +36,7 @@ export const journalPosts: JournalPost[] = [
         title: "Как дольше сохранить срезанные цветы свежими",
         excerpt: "Пять привычек флориста, которые продлевают жизнь любому букету: от температуры воды до места для вазы.",
         category: "Уход",
+        date: "2 авг. 2026",
         body: [
           "Главное отличие между букетом, который простоит три дня, и тем, который простоит десять, — это вода: насколько она чистая, как часто вы её меняете и насколько прохладно в комнате.",
           "Перед тем как поставить цветы в вазу, заново подрежьте каждый стебель под острым углом. Косой срез открывает большую поверхность и не даёт стеблю плотно прижаться ко дну вазы, из-за чего букет незаметно остаётся без воды.",
@@ -54,6 +57,7 @@ export const journalPosts: JournalPost[] = [
         title: "A short guide to peony season",
         excerpt: "Peonies bloom for only a few weeks. Here's how to choose them and make the most of their moment.",
         category: "Seasonal",
+        date: "18 Jul 2026",
         body: [
           "Peonies are a study in patience. For most of the year they simply aren't available, and then for a few short weeks in late spring and early summer they arrive all at once, impossibly full and impossibly fragrant.",
           "When you choose peonies, look for buds that give slightly when you press them — like a marshmallow rather than a golf ball. A rock-hard bud may never open; one that is already soft and showing colour will bloom within a day or two.",
@@ -65,6 +69,7 @@ export const journalPosts: JournalPost[] = [
         title: "პიონების სეზონის მოკლე გზამკვლევი",
         excerpt: "პიონები მხოლოდ რამდენიმე კვირა ყვავილობს. აი, როგორ შეარჩიო ისინი და სრულად გამოიყენო მათი მოკლე სეზონი.",
         category: "სეზონური",
+        date: "18 ივლ 2026",
         body: [
           "პიონი მოთმინების ყვავილია. წლის უმეტეს ნაწილში ის უბრალოდ არ გვხვდება, შემდეგ კი გვიან გაზაფხულსა და ზაფხულის დასაწყისში რამდენიმე კვირით ერთდროულად ჩნდება — უხვი, სურნელოვანი და განსაკუთრებული.",
           "პიონების არჩევისას მოძებნე კოკრები, რომლებიც მსუბუქად დათმობს შეხებისას — მარშმელოუსავით და არა გოლფის ბურთივით. ქვასავით მყარი კოკრი შეიძლება საერთოდ არ გაიხსნას; რბილი, შეფერილობის მქონე კოკრი კი ერთ-ორ დღეში აყვავდება.",
@@ -76,6 +81,7 @@ export const journalPosts: JournalPost[] = [
         title: "Короткий гид по сезону пионов",
         excerpt: "Пионы цветут всего несколько недель. Рассказываем, как выбрать их и успеть насладиться сезоном.",
         category: "Сезонное",
+        date: "18 июл. 2026",
         body: [
           "Пионы учат терпению. Большую часть года их просто нет, а затем на несколько недель в конце весны и начале лета они появляются сразу все — невероятно пышные и ароматные.",
           "Выбирая пионы, ищите бутоны, которые слегка поддаются при нажатии — как маршмеллоу, а не как мяч для гольфа. Каменно-твёрдый бутон может так и не раскрыться; мягкий бутон с заметным цветом распустится за день-два.",
@@ -96,6 +102,7 @@ export const journalPosts: JournalPost[] = [
         title: "Choosing flowers by colour and meaning",
         excerpt: "What warm corals, cool blues and classic reds quietly say — and how to match them to the moment.",
         category: "Ideas",
+        date: "30 Jun 2026",
         body: [
           "Colour is the fastest way a bouquet communicates, often before anyone reads the card. Choosing it deliberately is one of the simplest ways to make a gift feel considered.",
           "Warm corals and peaches read as friendly and optimistic — a good choice for a new job, a housewarming, or a thank-you where red might feel too intense. They flatter almost every room and photograph beautifully in daylight.",
@@ -107,6 +114,7 @@ export const journalPosts: JournalPost[] = [
         title: "როგორ ავარჩიოთ ყვავილები ფერისა და მნიშვნელობის მიხედვით",
         excerpt: "რას ამბობს მშვიდად თბილი მარჯნისფერი, ცივი ლურჯი და კლასიკური წითელი — და როგორ შეუხამო ისინი სწორ მომენტს.",
         category: "იდეები",
+        date: "30 ივნ 2026",
         body: [
           "ფერი თაიგულის ყველაზე სწრაფი ენაა — ხშირად მანამდეც კი, სანამ ვინმე ბარათს წაიკითხავს. ფერის გააზრებულად არჩევა საჩუქარს ყურადღებიან და პირადულ ჟესტად აქცევს.",
           "თბილი მარჯნისფერი და ატმისფერი მეგობრულად და ოპტიმისტურად ჟღერს — კარგი არჩევანია ახალი სამსახურისთვის, ახალ სახლში გადასვლისთვის ან მადლობისთვის, როცა წითელი ზედმეტად ინტენსიური იქნებოდა. ისინი თითქმის ყველა სივრცეს უხდება და დღის შუქზე განსაკუთრებით ლამაზად ჩანს.",
@@ -118,6 +126,7 @@ export const journalPosts: JournalPost[] = [
         title: "Как выбирать цветы по цвету и значению",
         excerpt: "О чём тихо говорят тёплые кораллы, прохладные синие оттенки и классические красные — и как подобрать их к моменту.",
         category: "Идеи",
+        date: "30 июн. 2026",
         body: [
           "Цвет — самый быстрый язык букета, часто он говорит ещё до того, как кто-то прочитает открытку. Осознанный выбор цвета — один из самых простых способов сделать подарок по-настоящему личным.",
           "Тёплые коралловые и персиковые оттенки звучат дружелюбно и оптимистично: это хороший выбор для новой работы, новоселья или благодарности, когда красный был бы слишком интенсивным. Они украшают почти любую комнату и особенно красиво выглядят при дневном свете.",

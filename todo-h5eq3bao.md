@@ -162,4 +162,5 @@
 - [x] Add Georgian and Russian Journal content plus direct-load persisted-language rendering without changing article routes, imagery, CTA destination, or visual layout.
 - [x] Align Journal list/detail body rendering with the already-hydrated shared I18n context used by the Georgian header.
 - [x] Replace English month abbreviations in Georgian Journal dates with deterministic Georgian month labels.
+- [x] Bind each Journal card/detail date to the same locale-specific article content that updates the Georgian title and body after hydration.
 - [ ] Add focused regression coverage; validate all Journal articles in Georgian, TypeScript, full tests, production build, and published direct-load behavior.

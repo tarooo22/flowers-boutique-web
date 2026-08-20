@@ -16,6 +16,7 @@ describe("Journal locale contract", () => {
         expect(content.title).toBeTruthy();
         expect(content.excerpt).toBeTruthy();
         expect(content.category).toBeTruthy();
+        expect(content.date).toBeTruthy();
         expect(content.body).toHaveLength(4);
       }
     }
@@ -23,16 +24,20 @@ describe("Journal locale contract", () => {
     expect(journalPosts[0]?.content.ka.title).toBe("როგორ შევინარჩუნოთ მოჭრილი ყვავილები უფრო დიდხანს");
     expect(journalPosts[1]?.content.ka.title).toBe("პიონების სეზონის მოკლე გზამკვლევი");
     expect(journalPosts[2]?.content.ka.title).toBe("როგორ ავარჩიოთ ყვავილები ფერისა და მნიშვნელობის მიხედვით");
+    expect(journalPosts[0]?.content.ka.date).toBe("2 აგვ 2026");
+    expect(journalPosts[1]?.content.ka.date).toBe("18 ივლ 2026");
+    expect(journalPosts[2]?.content.ka.date).toBe("30 ივნ 2026");
   });
 
   it("uses the shared hydrated language context for list, detail and home views", () => {
     expect(listSource).toContain("useI18n");
     expect(listSource).toContain("post.content[lang]");
-    expect(listSource).toContain("formatDate(post.date, lang)");
+    expect(listSource).toContain("content.date");
     expect(detailSource).toContain("useI18n");
     expect(detailSource).toContain("post.content[lang]");
     expect(detailSource).toContain("journal.shopFreshBouquets");
+    expect(detailSource).toContain("content.date");
     expect(homeSource).toContain("post.content[lang]");
-    expect(homeSource).toContain("formatDate(post.date, lang)");
+    expect(homeSource).toContain("content.date");
   });
 });

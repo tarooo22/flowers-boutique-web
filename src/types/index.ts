@@ -62,6 +62,7 @@ export interface JournalPostContent {
   title: string;
   excerpt: string;
   category: string;
+  date: string;
   body: string[];
 }
 
