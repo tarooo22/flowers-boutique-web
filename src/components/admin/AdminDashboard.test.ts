@@ -39,4 +39,13 @@ describe("Operational Admin panel contract", () => {
     expect(source).toContain("რუკაზე ნახვა");
     expect(source).toContain("tel:${order.customer.phone}");
   });
+
+  it("keeps the expanded manager workspace usable from a phone through desktop breakpoints", () => {
+    expect(source).toContain('type="file"');
+    expect(source).toContain("multiple");
+    expect(source).toContain("sm:grid-cols-2");
+    expect(source).toContain("md:grid-cols-[1.25fr_0.9fr_0.9fr]");
+    expect(source).toContain("lg:grid-cols-[1.1fr_0.9fr]");
+    expect(source).toContain("flex-wrap");
+  });
 });

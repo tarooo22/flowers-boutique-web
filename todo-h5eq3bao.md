@@ -171,4 +171,5 @@
 - [x] Add protected media upload/list contracts and category create/edit/delete contracts without deleting categories referenced by products.
 - [x] Implement product image drag-and-drop, device file chooser, reusable media library picker and multi-image selection in the Admin product editor.
 - [x] Implement category management and improve order operations with search, status queues, order detail, customer/delivery context and protected status updates.
-- [ ] Add Admin regression coverage and validate media/category/order workflows, 375/768/1440 responsive layouts, TypeScript, full tests, production build and live manager route.
+- [x] Create the missing production `productImages` table required by the existing product gallery schema, then re-verify Admin data loading safely.
+- [x] Add Admin regression coverage and validate media/category/order workflows, 375/768/1440 responsive layouts, TypeScript, full tests, production build and live manager route.
