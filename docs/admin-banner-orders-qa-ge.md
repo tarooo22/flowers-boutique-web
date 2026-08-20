@@ -33,6 +33,10 @@
 > **Post-delete UI confirmation — PASS:** manager Banner workspace კვლავ აჩვენებს „ბანერი ჯერ არ არის“, რაც database count-ის `0` შედეგს ემთხვევა. შემდეგი, narrowly scoped QA ნაბიჯი შეამოწმებს editor-ის text update/save interaction-ს იმავე reusable managed image-ით.
 
 > **New media-library persistence defect:** QA upload-ისას `admin-media/...42d0f4c3...png` წარმატებით აირჩა Banner editor-ში, მაგრამ ახალი editor session-ის media library ცარიელია. ეს ნიშნავს, რომ upload response დროებით არსებობს client state-ში, თუმცა managed asset persistent admin-media listing-ში არ ინახება/იბრუნება. Editor update QA შეჩერდა, რათა workflow defect ჯერ გამოსწორდეს.
+
+> **Registry release:** `885547f5` ამატებს persistent `adminMediaAssets` registry-სა და უკვე ატვირთული QA asset-ის ერთჯერად backfill-ს. გამოქვეყნებული authenticated Banner workspace განახლების შემდეგ სუფთად იტვირთება; ახლა მოწმდება cross-session picker-იდან არსებული managed asset-ის დაბრუნება.
+
+> **Registry ordering defect:** persistent registry უკვე იკითხება, მაგრამ მის assets-ს media list-ში legacy product cover/gallery entries-ის შემდეგ ამატებს. 120-item list limit-ის გამო managed asset Banner picker-მდე ვერ აღწევს. გამოსწორება: managed uploads უნდა იყოს list-ის სათავეში, რათა ყველაზე ახალი reusable uploads პრიორიტეტულად გამოჩნდეს.
 | Orders analytics — desktop | PASS | Published workspace-ში რეალური ერთი შეკვეთიდან გამოითვალა 164 ₾ შემოსავალი, 164 ₾ საშუალო, 1 ახალი რიგში; status chart, date chart და recent-orders table აჩვენებს იმავე `FLR-600001` ჩანაწერს. |
 | Chart rendering | PASS | Desktop render-ში status chart-ის მხოლოდ „ახალი“ სვეტი არის 1, ხოლო daily trend-ის `Aug 20` სვეტი არის 1; chart values ემთხვევა metric card-სა და order table-ს. |
 | Orders queue consistency | PASS | ანალიტიკის ქვემოთ არსებული სამუშაო queue ასევე აჩვენებს 1 ახალ შეკვეთას და იმავე customer/total/status მნიშვნელობებს; დამატებითი demo/mock order არ არის. |

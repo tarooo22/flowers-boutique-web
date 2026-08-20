@@ -25,6 +25,7 @@ describe("Admin expansion route contract", () => {
     expect(productionAdmin).toContain("recordProductionAdminMedia");
     expect(productionAdmin).toContain("database.select().from(adminMediaAssets)");
     expect(productionAdmin).toContain("assets.push({ id: `managed-${media.id}`");
+    expect(productionAdmin.indexOf("for (const media of managedRows)")).toBeLessThan(productionAdmin.indexOf("for (const product of coverRows)"));
   });
 
   it("supports category CRUD while preserving referenced-category safety", () => {

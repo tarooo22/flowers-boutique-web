@@ -186,3 +186,4 @@
 - [x] Restrict the Banner editor media picker to API-compatible managed `/manus-storage/` and `admin-media/` assets, then re-run the approved temporary Banner lifecycle test.
 - [ ] Verify a real Banner editor update (text change and save) in the approved temporary lifecycle, then confirm no temporary banner record remains.
 - [ ] Persist and list uploaded `admin-media` assets in the Admin media library across editor sessions, then resume Banner editor update QA with the existing managed asset.
+- [ ] Prioritize persistent managed uploads ahead of legacy product images before the Admin media-list limit is applied.

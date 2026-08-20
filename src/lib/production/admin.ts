@@ -145,6 +145,11 @@ export async function listProductionAdminMedia(): Promise<AdminMediaAsset[]> {
   ]);
   const assets: AdminMediaAsset[] = [];
   const seen = new Set<string>();
+  for (const media of managedRows) {
+    if (seen.has(media.storageUrl)) continue;
+    seen.add(media.storageUrl);
+    assets.push({ id: `managed-${media.id}`, url: media.storageUrl, key: media.storageKey, productName: "ატვირთული ფოტო", sortOrder: 0 });
+  }
   for (const product of coverRows) {
     if (!product.imageUrl || seen.has(product.imageUrl)) continue;
     seen.add(product.imageUrl);
@@ -154,11 +159,6 @@ export async function listProductionAdminMedia(): Promise<AdminMediaAsset[]> {
     if (seen.has(row.image.imageUrl)) continue;
     seen.add(row.image.imageUrl);
     assets.push({ id: `gallery-${row.image.id}`, url: row.image.imageUrl, key: row.image.imageKey, productId: String(row.image.productId), productName: row.name ?? undefined, sortOrder: Number(row.image.sortOrder ?? 0) });
-  }
-  for (const media of managedRows) {
-    if (seen.has(media.storageUrl)) continue;
-    seen.add(media.storageUrl);
-    assets.push({ id: `managed-${media.id}`, url: media.storageUrl, key: media.storageKey, productName: "ატვირთული ფოტო", sortOrder: 0 });
   }
   return assets.slice(0, 120);
 }
