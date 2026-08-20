@@ -203,3 +203,11 @@ The Rewards route previously rendered its body copy from hardcoded English strin
 The initial implementation localized client-side navigation. A direct reload exposed the App Router first-paint boundary: the existing persisted language made the shared chrome Georgian but left the page body's static server markup English. The locale provider now publishes a language-change event after a selector update, while the Rewards view reads the persisted language on mount and listens for later language changes. This covers both a direct URL open/refresh and in-app navigation.
 
 **Validation:** focused Rewards regression coverage, TypeScript, **39 Vitest tests**, and `NODE_ENV=production pnpm build` pass. Published direct-load verification in the existing Georgian browser session rendered **ქეშბექი ფურცლებით**, **შენი ბალანსი**, localized tiers/example copy, and **დაიწყე დაგროვება — აირჩიე თაიგული** on `/rewards`; client-side navigation from About was verified as well.
+
+## Journal locale consistency repair — 2026-08-20
+
+The Journal list, all three public article detail pages, and the Home Journal teaser cards no longer expose English editorial content when the saved storefront language is Georgian. Each article now carries complete English, Georgian, and Russian title, category, excerpt, date, and four-paragraph body content. The list/detail views follow the same hydrated language context as the header, while the article slugs, canonical ISO dates, images, catalog CTA destination, layout, and styles remain unchanged.
+
+An initial direct-load correction localized article content but exposed a browser-dependent English month abbreviation in the list. The final data contract binds each visible date to the same locale-specific article content object as its title/body, guaranteeing a single synchronized render path.
+
+**Validation:** localized article regression coverage, TypeScript, **41 Vitest tests**, and `NODE_ENV=production pnpm build` pass. Live Georgian verification confirmed all three Journal card titles, categories, summaries and dates: **2 აგვ 2026**, **18 ივლ 2026**, and **30 ივნ 2026**. The published peony detail page also rendered its Georgian breadcrumb, **სეზონური · 5 წთ წასაკითხად · 18 ივლ 2026** metadata, full four-paragraph body, and **ახალი თაიგულების ნახვა** CTA.
