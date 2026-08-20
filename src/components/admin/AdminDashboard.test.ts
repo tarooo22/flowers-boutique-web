@@ -46,6 +46,7 @@ describe("Operational Admin panel contract", () => {
     expect(source).toContain("ბანერის რედაქტირება");
     expect(source).toContain("ბანერი გამოჩნდეს მთავარ გვერდზე");
     expect(source).toContain("მედია ბიბლიოთეკა");
+    expect(source).toContain('asset.url.startsWith("/manus-storage/") && asset.key.startsWith("admin-media/")');
     expect(source).not.toContain("Storefront editorial blocks დაცულია project content-ში");
   });
 

@@ -183,3 +183,4 @@
 - [x] Build an order operations dashboard from real order data with status counts, revenue metrics, time/status charts, search and a detailed accessible table.
 - [ ] Add regression tests and validate all Admin workflows at 375/768/1440, TypeScript, full tests, production build and published manager route.
 - [ ] Perform final authenticated production-manager visual verification of Banner create/edit/publish and Orders analytics at 375/768/1440.
+- [ ] Restrict the Banner editor media picker to API-compatible managed `/manus-storage/` and `admin-media/` assets, then re-run the approved temporary Banner lifecycle test.

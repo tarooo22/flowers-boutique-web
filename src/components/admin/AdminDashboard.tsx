@@ -370,6 +370,7 @@ function MediaStrip({ images, onRemove, onMove }: { images: AdminMedia[]; onRemo
 function BannerEditor({ banner, media, busy, onUpload, onClose, onSave }: { banner: AdminBanner | null; media: AdminMedia[]; busy: boolean; onUpload: (files: File[]) => Promise<AdminMedia[]>; onClose: () => void; onSave: (draft: BannerDraft) => void }) {
   const [draft, setDraft] = useState<BannerDraft>(() => banner ? { placement: "homepage", titleKa: banner.titleKa, titleEn: banner.titleEn, subtitleKa: banner.subtitleKa, subtitleEn: banner.subtitleEn, ctaLabelKa: banner.ctaLabelKa, ctaLabelEn: banner.ctaLabelEn, ctaHref: banner.ctaHref, image: banner.imageUrl ? { id: `banner-${banner.id}`, url: banner.imageUrl, key: banner.imageKey, sortOrder: 0 } : null, active: banner.active, sortOrder: banner.sortOrder } : newBannerDraft());
   const [pickerOpen, setPickerOpen] = useState(false);
+  media = media.filter((asset) => asset.url.startsWith("/manus-storage/") && asset.key.startsWith("admin-media/"));
   const fileInput = useRef<HTMLInputElement>(null);
   const update = <K extends keyof BannerDraft>(key: K, value: BannerDraft[K]) => setDraft((previous) => ({ ...previous, [key]: value }));
   const receiveFile = async (file?: File) => { if (!file) return; const created = await onUpload([file]); if (created[0]) update("image", created[0]); };
