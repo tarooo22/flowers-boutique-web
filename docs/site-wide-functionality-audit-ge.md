@@ -211,3 +211,11 @@ The Journal list, all three public article detail pages, and the Home Journal te
 An initial direct-load correction localized article content but exposed a browser-dependent English month abbreviation in the list. The final data contract binds each visible date to the same locale-specific article content object as its title/body, guaranteeing a single synchronized render path.
 
 **Validation:** localized article regression coverage, TypeScript, **41 Vitest tests**, and `NODE_ENV=production pnpm build` pass. Live Georgian verification confirmed all three Journal card titles, categories, summaries and dates: **2 აგვ 2026**, **18 ივლ 2026**, and **30 ივნ 2026**. The published peony detail page also rendered its Georgian breadcrumb, **სეზონური · 5 წთ წასაკითხად · 18 ივლ 2026** metadata, full four-paragraph body, and **ახალი თაიგულების ნახვა** CTA.
+
+## Checkout staged-flow reconstruction — 2026-08-20
+
+The Checkout presentation now follows the supplied clean-room reference structure while retaining Flower’s Boutique’s cream/green/coral visual tokens and existing button system. A compact progress rail leads into numbered form cards for contact details, delivery address, delivery schedule, florist notes, and payment information. The live order summary remains adjacent and sticky at desktop sizes, keeping the current cart item thumbnail, quantity, subtotal, delivery fee, total, order-note and return-to-cart route visible while the customer completes the form.
+
+All order behavior is preserved: the existing required fields and form names, FormData customer payload, live product/custom-bouquet lines, delivery threshold calculation, `/api/orders` request, submission guards, failure feedback, success state and `clearCart()` handoff are unchanged. The new Checkout labels, errors and success content are complete in English, Georgian and Russian.
+
+**Validation:** focused Checkout regression coverage, TypeScript, **43 Vitest tests**, and `NODE_ENV=production pnpm build` pass. Published desktop verification in a Georgian browser session rendered the staged progress rail, five numbered cards, Georgian fields, selected cart bouquet, price calculation, localized primary action, and sticky order summary without altering the checkout route or cart state.
