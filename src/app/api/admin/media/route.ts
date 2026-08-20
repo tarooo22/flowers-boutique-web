@@ -4,6 +4,7 @@ import { isProductionAdmin } from "@/lib/production/auth";
 import { listProductionAdminMedia, recordProductionAdminMedia } from "@/lib/production/admin";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 const MAX_FILE_BYTES = 8 * 1024 * 1024;
 const MAX_FILES = 8;
@@ -22,7 +23,10 @@ function safeExtension(file: File) {
 export async function GET() {
   const denied = await guard();
   if (denied) return denied;
-  return NextResponse.json({ media: await listProductionAdminMedia() });
+  return NextResponse.json(
+    { media: await listProductionAdminMedia() },
+    { headers: { "Cache-Control": "private, no-store, max-age=0", "X-Admin-Media-Revision": "managed-media-registry-v1" } },
+  );
 }
 
 export async function POST(request: Request) {

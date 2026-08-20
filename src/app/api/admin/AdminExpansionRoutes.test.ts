@@ -17,6 +17,9 @@ describe("Admin expansion route contract", () => {
     expect(mediaRoute).toContain("v1/storage/presign/put");
     expect(mediaRoute).toContain("/manus-storage/${key}");
     expect(mediaRoute).toContain("recordProductionAdminMedia");
+    expect(mediaRoute).toContain('dynamic = "force-dynamic"');
+    expect(mediaRoute).toContain("X-Admin-Media-Revision");
+    expect(mediaRoute).toContain("private, no-store, max-age=0");
   });
 
   it("persists managed uploads for reuse across admin editor sessions", () => {
