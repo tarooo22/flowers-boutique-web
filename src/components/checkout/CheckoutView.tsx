@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useStore } from "@/lib/store";
@@ -11,180 +11,89 @@ import { Button } from "@/components/ui/Button";
 import { LeafIcon } from "@/components/ui/Icons";
 
 const timeWindows = ["09:00 – 12:00", "12:00 – 15:00", "15:00 – 18:00", "18:00 – 21:00"];
+type Fulfillment = "delivery" | "studio_pickup";
+
+const isoDate = (date: Date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+const tomorrow = () => { const date = new Date(); date.setHours(0, 0, 0, 0); date.setDate(date.getDate() + 1); return date; };
 
 export function CheckoutView() {
   const { lines, customLines, subtotal, clearCart, hydrated, getProduct, getUnitPrice } = useStore();
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const [submitted, setSubmitted] = useState(false);
   const [orderId, setOrderId] = useState("");
   const [sending, setSending] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [fulfillment, setFulfillment] = useState<Fulfillment>("delivery");
+  const [recipientMode, setRecipientMode] = useState<"self" | "other">("self");
+  const [deliveryDate, setDeliveryDate] = useState(() => isoDate(tomorrow()));
+  const [month, setMonth] = useState(() => { const date = tomorrow(); return new Date(date.getFullYear(), date.getMonth(), 1); });
 
   const hasCartItems = lines.length > 0 || customLines.length > 0;
-  const items = lines
-    .map((line) => {
-      const product = getProduct(line.productId);
-      return product ? { line, product, unit: getUnitPrice(product, line.variantId) } : null;
-    })
-    .filter((entry): entry is NonNullable<typeof entry> => Boolean(entry));
-  const delivery = subtotal >= brand.delivery.freeFrom || subtotal === 0 ? 0 : 15;
+  const items = lines.map((line) => { const product = getProduct(line.productId); return product ? { line, product, unit: getUnitPrice(product, line.variantId) } : null; }).filter((entry): entry is NonNullable<typeof entry> => Boolean(entry));
+  const delivery = fulfillment === "studio_pickup" || subtotal >= brand.delivery.freeFrom || subtotal === 0 ? 0 : 15;
   const total = subtotal + delivery;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (sending) return;
-    if (!hydrated || !hasCartItems) {
-      setSubmitError(t("checkout.emptyCopy"));
-      return;
-    }
-
-    setSending(true);
-    setSubmitError(null);
+    if (!hydrated || !hasCartItems) { setSubmitError(t("checkout.emptyCopy")); return; }
+    setSending(true); setSubmitError(null);
     const form = new FormData(event.currentTarget);
-    const customer = Object.fromEntries(
-      ["name", "email", "phone", "recipient", "address", "city", "date", "time", "notes"].map((key) => [key, String(form.get(key) ?? "")]),
-    );
-    const payload = {
-      customer,
-      items: [
-        ...items.map(({ line, product, unit }) => ({
-          productId: product.id,
-          variantId: line.variantId,
-          name: product.name,
-          quantity: line.quantity,
-          price: unit,
-          image: product.images[0],
-          kind: "product" as const,
-        })),
-        ...customLines.map((line) => ({
-          name: line.kind === "ai" ? "AI bouquet" : "Custom bouquet",
-          quantity: line.quantity,
-          price: line.price,
-          image: line.image,
-          kind: "custom" as const,
-        })),
-      ],
-    };
-
+    const cardMessage = String(form.get("cardMessage") ?? "").trim();
+    const deliveryInstructions = String(form.get("notes") ?? "").trim();
+    const notes = [cardMessage ? `Card message: ${cardMessage}` : "", deliveryInstructions ? `Delivery instructions: ${deliveryInstructions}` : ""].filter(Boolean).join("\n");
+    const customer = Object.fromEntries(["name", "email", "phone", "recipient", "address", "city", "date", "time", "fulfillment"].map((key) => [key, String(form.get(key) ?? "")]));
+    Object.assign(customer, { notes });
+    const payload = { customer, items: [...items.map(({ line, product, unit }) => ({ productId: product.id, variantId: line.variantId, name: product.name, quantity: line.quantity, price: unit, image: product.images[0], kind: "product" as const })), ...customLines.map((line) => ({ name: line.kind === "ai" ? "AI bouquet" : "Custom bouquet", quantity: line.quantity, price: line.price, image: line.image, kind: "custom" as const }))] };
     try {
-      const response = await fetch("/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetch("/api/orders", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       const data = (await response.json()) as { id?: string; error?: string };
-      if (!response.ok || !data.id) {
-        setSubmitError(t("checkout.submitError"));
-        return;
-      }
-      setOrderId(data.id);
-      setSubmitted(true);
-      clearCart();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch {
-      setSubmitError(t("checkout.connectionError"));
-    } finally {
-      setSending(false);
-    }
+      if (!response.ok || !data.id) { setSubmitError(t("checkout.submitError")); return; }
+      setOrderId(data.id); setSubmitted(true); clearCart(); window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch { setSubmitError(t("checkout.connectionError")); } finally { setSending(false); }
   };
 
-  if (submitted) {
-    return (
-      <div className="container-fb pb-28 pt-10">
-        <div className="mx-auto max-w-xl rounded-[20px] border border-black/5 bg-[var(--surface)] p-8 text-center shadow-[0_18px_48px_rgba(34,33,30,0.07)]">
-          <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-[var(--green-soft)]"><LeafIcon className="h-8 w-8 text-[var(--green)]" /></div>
-          <h1 className="font-display mt-4 text-[26px]">{t("checkout.successTitle")}</h1>
-          <p className="mt-2 text-[14px] text-[var(--muted)]">{t("checkout.successCopy", { id: orderId })}</p>
-          <p className="mt-4 rounded-[var(--radius)] bg-[var(--surface-warm)] px-4 py-3 text-[12.5px] text-[var(--muted)]">{t("checkout.successNote")}</p>
-          <Button href="/catalog" variant="dark" className="mt-6">{t("checkout.continue")}</Button>
-        </div>
+  if (submitted) return <CheckoutSuccess id={orderId} />;
+  if (!hydrated) return <CheckoutLoading />;
+  if (!hasCartItems) return <CheckoutEmpty />;
+
+  return <div className="bg-[var(--surface-warm)] pb-24 pt-4 sm:pt-7"><div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6">
+    <section className="rounded-[20px] border border-black/5 bg-[var(--surface)] px-5 py-5 shadow-[0_12px_38px_rgba(34,33,30,0.055)] sm:px-7"><p className="mono text-[10px] uppercase tracking-[0.18em] text-[var(--muted-2)]">Flower&apos;s Boutique</p><div className="mt-1 flex flex-wrap items-end justify-between gap-3"><div><h1 className="font-display text-[30px] leading-none sm:text-[36px]">{t("common.checkout")}</h1><p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[var(--muted)]">{t("checkout.intro")}</p></div><span className="rounded-full bg-[var(--green-soft)] px-3 py-1.5 text-[11px] font-semibold text-[var(--green)]">{t("checkout.secureOrder")}</span></div><ol className="mt-5 grid gap-2 border-t border-black/5 pt-4 text-[11px] font-semibold text-[var(--muted)] sm:grid-cols-3">{[t("checkout.progressDetails"), t("checkout.progressDelivery"), t("checkout.progressConfirm")].map((label, index) => <li key={label} className="flex items-center gap-2"><span className="grid h-5 w-5 place-items-center rounded-full bg-[var(--green)] text-[10px] text-white">{index + 1}</span>{label}</li>)}</ol></section>
+
+    <form onSubmit={handleSubmit} className="mt-5 grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <div className="grid gap-4">
+        <CheckoutStep number="1" title={t("checkout.stepContact")} description={t("checkout.contactHint")}><Field label={t("checkout.name")} name="name" autoComplete="name" required /><div className="grid gap-3 sm:grid-cols-2"><Field label={t("checkout.email")} name="email" type="email" autoComplete="email" required /><Field label={t("checkout.phone")} name="phone" type="tel" autoComplete="tel" required /></div></CheckoutStep>
+
+        <CheckoutStep number="2" title={t("checkout.stepMethod")} description={t("checkout.deliveryHint")}><input type="hidden" name="fulfillment" value={fulfillment} /><div className="grid gap-3 sm:grid-cols-2"><ChoiceCard active={fulfillment === "delivery"} onClick={() => setFulfillment("delivery")} title={t("checkout.deliveryChoice")} text={t("checkout.deliveryChoiceCopy")} badge={delivery ? formatPrice(delivery) : t("checkout.free")} /><ChoiceCard active={fulfillment === "studio_pickup"} onClick={() => setFulfillment("studio_pickup")} title={t("checkout.pickupChoice")} text={t("checkout.pickupChoiceCopy")} badge={t("checkout.free")} /></div></CheckoutStep>
+
+        <CheckoutStep number="3" title={t("checkout.stepDate")} description={t("checkout.dateHint")}><input type="hidden" name="date" value={deliveryDate} /><DeliveryCalendar month={month} setMonth={setMonth} selected={deliveryDate} setSelected={setDeliveryDate} lang={lang} previousLabel={t("checkout.calendarPrevious")} nextLabel={t("checkout.calendarNext")} /><div className="grid gap-3 sm:grid-cols-2"><div className="grid gap-1.5"><label htmlFor="time" className={labelClass}>{t("checkout.time")}<span className="text-[var(--action)]"> *</span></label><select id="time" name="time" required className={inputClass}>{timeWindows.map((window) => <option key={window}>{window}</option>)}<option>{t("checkout.asap")}</option></select></div><p className="self-end rounded-[var(--radius)] bg-[var(--surface-sand)] px-3 py-3 text-[12px] leading-relaxed text-[var(--muted)]">{fulfillment === "studio_pickup" ? t("checkout.pickupChoiceCopy") : t("checkout.deliveryMethodCopy")}</p></div></CheckoutStep>
+
+        <CheckoutStep number="4" title={t("checkout.stepRecipient")} description={t("checkout.recipientIntro")}><div className="grid gap-3 sm:grid-cols-2"><ChoiceCard compact active={recipientMode === "self"} onClick={() => setRecipientMode("self")} title={t("checkout.recipientSame")} /><ChoiceCard compact active={recipientMode === "other"} onClick={() => setRecipientMode("other")} title={t("checkout.recipientOther")} /></div>{recipientMode === "other" ? <Field label={t("checkout.recipient")} name="recipient" hint={t("checkout.recipientHint")} /> : <input type="hidden" name="recipient" value="" />}{fulfillment === "delivery" ? <><Field label={t("checkout.address")} name="address" autoComplete="street-address" required /><div className="grid gap-3 sm:grid-cols-2"><Field label={t("checkout.city")} name="city" defaultValue="თბილისი" required /><p className="self-end rounded-[var(--radius)] bg-[var(--surface-sand)] px-3 py-3 text-[12px] text-[var(--muted)]">{t("checkout.deliveryMethod")}</p></div></> : <><input type="hidden" name="address" value="" /><input type="hidden" name="city" value="თბილისი" /><p className="rounded-[var(--radius)] border border-[var(--green)]/20 bg-[var(--green-soft)] px-4 py-3 text-[13px] text-[var(--green)]">{brand.addressFull}</p></>}</CheckoutStep>
+
+        <CheckoutStep number="5" title={t("checkout.stepPersonalize")} description={t("checkout.notesHint")}><div className="grid gap-3 sm:grid-cols-2"><TextArea label={t("checkout.cardMessage")} name="cardMessage" placeholder={t("checkout.cardMessagePlaceholder")} /><TextArea label={t("checkout.deliveryInstructions")} name="notes" placeholder={t("checkout.deliveryInstructionsPlaceholder")} /></div></CheckoutStep>
+
+        <CheckoutStep number="6" title={t("checkout.stepConfirm")} description={t("checkout.paymentCopy", { methods: brand.payments.join(", ") })}><label className="flex min-h-11 items-start gap-3 rounded-[var(--radius)] border border-[var(--line)] bg-[var(--surface-warm)] px-3 py-3 text-[12.5px] leading-relaxed"><input required type="checkbox" className="mt-0.5 h-4 w-4 accent-[var(--green)]" />{t("checkout.consentTerms")}</label><label className="flex min-h-11 items-start gap-3 rounded-[var(--radius)] border border-[var(--line)] bg-[var(--surface-warm)] px-3 py-3 text-[12.5px] leading-relaxed"><input type="checkbox" defaultChecked className="mt-0.5 h-4 w-4 accent-[var(--green)]" />{t("checkout.consentCall")}</label><p className="rounded-[var(--radius)] border border-[var(--action)]/15 bg-[var(--action)]/5 px-3 py-3 text-[12px] leading-relaxed text-[var(--muted)]">{t("checkout.confirmNote")}</p></CheckoutStep>
       </div>
-    );
-  }
-
-  if (!hydrated) {
-    return <div className="container-fb pb-28 pt-10" aria-busy="true"><div className="h-28 animate-pulse rounded-[20px] bg-[var(--surface-warm)]" /><div className="mt-6 h-80 animate-pulse rounded-[20px] bg-[var(--surface-warm)]" /></div>;
-  }
-
-  if (!hasCartItems) {
-    return (
-      <div className="container-fb pb-28 pt-10 text-center">
-        <h1 className="font-display text-[30px]">{t("common.checkout")}</h1>
-        <p className="mt-3 text-[14px] text-[var(--muted)]">{t("checkout.empty")}</p>
-        <Button href="/catalog" variant="dark" className="mt-6">{t("checkout.browse")}</Button>
-      </div>
-    );
-  }
-
-  return (
-    <div className="container-fb pb-24 pt-5 sm:pt-7">
-      <section className="rounded-[20px] border border-black/5 bg-[var(--surface)] px-5 py-5 shadow-[0_12px_38px_rgba(34,33,30,0.055)] sm:px-7">
-        <p className="mono text-[10px] uppercase tracking-[0.18em] text-[var(--muted-2)]">Flower&apos;s Boutique</p>
-        <div className="mt-1 flex flex-wrap items-end justify-between gap-3">
-          <div><h1 className="font-display text-[28px] leading-none sm:text-[34px]">{t("common.checkout")}</h1><p className="mt-2 max-w-xl text-[13px] text-[var(--muted)]">{t("checkout.intro")}</p></div>
-          <p className="rounded-full bg-[var(--green-soft)] px-3 py-1.5 text-[11px] font-semibold text-[var(--green)]">{t("checkout.secureOrder")}</p>
-        </div>
-        <ol className="mt-5 grid gap-2 border-t border-black/5 pt-4 text-[11px] font-semibold text-[var(--muted)] sm:grid-cols-4">
-          {[t("checkout.stepContact"), t("checkout.stepDelivery"), t("checkout.stepSchedule"), t("checkout.stepPayment")].map((label, index) => <li key={label} className="flex items-center gap-2"><span className="grid h-5 w-5 place-items-center rounded-full bg-[var(--green)] text-[10px] text-white">{index + 1}</span>{label}</li>)}
-        </ol>
-      </section>
-
-      <form onSubmit={handleSubmit} className="mt-6 grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_22rem] xl:grid-cols-[minmax(0,1fr)_24rem]">
-        <div className="grid gap-4">
-          <CheckoutStep number="1" title={t("checkout.stepContact")} description={t("checkout.contactHint")}>
-            <Field label={t("checkout.name")} name="name" autoComplete="name" required />
-            <div className="grid gap-3 sm:grid-cols-2"><Field label={t("checkout.email")} name="email" type="email" autoComplete="email" required /><Field label={t("checkout.phone")} name="phone" type="tel" autoComplete="tel" required /></div>
-          </CheckoutStep>
-
-          <CheckoutStep number="2" title={t("checkout.stepDelivery")} description={t("checkout.deliveryHint")}>
-            <div className="rounded-[var(--radius)] border border-[var(--green)]/20 bg-[var(--green-soft)] px-4 py-3"><p className="text-[13px] font-semibold text-[var(--ink)]">{t("checkout.deliveryMethod")}</p><p className="mt-0.5 text-[12px] leading-relaxed text-[var(--muted)]">{t("checkout.deliveryMethodCopy")}</p></div>
-            <Field label={t("checkout.address")} name="address" autoComplete="street-address" required />
-            <div className="grid gap-3 sm:grid-cols-2"><Field label={t("checkout.city")} name="city" defaultValue="Tbilisi" required /><Field label={t("checkout.recipient")} name="recipient" hint={t("checkout.recipientHint")} /></div>
-          </CheckoutStep>
-
-          <CheckoutStep number="3" title={t("checkout.stepSchedule")} description={t("checkout.scheduleHint")}>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <Field label={t("checkout.date")} name="date" type="date" required />
-              <div className="grid gap-1.5"><label htmlFor="time" className="text-[12px] font-semibold text-[var(--ink)]">{t("checkout.time")} <span className="text-[var(--action)]">*</span></label><select id="time" name="time" required className="h-11 rounded-[var(--radius)] border border-[var(--line-strong)] bg-white px-3 text-[14px] outline-none transition focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/15">{timeWindows.map((window) => <option key={window}>{window}</option>)}<option>{t("checkout.asap")}</option></select></div>
-            </div>
-          </CheckoutStep>
-
-          <CheckoutStep number="4" title={t("checkout.stepNotes")} description={t("checkout.notesHint")}>
-            <div className="grid gap-1.5"><label htmlFor="notes" className="text-[12px] font-semibold text-[var(--ink)]">{t("checkout.notes")}</label><textarea id="notes" name="notes" rows={4} placeholder={t("checkout.notesPlaceholder")} className="rounded-[var(--radius)] border border-[var(--line-strong)] bg-white px-3 py-2.5 text-[14px] outline-none transition placeholder:text-[var(--muted-2)] focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/15" /></div>
-          </CheckoutStep>
-
-          <CheckoutStep number="5" title={t("checkout.stepPayment")}><p className="rounded-[var(--radius)] bg-[var(--surface-warm)] px-4 py-3 text-[13px] leading-relaxed text-[var(--muted)]">{t("checkout.paymentCopy", { methods: brand.payments.join(", ") })}</p></CheckoutStep>
-        </div>
-
-        <aside className="h-fit rounded-[20px] border border-black/5 bg-[var(--surface)] p-5 shadow-[0_16px_42px_rgba(34,33,30,0.08)] lg:sticky lg:top-24 sm:p-6">
-          <div className="flex items-start justify-between gap-3 border-b border-black/5 pb-4"><div><p className="mono text-[10px] uppercase tracking-[0.16em] text-[var(--muted-2)]">Flower&apos;s Boutique</p><h2 className="font-display mt-1 text-[20px]">{t("checkout.summary")}</h2></div><span className="grid h-8 w-8 place-items-center rounded-full bg-[var(--green-soft)]"><LeafIcon className="h-4 w-4 text-[var(--green)]" /></span></div>
-          <ul className="mt-4 grid gap-3">
-            {customLines.map((line) => <SummaryItem key={line.id} image={line.image} quantity={line.quantity} name={line.kind === "ai" ? t("checkout.aiBouquet") : t("checkout.customBouquet")} price={formatPrice(line.price * line.quantity)} />)}
-            {items.map(({ line, product, unit }) => <SummaryItem key={`${line.productId}-${line.variantId}`} image={product.images[0]} quantity={line.quantity} name={product.name} price={formatPrice(unit * line.quantity)} />)}
-          </ul>
-          <dl className="mt-5 grid gap-2 border-t border-black/5 pt-4 text-[13px]">
-            <div className="flex justify-between gap-4"><dt className="text-[var(--muted)]">{t("common.subtotal")}</dt><dd className="tabular-nums">{formatPrice(subtotal)}</dd></div>
-            <div className="flex justify-between gap-4"><dt className="text-[var(--muted)]">{t("checkout.delivery")}</dt><dd className="tabular-nums">{delivery === 0 ? t("checkout.free") : formatPrice(delivery)}</dd></div>
-            <div className="mt-1 flex justify-between gap-4 border-t border-black/5 pt-3 text-[15px] font-semibold"><dt>{t("common.total")}</dt><dd className="tabular-nums">{formatPrice(total)}</dd></div>
-          </dl>
-          <div className="mt-4 rounded-[var(--radius)] bg-[var(--surface-warm)] px-3 py-2.5 text-[11.5px] leading-relaxed text-[var(--muted)]">{t("checkout.summaryNote")}</div>
-          {submitError ? <p role="alert" aria-live="polite" className="mt-3 text-[13px] font-semibold text-[var(--action-deep)]">{submitError}</p> : null}
-          <Button type="submit" variant="primary" fullWidth size="lg" className="mt-4" disabled={sending || !hasCartItems}>{sending ? t("checkout.placing") : t("checkout.placeOrder")}</Button>
-          <Link href="/cart" className="mt-3 block text-center text-[13px] font-semibold text-[var(--muted)] underline-offset-4 hover:text-[var(--ink)] hover:underline">{t("checkout.backToCart")}</Link>
-        </aside>
-      </form>
-    </div>
-  );
+      <OrderSummary customLines={customLines} items={items} subtotal={subtotal} delivery={delivery} total={total} error={submitError} sending={sending} />
+    </form>
+  </div></div>;
 }
 
-function CheckoutStep({ number, title, description, children }: { number: string; title: string; description?: string; children: React.ReactNode }) {
-  return <fieldset className="rounded-[18px] border border-black/5 bg-[var(--surface)] p-5 shadow-[0_10px_28px_rgba(34,33,30,0.045)] sm:p-6"><legend className="sr-only">{title}</legend><div className="mb-5 flex gap-3"><span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[var(--green)] text-[10px] font-bold text-white">{number}</span><div><h2 className="font-display text-[19px] leading-none">{title}</h2>{description ? <p className="mt-1 text-[12px] text-[var(--muted)]">{description}</p> : null}</div></div><div className="grid gap-4">{children}</div></fieldset>;
-}
+function CheckoutSuccess({ id }: { id: string }) { const { t } = useI18n(); return <div className="container-fb pb-28 pt-10"><div className="mx-auto max-w-xl rounded-[20px] border border-black/5 bg-[var(--surface)] p-8 text-center shadow-[0_18px_48px_rgba(34,33,30,0.07)]"><div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-[var(--green-soft)]"><LeafIcon className="h-8 w-8 text-[var(--green)]" /></div><h1 className="font-display mt-4 text-[26px]">{t("checkout.successTitle")}</h1><p className="mt-2 text-[14px] text-[var(--muted)]">{t("checkout.successCopy", { id })}</p><p className="mt-4 rounded-[var(--radius)] bg-[var(--surface-warm)] px-4 py-3 text-[12.5px] text-[var(--muted)]">{t("checkout.successNote")}</p><Button href="/catalog" variant="dark" className="mt-6">{t("checkout.continue")}</Button></div></div>; }
+function CheckoutLoading() { return <div className="container-fb pb-28 pt-10" aria-busy="true"><div className="h-28 animate-pulse rounded-[20px] bg-[var(--surface-warm)]" /><div className="mt-6 h-80 animate-pulse rounded-[20px] bg-[var(--surface-warm)]" /></div>; }
+function CheckoutEmpty() { const { t } = useI18n(); return <div className="container-fb pb-28 pt-10 text-center"><h1 className="font-display text-[30px]">{t("common.checkout")}</h1><p className="mt-3 text-[14px] text-[var(--muted)]">{t("checkout.empty")}</p><Button href="/catalog" variant="dark" className="mt-6">{t("checkout.browse")}</Button></div>; }
 
-function Field({ label, name, type = "text", required, defaultValue, autoComplete, hint }: { label: string; name: string; type?: string; required?: boolean; defaultValue?: string; autoComplete?: string; hint?: string }) {
-  return <div className="grid gap-1.5"><label htmlFor={name} className="text-[12px] font-semibold text-[var(--ink)]">{label}{required ? <span className="text-[var(--action)]"> *</span> : null}</label><input id={name} name={name} type={type} required={required} defaultValue={defaultValue} autoComplete={autoComplete} className="h-11 rounded-[var(--radius)] border border-[var(--line-strong)] bg-white px-3 text-[14px] outline-none transition focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/15" />{hint ? <p className="text-[11px] text-[var(--muted-2)]">{hint}</p> : null}</div>;
-}
+function OrderSummary({ customLines, items, subtotal, delivery, total, error, sending }: { customLines: ReturnType<typeof useStore>["customLines"]; items: Array<{ line: any; product: any; unit: number }>; subtotal: number; delivery: number; total: number; error: string | null; sending: boolean }) { const { t } = useI18n(); return <aside className="h-fit rounded-[20px] border border-black/5 bg-[var(--surface)] p-5 shadow-[0_16px_42px_rgba(34,33,30,0.08)] lg:sticky lg:top-24"><div className="flex items-start justify-between gap-3 border-b border-black/5 pb-4"><div><p className="mono text-[10px] uppercase tracking-[0.16em] text-[var(--muted-2)]">Flower&apos;s Boutique</p><h2 className="font-display mt-1 text-[20px]">{t("checkout.summary")}</h2></div><span className="grid h-8 w-8 place-items-center rounded-full bg-[var(--green-soft)]"><LeafIcon className="h-4 w-4 text-[var(--green)]" /></span></div><ul className="mt-4 grid gap-3">{customLines.map((line) => <SummaryItem key={line.id} image={line.image} quantity={line.quantity} name={line.kind === "ai" ? t("checkout.aiBouquet") : t("checkout.customBouquet")} price={formatPrice(line.price * line.quantity)} />)}{items.map(({ line, product, unit }) => <SummaryItem key={`${line.productId}-${line.variantId}`} image={product.images[0]} quantity={line.quantity} name={product.name} price={formatPrice(unit * line.quantity)} />)}</ul><dl className="mt-5 grid gap-2 border-t border-black/5 pt-4 text-[13px]"><SummaryLine label={t("common.subtotal")} value={formatPrice(subtotal)} /><SummaryLine label={t("checkout.delivery")} value={delivery === 0 ? t("checkout.free") : formatPrice(delivery)} /><SummaryLine label={t("common.total")} value={formatPrice(total)} strong /></dl><div className="mt-4 rounded-[var(--radius)] bg-[var(--surface-sand)] p-3"><p className="text-[11px] font-bold uppercase tracking-wide text-[var(--muted)]">{t("checkout.summaryChecks")}</p><ul className="mt-2 grid gap-1.5 text-[11.5px] leading-relaxed text-[var(--muted)]">{[t("checkout.summaryCheckOne"), t("checkout.summaryCheckTwo"), t("checkout.summaryCheckThree")].map((copy) => <li key={copy} className="flex gap-2"><span className="text-[var(--green)]">✓</span>{copy}</li>)}</ul></div>{error ? <p role="alert" aria-live="polite" className="mt-3 text-[13px] font-semibold text-[var(--action-deep)]">{error}</p> : null}<Button type="submit" variant="primary" fullWidth size="lg" className="mt-4" disabled={sending}>{sending ? t("checkout.placing") : t("checkout.submitConfirm")}</Button><Link href="/cart" className="mt-3 block text-center text-[13px] font-semibold text-[var(--muted)] underline-offset-4 hover:text-[var(--ink)] hover:underline">{t("checkout.backToCart")}</Link></aside>; }
 
-function SummaryItem({ image, quantity, name, price }: { image?: string; quantity: number; name: string; price: string }) {
-  return <li className="flex items-center gap-3"><div className="relative h-14 w-12 shrink-0 overflow-hidden rounded-[var(--radius)] bg-[var(--surface-warm)]">{image ? <Image src={image} alt="" fill sizes="48px" className="object-cover" unoptimized /> : null}<span className="mono absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--ink)] px-1 text-[10px] font-bold text-white">{quantity}</span></div><p className="min-w-0 flex-1 truncate text-[12.5px] font-semibold uppercase tracking-[0.02em]">{name}</p><span className="text-[13px] font-semibold tabular-nums">{price}</span></li>;
-}
+function DeliveryCalendar({ month, setMonth, selected, setSelected, lang, previousLabel, nextLabel }: { month: Date; setMonth: (value: Date) => void; selected: string; setSelected: (value: string) => void; lang: "en" | "ka" | "ru"; previousLabel: string; nextLabel: string }) { const earliest = tomorrow(); const cells = useMemo(() => { const starts = new Date(month.getFullYear(), month.getMonth(), 1); const lead = (starts.getDay() + 6) % 7; const result: Array<Date | null> = Array.from({ length: lead }, () => null); const count = new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate(); for (let day = 1; day <= count; day++) result.push(new Date(month.getFullYear(), month.getMonth(), day)); while (result.length % 7) result.push(null); return result; }, [month]); const locale = lang === "ka" ? "ka-GE" : lang === "ru" ? "ru-RU" : "en-GB"; const weekday = Array.from({ length: 7 }, (_, index) => new Intl.DateTimeFormat(locale, { weekday: "narrow" }).format(new Date(2024, 0, index + 1))); return <div className="rounded-[var(--radius)] border border-[var(--line)] bg-white p-3"><div className="flex items-center justify-between gap-2"><button type="button" aria-label={previousLabel} onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() - 1, 1))} className={calendarNav}>←</button><p className="text-[13px] font-semibold">{new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(month)}</p><button type="button" aria-label={nextLabel} onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() + 1, 1))} className={calendarNav}>→</button></div><div className="mt-3 grid grid-cols-7 gap-1 text-center"><>{weekday.map((day, index) => <span key={`${day}-${index}`} className="py-1 text-[10px] font-semibold text-[var(--muted-2)]">{day}</span>)}</>{cells.map((date, index) => { const value = date ? isoDate(date) : ""; const disabled = !date || date < earliest; return <button key={`${value}-${index}`} type="button" disabled={disabled} onClick={() => date && setSelected(value)} className={`mx-auto grid h-8 w-8 place-items-center rounded-full text-[11px] font-semibold transition disabled:cursor-not-allowed disabled:text-[var(--muted-2)] ${value === selected ? "bg-[var(--green)] text-white" : "hover:bg-[var(--green-soft)]"}`}>{date?.getDate() ?? ""}</button>; })}</div></div>; }
+
+function CheckoutStep({ number, title, description, children }: { number: string; title: string; description?: string; children: React.ReactNode }) { return <fieldset className="rounded-[18px] border border-black/5 bg-[var(--surface)] p-5 shadow-[0_10px_28px_rgba(34,33,30,0.045)] sm:p-6"><legend className="sr-only">{title}</legend><div className="mb-5 flex gap-3"><span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[var(--green)] text-[10px] font-bold text-white">{number}</span><div><h2 className="font-display text-[20px] leading-none">{title}</h2>{description ? <p className="mt-1 text-[12px] leading-relaxed text-[var(--muted)]">{description}</p> : null}</div></div><div className="grid gap-4">{children}</div></fieldset>; }
+function ChoiceCard({ active, onClick, title, text, badge, compact }: { active: boolean; onClick: () => void; title: string; text?: string; badge?: string; compact?: boolean }) { return <button type="button" aria-pressed={active} onClick={onClick} className={`relative min-h-20 rounded-[var(--radius)] border p-4 text-left transition ${active ? "border-[var(--green)] bg-[var(--green-soft)] shadow-[0_0_0_1px_var(--green)]" : "border-[var(--line)] bg-white hover:border-[var(--line-strong)]"}`}><span className={`absolute right-3 top-3 grid h-4 w-4 place-items-center rounded-full border ${active ? "border-[var(--green)] bg-[var(--green)]" : "border-[var(--line-strong)]"}`}>{active ? <span className="h-1.5 w-1.5 rounded-full bg-white" /> : null}</span><p className="pr-7 text-[13px] font-semibold">{title}</p>{text ? <p className="mt-1 pr-2 text-[11.5px] leading-relaxed text-[var(--muted)]">{text}</p> : null}{badge && !compact ? <span className="mt-3 inline-block rounded-full bg-white/80 px-2 py-1 text-[10px] font-bold text-[var(--green)]">{badge}</span> : null}</button>; }
+function Field({ label, name, type = "text", required, defaultValue, autoComplete, hint }: { label: string; name: string; type?: string; required?: boolean; defaultValue?: string; autoComplete?: string; hint?: string }) { return <div className="grid gap-1.5"><label htmlFor={name} className={labelClass}>{label}{required ? <span className="text-[var(--action)]"> *</span> : null}</label><input id={name} name={name} type={type} required={required} defaultValue={defaultValue} autoComplete={autoComplete} className={inputClass} />{hint ? <p className="text-[11px] text-[var(--muted-2)]">{hint}</p> : null}</div>; }
+function TextArea({ label, name, placeholder }: { label: string; name: string; placeholder: string }) { return <div className="grid gap-1.5"><label htmlFor={name} className={labelClass}>{label}</label><textarea id={name} name={name} rows={4} placeholder={placeholder} className="min-h-28 rounded-[var(--radius)] border border-[var(--line-strong)] bg-white px-3 py-2.5 text-[14px] outline-none transition placeholder:text-[var(--muted-2)] focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/15" /></div>; }
+function SummaryItem({ image, quantity, name, price }: { image?: string; quantity: number; name: string; price: string }) { return <li className="flex items-center gap-3"><div className="relative h-14 w-12 shrink-0 overflow-hidden rounded-[var(--radius)] bg-[var(--surface-warm)]">{image ? <Image src={image} alt="" fill sizes="48px" className="object-cover" unoptimized /> : null}<span className="mono absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--ink)] px-1 text-[10px] font-bold text-white">{quantity}</span></div><p className="min-w-0 flex-1 truncate text-[12.5px] font-semibold uppercase tracking-[0.02em]">{name}</p><span className="text-[13px] font-semibold tabular-nums">{price}</span></li>; }
+function SummaryLine({ label, value, strong }: { label: string; value: string; strong?: boolean }) { return <div className={`flex justify-between gap-4 ${strong ? "mt-1 border-t border-black/5 pt-3 text-[15px] font-semibold" : ""}`}><dt className={strong ? "" : "text-[var(--muted)]"}>{label}</dt><dd className="tabular-nums">{value}</dd></div>; }
+
+const labelClass = "text-[12px] font-semibold text-[var(--ink)]";
+const inputClass = "h-11 rounded-[var(--radius)] border border-[var(--line-strong)] bg-white px-3 text-[14px] outline-none transition focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/15";
+const calendarNav = "grid h-8 w-8 place-items-center rounded-full text-[15px] transition hover:bg-[var(--green-soft)]";

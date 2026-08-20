@@ -13,6 +13,7 @@ type CustomerInput = {
   date?: string;
   time?: string;
   notes?: string;
+  fulfillment?: string;
 };
 
 type ProductLine = { productId: string | number; quantity: number; variantId?: string };
@@ -50,8 +51,9 @@ export async function createProductionOrder(input: NextOrderInput) {
     date: text(input.customer?.date, 40),
     time: text(input.customer?.time, 40),
     notes: text(input.customer?.notes, 600),
+    fulfillment: input.customer?.fulfillment === "studio_pickup" ? "studio_pickup" : "delivery",
   };
-  if (!customer.name || !customer.phone || !customer.address) throw new Error("missing_fields");
+  if (!customer.name || !customer.phone || (customer.fulfillment === "delivery" && !customer.address)) throw new Error("missing_fields");
 
   const productLines = input.items.filter((item): item is ProductLine => "productId" in item);
   const customLines = input.items.filter((item): item is CustomLine => "kind" in item && item.kind === "custom");
@@ -89,7 +91,7 @@ export async function createProductionOrder(input: NextOrderInput) {
   if (!items.length) throw new Error("empty_order");
 
   const subtotal = items.reduce((sum, item) => sum + item.total, 0);
-  const deliveryFee = subtotal >= 150 ? 0 : 15;
+  const deliveryFee = customer.fulfillment === "studio_pickup" || subtotal >= 150 ? 0 : 15;
   const total = subtotal + deliveryFee;
   const db = getProductionDb();
   const numberRow = await db.select({ latest: sql<number>`coalesce(max(${orders.orderNumber}), 600000)` }).from(orders);
@@ -99,7 +101,7 @@ export async function createProductionOrder(input: NextOrderInput) {
     customerEmail: customer.email || null,
     customerPhone: customer.phone,
     recipientName: customer.recipient || null,
-    deliveryAddress: customer.address,
+    deliveryAddress: customer.address || "Flower’s Boutique studio pickup",
     deliveryDate: customer.date || null,
     deliveryTime: customer.time || null,
     notes: customer.notes || null,
@@ -111,7 +113,7 @@ export async function createProductionOrder(input: NextOrderInput) {
     paymentMethod: "cash",
     paymentStatus: "pending",
     deliveryStatus: "new",
-    fulfillmentType: "delivery",
+    fulfillmentType: customer.fulfillment === "studio_pickup" ? "pickup" : "delivery",
   });
   return { id: `FLR-${orderNumber}`, orderNumber, subtotal, deliveryFee, total };
 }
