@@ -175,5 +175,5 @@
 - [x] Add Admin regression coverage and validate media/category/order workflows, 375/768/1440 responsive layouts, TypeScript, full tests, production build and live manager route.
 - [x] Compare the current Checkout form/order payload against the reference's six-step contact, delivery choice, date, recipient, personalization and summary workflow.
 - [x] Add safe Checkout-only interaction state for delivery method, chosen delivery date, recipient personalization and consent options while preserving existing `/api/orders` field names and payload compatibility.
-- [ ] Replace Checkout presentation with the reference-inspired six-step flow, calendar and persistent order summary in Flower’s Boutique visual tokens and three locales.
-- [ ] Add focused Checkout regression coverage and validate 375/768/1440 responsive flow, cart handoff, TypeScript, full tests, production build and published route.
+- [x] Replace Checkout presentation with the reference-inspired six-step flow, calendar and persistent order summary in Flower’s Boutique visual tokens and three locales.
+- [x] Add focused Checkout regression coverage and validate 375/768/1440 responsive flow, cart handoff, TypeScript, full tests, production build and published route.
