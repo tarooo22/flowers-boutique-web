@@ -167,3 +167,8 @@
 - [x] Audit the existing Checkout form, summary, delivery/payment fields, validation and submit contracts before a presentation-only reconstruction.
 - [x] Rebuild Checkout into a reference-inspired staged form with an adjacent order summary, retaining Flower’s Boutique colors, button styling, localized copy and existing order/payment behavior.
 - [x] Add focused Checkout presentation/interaction coverage; validate form submission safeguards, cart handoff, responsive 375/768/1440 layouts, TypeScript, full tests, production build and published route.
+- [x] Audit the full current Admin UI, role guard, products/categories/orders APIs, product-image schema and storage helper before feature expansion.
+- [x] Add protected media upload/list contracts and category create/edit/delete contracts without deleting categories referenced by products.
+- [x] Implement product image drag-and-drop, device file chooser, reusable media library picker and multi-image selection in the Admin product editor.
+- [x] Implement category management and improve order operations with search, status queues, order detail, customer/delivery context and protected status updates.
+- [ ] Add Admin regression coverage and validate media/category/order workflows, 375/768/1440 responsive layouts, TypeScript, full tests, production build and live manager route.

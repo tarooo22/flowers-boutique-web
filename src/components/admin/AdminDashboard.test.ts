@@ -12,15 +12,15 @@ describe("Operational Admin panel contract", () => {
     expect(source).toContain("შეკვეთები");
     expect(source).toContain("ბანერები");
     expect(source).toContain("პარამეტრები");
-    expect(source).toContain("Set fulfilment status");
-    expect(source).toContain("ძებნა…");
-    expect(source).toContain("Saving status…");
+    expect(source).toContain("სტატუსის შეცვლა");
+    expect(source).toContain("Fulfilment desk");
+    expect(source).toContain("ID, სახელი, ტელეფონი ან მისამართი…");
   });
 
   it("retains real legacy product create, edit and confirmation-gated delete workflows", () => {
     expect(source).toContain("+ ახალი პროდუქტი");
     expect(source).toContain("პროდუქტის რედაქტირება");
-    expect(source).toContain("Delete this product from the catalog? This cannot be undone.");
+    expect(source).toContain("პროდუქტის წაშლა გსურთ?");
     expect(source).toContain("/api/admin/products");
   });
 
@@ -28,5 +28,15 @@ describe("Operational Admin panel contract", () => {
     expect(source).not.toContain("Delete order");
     expect(source).not.toContain("removeOrder");
     expect(source).not.toContain("/api/admin/orders?id=");
+  });
+
+  it("provides the manager-facing media, category and customer-delivery controls", () => {
+    expect(source).toContain("ფოტოს გადაათრიეთ აქ");
+    expect(source).toContain("მედია ბიბლიოთეკა");
+    expect(source).toContain("/api/admin/media");
+    expect(source).toContain("/api/admin/categories");
+    expect(source).toContain("კატეგორიების მართვა");
+    expect(source).toContain("რუკაზე ნახვა");
+    expect(source).toContain("tel:${order.customer.phone}");
   });
 });

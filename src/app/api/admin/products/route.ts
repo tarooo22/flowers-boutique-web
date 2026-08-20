@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { isProductionAdmin } from "@/lib/production/auth";
-import { createProductionAdminProduct, deleteProductionAdminProduct, listProductionAdminCategories, listProductionAdminProducts, productionAdminStats, updateProductionAdminProduct } from "@/lib/production/admin";
+import { createProductionAdminProduct, deleteProductionAdminProduct, listProductionAdminCategories, listProductionAdminMedia, listProductionAdminProducts, productionAdminStats, updateProductionAdminProduct } from "@/lib/production/admin";
 
 export const runtime = "nodejs";
 
@@ -12,8 +12,8 @@ async function guard() {
 export async function GET() {
   const denied = await guard();
   if (denied) return denied;
-  const [products, stats, categories] = await Promise.all([listProductionAdminProducts(), productionAdminStats(), listProductionAdminCategories()]);
-  return NextResponse.json({ products, stats, categories });
+  const [products, stats, categories, media] = await Promise.all([listProductionAdminProducts(), productionAdminStats(), listProductionAdminCategories(), listProductionAdminMedia()]);
+  return NextResponse.json({ products, stats, categories, media });
 }
 
 export async function PATCH(request: Request) {
@@ -32,6 +32,7 @@ export async function PATCH(request: Request) {
     unitType?: unknown;
     categoryId?: unknown;
     imageUrl?: unknown;
+    imageUrls?: unknown;
     available?: unknown;
     published?: unknown;
     bestseller?: unknown;
@@ -49,6 +50,14 @@ export async function PATCH(request: Request) {
   }
   if (typeof body.priceMax === "number" && Number.isFinite(body.priceMax) && body.priceMax >= 0) patch.priceMax = Math.round(body.priceMax);
   if (typeof body.categoryId === "number" && Number.isSafeInteger(body.categoryId) && body.categoryId > 0) patch.categoryId = body.categoryId;
+  if (Array.isArray(body.imageUrls)) {
+    const imageUrls = body.imageUrls
+      .filter((item): item is { url: string; key: string } => Boolean(item) && typeof item === "object" && typeof (item as { url?: unknown }).url === "string" && typeof (item as { key?: unknown }).key === "string")
+      .map((item) => ({ url: item.url.trim(), key: item.key.trim() }))
+      .filter((item) => item.url.startsWith("/manus-storage/") && item.key.startsWith("admin-media/"))
+      .slice(0, 8);
+    patch.imageUrls = imageUrls;
+  }
   if (typeof body.priceOnRequest === "boolean") patch.priceOnRequest = body.priceOnRequest;
   if (typeof body.available === "boolean") patch.available = body.available;
   if (typeof body.published === "boolean") patch.published = body.published;
@@ -82,6 +91,11 @@ export async function POST(request: Request) {
     priceOnRequest: body.priceOnRequest === true,
     unitType: typeof body.unitType === "string" ? body.unitType.trim() : "single stem",
     imageUrl: typeof body.imageUrl === "string" ? body.imageUrl.trim() : undefined,
+    imageUrls: Array.isArray(body.imageUrls) ? body.imageUrls
+      .filter((item): item is { url: string; key: string } => Boolean(item) && typeof item === "object" && typeof (item as { url?: unknown }).url === "string" && typeof (item as { key?: unknown }).key === "string")
+      .map((item) => ({ url: item.url.trim(), key: item.key.trim() }))
+      .filter((item) => item.url.startsWith("/manus-storage/") && item.key.startsWith("admin-media/"))
+      .slice(0, 8) : undefined,
     available: body.available !== false,
     published: body.published !== false,
     bestseller: body.bestseller === true,

@@ -1,9 +1,35 @@
 import "server-only";
 
-import { desc, eq, sql } from "drizzle-orm";
+import { asc, desc, eq, sql } from "drizzle-orm";
 import { categories, getProductionDb, orders, productImages, products } from "@/lib/production/db";
 
 const toNumber = (value: unknown) => Number(value ?? 0) || 0;
+
+export type AdminMediaAsset = {
+  id: string;
+  url: string;
+  key: string;
+  productId?: string;
+  productName?: string;
+  sortOrder: number;
+};
+
+export type AdminCategoryInput = {
+  nameKa: string;
+  nameEn: string;
+  descriptionKa?: string;
+  descriptionEn?: string;
+  slug: string;
+};
+
+function normalizeMedia(items: Array<Pick<AdminMediaAsset, "url" | "key">> | undefined) {
+  if (!items) return undefined;
+  const seen = new Set<string>();
+  return items
+    .map((item) => ({ url: item.url.trim(), key: item.key.trim() }))
+    .filter((item) => item.url && item.key && !seen.has(item.url) && (seen.add(item.url), true))
+    .slice(0, 8);
+}
 
 function dashboardStatus(value: string | null) {
   if (value === "delivered") return "completed";
@@ -44,10 +70,17 @@ export async function listProductionAdminOrders() {
 }
 
 export async function listProductionAdminProducts() {
-  const rows = await getProductionDb()
-    .select({ product: products, category: categories })
-    .from(products)
-    .leftJoin(categories, eq(products.categoryId, categories.id));
+  const database = getProductionDb();
+  const [rows, galleryRows] = await Promise.all([
+    database.select({ product: products, category: categories }).from(products).leftJoin(categories, eq(products.categoryId, categories.id)),
+    database.select().from(productImages).orderBy(asc(productImages.productId), asc(productImages.sortOrder)),
+  ]);
+  const galleryByProduct = new Map<number, AdminMediaAsset[]>();
+  for (const image of galleryRows) {
+    const list = galleryByProduct.get(image.productId) ?? [];
+    list.push({ id: `gallery-${image.id}`, url: image.imageUrl, key: image.imageKey, productId: String(image.productId), sortOrder: Number(image.sortOrder ?? 0) });
+    galleryByProduct.set(image.productId, list);
+  }
   return rows.map(({ product, category }) => ({
     id: String(product.id),
     categoryId: String(product.categoryId),
@@ -60,6 +93,10 @@ export async function listProductionAdminProducts() {
     subtitle: product.nameEn || undefined,
     category: category?.nameKa || category?.nameEn || "",
     image: product.imageUrl || "",
+    images: [
+      ...(product.imageUrl ? [{ id: `cover-${product.id}`, url: product.imageUrl, key: product.imageKey || product.imageUrl, productId: String(product.id), sortOrder: -1 }] : []),
+      ...(galleryByProduct.get(product.id) ?? []).filter((image) => image.url !== product.imageUrl),
+    ],
     price: toNumber(product.priceMin),
     priceMax: toNumber(product.priceMax),
     basePrice: toNumber(product.priceMin),
@@ -84,6 +121,27 @@ export async function listProductionAdminCategories() {
   }));
 }
 
+export async function listProductionAdminMedia(): Promise<AdminMediaAsset[]> {
+  const database = getProductionDb();
+  const [coverRows, galleryRows] = await Promise.all([
+    database.select({ id: products.id, name: products.nameKa, imageUrl: products.imageUrl, imageKey: products.imageKey }).from(products),
+    database.select({ image: productImages, name: products.nameKa }).from(productImages).leftJoin(products, eq(productImages.productId, products.id)).orderBy(desc(productImages.id)),
+  ]);
+  const assets: AdminMediaAsset[] = [];
+  const seen = new Set<string>();
+  for (const product of coverRows) {
+    if (!product.imageUrl || seen.has(product.imageUrl)) continue;
+    seen.add(product.imageUrl);
+    assets.push({ id: `cover-${product.id}`, url: product.imageUrl, key: product.imageKey || product.imageUrl, productId: String(product.id), productName: product.name, sortOrder: -1 });
+  }
+  for (const row of galleryRows) {
+    if (seen.has(row.image.imageUrl)) continue;
+    seen.add(row.image.imageUrl);
+    assets.push({ id: `gallery-${row.image.id}`, url: row.image.imageUrl, key: row.image.imageKey, productId: String(row.image.productId), productName: row.name ?? undefined, sortOrder: Number(row.image.sortOrder ?? 0) });
+  }
+  return assets.slice(0, 120);
+}
+
 export async function productionAdminStats() {
   const [ordersList, productCount] = await Promise.all([
     listProductionAdminOrders(),
@@ -97,6 +155,28 @@ export async function productionAdminStats() {
     newCount: ordersList.filter((order) => order.status === "new").length,
     productCount: Number(productCount[0]?.count ?? 0),
   };
+}
+
+export async function createProductionAdminCategory(input: AdminCategoryInput) {
+  await getProductionDb().insert(categories).values({ nameKa: input.nameKa, nameEn: input.nameEn, descriptionKa: input.descriptionKa ?? "", descriptionEn: input.descriptionEn ?? "", slug: input.slug });
+}
+
+export async function updateProductionAdminCategory(id: number, input: Partial<AdminCategoryInput>) {
+  const updates: Record<string, string> = {};
+  if (input.nameKa !== undefined) updates.nameKa = input.nameKa;
+  if (input.nameEn !== undefined) updates.nameEn = input.nameEn;
+  if (input.descriptionKa !== undefined) updates.descriptionKa = input.descriptionKa;
+  if (input.descriptionEn !== undefined) updates.descriptionEn = input.descriptionEn;
+  if (input.slug !== undefined) updates.slug = input.slug;
+  if (!Object.keys(updates).length) throw new Error("nothing_to_update");
+  await getProductionDb().update(categories).set(updates).where(eq(categories.id, id));
+}
+
+export async function deleteProductionAdminCategory(id: number) {
+  const database = getProductionDb();
+  const linked = await database.select({ count: sql<number>`count(*)` }).from(products).where(eq(products.categoryId, id));
+  if (Number(linked[0]?.count ?? 0) > 0) throw new Error("category_in_use");
+  await database.delete(categories).where(eq(categories.id, id));
 }
 
 export async function updateProductionProduct(id: number, patch: { price?: number; available?: boolean; bestseller?: boolean }) {
@@ -119,6 +199,7 @@ export type AdminProductPatch = {
   unitType?: string;
   categoryId?: number;
   imageUrl?: string;
+  imageUrls?: Array<Pick<AdminMediaAsset, "url" | "key">>;
   available?: boolean;
   published?: boolean;
   bestseller?: boolean;
@@ -126,6 +207,7 @@ export type AdminProductPatch = {
 
 export async function updateProductionAdminProduct(id: number, patch: AdminProductPatch) {
   const updates: Record<string, unknown> = {};
+  const media = normalizeMedia(patch.imageUrls);
   if (patch.nameKa !== undefined) updates.nameKa = patch.nameKa;
   if (patch.nameEn !== undefined) updates.nameEn = patch.nameEn;
   if (patch.descriptionKa !== undefined) updates.descriptionKa = patch.descriptionKa;
@@ -136,15 +218,25 @@ export async function updateProductionAdminProduct(id: number, patch: AdminProdu
   if (patch.unitType !== undefined) updates.unitType = patch.unitType;
   if (patch.categoryId !== undefined) updates.categoryId = patch.categoryId;
   if (patch.imageUrl !== undefined) updates.imageUrl = patch.imageUrl;
+  if (media !== undefined) {
+    updates.imageUrl = media[0]?.url ?? null;
+    updates.imageKey = media[0]?.key ?? null;
+  }
   if (patch.available !== undefined) updates.isAvailable = patch.available;
   if (patch.published !== undefined) updates.published = patch.published;
   if (patch.bestseller !== undefined) updates.featured = patch.bestseller;
   if (!Object.keys(updates).length) throw new Error("nothing_to_update");
-  await getProductionDb().update(products).set(updates).where(eq(products.id, id));
+  const database = getProductionDb();
+  await database.update(products).set(updates).where(eq(products.id, id));
+  if (media !== undefined) {
+    await database.delete(productImages).where(eq(productImages.productId, id));
+    if (media.length) await database.insert(productImages).values(media.map((image, sortOrder) => ({ productId: id, imageUrl: image.url, imageKey: image.key, sortOrder })));
+  }
 }
 
 export async function createProductionAdminProduct(input: Required<Pick<AdminProductPatch, "nameKa" | "nameEn" | "categoryId">> & AdminProductPatch) {
-  await getProductionDb().insert(products).values({
+  const media = normalizeMedia(input.imageUrls);
+  const result = await getProductionDb().insert(products).values({
     nameKa: input.nameKa,
     nameEn: input.nameEn,
     descriptionKa: input.descriptionKa ?? "",
@@ -154,11 +246,14 @@ export async function createProductionAdminProduct(input: Required<Pick<AdminPro
     priceOnRequest: input.priceOnRequest ?? false,
     unitType: input.unitType ?? "single stem",
     categoryId: input.categoryId,
-    imageUrl: input.imageUrl ?? null,
+    imageUrl: media?.[0]?.url ?? input.imageUrl ?? null,
+    imageKey: media?.[0]?.key ?? null,
     isAvailable: input.available ?? true,
     published: input.published ?? true,
     featured: input.bestseller ?? false,
   });
+  const productId = Number(result[0]?.insertId ?? 0);
+  if (productId && media?.length) await getProductionDb().insert(productImages).values(media.map((image, sortOrder) => ({ productId, imageUrl: image.url, imageKey: image.key, sortOrder })));
 }
 
 export async function deleteProductionAdminProduct(id: number) {
