@@ -145,4 +145,4 @@
 - [x] Run focused Admin regression, responsive manager QA, TypeScript, full tests, production build and published verification for the restored panel.
 - [x] Locate and inventory the original pre-redesign project's Admin panel, distinct from the recent compact and manager-workspace variants.
 - [x] Map the original Admin panel's supported UI and workflows to current production data, role guard, session and safe API contracts.
-- [ ] Restore the original pre-redesign Admin presentation and supported controls; validate locally and on the published manager route.
+- [x] Restore the original pre-redesign Admin presentation and supported controls; validate locally and on the published manager route.
