@@ -189,3 +189,7 @@ The About visit/contact card now retains its editorial bouquet photo, address, h
 The About map regression contract verifies the iframe, central configuration and directions fallback. TypeScript, **36 Vitest tests**, and the production Next build pass. Desktop visual QA confirms that the contact-card geometry, map allocation and existing footer/contact flow remain intact; published-domain verification is pending.
 
 **Published verification:** the cache-busted live `/about` page loads with the existing localized About/contact content and preserved Call/WhatsApp actions. The map section is present after the contact card as a lazy-loaded responsive iframe, and the Georgian **მარშრუტის ნახვა** external directions fallback renders on the published page. This preserves a useful location route even when a browser blocks third-party map tiles in its preview renderer.
+
+## About location card copy refinement — 2026-08-20
+
+The location-value card next to the pin icon now communicates a practical reason to visit the studio rather than the prior generic floristry claim. Its Georgian copy is **გვიპოვე ვაკეში** with a concise invitation to visit the Chavchavadze Avenue studio and use the map for directions. Matching English and Russian messages remain in the same translation contract. The icon, card geometry and surrounding value-card layout remain unchanged. TypeScript, **37 Vitest tests**, and the production build pass; published verification is pending.
