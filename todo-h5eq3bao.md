@@ -153,4 +153,4 @@
 - [x] Add an interactive map and a resilient external directions fallback to the contact area without changing Flower’s Boutique branding or contact content.
 - [x] Validate map/contact behavior at mobile and desktop, run regression/build checks and publish the verified update.
 - [x] Replace the requested About location-value card title and description with clearer bilingual customer-facing copy while preserving its icon and visual layout.
-- [ ] Validate and publish the revised location card copy.
+- [x] Validate and publish the revised location card copy.

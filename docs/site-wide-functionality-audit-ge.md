@@ -192,4 +192,6 @@ The About map regression contract verifies the iframe, central configuration and
 
 ## About location card copy refinement — 2026-08-20
 
-The location-value card next to the pin icon now communicates a practical reason to visit the studio rather than the prior generic floristry claim. Its Georgian copy is **გვიპოვე ვაკეში** with a concise invitation to visit the Chavchavadze Avenue studio and use the map for directions. Matching English and Russian messages remain in the same translation contract. The icon, card geometry and surrounding value-card layout remain unchanged. TypeScript, **37 Vitest tests**, and the production build pass; published verification is pending.
+The location-value card next to the pin icon now communicates a practical reason to visit the studio rather than the prior generic floristry claim. Its Georgian copy is **გვიპოვე ვაკეში** with a concise invitation to visit the Chavchavadze Avenue studio and use the map for directions. Matching English and Russian messages remain in the same translation contract. The icon, card geometry and surrounding value-card layout remain unchanged. TypeScript, **37 Vitest tests**, and the production build pass.
+
+**Published verification:** after rollout propagation, the cache-busted production About page rendered the new **გვიპოვე ვაკეში** heading and its Chavchavadze Avenue/map-description verbatim. The prior florist/algorithm copy no longer appears in that card.
