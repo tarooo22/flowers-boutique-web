@@ -1,7 +1,9 @@
 "use client";
+"use client";
 
 import { useState } from "react";
 import { useI18n } from "@/lib/i18n";
+import type { CatalogBuilderFlower } from "@/lib/builderCatalog";
 import { builderFlowers } from "@/data/builder";
 import { VisualBuilder } from "./VisualBuilder";
 import { AIBouquet } from "./AIBouquet";
@@ -9,7 +11,7 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 
 type Tab = "visual" | "ai";
 
-export function BuilderTabs() {
+export function BuilderTabs({ aiFlowers }: { aiFlowers: CatalogBuilderFlower[] }) {
   const { t } = useI18n();
   const [tab, setTab] = useState<Tab>("visual");
   const legacyBuilderFlowers = builderFlowers.map((flower) => ({
@@ -18,6 +20,7 @@ export function BuilderTabs() {
     price: flower.price,
     asset: flower.asset,
   }));
+  const aiPickerFlowers = aiFlowers.length ? aiFlowers : legacyBuilderFlowers;
 
   return (
     <div className="container-fb pt-6 pb-20 sm:pb-28">
@@ -37,11 +40,15 @@ export function BuilderTabs() {
         {(["visual", "ai"] as Tab[]).map((value) => (
           <button
             key={value}
+            type="button"
             role="tab"
             id={`builder-tab-${value}`}
             aria-selected={tab === value}
             aria-controls={`builder-panel-${value}`}
-            onClick={() => setTab(value)}
+            onClick={(event) => {
+              event.preventDefault();
+              setTab(value);
+            }}
             className={`rounded-full border px-5 py-2.5 text-[13.5px] font-semibold transition ${
               tab === value
                 ? "border-[var(--ink)] bg-[var(--ink)] text-white"
@@ -64,7 +71,7 @@ export function BuilderTabs() {
           </div>
         ) : (
           <div role="tabpanel" id="builder-panel-ai" aria-labelledby="builder-tab-ai">
-            <AIBouquet flowers={legacyBuilderFlowers} />
+            <AIBouquet flowers={aiPickerFlowers} />
           </div>
         )}
       </div>

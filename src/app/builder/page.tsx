@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { BuilderTabs } from "@/components/builder/BuilderTabs";
+import { catalogFlowersForAIBouquet } from "@/lib/builderCatalog";
+import { listLiveProducts } from "@/lib/production/catalog";
 
 export const metadata: Metadata = {
   title: "Build a bouquet",
@@ -7,6 +9,9 @@ export const metadata: Metadata = {
     "Compose your own bouquet stem by stem, or describe the bouquet you imagine and let AI sketch it.",
 };
 
-export default function BuilderPage() {
-  return <BuilderTabs />;
+export const dynamic = "force-dynamic";
+
+export default async function BuilderPage() {
+  const products = await listLiveProducts();
+  return <BuilderTabs aiFlowers={catalogFlowersForAIBouquet(products)} />;
 }

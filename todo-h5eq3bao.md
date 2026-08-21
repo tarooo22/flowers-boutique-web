@@ -187,3 +187,7 @@
 - [x] Verify a real Banner editor update (text change and save) in the approved temporary lifecycle, then confirm no temporary banner record remains.
 - [x] Persist and list uploaded `admin-media` assets in the Admin media library across editor sessions, then resume Banner editor update QA with the existing managed asset.
 - [x] Prioritize persistent managed uploads ahead of legacy product images before the Admin media-list limit is applied.
+- [x] Validate and install the user-provided SKILL(20).md so it appears in the available skills list.
+- [x] Diagnose and fix AI Bouquet live preview flower overflow so every selected flower remains visible inside the composition frame.
+- [x] Populate the AI Bouquet flower picker from all current and newly added catalog products classified as individual flowers, preserving selection, pricing and checkout behavior.
+- [x] Add focused regression coverage and validate AI Bouquet preview/picker behavior at mobile, tablet and desktop widths.

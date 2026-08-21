@@ -104,6 +104,7 @@ export function AIBouquet({ flowers }: { flowers: LiveBuilderFlower[] }) {
 
   const visible = onlySelected ? selected : flowers;
   const steps = [t("ai.step1"), t("ai.step2"), t("ai.step3")];
+  const previewColumns = Math.min(6, Math.max(2, Math.ceil(Math.sqrt(selected.length))));
 
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-10">
@@ -120,32 +121,33 @@ export function AIBouquet({ flowers }: { flowers: LiveBuilderFlower[] }) {
               unoptimized={image.startsWith("data:") || image.startsWith("/manus-storage/")}
             />
           ) : selected.length ? (
-            // idle: show the chosen stems as a fanned preview
-            <div className="absolute inset-0 flex items-end justify-center gap-1 px-8 pb-[18%]">
-              {selected.slice(0, 8).map((f, i) => {
-                const n = selected.length;
-                const spread = 9;
-                const angle = (i - (n - 1) / 2) * spread;
-                return (
-                  <div
-                    key={f.key}
-                    className="relative h-[62%] w-12 origin-bottom transition-transform duration-500 sm:w-16"
-                    style={{ transform: `rotate(${angle}deg)`, zIndex: 10 + i }}
-                  >
-                    <Image
-                      src={f.asset}
-                      alt=""
-                      fill
-                      sizes="64px"
-                      className="object-contain object-top drop-shadow-[0_8px_16px_rgba(65,41,27,0.16)]"
-                      unoptimized
-                    />
-                    <span className="mono absolute -top-2 left-1/2 -translate-x-1/2 rounded-full bg-white px-1.5 py-0.5 text-[10px] font-bold shadow-sm">
-                      {counts[f.key]}
-                    </span>
-                  </div>
-                );
-              })}
+            <div
+              data-testid="ai-composition-preview"
+              className="absolute inset-[9%] grid min-h-0 gap-1.5 sm:gap-2"
+              style={{
+                gridTemplateColumns: `repeat(${previewColumns}, minmax(0, 1fr))`,
+                gridAutoRows: "minmax(0, 1fr)",
+              }}
+            >
+              {selected.map((f) => (
+                <div
+                  key={f.key}
+                  data-testid="ai-composition-cell"
+                  className="relative min-h-0 overflow-hidden rounded-[18px] border border-white/80 bg-white/72 shadow-[0_8px_16px_rgba(65,41,27,0.10)]"
+                >
+                  <Image
+                    src={f.asset}
+                    alt={f.name}
+                    fill
+                    sizes="(max-width: 640px) 18vw, 72px"
+                    className="object-contain p-[10%] transition-transform duration-300"
+                    unoptimized
+                  />
+                  <span className="mono absolute right-1.5 top-1.5 rounded-full bg-[var(--ink)] px-1.5 py-0.5 text-[10px] font-bold text-white shadow-sm">
+                    {counts[f.key]}
+                  </span>
+                </div>
+              ))}
             </div>
           ) : (
             <div className="grid h-full place-items-center px-8 text-center">
@@ -245,6 +247,7 @@ export function AIBouquet({ flowers }: { flowers: LiveBuilderFlower[] }) {
             return (
               <li
                 key={f.key}
+                data-testid="ai-flower-option"
                 className={`flex items-center gap-3 rounded-[var(--radius)] border p-2.5 transition ${
                   active
                     ? "border-[var(--ink)] bg-white shadow-[var(--shadow-card)]"
@@ -290,7 +293,8 @@ export function AIBouquet({ flowers }: { flowers: LiveBuilderFlower[] }) {
                   </span>
                   <button
                     type="button"
-                      aria-label={`+ ${f.name}`}
+                    data-testid="ai-flower-increment"
+                    aria-label={`+ ${f.name}`}
                     disabled={totalStems >= MAX_STEMS}
                     onClick={() => setCount(f.key, count + 1)}
                     className="grid h-8 w-8 place-items-center rounded-full border border-[var(--line-strong)] transition hover:border-[var(--ink)] disabled:opacity-30"
