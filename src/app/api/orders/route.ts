@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createProductionOrder } from "@/lib/production/orders";
+import { getProductionSessionUser } from "@/lib/production/auth";
 
 export const runtime = "nodejs";
 
@@ -14,9 +15,11 @@ export async function POST(request: Request) {
 
   try {
     const payload = body as { customer?: unknown; items?: unknown };
+    const sessionUser = await getProductionSessionUser();
     const order = await createProductionOrder({
       customer: (payload.customer ?? {}) as never,
       items: Array.isArray(payload.items) ? payload.items.slice(0, 60) as never : [],
+      userId: sessionUser?.id ?? null,
     });
     return NextResponse.json(order, { status: 201 });
   } catch (error) {

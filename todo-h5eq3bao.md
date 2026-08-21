@@ -211,3 +211,7 @@
 - [x] Reframe the Rewards page as an original Flower’s Boutique loyalty concept with a new Georgian name and independent copy.
 - [x] Replace the imported-looking cashback tiers and examples with a coherent maximum 5% loyalty benefit structure.
 - [x] Preserve real loyalty calculations, add regression coverage, and validate the redesigned page at mobile, tablet and desktop widths.
+- [x] Define Flower Circle level eligibility from each signed-in customer’s real confirmed order history without counting cancelled or unrelated orders.
+- [x] Implement a protected server-side Flower Circle summary API with total eligible spend, current level, benefit percentage and next-level progress.
+- [x] Connect the Rewards page to the signed-in customer’s actual Flower Circle summary and provide an accurate signed-out state.
+- [x] Add data-scenario regression coverage and validate the personalized Flower Circle experience at mobile, tablet and desktop widths.

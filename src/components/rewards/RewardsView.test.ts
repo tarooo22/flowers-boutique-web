@@ -24,6 +24,9 @@ describe("Rewards locale contract", () => {
     expect(source).toContain('window.addEventListener(LANGUAGE_CHANGE_EVENT, syncLocale)');
     expect(source).toContain('document.title = `${t("rewards.metaTitle")} · Flower\'s Boutique`');
     expect(source).toContain('role="progressbar"');
+    expect(source).toContain('fetch("/api/flower-circle"');
+    expect(source).toContain('summary === null');
+    expect(source).toContain("currentTierIndex");
     expect(source).toContain('pct: "5%"');
     expect(source).not.toContain('pct: "8%"');
   });

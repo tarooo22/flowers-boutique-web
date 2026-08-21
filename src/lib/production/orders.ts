@@ -22,6 +22,7 @@ type CustomLine = { kind: "custom"; quantity: number; price: number; name?: stri
 export type NextOrderInput = {
   customer: CustomerInput;
   items: Array<ProductLine | CustomLine>;
+  userId?: number | null;
 };
 
 function text(value: unknown, max: number) {
@@ -97,6 +98,7 @@ export async function createProductionOrder(input: NextOrderInput) {
   const numberRow = await db.select({ latest: sql<number>`coalesce(max(${orders.orderNumber}), 600000)` }).from(orders);
   const orderNumber = Number(numberRow[0]?.latest ?? 600000) + 1;
   await db.insert(orders).values({
+    userId: Number.isSafeInteger(input.userId) && Number(input.userId) > 0 ? Number(input.userId) : null,
     customerName: customer.name,
     customerEmail: customer.email || null,
     customerPhone: customer.phone,
