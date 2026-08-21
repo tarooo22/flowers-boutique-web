@@ -12,4 +12,12 @@ describe("ContactStrip", () => {
     expect(source).toContain("cs.closedNow");
     expect(source).toContain("role=\"status\"");
   });
+
+  it("uses the centralized map and directions details in place of a decorative bouquet visual", () => {
+    expect(source).toContain("brand.mapEmbedUrl");
+    expect(source).toContain("brand.directionsUrl");
+    expect(source).toContain("title={`${brand.name} map`}");
+    expect(source).toContain('loading="lazy"');
+    expect(source).toContain("PinIcon");
+  });
 });

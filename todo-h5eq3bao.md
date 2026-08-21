@@ -198,3 +198,5 @@
 - [x] Redesign the AI Bouquet selected-flower preview as an animated circular composition with staged flower placement.
 - [x] Add a five-second generation state with a visible spinning progress treatment before revealing the AI Bouquet result.
 - [x] Add interaction regression coverage and responsive QA for the AI Bouquet preview/generation transition.
+- [x] Replace the bouquet visual in the shared contact section with an accessible studio-location map while preserving contact details and actions.
+- [x] Add regression coverage and validate the map-based contact layout at mobile, tablet and desktop widths.
