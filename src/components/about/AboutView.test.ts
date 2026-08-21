@@ -6,9 +6,12 @@ const brand = readFileSync(new URL("../../config/brand.ts", import.meta.url), "u
 const translations = readFileSync(new URL("../../lib/translations.ts", import.meta.url), "utf8");
 
 describe("About contact map contract", () => {
-  it("keeps a visible studio map image and external directions fallback alongside contact actions", () => {
-    expect(source).toContain("src={brand.mapImageUrl}");
-    expect(source).toContain("alt={`${brand.addressFull} map`}");
+  it("keeps an interactive embedded studio map and external directions fallback alongside contact actions", () => {
+    expect(source).toContain("title={`${brand.name} map`}");
+    expect(source).toContain("src={brand.mapEmbedUrl}");
+    expect(source).toContain('loading="eager"');
+    expect(source).toContain("allowFullScreen");
+    expect(source).not.toContain("mapImageUrl");
     expect(source).toContain("href={brand.directionsUrl}");
     expect(source).toContain('t("about.getDirections")');
     expect(source).toContain("WhatsApp");
@@ -18,7 +21,6 @@ describe("About contact map contract", () => {
 
   it("keeps the address and map destinations centralized in brand configuration", () => {
     expect(brand).toContain("mapEmbedUrl");
-    expect(brand).toContain("mapImageUrl");
     expect(brand).toContain("directionsUrl");
     expect(brand).toContain("12 Chavchavadze Avenue, Tbilisi 0179, Georgia");
   });

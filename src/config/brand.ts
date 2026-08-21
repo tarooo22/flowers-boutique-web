@@ -22,7 +22,6 @@ export const brand = {
   addressFull: "12 Chavchavadze Avenue, Tbilisi 0179, Georgia",
   mapEmbedUrl:
     "https://maps.google.com/maps?q=12%20Chavchavadze%20Avenue%2C%20Tbilisi%2C%20Georgia&z=15&output=embed",
-  mapImageUrl: "/manus-storage/flowers-boutique-studio-map_cc2f72ee.webp",
   directionsUrl:
     "https://www.google.com/maps/dir/?api=1&destination=12%20Chavchavadze%20Avenue%2C%20Tbilisi%2C%20Georgia",
   hours: "Every day 09:00–21:00",

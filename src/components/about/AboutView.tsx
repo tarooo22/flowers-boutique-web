@@ -195,13 +195,13 @@ export function AboutView() {
         <Reveal direction="zoom">
           <div className="grid overflow-hidden rounded-[var(--radius-lg)] border md:grid-cols-2">
             <div className="relative min-h-[280px] overflow-hidden bg-[var(--surface-warm)] sm:min-h-[360px]">
-              <Image
-                src={brand.mapImageUrl}
-                alt={`${brand.addressFull} map`}
-                fill
-                unoptimized
-                sizes="(max-width:768px) 100vw, 50vw"
-                className="object-cover object-center"
+              <iframe
+                title={`${brand.name} map`}
+                src={brand.mapEmbedUrl}
+                loading="eager"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+                className="absolute inset-0 h-full w-full border-0"
               />
               <a
                 href={brand.directionsUrl}

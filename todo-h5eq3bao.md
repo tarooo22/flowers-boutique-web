@@ -206,3 +206,5 @@
 - [x] Restore ContactStrip to the compact dark-left/cream-right first-reference layout without an embedded map.
 - [x] Replace only the About contact card bouquet visual with the centralized studio map and remove its separate full-width lower map panel.
 - [x] Add regression coverage and validate the corrected ContactStrip and About map card at mobile, tablet and desktop widths.
+- [x] Replace the About contact card static map image with an interactive embedded map that supports pan and zoom.
+- [x] Preserve the directions action and validate the interactive map card at mobile, tablet and desktop widths.
