@@ -5,7 +5,6 @@ import { useEffect, useState, type ReactNode } from "react";
 import { useStore } from "@/lib/store";
 import { useI18n } from "@/lib/i18n";
 import { IconButton } from "@/components/ui/IconButton";
-import { isAdminRole } from "@/lib/accountAccess";
 import { LanguageSelector } from "./LanguageSelector";
 import { SearchIcon, UserIcon, HeartIcon, BagIcon } from "@/components/ui/Icons";
 
@@ -41,16 +40,16 @@ function IconLink({
 export function HeaderActions() {
   const { openCart, setSearchOpen, cartCount, favCount, hydrated } = useStore();
   const { t } = useI18n();
-  const [customer, setCustomer] = useState<{ name: string; role: string } | null>(null);
+  const [customer, setCustomer] = useState<{ name: string } | null>(null);
 
   useEffect(() => {
     let active = true;
     fetch("/api/auth/me", { credentials: "same-origin" })
       .then(async (response) => {
         if (!response.ok) return null;
-        const payload = await response.json() as { user?: { name?: unknown; role?: unknown } };
+        const payload = await response.json() as { user?: { name?: unknown } };
         if (typeof payload.user?.name !== "string") return null;
-        return { name: payload.user.name.trim(), role: typeof payload.user.role === "string" ? payload.user.role : "user" };
+        return { name: payload.user.name.trim() };
       })
       .catch(() => null)
       .then((value) => {
@@ -70,8 +69,8 @@ export function HeaderActions() {
       <LanguageSelector />
 
       <IconLink
-        href={isAdminRole(customer?.role) ? "/admin" : customer ? "/account" : "/account/login"}
-        label={isAdminRole(customer?.role) ? "Open admin panel" : customer ? `Account: ${customer.name}` : t("header.account")}
+        href={customer ? "/account" : "/account/login"}
+        label={customer ? `Account: ${customer.name}` : t("header.account")}
         className="hidden sm:grid"
       >
         <UserIcon />

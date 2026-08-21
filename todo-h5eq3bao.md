@@ -221,3 +221,6 @@
 - [x] Add private Account order history and Flower Circle ledger visibility for the signed-in customer.
 - [x] Add protected Flower Circle eligibility, ledger audit and aggregate analytics to Admin operations.
 - [x] Add full financial-scenario regression coverage, authenticated QA, responsive checks, build validation and production checkpoint.
+- [x] Make the shared header profile icon route every signed-in customer to their Account page rather than role-specific destinations.
+- [x] Keep Admin access as a separate, clearly labeled admin-only action without affecting standard Account navigation.
+- [x] Add role-aware navigation regression coverage and validate the fix with production build checks.
