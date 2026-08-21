@@ -191,3 +191,4 @@
 - [x] Diagnose and fix AI Bouquet live preview flower overflow so every selected flower remains visible inside the composition frame.
 - [x] Populate the AI Bouquet flower picker from all current and newly added catalog products classified as individual flowers, preserving selection, pricing and checkout behavior.
 - [x] Add focused regression coverage and validate AI Bouquet preview/picker behavior at mobile, tablet and desktop widths.
+- [x] Diagnose and repair Admin category deletion feedback and safe delete behavior when product dependencies exist or are absent.

@@ -40,6 +40,14 @@ describe("Operational Admin panel contract", () => {
     expect(source).toContain("tel:${order.customer.phone}");
   });
 
+  it("explains why a referenced category cannot be deleted and directs the manager to its products", () => {
+    expect(source).toContain("პროდუქტების ნახვა");
+    expect(source).toContain("უსაფრთხოებისთვის ეს კატეგორია ვერ წაიშლება");
+    expect(source).toContain("კატეგორია ცარიელია და მისი წაშლა შესაძლებელია.");
+    expect(source).toContain("reviewCategoryProducts");
+    expect(source).toContain("payload.productCount");
+  });
+
   it("provides live banner management and image selection through the existing protected media workflow", () => {
     expect(source).toContain("/api/admin/banners");
     expect(source).toContain("ბანერების მართვა");

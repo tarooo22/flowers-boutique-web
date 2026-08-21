@@ -211,13 +211,31 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
     finally { setBusy(null); }
   };
 
-  const deleteCategory = async (category: AdminCategory) => {
-    if (!window.confirm(`წავშალოთ „${category.nameKa}“? პროდუქტებიანი კატეგორია დაცულია და არ წაიშლება.`)) return;
+  const reviewCategoryProducts = (category: AdminCategory) => {
+    setTab("products");
+    setCategoryFilter(category.nameKa);
+    setQuery("");
+    setFeedback(`„${category.nameKa}“ კატეგორიის პროდუქტები გახსნილია. ჯერ გადაიტანეთ ისინი სხვა კატეგორიაში, შემდეგ შეძლებთ წაშლას.`);
+  };
+
+  const deleteCategory = async (category: AdminCategory, productCount: number) => {
+    if (productCount > 0) {
+      setFeedback(`„${category.nameKa}“ ვერ წაიშლება: მასზე მიბმულია ${productCount} პროდუქტი. ჯერ გადაიტანეთ პროდუქტები სხვა კატეგორიაში.`);
+      return;
+    }
+    if (!window.confirm(`წავშალოთ ცარიელი კატეგორია „${category.nameKa}“? ეს მოქმედება ვერ დაბრუნდება.`)) return;
     setBusy(`category:delete:${category.id}`); setFeedback(null);
     try {
       const response = await fetch(`/api/admin/categories?id=${encodeURIComponent(category.id)}`, { method: "DELETE" });
       const payload = await response.json();
-      if (!response.ok) throw new Error(payload.error ?? "delete_failed");
+      if (!response.ok) {
+        if (payload.error === "category_in_use") {
+          const currentCount = Number(payload.productCount ?? productCount);
+          setFeedback(`„${category.nameKa}“ ვერ წაიშალა: ამ დროს მასზე მიბმულია ${currentCount} პროდუქტი. ჯერ გადაიტანეთ ისინი სხვა კატეგორიაში.`);
+          return;
+        }
+        throw new Error(payload.error ?? "delete_failed");
+      }
       setCategories(payload.categories); setFeedback("კატეგორია წაიშალა.");
     } catch { setFeedback("კატეგორიის წაშლა ვერ მოხერხდა: ჯერ გადაიტანეთ მასზე მიბმული პროდუქტები სხვა კატეგორიაში."); }
     finally { setBusy(null); }
@@ -286,7 +304,7 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
       {demoCredentials ? <p className="mt-4 rounded-[var(--radius)] border border-[var(--action)]/30 bg-[var(--action)]/8 px-4 py-3 text-[12.5px] text-[var(--action-deep)]"><strong>Demo credentials are active.</strong> რეალური მენეჯერის წვდომისთვის გამოიყენეთ production administrator account.</p> : null}
       {feedback ? <div role="status" className="mt-4 rounded-[var(--radius)] border border-[var(--line-strong)] bg-[var(--surface)] px-4 py-3 text-[12.5px] text-[var(--muted)]">{feedback}</div> : null}
       {tab === "products" ? <ProductsWorkspace loading={loading} products={visibleProducts} query={query} setQuery={setQuery} availabilityFilter={availabilityFilter} setAvailabilityFilter={setAvailabilityFilter} categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter} categories={categorySummaries} patchProduct={patchProduct} onAdd={() => setCreatingProduct(true)} onEdit={setEditingProduct} onDelete={deleteProduct} busy={busy} /> : null}
-      {tab === "categories" ? <CategoriesWorkspace categories={categorySummaries} loading={loading} onCreate={() => setCreatingCategory(true)} onEdit={setEditingCategory} onDelete={deleteCategory} busy={busy} /> : null}
+      {tab === "categories" ? <CategoriesWorkspace categories={categorySummaries} loading={loading} onCreate={() => setCreatingCategory(true)} onEdit={setEditingCategory} onReviewProducts={reviewCategoryProducts} onDelete={deleteCategory} busy={busy} /> : null}
       {tab === "orders" ? <><OrdersAnalytics orders={orders} /><OrdersWorkspace loading={loading} orders={visibleOrders} allOrders={orders} query={query} setQuery={setQuery} statusFilter={statusFilter} setStatusFilter={setStatusFilter} openOrder={openOrder} setOpenOrder={setOpenOrder} setStatus={setStatus} busy={busy} /></> : null}
       {tab === "banners" ? <BannersWorkspace banners={banners} loading={loading} busy={busy} onCreate={() => setCreatingBanner(true)} onEdit={setEditingBanner} onDelete={deleteBanner} onToggle={(banner, active) => saveBanner({ placement: "homepage", titleKa: banner.titleKa, titleEn: banner.titleEn, subtitleKa: banner.subtitleKa, subtitleEn: banner.subtitleEn, ctaLabelKa: banner.ctaLabelKa, ctaLabelEn: banner.ctaLabelEn, ctaHref: banner.ctaHref, image: banner.imageUrl ? { id: `banner-${banner.id}`, url: banner.imageUrl, key: banner.imageKey, sortOrder: 0 } : null, active, sortOrder: banner.sortOrder }, banner.id)} /> : null}
       {tab === "settings" ? <LegacyNotice title="პარამეტრები" text="მიწოდების, გადახდისა და account security-ის კონფიგურაცია დაცულია. აქ არსებული სამუშაო ინსტრუმენტები storefront-ის ყოველდღიურ მართვას ემსახურება." /> : null}
@@ -305,9 +323,9 @@ function ProductsWorkspace({ loading, products, query, setQuery, availabilityFil
   </div>;
 }
 
-function CategoriesWorkspace({ categories, loading, onCreate, onEdit, onDelete, busy }: { categories: Array<{ category: AdminCategory; count: number }>; loading: boolean; onCreate: () => void; onEdit: (category: AdminCategory) => void; onDelete: (category: AdminCategory) => void; busy: string | null }) {
+function CategoriesWorkspace({ categories, loading, onCreate, onEdit, onReviewProducts, onDelete, busy }: { categories: Array<{ category: AdminCategory; count: number }>; loading: boolean; onCreate: () => void; onEdit: (category: AdminCategory) => void; onReviewProducts: (category: AdminCategory) => void; onDelete: (category: AdminCategory, productCount: number) => void; busy: string | null }) {
   return <div className="pt-7"><div className="flex flex-wrap items-end justify-between gap-4"><div><p className="mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--muted)]">Catalog structure</p><h2 className="mt-2 font-display text-[30px] leading-none">კატეგორიების მართვა</h2><p className="mt-2 text-sm text-[var(--muted)]">დაამატეთ, შეცვალეთ ან უსაფრთხოდ წაშალეთ კატეგორიები.</p></div><Button type="button" variant="dark" size="sm" onClick={onCreate}>+ ახალი კატეგორია</Button></div>
-    {loading ? <LoadingRows /> : <div className="mt-5 grid gap-3 md:grid-cols-2">{categories.map(({ category, count }) => <article key={category.id} className="rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] p-5 shadow-[var(--shadow-card)]"><div className="flex items-start justify-between gap-3"><div><p className="font-display text-[22px] leading-none">{category.nameKa}</p><p className="mt-1 text-[12px] text-[var(--muted)]">{category.nameEn} · /{category.slug}</p></div><span className="rounded-full bg-[var(--green-soft)] px-3 py-1 text-[11px] font-semibold text-[var(--green)]">{count} პროდუქტი</span></div><p className="mt-4 min-h-9 text-[12.5px] leading-relaxed text-[var(--muted)]">{category.descriptionKa || "აღწერა არ არის დამატებული."}</p><div className="mt-5 flex gap-2 border-t border-[var(--line)] pt-4"><button type="button" className={minorButton} onClick={() => onEdit(category)}>რედაქტირება</button><button type="button" disabled={busy === `category:delete:${category.id}`} className={`${minorButton} border-[var(--action)]/35 text-[var(--action-deep)] hover:bg-[var(--action)]/10 disabled:opacity-50`} onClick={() => onDelete(category)}>წაშლა</button></div></article>)}</div>}
+    {loading ? <LoadingRows /> : <div className="mt-5 grid gap-3 md:grid-cols-2">{categories.map(({ category, count }) => <article key={category.id} className="rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] p-5 shadow-[var(--shadow-card)]"><div className="flex items-start justify-between gap-3"><div><p className="font-display text-[22px] leading-none">{category.nameKa}</p><p className="mt-1 text-[12px] text-[var(--muted)]">{category.nameEn} · /{category.slug}</p></div><span className="rounded-full bg-[var(--green-soft)] px-3 py-1 text-[11px] font-semibold text-[var(--green)]">{count} პროდუქტი</span></div><p className="mt-4 min-h-9 text-[12.5px] leading-relaxed text-[var(--muted)]">{category.descriptionKa || "აღწერა არ არის დამატებული."}</p>{count > 0 ? <p className="mt-3 rounded-[var(--radius)] bg-[var(--surface-sand)] px-3 py-2 text-[11.5px] leading-relaxed text-[var(--muted)]">უსაფრთხოებისთვის ეს კატეგორია ვერ წაიშლება, სანამ მასზე {count} პროდუქტი არის მიბმული.</p> : <p className="mt-3 rounded-[var(--radius)] bg-[var(--green-soft)] px-3 py-2 text-[11.5px] leading-relaxed text-[var(--green)]">კატეგორია ცარიელია და მისი წაშლა შესაძლებელია.</p>}<div className="mt-5 flex flex-wrap gap-2 border-t border-[var(--line)] pt-4"><button type="button" className={minorButton} onClick={() => onEdit(category)}>რედაქტირება</button>{count > 0 ? <button type="button" className={minorButton} onClick={() => onReviewProducts(category)}>პროდუქტების ნახვა</button> : null}<button type="button" disabled={count > 0 || busy === `category:delete:${category.id}`} title={count > 0 ? `ჯერ გადაიტანეთ ${count} პროდუქტი სხვა კატეგორიაში` : undefined} className={`${minorButton} border-[var(--action)]/35 text-[var(--action-deep)] hover:bg-[var(--action)]/10 disabled:cursor-not-allowed disabled:opacity-45`} onClick={() => onDelete(category, count)}>წაშლა</button></div></article>)}</div>}
   </div>;
 }
 

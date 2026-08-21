@@ -205,7 +205,8 @@ export async function updateProductionAdminCategory(id: number, input: Partial<A
 export async function deleteProductionAdminCategory(id: number) {
   const database = getProductionDb();
   const linked = await database.select({ count: sql<number>`count(*)` }).from(products).where(eq(products.categoryId, id));
-  if (Number(linked[0]?.count ?? 0) > 0) throw new Error("category_in_use");
+  const productCount = Number(linked[0]?.count ?? 0);
+  if (productCount > 0) throw new Error(`category_in_use:${productCount}`);
   await database.delete(categories).where(eq(categories.id, id));
 }
 

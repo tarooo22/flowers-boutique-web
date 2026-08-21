@@ -63,7 +63,10 @@ export async function DELETE(request: Request) {
   try {
     await deleteProductionAdminCategory(id);
   } catch (error) {
-    if (error instanceof Error && error.message === "category_in_use") return NextResponse.json({ error: "category_in_use" }, { status: 409 });
+    if (error instanceof Error && error.message.startsWith("category_in_use:")) {
+      const productCount = Number(error.message.split(":")[1]) || 0;
+      return NextResponse.json({ error: "category_in_use", productCount }, { status: 409 });
+    }
     throw error;
   }
   return NextResponse.json({ categories: await listProductionAdminCategories() });

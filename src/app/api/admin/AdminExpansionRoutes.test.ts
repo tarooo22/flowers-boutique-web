@@ -37,6 +37,8 @@ describe("Admin expansion route contract", () => {
     expect(categoryRoute).toContain("updateProductionAdminCategory");
     expect(categoryRoute).toContain("deleteProductionAdminCategory");
     expect(categoryRoute).toContain("category_in_use");
+    expect(categoryRoute).toContain("productCount");
+    expect(productionAdmin).toContain("category_in_use:${productCount}");
   });
 
   it("accepts only managed media keys in product galleries", () => {
