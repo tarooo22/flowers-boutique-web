@@ -227,3 +227,8 @@
 - [x] Add an accessible profile dropdown with Account and Sign out actions for every signed-in customer.
 - [x] Show the Admin destination only for verified admin roles while keeping standard customers out of admin navigation.
 - [x] Add keyboard/outside-click regression coverage and validate the responsive profile dropdown with production build checks.
+- [x] Rebuild Account as a reference-inspired sidebar dashboard with responsive tab navigation and a Georgian-first interface.
+- [x] Surface real order history and Flower Circle activity in the Orders tab without changing customer data.
+- [x] Add profile, security, addresses, notifications and coupons panels with clear safe states for fields not yet supported by persisted data.
+- [x] Keep Admin access role-gated within the Account dashboard and preserve secure sign-out behavior.
+- [x] Add Account tab-state/data-boundary regression coverage, responsive QA and production build validation.
