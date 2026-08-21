@@ -207,6 +207,10 @@ const en: Dict = {
   // contact strip
   "cs.title": "Call us — we'll find your perfect bouquet",
   "cs.openNow": "Open now",
+  "cs.closedNow": "Closed now",
+  "cs.statusLoading": "Checking studio status",
+  "cs.tbilisiTime": "Tbilisi time",
+  "cs.hours": "Every day · 09:00–21:00",
   "cs.call": "Call",
 
   // footer
@@ -581,6 +585,10 @@ const ka: Dict = {
 
   "cs.title": "დაგვირეკე — ვიპოვით შენს იდეალურ თაიგულს",
   "cs.openNow": "ახლა ღიაა",
+  "cs.closedNow": "ახლა დაკეტილია",
+  "cs.statusLoading": "სტუდიის სტატუსი მოწმდება",
+  "cs.tbilisiTime": "თბილისის დრო",
+  "cs.hours": "ყოველდღე · 09:00–21:00",
   "cs.call": "დარეკვა",
 
   "footer.tagline":
@@ -950,6 +958,10 @@ const ru: Dict = {
 
   "cs.title": "Позвоните нам — подберём идеальный букет",
   "cs.openNow": "Сейчас открыто",
+  "cs.closedNow": "Сейчас закрыто",
+  "cs.statusLoading": "Проверяем статус студии",
+  "cs.tbilisiTime": "Время в Тбилиси",
+  "cs.hours": "Ежедневно · 09:00–21:00",
   "cs.call": "Позвонить",
 
   "footer.tagline":

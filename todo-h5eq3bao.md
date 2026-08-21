@@ -192,3 +192,9 @@
 - [x] Populate the AI Bouquet flower picker from all current and newly added catalog products classified as individual flowers, preserving selection, pricing and checkout behavior.
 - [x] Add focused regression coverage and validate AI Bouquet preview/picker behavior at mobile, tablet and desktop widths.
 - [x] Diagnose and repair Admin category deletion feedback and safe delete behavior when product dependencies exist or are absent.
+- [x] Redesign the shared contact/call-to-action strip without changing its phone and WhatsApp actions.
+- [x] Show a live, Georgian-language open/closed status using Asia/Tbilisi time and the 09:00–21:00 schedule.
+- [x] Add regression coverage and validate the revised contact strip at mobile, tablet and desktop widths.
+- [x] Redesign the AI Bouquet selected-flower preview as an animated circular composition with staged flower placement.
+- [x] Add a five-second generation state with a visible spinning progress treatment before revealing the AI Bouquet result.
+- [x] Add interaction regression coverage and responsive QA for the AI Bouquet preview/generation transition.

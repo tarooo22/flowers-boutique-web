@@ -11,6 +11,7 @@ import { PlusIcon, MinusIcon, CloseIcon, LeafIcon, StarIcon } from "@/components
 
 /** flat styling fee on top of the stems, matching the studio service */
 const STYLING_FEE = 20;
+const MIN_GENERATION_DURATION_MS = 5_000;
 
 export type LiveBuilderFlower = { key: string; name: string; price: number; asset: string };
 
@@ -44,6 +45,7 @@ export function AIBouquet({ flowers }: { flowers: LiveBuilderFlower[] }) {
     [selected, counts, note],
   );
   const stale = Boolean(image) && generatedFor !== null && generatedFor !== fingerprint;
+  const hasFreshResult = Boolean(image) && !stale;
 
   // rotate the progress messages while generating
   useEffect(() => {
@@ -72,6 +74,7 @@ export function AIBouquet({ flowers }: { flowers: LiveBuilderFlower[] }) {
     setLoading(true);
     setError(null);
     const snapshot = fingerprint;
+    const generationStartedAt = Date.now();
     try {
       const res = await fetch("/api/bouquet/generate", {
         method: "POST",
@@ -92,6 +95,10 @@ export function AIBouquet({ flowers }: { flowers: LiveBuilderFlower[] }) {
         setError(t("builder.aiError"));
         return;
       }
+      const remainingDuration = Math.max(0, MIN_GENERATION_DURATION_MS - (Date.now() - generationStartedAt));
+      if (remainingDuration) {
+        await new Promise((resolve) => window.setTimeout(resolve, remainingDuration));
+      }
       setImage(data.image);
       setMode(data.mode ?? "demo");
       setGeneratedFor(snapshot);
@@ -104,14 +111,28 @@ export function AIBouquet({ flowers }: { flowers: LiveBuilderFlower[] }) {
 
   const visible = onlySelected ? selected : flowers;
   const steps = [t("ai.step1"), t("ai.step2"), t("ai.step3")];
-  const previewColumns = Math.min(6, Math.max(2, Math.ceil(Math.sqrt(selected.length))));
+  const previewCardWidth =
+    selected.length <= 4 ? "23%" : selected.length <= 10 ? "16%" : selected.length <= 24 ? "11.5%" : "9%";
+  const circularPreview = selected.map((flower, index) => {
+    const ring = Math.floor(index / 10);
+    const indexInRing = index % 10;
+    const flowersInRing = Math.min(10, selected.length - ring * 10);
+    const radius = selected.length === 1 ? 0 : Math.min(46, selected.length <= 10 ? 32 : 18 + ring * 9);
+    const angle = (indexInRing / flowersInRing) * Math.PI * 2 - Math.PI / 2;
+    return {
+      flower,
+      index,
+      left: `${50 + Math.cos(angle) * radius}%`,
+      top: `${50 + Math.sin(angle) * radius}%`,
+    };
+  });
 
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-10">
       {/* ---------- preview stage ---------- */}
       <div className="lg:sticky lg:top-24 lg:self-start">
         <div className="relative mx-auto aspect-[4/5] w-full max-w-[520px] overflow-hidden rounded-[24px] border border-[var(--line)] bg-[radial-gradient(circle_at_50%_20%,#fff_0%,#fbf7f0_45%,#f0e7d9_100%)]">
-          {image ? (
+          {image && !stale ? (
             <Image
               src={image}
               alt={t("builder.aiResult")}
@@ -123,27 +144,34 @@ export function AIBouquet({ flowers }: { flowers: LiveBuilderFlower[] }) {
           ) : selected.length ? (
             <div
               data-testid="ai-composition-preview"
-              className="absolute inset-[9%] grid min-h-0 gap-1.5 sm:gap-2"
-              style={{
-                gridTemplateColumns: `repeat(${previewColumns}, minmax(0, 1fr))`,
-                gridAutoRows: "minmax(0, 1fr)",
-              }}
+              aria-label={t("ai.selectFlowers")}
+              className={`absolute inset-[7%] overflow-hidden rounded-full border border-white/80 bg-white/30 shadow-inner ${loading ? "fb-bouquet-stage--generating" : ""}`}
             >
-              {selected.map((f) => (
+              <span className="absolute inset-[14%] rounded-full border border-dashed border-[var(--action)]/25" aria-hidden="true" />
+              <span className="absolute inset-[30%] rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.92)_0%,rgba(255,255,255,0.18)_70%)]" aria-hidden="true" />
+              {circularPreview.map(({ flower: f, index, left, top }) => (
                 <div
                   key={f.key}
                   data-testid="ai-composition-cell"
-                  className="relative min-h-0 overflow-hidden rounded-[18px] border border-white/80 bg-white/72 shadow-[0_8px_16px_rgba(65,41,27,0.10)]"
+                  className="fb-bouquet-card absolute aspect-[3/4] overflow-hidden rounded-[14px] border border-white/85 bg-white/85 shadow-[0_10px_20px_rgba(65,41,27,0.13)]"
+                  style={{
+                    left,
+                    top,
+                    width: previewCardWidth,
+                    transform: "translate(-50%, -50%)",
+                    animationDelay: `${Math.min(index * 75, 900)}ms`,
+                    zIndex: index + 2,
+                  }}
                 >
                   <Image
                     src={f.asset}
                     alt={f.name}
                     fill
-                    sizes="(max-width: 640px) 18vw, 72px"
-                    className="object-contain p-[10%] transition-transform duration-300"
+                    sizes="(max-width: 640px) 20vw, 92px"
+                    className="object-contain p-[8%]"
                     unoptimized
                   />
-                  <span className="mono absolute right-1.5 top-1.5 rounded-full bg-[var(--ink)] px-1.5 py-0.5 text-[10px] font-bold text-white shadow-sm">
+                  <span className="mono absolute right-1 top-1 rounded-full bg-[var(--ink)] px-1.5 py-0.5 text-[9px] font-bold text-white shadow-sm">
                     {counts[f.key]}
                   </span>
                 </div>
@@ -164,9 +192,9 @@ export function AIBouquet({ flowers }: { flowers: LiveBuilderFlower[] }) {
 
           {/* generating overlay */}
           {loading ? (
-            <div className="absolute inset-0 grid place-items-center bg-white/80 backdrop-blur-sm">
-              <div className="text-center">
-                <div className="mx-auto h-11 w-11 animate-spin rounded-full border-2 border-[var(--line-strong)] border-t-[var(--action)]" />
+            <div aria-busy="true" className="absolute inset-0 grid place-items-center bg-[var(--ink)]/18 backdrop-blur-[1px]">
+              <div className="rounded-full border border-white/70 bg-white/90 px-7 py-6 text-center shadow-[var(--shadow-float)]">
+                <div className="mx-auto h-12 w-12 animate-spin rounded-full border-2 border-[var(--line-strong)] border-t-[var(--action)]" />
                 <p className="mt-4 text-[13.5px] font-semibold text-[var(--ink)]">
                   {steps[step]}
                 </p>
@@ -353,7 +381,7 @@ export function AIBouquet({ flowers }: { flowers: LiveBuilderFlower[] }) {
 
           <div className="mt-4 grid gap-2">
             <Button
-              variant={image && !stale ? "outline" : "primary"}
+              variant={hasFreshResult ? "outline" : "primary"}
               size="lg"
               fullWidth
               disabled={loading || totalStems === 0}
