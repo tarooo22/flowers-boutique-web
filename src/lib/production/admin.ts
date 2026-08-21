@@ -82,6 +82,11 @@ export async function listProductionAdminOrders() {
     subtotal: Math.max(0, toNumber(order.totalPrice) - toNumber(order.deliveryFee)),
     delivery: toNumber(order.deliveryFee),
     total: toNumber(order.totalPrice),
+    flowerCircle: {
+      eligible: ["processing", "courier", "delivered"].includes(order.deliveryStatus ?? ""),
+      discount: toNumber(order.flowerCircleDiscount),
+      earned: toNumber(order.flowerCircleEarned),
+    },
   }));
 }
 

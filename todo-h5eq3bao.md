@@ -219,5 +219,5 @@
 - [x] Add idempotent order-status processing so confirmed/delivering/completed orders earn benefits once and cancelled/refunded orders reverse them safely.
 - [x] Add Checkout benefit redemption with server-side discount recomputation and protected order-level audit fields.
 - [x] Add private Account order history and Flower Circle ledger visibility for the signed-in customer.
-- [ ] Add protected Flower Circle eligibility, ledger audit and aggregate analytics to Admin operations.
-- [ ] Add full financial-scenario regression coverage, authenticated QA, responsive checks, build validation and production checkpoint.
+- [x] Add protected Flower Circle eligibility, ledger audit and aggregate analytics to Admin operations.
+- [x] Add full financial-scenario regression coverage, authenticated QA, responsive checks, build validation and production checkpoint.

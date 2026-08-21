@@ -5538,3 +5538,66 @@
 [2026-08-21T18:20:19.714Z] GET /manus-storage/img_7347_8b70b6a5_904b94c3.webp 307 in 57ms (next.js: 4ms, application-code: 53ms)
 [2026-08-21T18:20:19.717Z] GET /manus-storage/fb-journal-care-v2_236c8f7f.jpg 307 in 48ms (next.js: 2ms, application-code: 46ms)
 [2026-08-21T18:20:19.719Z] GET /manus-storage/img_7356_d8c86f08_198aa88a.webp 307 in 50ms (next.js: 1.1ms, application-code: 49ms)
+[2026-08-21T18:35:55.998Z] GET / 200 in 1957ms (next.js: 138ms, application-code: 1819ms)
+[2026-08-21T18:35:56.245Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 202ms (next.js: 64ms, application-code: 138ms)
+[2026-08-21T18:35:56.289Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 154ms (next.js: 1.9ms, application-code: 152ms)
+[2026-08-21T18:35:56.292Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 248ms (next.js: 76ms, application-code: 171ms)
+[2026-08-21T18:35:56.304Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 169ms (next.js: 8ms, application-code: 160ms)
+[2026-08-21T18:35:56.307Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 172ms (next.js: 5ms, application-code: 166ms)
+[2026-08-21T18:35:56.312Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 164ms (next.js: 1.2ms, application-code: 163ms)
+[2026-08-21T18:35:56.594Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 47ms (next.js: 1.3ms, application-code: 46ms)
+[2026-08-21T18:35:56.616Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 55ms (next.js: 12ms, application-code: 42ms)
+[2026-08-21T18:35:56.624Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 45ms (next.js: 4ms, application-code: 42ms)
+[2026-08-21T18:35:56.627Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 48ms (next.js: 1.4ms, application-code: 47ms)
+[2026-08-21T18:35:56.639Z] GET /manus-storage/editorial-collection_fd67f2f1.webp 307 in 45ms (next.js: 1.4ms, application-code: 43ms)
+[2026-08-21T18:36:00.179Z] GET /?from_webdev=1 200 in 164ms (next.js: 1.7ms, application-code: 162ms)
+[2026-08-21T18:36:00.479Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 54ms (next.js: 9ms, application-code: 45ms)
+[2026-08-21T18:36:00.485Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 47ms (next.js: 1.1ms, application-code: 46ms)
+[2026-08-21T18:36:04.379Z] HEAD / 200 in 180ms (next.js: 2ms, application-code: 178ms)
+[2026-08-21T18:36:05.118Z] GET /?from_webdev=1 200 in 181ms (next.js: 1.7ms, application-code: 179ms)
+[2026-08-21T18:36:05.493Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 161ms (next.js: 10ms, application-code: 151ms)
+[2026-08-21T18:36:05.521Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 173ms (next.js: 1.0ms, application-code: 172ms)
+[2026-08-21T18:38:05.724Z] GET /?from_webdev=1 200 in 85ms (next.js: 3ms, application-code: 82ms)
+[2026-08-21T18:38:06.454Z] GET /?from_webdev=1 200 in 722ms (next.js: 1.4ms, application-code: 721ms)
+[2026-08-21T18:38:06.823Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 149ms (next.js: 1.6ms, application-code: 148ms)
+[2026-08-21T18:38:06.824Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 164ms (next.js: 10ms, application-code: 154ms)
+[2026-08-21T18:38:09.233Z] HEAD / 200 in 153ms (next.js: 1.5ms, application-code: 152ms)
+[2026-08-21T18:38:10.094Z] GET /?from_webdev=1 200 in 160ms (next.js: 1.6ms, application-code: 159ms)
+[2026-08-21T18:38:10.574Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 54ms (next.js: 13ms, application-code: 41ms)
+[2026-08-21T18:38:10.588Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 50ms (next.js: 1.6ms, application-code: 48ms)
+[2026-08-21T18:39:36.109Z] GET /?from_webdev=1 200 in 988ms (next.js: 2ms, application-code: 986ms)
+[2026-08-21T18:39:36.710Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 140ms (next.js: 1.2ms, application-code: 139ms)
+[2026-08-21T18:39:36.711Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 160ms (next.js: 13ms, application-code: 147ms)
+[2026-08-21T18:39:39.657Z] HEAD / 200 in 152ms (next.js: 1.8ms, application-code: 150ms)
+[2026-08-21T18:39:41.101Z] GET /?from_webdev=1 200 in 159ms (next.js: 1.6ms, application-code: 157ms)
+[2026-08-21T18:39:41.490Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 151ms (next.js: 1.3ms, application-code: 149ms)
+[2026-08-21T18:39:41.552Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 231ms (next.js: 13ms, application-code: 218ms)
+[2026-08-21T18:40:21.686Z] GET /account 307 in 1396ms (next.js: 1241ms, application-code: 155ms)
+[2026-08-21T18:40:21.783Z] GET /checkout 200 in 1489ms (next.js: 29ms, application-code: 1459ms)
+[2026-08-21T18:40:21.834Z] GET /account/login?next=/account 200 in 145ms (next.js: 15ms, application-code: 130ms)
+[2026-08-21T18:40:21.847Z] ⚠ Blocked cross-origin request to Next.js dev resource /_next/static/chunks/src_components_checkout_CheckoutView_tsx_0lh70cy._.js from "127.0.0.1".
+[2026-08-21T18:40:21.847Z] Cross-origin access to Next.js dev resources is blocked by default for safety.
+[2026-08-21T18:40:21.847Z] To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+[2026-08-21T18:40:21.847Z] // next.config.js
+[2026-08-21T18:40:21.847Z] module.exports = {
+[2026-08-21T18:40:21.847Z] allowedDevOrigins: ['127.0.0.1'],
+[2026-08-21T18:40:21.847Z] }
+[2026-08-21T18:40:21.847Z] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[2026-08-21T18:40:21.992Z] ⚠ Blocked cross-origin request to Next.js dev resource /_next/static/chunks/src_19leuld._.js from "127.0.0.1".
+[2026-08-21T18:40:21.993Z] Cross-origin access to Next.js dev resources is blocked by default for safety.
+[2026-08-21T18:40:21.993Z] To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+[2026-08-21T18:40:21.993Z] // next.config.js
+[2026-08-21T18:40:21.993Z] module.exports = {
+[2026-08-21T18:40:21.993Z] allowedDevOrigins: ['127.0.0.1'],
+[2026-08-21T18:40:21.993Z] }
+[2026-08-21T18:40:21.993Z] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[2026-08-21T18:40:44.582Z] GET /?from_webdev=1 200 in 159ms (next.js: 8ms, application-code: 151ms)
+[2026-08-21T18:40:44.919Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 138ms (next.js: 15ms, application-code: 124ms)
+[2026-08-21T18:40:44.956Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 155ms (next.js: 0.9ms, application-code: 155ms)
+[2026-08-21T18:40:47.690Z] HEAD / 200 in 181ms (next.js: 2ms, application-code: 179ms)
+[2026-08-21T18:40:49.095Z] GET /?from_webdev=1 200 in 166ms (next.js: 1.8ms, application-code: 165ms)
+[2026-08-21T18:40:49.452Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 154ms (next.js: 12ms, application-code: 143ms)
+[2026-08-21T18:40:49.464Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 148ms (next.js: 1.5ms, application-code: 146ms)
+[2026-08-21T18:40:51.960Z] GET /api/account/orders 401 in 361ms (next.js: 307ms, application-code: 54ms)
+[2026-08-21T18:48:06.854Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 156ms (next.js: 24ms, application-code: 132ms)
+[2026-08-21T18:48:06.903Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 204ms (next.js: 31ms, application-code: 173ms)
