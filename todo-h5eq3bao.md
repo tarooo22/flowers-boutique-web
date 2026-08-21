@@ -224,3 +224,6 @@
 - [x] Make the shared header profile icon route every signed-in customer to their Account page rather than role-specific destinations.
 - [x] Keep Admin access as a separate, clearly labeled admin-only action without affecting standard Account navigation.
 - [x] Add role-aware navigation regression coverage and validate the fix with production build checks.
+- [x] Add an accessible profile dropdown with Account and Sign out actions for every signed-in customer.
+- [x] Show the Admin destination only for verified admin roles while keeping standard customers out of admin navigation.
+- [x] Add keyboard/outside-click regression coverage and validate the responsive profile dropdown with production build checks.
