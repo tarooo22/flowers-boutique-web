@@ -194,15 +194,24 @@ export function AboutView() {
       <section id="contact" className="container-fb pt-14">
         <Reveal direction="zoom">
           <div className="grid overflow-hidden rounded-[var(--radius-lg)] border md:grid-cols-2">
-            <div className="relative min-h-[260px]">
+            <div className="relative min-h-[280px] overflow-hidden bg-[var(--surface-warm)] sm:min-h-[360px]">
               <Image
-                src="/manus-storage/editorial-collection_fd67f2f1.webp"
-                alt=""
+                src={brand.mapImageUrl}
+                alt={`${brand.addressFull} map`}
                 fill
                 unoptimized
                 sizes="(max-width:768px) 100vw, 50vw"
-                className="object-cover"
+                className="object-cover object-center"
               />
+              <a
+                href={brand.directionsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute bottom-4 left-4 inline-flex h-10 items-center gap-2 rounded-[var(--radius-sm)] bg-[var(--ink)] px-4 text-[13px] font-semibold text-white shadow-[var(--shadow-float)] transition hover:bg-[var(--ink-2)]"
+              >
+                <PinIcon className="h-4 w-4" />
+                {t("about.getDirections")}
+              </a>
             </div>
 
             <div className="bg-[var(--surface)] px-6 py-8 sm:px-9 sm:py-10">
@@ -257,24 +266,6 @@ export function AboutView() {
               </p>
             </div>
 
-            <div className="relative min-h-[250px] border-t border-[var(--line)] bg-[var(--surface-warm)] md:col-span-2 sm:min-h-[320px]">
-              <iframe
-                title={`${brand.name} map`}
-                src={brand.mapEmbedUrl}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="absolute inset-0 h-full w-full border-0 grayscale-[0.12]"
-              />
-              <a
-                href={brand.directionsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="absolute bottom-4 left-4 inline-flex h-10 items-center gap-2 rounded-[var(--radius-sm)] bg-[var(--ink)] px-4 text-[13px] font-semibold text-white shadow-[var(--shadow-float)] transition hover:bg-[var(--ink-2)]"
-              >
-                <PinIcon className="h-4 w-4" />
-                {t("about.getDirections")}
-              </a>
-            </div>
           </div>
         </Reveal>
       </section>

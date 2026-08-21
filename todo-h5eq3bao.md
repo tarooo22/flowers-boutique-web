@@ -200,3 +200,9 @@
 - [x] Add interaction regression coverage and responsive QA for the AI Bouquet preview/generation transition.
 - [x] Replace the bouquet visual in the shared contact section with an accessible studio-location map while preserving contact details and actions.
 - [x] Add regression coverage and validate the map-based contact layout at mobile, tablet and desktop widths.
+- [x] Restore the compact first-reference ContactStrip structure and remove the oversized lower map layout.
+- [x] Place the studio map exclusively in the former left bouquet-visual area while preserving live status and Call/WhatsApp actions on the right.
+- [x] Add regression coverage and validate the corrected compact map/contact layout at mobile, tablet and desktop widths.
+- [x] Restore ContactStrip to the compact dark-left/cream-right first-reference layout without an embedded map.
+- [x] Replace only the About contact card bouquet visual with the centralized studio map and remove its separate full-width lower map panel.
+- [x] Add regression coverage and validate the corrected ContactStrip and About map card at mobile, tablet and desktop widths.
