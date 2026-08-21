@@ -129,6 +129,31 @@ export const authSessions = mysqlTable("authSessions", {
   revokedAt: timestamp("revokedAt"),
 });
 
+/** Customer-owned delivery address book. Data is accessed only through the authenticated Account APIs. */
+export const customerAddresses = mysqlTable("customerAddresses", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  label: varchar("label", { length: 80 }).notNull(),
+  recipientName: varchar("recipientName", { length: 120 }).notNull(),
+  phone: varchar("phone", { length: 32 }),
+  city: varchar("city", { length: 80 }).notNull().default("თბილისი"),
+  address: text("address").notNull(),
+  instructions: text("instructions"),
+  isDefault: boolean("isDefault").notNull().default(false),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => [index("customerAddresses_user_updated_index").on(table.userId, table.updatedAt)]);
+
+/** One preference row per customer; operational order updates stay enabled by default. */
+export const customerNotificationPreferences = mysqlTable("customerNotificationPreferences", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  orderUpdates: boolean("orderUpdates").notNull().default(true),
+  flowerCircleUpdates: boolean("flowerCircleUpdates").notNull().default(true),
+  editorialUpdates: boolean("editorialUpdates").notNull().default(false),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => [uniqueIndex("customerNotificationPreferences_user_unique").on(table.userId)]);
+
 function createProductionDb(url: string) {
   return drizzle({ client: createPool(url) });
 }

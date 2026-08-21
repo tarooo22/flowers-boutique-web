@@ -232,3 +232,7 @@
 - [x] Add profile, security, addresses, notifications and coupons panels with clear safe states for fields not yet supported by persisted data.
 - [x] Keep Admin access role-gated within the Account dashboard and preserve secure sign-out behavior.
 - [x] Add Account tab-state/data-boundary regression coverage, responsive QA and production build validation.
+- [x] Persist authenticated customer profile fields and provide validated self-service editing limited to the session owner.
+- [x] Add an owner-scoped address book with create, edit, default selection and delete operations for multiple delivery addresses.
+- [x] Persist customer notification preferences and provide independent order, Flower Circle and editorial communication controls.
+- [x] Add Account API ownership/validation regression coverage, responsive form QA and production build validation.

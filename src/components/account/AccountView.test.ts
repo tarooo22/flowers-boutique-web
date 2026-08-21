@@ -20,4 +20,12 @@ describe("Account dashboard", () => {
     expect(source).toContain('fetch("/api/auth/logout"');
     expect(source).toContain('fetch("/api/admin/login"');
   });
+
+  it("renders owner-editable profile, address-book and notification preference controls", () => {
+    expect(source).toContain('fetch("/api/account/profile"');
+    expect(source).toContain('fetch("/api/account/addresses"');
+    expect(source).toContain('fetch("/api/account/notifications"');
+    expect(source).toContain('მიამართის დამატება'.replace('მიამართ', 'მისამართ'));
+    expect(source).toContain('პარამეტრების შენახვა');
+  });
 });
