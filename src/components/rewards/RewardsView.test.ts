@@ -23,8 +23,9 @@ describe("Rewards locale contract", () => {
     expect(source).toContain("readPersistedLocale");
     expect(source).toContain('window.addEventListener(LANGUAGE_CHANGE_EVENT, syncLocale)');
     expect(source).toContain('document.title = `${t("rewards.metaTitle")} · Flower\'s Boutique`');
-    expect(source).not.toContain(">Rewards in petals<");
-    expect(source).not.toContain(">Start earning — shop bouquets<");
+    expect(source).toContain('role="progressbar"');
+    expect(source).toContain('pct: "5%"');
+    expect(source).not.toContain('pct: "8%"');
   });
 
   it("provides full Georgian and English Rewards copy without falling back to English", () => {
@@ -33,8 +34,10 @@ describe("Rewards locale contract", () => {
       expect(translations.ka[key]).toBeTruthy();
     }
 
-    expect(translations.ka["rewards.title"]).toBe("ქეშბექი ფურცლებით");
-    expect(translations.ka["rewards.cta"]).toBe("დაიწყე დაგროვება — აირჩიე თაიგული");
-    expect(translations.en["rewards.title"]).toBe("Rewards in petals");
+    expect(translations.ka["rewards.title"]).toBe("მცირე მადლობა, ყოველი დაბრუნებისთვის");
+    expect(translations.ka["rewards.cta"]).toBe("აირჩიე თაიგული");
+    expect(translations.en["rewards.metaTitle"]).toBe("Flower Circle");
+    expect(translations.en["rewards.tier4Note"]).toContain("5%");
+    expect(translations.ka["marquee.cashback"]).toBe("სარგებელი 5%-მდე");
   });
 });

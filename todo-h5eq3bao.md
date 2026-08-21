@@ -208,3 +208,6 @@
 - [x] Add regression coverage and validate the corrected ContactStrip and About map card at mobile, tablet and desktop widths.
 - [x] Replace the About contact card static map image with an interactive embedded map that supports pan and zoom.
 - [x] Preserve the directions action and validate the interactive map card at mobile, tablet and desktop widths.
+- [x] Reframe the Rewards page as an original Flower’s Boutique loyalty concept with a new Georgian name and independent copy.
+- [x] Replace the imported-looking cashback tiers and examples with a coherent maximum 5% loyalty benefit structure.
+- [x] Preserve real loyalty calculations, add regression coverage, and validate the redesigned page at mobile, tablet and desktop widths.
