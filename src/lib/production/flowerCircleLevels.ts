@@ -21,6 +21,11 @@ function toMoney(value: unknown) {
   return Number.isFinite(parsed) && parsed > 0 ? Math.round(parsed * 100) / 100 : 0;
 }
 
+export function calculateFlowerCircleRedemption(availableBenefit: number, subtotal: number, requested: boolean) {
+  if (!requested) return 0;
+  return Math.min(toMoney(availableBenefit), Math.round(toMoney(subtotal) * 0.3 * 100) / 100);
+}
+
 export function summarizeFlowerCircle(eligibleSpend: number, eligibleOrderCount: number): FlowerCircleSummary {
   const spend = toMoney(eligibleSpend);
   const currentIndex = FLOWER_CIRCLE_LEVELS.reduce(

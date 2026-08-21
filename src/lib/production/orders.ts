@@ -1,7 +1,8 @@
 import "server-only";
 
 import { and, eq, inArray, sql } from "drizzle-orm";
-import { getProductionDb, orders, products } from "@/lib/production/db";
+import { flowerCircleLedger, getProductionDb, orders, products } from "@/lib/production/db";
+import { calculateFlowerCircleRedemption, getFlowerCircleBalance } from "@/lib/production/flowerCircle";
 
 type CustomerInput = {
   name: string;
@@ -23,6 +24,7 @@ export type NextOrderInput = {
   customer: CustomerInput;
   items: Array<ProductLine | CustomLine>;
   userId?: number | null;
+  useFlowerCircleBenefit?: boolean;
 };
 
 function text(value: unknown, max: number) {
@@ -93,12 +95,15 @@ export async function createProductionOrder(input: NextOrderInput) {
 
   const subtotal = items.reduce((sum, item) => sum + item.total, 0);
   const deliveryFee = customer.fulfillment === "studio_pickup" || subtotal >= 150 ? 0 : 15;
-  const total = subtotal + deliveryFee;
+  const userId = Number.isSafeInteger(input.userId) && Number(input.userId) > 0 ? Number(input.userId) : null;
+  const benefitDiscount = userId ? calculateFlowerCircleRedemption(await getFlowerCircleBalance(userId), subtotal, input.useFlowerCircleBenefit === true) : 0;
+  const total = subtotal - benefitDiscount + deliveryFee;
   const db = getProductionDb();
-  const numberRow = await db.select({ latest: sql<number>`coalesce(max(${orders.orderNumber}), 600000)` }).from(orders);
-  const orderNumber = Number(numberRow[0]?.latest ?? 600000) + 1;
-  await db.insert(orders).values({
-    userId: Number.isSafeInteger(input.userId) && Number(input.userId) > 0 ? Number(input.userId) : null,
+  const orderNumber = await db.transaction(async (tx) => {
+    const numberRow = await tx.select({ latest: sql<number>`coalesce(max(${orders.orderNumber}), 600000)` }).from(orders);
+    const nextOrderNumber = Number(numberRow[0]?.latest ?? 600000) + 1;
+    const result = await tx.insert(orders).values({
+    userId,
     customerName: customer.name,
     customerEmail: customer.email || null,
     customerPhone: customer.phone,
@@ -109,13 +114,22 @@ export async function createProductionOrder(input: NextOrderInput) {
     notes: customer.notes || null,
     items,
     totalPrice: String(total),
+    subtotalBeforeBenefit: String(subtotal),
+    flowerCircleDiscount: String(benefitDiscount),
     deliveryFee: String(deliveryFee),
-    orderNumber,
+    orderNumber: nextOrderNumber,
     orderChannel: "website",
     paymentMethod: "cash",
     paymentStatus: "pending",
     deliveryStatus: "new",
     fulfillmentType: customer.fulfillment === "studio_pickup" ? "pickup" : "delivery",
+    });
+    const orderId = Number(result[0]?.insertId);
+    if (!Number.isSafeInteger(orderId) || orderId <= 0) throw new Error("order_creation_failed");
+    if (userId && benefitDiscount > 0) {
+      await tx.insert(flowerCircleLedger).values({ userId, orderId, eventKey: `redeem:${orderId}`, type: "redeem", amount: String(-benefitDiscount), status: "posted", note: "Applied in Checkout" });
+    }
+    return nextOrderNumber;
   });
-  return { id: `FLR-${orderNumber}`, orderNumber, subtotal, deliveryFee, total };
+  return { id: `FLR-${orderNumber}`, orderNumber, subtotal, deliveryFee, flowerCircleDiscount: benefitDiscount, total };
 }

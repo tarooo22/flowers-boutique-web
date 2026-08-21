@@ -10,7 +10,11 @@ describe("Checkout fulfillment persistence contract", () => {
     expect(source).toContain('customer.fulfillment === "delivery" && !customer.address');
     expect(source).toContain('customer.fulfillment === "studio_pickup" || subtotal >= 150 ? 0 : 15');
     expect(source).toContain('customer.fulfillment === "studio_pickup" ? "pickup" : "delivery"');
-    expect(source).toContain("userId: Number.isSafeInteger(input.userId)");
+    expect(source).toContain("const userId = Number.isSafeInteger(input.userId)");
+    expect(source).toContain("calculateFlowerCircleRedemption");
+    expect(source).toContain("subtotalBeforeBenefit: String(subtotal)");
+    expect(source).toContain("flowerCircleDiscount: String(benefitDiscount)");
+    expect(source).toContain('eventKey: `redeem:${orderId}`');
     expect(orderRoute).toContain("getProductionSessionUser");
     expect(orderRoute).toContain("userId: sessionUser?.id ?? null");
   });

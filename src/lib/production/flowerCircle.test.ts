@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
-import { summarizeFlowerCircle } from "./flowerCircleLevels";
+import { calculateFlowerCircleRedemption, summarizeFlowerCircle } from "./flowerCircleLevels";
 
 const serverSource = readFileSync(new URL("./flowerCircle.ts", import.meta.url), "utf8");
 
@@ -16,10 +16,17 @@ describe("Flower Circle real-order summary", () => {
     expect(summarizeFlowerCircle(164, 1)).toMatchObject({ remainingToNextLevel: 1336, progressPercent: 10.9 });
   });
 
+  it("caps redemption to the lower of available benefit and 30 percent of product subtotal", () => {
+    expect(calculateFlowerCircleRedemption(100, 200, true)).toBe(60);
+    expect(calculateFlowerCircleRedemption(20, 200, true)).toBe(20);
+    expect(calculateFlowerCircleRedemption(20, 200, false)).toBe(0);
+  });
+
   it("restricts persisted and legacy orders to the authenticated owner while excluding unconfirmed statuses", () => {
     expect(serverSource).toContain("eq(orders.userId, user.id)");
     expect(serverSource).toContain("isNull(orders.userId)");
     expect(serverSource).toContain("eq(orders.customerEmail, legacyEmail)");
     expect(serverSource).toContain('inArray(orders.deliveryStatus, ELIGIBLE_DELIVERY_STATUSES)');
+    expect(serverSource).toContain('"processing", "courier", "delivered"');
   });
 });

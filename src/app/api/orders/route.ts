@@ -14,12 +14,13 @@ export async function POST(request: Request) {
   }
 
   try {
-    const payload = body as { customer?: unknown; items?: unknown };
+    const payload = body as { customer?: unknown; items?: unknown; useFlowerCircleBenefit?: unknown };
     const sessionUser = await getProductionSessionUser();
     const order = await createProductionOrder({
       customer: (payload.customer ?? {}) as never,
       items: Array.isArray(payload.items) ? payload.items.slice(0, 60) as never : [],
       userId: sessionUser?.id ?? null,
+      useFlowerCircleBenefit: payload.useFlowerCircleBenefit === true,
     });
     return NextResponse.json(order, { status: 201 });
   } catch (error) {

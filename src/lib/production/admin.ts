@@ -2,6 +2,7 @@ import "server-only";
 
 import { asc, desc, eq, sql } from "drizzle-orm";
 import { adminMediaAssets, banners, categories, getProductionDb, orders, productImages, products } from "@/lib/production/db";
+import { syncFlowerCircleOrderStatus } from "@/lib/production/flowerCircle";
 
 const toNumber = (value: unknown) => Number(value ?? 0) || 0;
 
@@ -353,5 +354,11 @@ export async function updateProductionOrderStatus(publicId: string, status: stri
   const map: Record<string, string> = { new: "new", confirmed: "processing", delivering: "courier", completed: "delivered", cancelled: "cancelled" };
   const deliveryStatus = map[status];
   if (!deliveryStatus) throw new Error("invalid_input");
-  await getProductionDb().update(orders).set({ deliveryStatus }).where(eq(orders.orderNumber, orderNumber));
+  const database = getProductionDb();
+  await database.transaction(async (tx) => {
+    const order = (await tx.select({ id: orders.id }).from(orders).where(eq(orders.orderNumber, orderNumber)).limit(1))[0];
+    if (!order) throw new Error("order_not_found");
+    await tx.update(orders).set({ deliveryStatus }).where(eq(orders.id, order.id));
+    await syncFlowerCircleOrderStatus(tx, order.id);
+  });
 }

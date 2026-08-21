@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { formatPrice } from "@/lib/format";
 
 export function AccountView({
   name,
@@ -16,6 +17,7 @@ export function AccountView({
 }) {
   const router = useRouter();
   const [signingOut, setSigningOut] = useState(false);
+  const [history, setHistory] = useState<any>(null);
   const displayName = name?.trim() || "there";
 
   async function signOut() {
@@ -25,6 +27,12 @@ export function AccountView({
     router.replace("/");
     router.refresh();
   }
+
+  useEffect(() => {
+    let active = true;
+    fetch("/api/account/orders", { cache: "no-store" }).then((response) => response.ok ? response.json() : null).then((payload) => { if (active) setHistory(payload); }).catch(() => { if (active) setHistory(null); });
+    return () => { active = false; };
+  }, []);
 
   return (
     <div className="container-fb pt-14 pb-28">
@@ -48,6 +56,11 @@ export function AccountView({
           </Button>
         </div>
       </section>
+      <section className="mx-auto mt-5 grid w-full max-w-3xl gap-5 md:grid-cols-2">
+        <article className="rounded-[var(--radius-lg)] border bg-[var(--surface)] p-6"><p className="mono text-[10px] uppercase tracking-[0.15em] text-[var(--muted)]">Flower Circle</p><p className="mt-3 text-[32px] font-bold text-[var(--green)]">{history?.summary ? `${history.summary.benefitPercent}%` : "—"}</p><p className="mt-2 text-[13px] leading-relaxed text-[var(--muted)]">{history?.summary ? `${formatPrice(history.summary.availableBenefit)} available benefit · ${formatPrice(history.summary.eligibleSpend)} eligible confirmed orders` : "Your real order history is loading securely."}</p></article>
+        <article className="rounded-[var(--radius-lg)] border bg-[var(--surface)] p-6"><p className="mono text-[10px] uppercase tracking-[0.15em] text-[var(--muted)]">Recent orders</p><div className="mt-3 grid gap-2">{history?.orders?.length ? history.orders.map((order: any) => <div key={order.id} className="flex items-center justify-between gap-3 rounded-[var(--radius)] bg-[var(--surface-warm)] px-3 py-2.5 text-[12px]"><span className="font-semibold">{order.id}</span><span className="text-[var(--muted)]">{order.status}</span><span className="font-semibold">{formatPrice(order.total)}</span></div>) : <p className="text-[13px] text-[var(--muted)]">Your confirmed orders will appear here.</p>}</div></article>
+      </section>
+      <section className="mx-auto mt-5 w-full max-w-3xl rounded-[var(--radius-lg)] border bg-[var(--surface)] p-6"><p className="mono text-[10px] uppercase tracking-[0.15em] text-[var(--muted)]">Flower Circle activity</p><div className="mt-3 grid gap-2">{history?.ledger?.length ? history.ledger.map((event: any) => <div key={event.id} className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius)] bg-[var(--surface-warm)] px-3 py-2.5 text-[12px]"><span className="font-semibold capitalize">{event.type}</span><span className="text-[var(--muted)]">{event.note || "Flower Circle event"}</span><span className={event.amount >= 0 ? "font-semibold text-[var(--green)]" : "font-semibold text-[var(--action-deep)]"}>{event.amount >= 0 ? "+" : ""}{formatPrice(event.amount)}</span></div>) : <p className="text-[13px] text-[var(--muted)]">Benefits earned or used at Checkout will appear here.</p>}</div></section>
     </div>
   );
 }

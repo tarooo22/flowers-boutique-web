@@ -2,7 +2,7 @@ import "server-only";
 
 import { drizzle } from "drizzle-orm/mysql2";
 import { createPool } from "mysql2/promise";
-import { mysqlTable, int, varchar, text, decimal, boolean, json, timestamp, uniqueIndex } from "drizzle-orm/mysql-core";
+import { mysqlTable, int, varchar, text, decimal, boolean, json, timestamp, index, uniqueIndex } from "drizzle-orm/mysql-core";
 
 export const categories = mysqlTable("categories", {
   id: int("id").autoincrement().primaryKey(),
@@ -75,6 +75,9 @@ export const orders = mysqlTable("orders", {
   customerPhone: varchar("customerPhone", { length: 20 }),
   items: json("items").notNull(),
   totalPrice: decimal("totalPrice", { precision: 10, scale: 2 }).notNull(),
+  subtotalBeforeBenefit: decimal("subtotalBeforeBenefit", { precision: 10, scale: 2 }),
+  flowerCircleDiscount: decimal("flowerCircleDiscount", { precision: 10, scale: 2 }).default("0"),
+  flowerCircleEarned: decimal("flowerCircleEarned", { precision: 10, scale: 2 }).default("0"),
   notes: text("notes"),
   recipientName: varchar("recipientName", { length: 255 }),
   deliveryAddress: text("deliveryAddress"),
@@ -88,7 +91,25 @@ export const orders = mysqlTable("orders", {
   fulfillmentType: varchar("fulfillmentType", { length: 32 }),
   deliveryFee: decimal("deliveryFee", { precision: 10, scale: 2 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
-});
+}, (table) => [index("orders_user_delivery_status_index").on(table.userId, table.deliveryStatus)]);
+
+/** Immutable audit events for earned, redeemed, reversed and manager-adjusted Flower Circle benefits. */
+export const flowerCircleLedger = mysqlTable("flowerCircleLedger", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  orderId: int("orderId"),
+  eventKey: varchar("eventKey", { length: 128 }).notNull(),
+  type: varchar("type", { length: 16 }).notNull(),
+  amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
+  benefitRate: decimal("benefitRate", { precision: 5, scale: 2 }),
+  status: varchar("status", { length: 16 }).notNull().default("posted"),
+  note: varchar("note", { length: 500 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => [
+  uniqueIndex("flowerCircleLedger_event_key_unique").on(table.eventKey),
+  index("flowerCircleLedger_user_created_index").on(table.userId, table.createdAt),
+  index("flowerCircleLedger_order_index").on(table.orderId),
+]);
 
 export const users = mysqlTable("users", {
   id: int("id").autoincrement().primaryKey(),

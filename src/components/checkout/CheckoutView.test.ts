@@ -17,6 +17,9 @@ const checkoutKeys = [
 describe("Checkout staged presentation contract", () => {
   it("retains the order submit, cart handoff and required field names", () => {
     expect(source).toContain('fetch("/api/orders"');
+    expect(source).toContain("useFlowerCircleBenefit");
+    expect(source).toContain('fetch("/api/flower-circle"');
+    expect(source).toContain("flowerCircleDiscount");
     expect(source).toContain("clearCart()");
     for (const field of ["name", "email", "phone", "address", "city", "date", "time", "notes"]) {
       expect(source).toContain(`name="${field}"`);
@@ -33,6 +36,11 @@ describe("Checkout staged presentation contract", () => {
     expect(source).toContain("lg:sticky lg:top-24");
     expect(source).toContain("useI18n");
     for (const key of checkoutKeys) {
+      expect(translations.en[key]).toBeTruthy();
+      expect(translations.ka[key]).toBeTruthy();
+      expect(translations.ru[key]).toBeTruthy();
+    }
+    for (const key of ["checkout.flowerCircleUse", "checkout.flowerCircleUseHint", "checkout.flowerCircleDiscount"]) {
       expect(translations.en[key]).toBeTruthy();
       expect(translations.ka[key]).toBeTruthy();
       expect(translations.ru[key]).toBeTruthy();
