@@ -3,22 +3,25 @@ import Link from "next/link";
 interface Props {
   className?: string;
   onClick?: () => void;
+  tone?: "coral" | "light";
 }
 
-/** Flower's Boutique wordmark lockup. */
-export function Logo({ className = "", onClick }: Props) {
+/** Shared Georgian Flower's Boutique wordmark lockup. */
+export function Logo({ className = "", onClick, tone = "coral" }: Props) {
+  const primaryColor = tone === "light" ? "text-white group-hover:text-[var(--action)]" : "text-[var(--action-deep)] group-hover:text-[var(--action)]";
+  const secondaryColor = tone === "light" ? "text-[var(--footer-muted)]" : "text-[var(--muted)]";
   return (
     <Link
       href="/"
       onClick={onClick}
-      aria-label="Flower's Boutique — home"
+      aria-label="ყვავილების ბუტიკი — მთავარი"
       className={`group inline-flex flex-col leading-none ${className}`}
     >
-      <span className="font-display text-[21px] italic tracking-tight text-[var(--action-deep)] transition-colors group-hover:text-[var(--action)] sm:text-[23px]">
-        Flower&rsquo;s
+      <span className={`font-display text-[18px] italic tracking-[-0.05em] transition-colors sm:text-[21px] ${primaryColor}`}>
+        ყვავილების
       </span>
-      <span className="mono text-[9px] font-medium uppercase tracking-[0.42em] text-[var(--muted)]">
-        Boutique
+      <span className={`mono mt-1 text-[7px] font-semibold tracking-[0.22em] ${secondaryColor}`}>
+        ბუტიკი
       </span>
     </Link>
   );

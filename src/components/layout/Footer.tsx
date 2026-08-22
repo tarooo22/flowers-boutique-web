@@ -4,6 +4,7 @@ import Link from "next/link";
 import { brand } from "@/config/brand";
 import { footerNav } from "@/config/nav";
 import { useI18n } from "@/lib/i18n";
+import { Logo } from "./Logo";
 
 export function Footer() {
   const { t } = useI18n();
@@ -13,7 +14,7 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
           {/* Brand block */}
           <div className="col-span-2 md:col-span-1">
-            <span className="font-display text-[24px] italic text-white">Flower&rsquo;s</span>
+            <Logo tone="light" />
             <p className="mt-3 max-w-[280px] text-[13px] leading-relaxed text-[var(--footer-muted)]">
               {t("footer.tagline")}
             </p>

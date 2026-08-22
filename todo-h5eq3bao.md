@@ -236,3 +236,6 @@
 - [x] Add an owner-scoped address book with create, edit, default selection and delete operations for multiple delivery addresses.
 - [x] Persist customer notification preferences and provide independent order, Flower Circle and editorial communication controls.
 - [x] Add Account API ownership/validation regression coverage, responsive form QA and production build validation.
+- [x] Create a Georgian “ყვავილების ბუტიკი” wordmark in the approved red editorial / spaced subline style.
+- [x] Integrate the approved Georgian wordmark consistently into shared Header and Footer branding without changing navigation behavior.
+- [x] Validate the logo at mobile and desktop header/footer breakpoints, run tests/build, and publish the revision.
