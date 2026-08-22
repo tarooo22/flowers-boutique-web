@@ -31,7 +31,7 @@ export function ProductCard({
   return (
     <Link
       href={`/product/${product.slug}`}
-      className="group flex flex-col transition-transform duration-300 hover:-translate-y-1"
+      className="group flex min-w-0 flex-col transition-transform duration-300 hover:-translate-y-1"
       aria-label={product.name}
     >
       <div className="card-media relative aspect-[3/4] overflow-hidden rounded-[10px] bg-[var(--surface-warm)] transition-shadow duration-300 group-hover:shadow-[var(--shadow-float)]">
@@ -88,7 +88,7 @@ export function ProductCard({
       </div>
 
       <div className="flex flex-1 flex-col pt-3">
-        <h3 className="text-[12.5px] font-semibold uppercase leading-snug tracking-[0.03em] text-[var(--ink)] transition-colors group-hover:text-[var(--action-deep)]">
+        <h3 className="break-words text-[12.5px] font-semibold uppercase leading-snug tracking-[0.03em] text-[var(--ink)] transition-colors group-hover:text-[var(--action-deep)]">
           {product.name}
         </h3>
         {product.subtitle ? (

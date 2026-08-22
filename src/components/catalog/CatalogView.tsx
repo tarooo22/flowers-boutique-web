@@ -268,7 +268,7 @@ export function CatalogView({ products, categories }: { products: Product[]; cat
       </div>
 
       {/* ---------- body ---------- */}
-      <div className="container-fb grid gap-8 pt-8 lg:grid-cols-[228px_minmax(0,1fr)] lg:gap-10">
+      <div className="container-fb grid min-w-0 grid-cols-[minmax(0,1fr)] gap-8 pt-8 lg:grid-cols-[228px_minmax(0,1fr)] lg:gap-10">
         {/* sidebar */}
         <aside className="hidden lg:block">
           <div className="sticky top-24">
@@ -276,7 +276,7 @@ export function CatalogView({ products, categories }: { products: Product[]; cat
           </div>
         </aside>
 
-        <div>
+        <div className="min-w-0">
           {/* toolbar */}
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--line)] pb-4">
             <div className="flex items-center gap-3">
@@ -344,9 +344,9 @@ export function CatalogView({ products, categories }: { products: Product[]; cat
           {/* grid */}
           <div className="mt-6">
             {pageItems.length ? (
-              <div className="grid grid-cols-2 gap-x-3 gap-y-8 sm:gap-x-5 lg:grid-cols-3 xl:grid-cols-4">
-                {pageItems.map((p, i) => (
-                  <Reveal key={p.id} delay={(i % 4) * 60}>
+            <div className="grid min-w-0 grid-cols-2 gap-x-3 gap-y-8 sm:gap-x-5 lg:grid-cols-3 xl:grid-cols-4">
+              {pageItems.map((p, i) => (
+                  <Reveal key={p.id} className="min-w-0" delay={(i % 4) * 60}>
                     <ProductCard product={p} priority={i < 4} />
                   </Reveal>
                 ))}
@@ -366,8 +366,9 @@ export function CatalogView({ products, categories }: { products: Product[]; cat
 
           {/* pagination */}
           {totalPages > 1 ? (
-            <nav aria-label="Pagination" className="mt-12 flex items-center justify-center gap-1.5">
-              <PageBtn
+            <nav aria-label="Pagination" className="mt-12 max-w-full overflow-x-auto px-1">
+              <div className="mx-auto flex w-max min-w-max items-center justify-center gap-1.5">
+                <PageBtn
                 disabled={current <= 1}
                 onClick={() => setParams({ page: String(current - 1) }, false)}
                 label="Previous page"
@@ -388,13 +389,14 @@ export function CatalogView({ products, categories }: { products: Product[]; cat
                   {n}
                 </button>
               ))}
-              <PageBtn
+                <PageBtn
                 disabled={current >= totalPages}
                 onClick={() => setParams({ page: String(current + 1) }, false)}
                 label="Next page"
               >
                 <ChevronRight className="h-4 w-4" />
-              </PageBtn>
+                </PageBtn>
+              </div>
             </nav>
           ) : null}
         </div>

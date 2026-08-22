@@ -249,3 +249,6 @@
 - [x] Audit the shared Logo and I18n contract to identify why the Georgian wordmark persists after an English locale change.
 - [x] Render the shared wordmark with Georgian text for KA and an English Flower’s Boutique lockup for EN/RU while preserving Header, MobileNav and Footer behavior.
 - [x] Add locale-switch regression coverage, validate responsive rendering and production build, then publish the correction.
+- [x] Identify the exact Catalog mobile element(s) that exceed the viewport and cause horizontal page scrolling.
+- [x] Correct Catalog and shared responsive geometry so controls, summary text and product grid remain fully within 375px/430px viewports.
+- [x] Audit Home, Catalog, Builder, Cart, Checkout, Account and About at mobile widths for horizontal overflow; add regression coverage, run build and publish.
