@@ -20,7 +20,7 @@ export function Logo({ className = "", onClick, tone = "coral" }: Props) {
       <span className={`font-display text-[18px] italic tracking-[-0.05em] transition-colors sm:text-[21px] ${primaryColor}`}>
         ყვავილების
       </span>
-      <span className={`mono mt-1 text-[9px] font-semibold tracking-[0.16em] sm:text-[10px] ${secondaryColor}`}>
+      <span className={`mono mt-0.5 text-[11px] font-semibold tracking-[0.12em] sm:text-[12px] ${secondaryColor}`}>
         ბუტიკი
       </span>
     </Link>

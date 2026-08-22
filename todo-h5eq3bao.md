@@ -241,3 +241,5 @@
 - [x] Validate the logo at mobile and desktop header/footer breakpoints, run tests/build, and publish the revision.
 - [x] Increase the Georgian “ბუტიკი” subline size and rebalance its letter-spacing in the shared wordmark.
 - [x] Revalidate mobile/desktop logo geometry, tests/build, and publish the refined wordmark.
+- [x] Increase the Georgian “ბუტიკი” supporting line by one final small step without changing header geometry.
+- [x] Run final logo visual/build validation and publish the adjusted wordmark.
