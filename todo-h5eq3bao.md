@@ -239,3 +239,5 @@
 - [x] Create a Georgian “ყვავილების ბუტიკი” wordmark in the approved red editorial / spaced subline style.
 - [x] Integrate the approved Georgian wordmark consistently into shared Header and Footer branding without changing navigation behavior.
 - [x] Validate the logo at mobile and desktop header/footer breakpoints, run tests/build, and publish the revision.
+- [x] Increase the Georgian “ბუტიკი” subline size and rebalance its letter-spacing in the shared wordmark.
+- [x] Revalidate mobile/desktop logo geometry, tests/build, and publish the refined wordmark.
