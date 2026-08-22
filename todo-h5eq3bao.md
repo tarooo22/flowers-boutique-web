@@ -246,3 +246,6 @@
 - [x] Diagnose why the mobile Header hides language selection and account/profile access while retaining other action controls.
 - [x] Restore accessible 44px mobile language and account controls without causing header overflow or changing desktop behavior.
 - [x] Test primary mobile header, mobile menu, language, account, search, wishlist and cart action paths; add regression coverage and validate production build.
+- [x] Audit the shared Logo and I18n contract to identify why the Georgian wordmark persists after an English locale change.
+- [x] Render the shared wordmark with Georgian text for KA and an English Flower’s Boutique lockup for EN/RU while preserving Header, MobileNav and Footer behavior.
+- [x] Add locale-switch regression coverage, validate responsive rendering and production build, then publish the correction.
