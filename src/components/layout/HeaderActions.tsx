@@ -83,19 +83,19 @@ export function HeaderActions() {
 
   return (
     <div className="flex items-center gap-0.5 sm:gap-1">
-      <IconButton label={t("header.search")} onClick={() => setSearchOpen(true)}>
+      <IconButton label={t("header.search")} onClick={() => setSearchOpen(true)} className="h-11 w-11">
         <SearchIcon />
       </IconButton>
 
       <LanguageSelector />
 
-      {customer ? <div ref={profileRef} className="relative hidden sm:block"><button type="button" onClick={() => setProfileOpen((open) => !open)} aria-label={`Account: ${customer.name}`} aria-haspopup="menu" aria-expanded={profileOpen} className="grid h-9 w-9 place-items-center rounded-full text-[var(--ink)] transition-colors hover:bg-black/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--green)]"><UserIcon /></button>{profileOpen ? <div role="menu" aria-label="Profile menu" className="absolute right-0 top-11 z-50 w-48 overflow-hidden rounded-[var(--radius)] border border-[var(--line)] bg-[var(--surface)] p-1.5 shadow-[0_16px_38px_rgba(34,33,30,0.16)]"><Link role="menuitem" href="/account" onClick={() => setProfileOpen(false)} className="block rounded-[calc(var(--radius)-4px)] px-3 py-2 text-[13px] font-semibold hover:bg-[var(--surface-warm)]">ჩემი ანგარიში</Link>{isAdminRole(customer.role) ? <Link role="menuitem" href="/admin" onClick={() => setProfileOpen(false)} className="block rounded-[calc(var(--radius)-4px)] px-3 py-2 text-[13px] font-semibold hover:bg-[var(--surface-warm)]">ადმინი</Link> : null}<button type="button" role="menuitem" onClick={signOut} className="mt-1 w-full rounded-[calc(var(--radius)-4px)] border-t border-[var(--line)] px-3 py-2 text-left text-[13px] font-semibold text-[var(--action-deep)] hover:bg-[var(--action)]/8">გასვლა</button></div> : null}</div> : <IconLink href="/account/login" label={t("header.account")} className="hidden sm:grid"><UserIcon /></IconLink>}
+      {customer ? <div ref={profileRef} className="relative"><button type="button" onClick={() => setProfileOpen((open) => !open)} aria-label={`Account: ${customer.name}`} aria-haspopup="menu" aria-expanded={profileOpen} className="grid h-11 w-11 place-items-center rounded-full text-[var(--ink)] transition-colors hover:bg-black/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--green)]"><UserIcon /></button>{profileOpen ? <div role="menu" aria-label="Profile menu" className="absolute right-0 top-12 z-50 w-48 overflow-hidden rounded-[var(--radius)] border border-[var(--line)] bg-[var(--surface)] p-1.5 shadow-[0_16px_38px_rgba(34,33,30,0.16)]"><Link role="menuitem" href="/account" onClick={() => setProfileOpen(false)} className="block rounded-[calc(var(--radius)-4px)] px-3 py-2 text-[13px] font-semibold hover:bg-[var(--surface-warm)]">ჩემი ანგარიში</Link>{isAdminRole(customer.role) ? <Link role="menuitem" href="/admin" onClick={() => setProfileOpen(false)} className="block rounded-[calc(var(--radius)-4px)] px-3 py-2 text-[13px] font-semibold hover:bg-[var(--surface-warm)]">ადმინი</Link> : null}<button type="button" role="menuitem" onClick={signOut} className="mt-1 w-full rounded-[calc(var(--radius)-4px)] border-t border-[var(--line)] px-3 py-2 text-left text-[13px] font-semibold text-[var(--action-deep)] hover:bg-[var(--action)]/8">გასვლა</button></div> : null}</div> : <IconLink href="/account/login" label={t("header.account")} className="h-11 w-11"><UserIcon /></IconLink>}
 
-      <IconLink href="/favorites" label={t("header.wishlist")} badge={hydrated ? favCount : 0}>
+      <IconLink href="/favorites" label={t("header.wishlist")} badge={hydrated ? favCount : 0} className="hidden sm:grid h-11 w-11">
         <HeartIcon />
       </IconLink>
 
-      <IconButton label={t("header.cart")} badge={hydrated ? cartCount : 0} onClick={openCart}>
+      <IconButton label={t("header.cart")} badge={hydrated ? cartCount : 0} onClick={openCart} className="h-11 w-11">
         <BagIcon />
       </IconButton>
     </div>

@@ -13,4 +13,18 @@ describe("Header profile navigation", () => {
     expect(source).toContain('aria-haspopup="menu"');
     expect(source).toContain('event.key === "Escape"');
   });
+
+  it("keeps language and Account access visible with 44px mobile controls", () => {
+    expect(source).toContain("<LanguageSelector />");
+    expect(source).not.toContain('className="relative hidden sm:block"');
+    expect(source).not.toContain('className="hidden sm:grid"');
+    expect(source).toContain('className="h-11 w-11"');
+  });
+
+  it("retains the primary mobile header actions", () => {
+    expect(source).toContain("setSearchOpen(true)");
+    expect(source).toContain('href="/account/login"');
+    expect(source).toContain('href="/favorites"');
+    expect(source).toContain("onClick={openCart}");
+  });
 });

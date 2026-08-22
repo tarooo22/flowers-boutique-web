@@ -16,19 +16,26 @@ export function LanguageSelector() {
     const onClick = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
     document.addEventListener("mousedown", onClick);
-    return () => document.removeEventListener("mousedown", onClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onClick);
+      document.removeEventListener("keydown", onKey);
+    };
   }, []);
 
   return (
-    <div ref={ref} className="relative hidden sm:block">
+    <div ref={ref} className="relative">
       <button
         type="button"
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label="Change language"
         onClick={() => setOpen((v) => !v)}
-        className="mono flex items-center gap-1 rounded-full px-2 py-1.5 text-[12px] font-semibold text-[var(--ink)] transition hover:bg-black/5"
+        className="mono flex h-11 min-w-11 items-center justify-center gap-1 rounded-full px-2 text-[12px] font-semibold text-[var(--ink)] transition hover:bg-black/5"
       >
         {current.short}
         <ChevronDown className={`h-3.5 w-3.5 transition ${open ? "rotate-180" : ""}`} />
@@ -47,7 +54,7 @@ export function LanguageSelector() {
                   setLang(l.code);
                   setOpen(false);
                 }}
-                className={`flex w-full items-center justify-between px-3 py-2 text-left text-[13px] transition hover:bg-black/5 ${
+                className={`flex min-h-11 w-full items-center justify-between px-3 py-2 text-left text-[13px] transition hover:bg-black/5 ${
                   l.code === lang ? "text-[var(--action-deep)]" : "text-[var(--ink)]"
                 }`}
               >

@@ -26,13 +26,13 @@ export function Header() {
         scrolled ? "border-[var(--line)] shadow-[0_1px_12px_rgba(26,26,26,0.05)]" : "border-transparent"
       }`}
     >
-      <div className="container-fb flex h-[64px] items-center justify-between gap-4">
-        <div className="flex items-center gap-6 xl:gap-9">
+      <div className="container-fb flex h-[64px] items-center justify-between gap-2">
+        <div className="flex items-center gap-2 sm:gap-6 xl:gap-9">
           <button
             type="button"
             aria-label={t("header.openMenu")}
             onClick={() => setMobileNavOpen(true)}
-            className="grid h-9 w-9 place-items-center rounded-full text-[var(--ink)] transition hover:bg-black/5 lg:hidden"
+            className="grid h-11 w-11 place-items-center rounded-full text-[var(--ink)] transition hover:bg-black/5 lg:hidden"
           >
             <MenuIcon />
           </button>

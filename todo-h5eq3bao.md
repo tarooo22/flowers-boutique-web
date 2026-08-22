@@ -243,3 +243,6 @@
 - [x] Revalidate mobile/desktop logo geometry, tests/build, and publish the refined wordmark.
 - [x] Increase the Georgian “ბუტიკი” supporting line by one final small step without changing header geometry.
 - [x] Run final logo visual/build validation and publish the adjusted wordmark.
+- [x] Diagnose why the mobile Header hides language selection and account/profile access while retaining other action controls.
+- [x] Restore accessible 44px mobile language and account controls without causing header overflow or changing desktop behavior.
+- [x] Test primary mobile header, mobile menu, language, account, search, wishlist and cart action paths; add regression coverage and validate production build.

@@ -8,7 +8,7 @@ import { useI18n } from "@/lib/i18n";
 import { mainNav } from "@/config/nav";
 import { brand } from "@/config/brand";
 import { Logo } from "./Logo";
-import { CloseIcon, ChevronRight, PhoneIcon, WhatsappIcon } from "@/components/ui/Icons";
+import { CloseIcon, ChevronRight, HeartIcon, PhoneIcon, UserIcon, WhatsappIcon } from "@/components/ui/Icons";
 
 export function MobileNav() {
   const { mobileNavOpen, setMobileNavOpen, catalogProducts } = useStore();
@@ -86,6 +86,16 @@ export function MobileNav() {
         </nav>
 
         <div className="border-t px-5 py-4">
+          <div className="mb-3 grid grid-cols-2 gap-2">
+            <Link href="/account" className="flex min-h-11 items-center gap-2 rounded-[var(--radius)] bg-[var(--surface-warm)] px-3 text-[13px] font-semibold">
+              <UserIcon className="h-4 w-4" />
+              {t("header.account")}
+            </Link>
+            <Link href="/favorites" className="flex min-h-11 items-center gap-2 rounded-[var(--radius)] bg-[var(--surface-warm)] px-3 text-[13px] font-semibold">
+              <HeartIcon className="h-4 w-4" />
+              {t("header.wishlist")}
+            </Link>
+          </div>
           <a href={brand.phoneHref} className="flex items-center gap-2 py-1.5 text-[14px] font-semibold">
             <PhoneIcon className="h-4 w-4 text-[var(--action)]" />
             {brand.phone}
