@@ -28,4 +28,10 @@ describe("Account dashboard", () => {
     expect(source).toContain('მიამართის დამატება'.replace('მიამართ', 'მისამართ'));
     expect(source).toContain('პარამეტრების შენახვა');
   });
+
+  it("keeps the mobile account navigation wrapped within the viewport", () => {
+    expect(source).toContain('grid min-w-0 grid-cols-2 gap-1 lg:block');
+    expect(source).not.toContain('flex gap-1 overflow-x-auto pb-1 lg:block');
+    expect(source).toContain('className="min-w-0 break-words font-semibold"');
+  });
 });

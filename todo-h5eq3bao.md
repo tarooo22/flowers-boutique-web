@@ -252,3 +252,6 @@
 - [x] Identify the exact Catalog mobile element(s) that exceed the viewport and cause horizontal page scrolling.
 - [x] Correct Catalog and shared responsive geometry so controls, summary text and product grid remain fully within 375px/430px viewports.
 - [x] Audit Home, Catalog, Builder, Cart, Checkout, Account and About at mobile widths for horizontal overflow; add regression coverage, run build and publish.
+- [x] Identify the Account/Profile mobile element(s) that exceed the viewport, including tab navigation, data panels and footer boundaries.
+- [x] Correct Account workspace mobile geometry so tabs remain usable without widening the document and profile/order cards wrap safely at 360px/430px.
+- [x] Add Account mobile overflow regression coverage, run signed-out/authenticated route QA, build validation and publish the correction.
