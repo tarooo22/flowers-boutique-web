@@ -55,4 +55,10 @@ describe("Checkout staged presentation contract", () => {
     expect(source).toContain("saveDeliveryAddress");
     expect(source).toContain("customer.recipient || customer.name");
   });
+
+  it("uses public manager-controlled delivery copy without moving fee calculations to the client", () => {
+    expect(source).toContain('fetch("/api/storefront/delivery-policy")');
+    expect(source).toContain("deliveryCopy");
+    expect(source).toContain("subtotal >= brand.delivery.freeFrom");
+  });
 });

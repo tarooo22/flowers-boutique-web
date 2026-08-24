@@ -268,8 +268,8 @@
 - [x] Validate 375–1440px Admin Products layouts, authenticated manager read-only flows, TypeScript, full tests and production build; publish the fix.
 - [x] Audit checkout, account-address, orders and translation contracts; define the minimal safe schema/API extensions for account-aware checkout and private order detail.
 - [x] Implement account-aware checkout defaults plus an owner-scoped order detail/timeline without altering historic order snapshots or Flower Circle rules.
-- [ ] Localize shared Search, authentication/recovery and customer order-status microcopy across Georgian, English and Russian.
-- [ ] Implement audited Admin Settings delivery-policy source-of-truth and wire approved storefront delivery copy to it.
+- [x] Localize shared Search, authentication/recovery and customer order-status microcopy across Georgian, English and Russian.
+- [x] Implement audited Admin Settings delivery-policy source-of-truth and wire approved storefront delivery copy to it.
 - [ ] Add protected Admin products pagination/bulk inventory actions and CRM-light order context without exposing customer data outside authorized operations.
 - [ ] Add a consent-aware notification outbox and private gift-reminder foundation without activating an external delivery provider.
 - [ ] Audit and improve public SEO, structured data, multilingual metadata and social sharing while keeping private routes non-indexable.

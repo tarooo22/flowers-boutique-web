@@ -96,4 +96,9 @@ describe("Operational Admin panel contract", () => {
     expect(source).toContain("min-w-0 w-full");
     expect(source).toContain('const selectClass = "h-11 min-w-0 w-full');
   });
+
+  it("connects the settings tab to the revision-aware delivery policy workspace", () => {
+    expect(source).toContain("DeliverySettingsWorkspace");
+    expect(source).toContain('{tab === "settings" ? <DeliverySettingsWorkspace /> : null}');
+  });
 });

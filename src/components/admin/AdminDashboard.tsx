@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { ChevronDown, SearchIcon } from "@/components/ui/Icons";
 import type { Order, OrderStatus } from "@/lib/server/store";
 import { OrdersOperations } from "@/components/admin/OrdersOperations";
+import { DeliverySettingsWorkspace } from "@/components/admin/DeliverySettingsWorkspace";
 
 interface AdminMedia {
   id: string;
@@ -308,7 +309,7 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
       {tab === "categories" ? <CategoriesWorkspace categories={categorySummaries} loading={loading} onCreate={() => setCreatingCategory(true)} onEdit={setEditingCategory} onReviewProducts={reviewCategoryProducts} onDelete={deleteCategory} busy={busy} /> : null}
       {tab === "orders" ? <OrdersOperations /> : null}
       {tab === "banners" ? <BannersWorkspace banners={banners} loading={loading} busy={busy} onCreate={() => setCreatingBanner(true)} onEdit={setEditingBanner} onDelete={deleteBanner} onToggle={(banner, active) => saveBanner({ placement: "homepage", titleKa: banner.titleKa, titleEn: banner.titleEn, subtitleKa: banner.subtitleKa, subtitleEn: banner.subtitleEn, ctaLabelKa: banner.ctaLabelKa, ctaLabelEn: banner.ctaLabelEn, ctaHref: banner.ctaHref, image: banner.imageUrl ? { id: `banner-${banner.id}`, url: banner.imageUrl, key: banner.imageKey, sortOrder: 0 } : null, active, sortOrder: banner.sortOrder }, banner.id)} /> : null}
-      {tab === "settings" ? <LegacyNotice title="პარამეტრები" text="მიწოდების, გადახდისა და account security-ის კონფიგურაცია დაცულია. აქ არსებული სამუშაო ინსტრუმენტები storefront-ის ყოველდღიურ მართვას ემსახურება." /> : null}
+      {tab === "settings" ? <DeliverySettingsWorkspace /> : null}
       {(editingProduct || creatingProduct) ? <ProductEditor product={editingProduct} categories={categories} media={media} busy={busy?.startsWith("editor:") || busy === "media:upload"} onUpload={uploadMedia} onClose={() => { setEditingProduct(null); setCreatingProduct(false); }} onSave={(draft) => saveProduct(draft, editingProduct?.id)} onDelete={editingProduct ? () => deleteProduct(editingProduct.id) : undefined} /> : null}
       {(editingCategory || creatingCategory) ? <CategoryEditor category={editingCategory} busy={busy?.startsWith("category:") ?? false} onClose={() => { setEditingCategory(null); setCreatingCategory(false); }} onSave={(draft) => saveCategory(draft, editingCategory?.id)} /> : null}
       {(editingBanner || creatingBanner) ? <BannerEditor banner={editingBanner} media={media} busy={busy === "media:upload" || busy?.startsWith("banner:") === true} onUpload={uploadMedia} onClose={() => { setEditingBanner(null); setCreatingBanner(false); }} onSave={(draft) => saveBanner(draft, editingBanner?.id)} /> : null}

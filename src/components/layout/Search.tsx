@@ -8,9 +8,11 @@ import { useStore } from "@/lib/store";
 import { searchProducts } from "@/lib/productSearch";
 import { formatPrice } from "@/lib/format";
 import { SearchIcon, CloseIcon } from "@/components/ui/Icons";
+import { useI18n } from "@/lib/i18n";
 
 export function SearchOverlay() {
   const { searchOpen, setSearchOpen, catalogProducts } = useStore();
+  const { t } = useI18n();
   const [q, setQ] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -47,7 +49,7 @@ export function SearchOverlay() {
   return (
     <div className="fixed inset-0 z-[70]">
       <button
-        aria-label="Close search"
+        aria-label={t("search.close")}
         className="fb-overlay absolute inset-0 bg-[var(--overlay)]"
         onClick={() => setSearchOpen(false)}
       />
@@ -60,11 +62,11 @@ export function SearchOverlay() {
               value={q}
               onChange={(e) => setQ(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && submit()}
-              placeholder="Search bouquets, colours, occasions…"
+              placeholder={t("search.placeholder")}
               className="w-full bg-transparent text-[16px] text-[var(--ink)] outline-none placeholder:text-[var(--muted-2)]"
             />
             <button
-              aria-label="Close search"
+              aria-label={t("search.close")}
               onClick={() => setSearchOpen(false)}
               className="grid h-9 w-9 place-items-center rounded-full hover:bg-black/5"
             >
@@ -100,18 +102,18 @@ export function SearchOverlay() {
                     onClick={submit}
                     className="text-[13px] font-semibold text-[var(--action-deep)] hover:underline"
                   >
-                    See all results for “{q.trim()}” →
+                    {t("search.seeAll", { query: q.trim() })}
                   </button>
                 </li>
               </ul>
             ) : (
               <p className="mt-5 pb-2 text-[13px] text-[var(--muted)]">
-                No matches for “{q.trim()}”. Try a colour or occasion.
+                {t("search.empty", { query: q.trim() })}
               </p>
             )
           ) : (
             <p className="mono mt-4 pb-1 text-[11px] uppercase tracking-[0.16em] text-[var(--muted-2)]">
-              Press Enter to search the full catalog
+              {t("search.hint")}
             </p>
           )}
         </div>

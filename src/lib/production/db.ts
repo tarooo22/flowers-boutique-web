@@ -181,6 +181,25 @@ export const orderOperationalMeta = mysqlTable("orderOperationalMeta", {
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
 
+/** Admin-managed public storefront policy records. Values are validated by their API contract before persistence. */
+export const storefrontSettings = mysqlTable("storefrontSettings", {
+  key: varchar("key", { length: 64 }).primaryKey(),
+  value: json("value").notNull(),
+  revision: int("revision").notNull().default(0),
+  updatedByUserId: int("updatedByUserId"),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+/** Append-only administrative trace for customer-visible storefront policy revisions. */
+export const storefrontSettingEvents = mysqlTable("storefrontSettingEvents", {
+  id: int("id").autoincrement().primaryKey(),
+  settingKey: varchar("settingKey", { length: 64 }).notNull(),
+  revision: int("revision").notNull(),
+  value: json("value").notNull(),
+  actorUserId: int("actorUserId"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => [index("storefrontSettingEvents_key_created_index").on(table.settingKey, table.createdAt)]);
+
 function createProductionDb(url: string) {
   return drizzle({ client: createPool(url) });
 }

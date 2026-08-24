@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { brand } from "@/config/brand";
 import { authFeedback } from "@/lib/authFeedback";
 import { postAuthDestination } from "@/lib/authRedirect";
+import { useI18n } from "@/lib/i18n";
 
 type Mode = "login" | "register";
 
@@ -16,6 +17,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const { t } = useI18n();
   const isLogin = mode === "login";
 
   return (
@@ -23,20 +25,20 @@ export function AuthForm({ mode }: { mode: Mode }) {
       <div className="mx-auto w-full max-w-md">
         <div className="text-center">
           <h1 className="font-display text-[28px] leading-tight sm:text-[32px]">
-            {isLogin ? "Welcome back" : "Create your account"}
+            {isLogin ? t("auth.loginTitle") : t("auth.registerTitle")}
           </h1>
           <p className="mt-2 text-[13.5px] text-[var(--muted)]">
             {isLogin
-              ? "Sign in to track orders and your wishlist."
-              : "Join Flower's Rewards and earn on every order."}
+              ? t("auth.loginLead")
+              : t("auth.registerLead")}
           </p>
         </div>
 
         {done ? (
           <div className="mt-8 rounded-[var(--radius-lg)] border bg-[var(--surface)] p-6 text-center text-[14px]">
-            <p className="font-semibold">Thanks!</p>
+            <p className="font-semibold">{t("auth.thanks")}</p>
             <p className="mt-1 text-[13px] text-[var(--muted)]">
-              Your account action was completed. Redirecting you now…
+              {t("auth.redirecting")}
             </p>
           </div>
         ) : (
@@ -71,11 +73,11 @@ export function AuthForm({ mode }: { mode: Mode }) {
             className="mt-8 grid gap-4 rounded-[var(--radius-lg)] border bg-[var(--surface)] p-6 sm:p-7"
           >
             {!isLogin ? (
-              <Field label="Full name" name="name" autoComplete="name" required />
+              <Field label={t("auth.fullName")} name="name" autoComplete="name" required />
             ) : null}
-            <Field label="Email" name="email" type="email" autoComplete="email" required />
+            <Field label={t("auth.email")} name="email" type="email" autoComplete="email" required />
             <Field
-              label="Password"
+              label={t("auth.password")}
               name="password"
               type="password"
               minLength={isLogin ? undefined : 8}
@@ -88,12 +90,12 @@ export function AuthForm({ mode }: { mode: Mode }) {
                   href={`${brand.emailHref}?subject=${encodeURIComponent("Password reset assistance")}`}
                   className="text-[12.5px] font-semibold text-[var(--muted)] hover:text-[var(--ink)]"
                 >
-                  Forgot password?
+                  {t("auth.forgotPassword")}
                 </a>
               </div>
             ) : null}
             <Button type="submit" variant="primary" fullWidth size="lg" className="mt-1">
-              {submitting ? "Please wait…" : isLogin ? "Sign in" : "Create account"}
+              {submitting ? t("auth.wait") : isLogin ? t("auth.signIn") : t("auth.create")}
             </Button>
             {error ? <p role="alert" className="text-[13px] font-semibold text-[var(--action-deep)]">{error}</p> : null}
           </form>
@@ -102,16 +104,16 @@ export function AuthForm({ mode }: { mode: Mode }) {
         <p className="mt-5 text-center text-[13px] text-[var(--muted)]">
           {isLogin ? (
             <>
-              New here?{" "}
+              {t("auth.newHere")} {" "}
               <Link href="/account/register" className="font-semibold text-[var(--action-deep)] hover:underline">
-                Create an account
+                {t("auth.create")}
               </Link>
             </>
           ) : (
             <>
-              Already have an account?{" "}
+              {t("auth.already")} {" "}
               <Link href="/account/login" className="font-semibold text-[var(--action-deep)] hover:underline">
-                Sign in
+                {t("auth.signIn")}
               </Link>
             </>
           )}
