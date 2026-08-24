@@ -80,4 +80,20 @@ describe("Operational Admin panel contract", () => {
     expect(source).toContain("lg:grid-cols-[1.1fr_0.9fr]");
     expect(source).toContain("flex-wrap");
   });
+
+  it("uses a mobile-first products card list while retaining the desktop inline-edit table", () => {
+    expect(source).toContain("function ProductManagementCard");
+    expect(source).toContain('className="mt-3 grid gap-3 md:hidden"');
+    expect(source).toContain('className="mt-3 hidden overflow-x-auto');
+    expect(source).toContain("md:block");
+    expect(source).toContain("min-h-11");
+  });
+
+  it("wraps Admin tabs and keeps every products filter within the mobile viewport", () => {
+    expect(source).toContain('className="grid grid-cols-2 gap-1.5 sm:flex sm:flex-wrap"');
+    expect(source).not.toContain("flex min-w-max gap-1.5");
+    expect(source).toContain("function Toolbar");
+    expect(source).toContain("min-w-0 w-full");
+    expect(source).toContain('const selectClass = "h-11 min-w-0 w-full');
+  });
 });

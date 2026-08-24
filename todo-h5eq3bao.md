@@ -262,3 +262,7 @@
 - [x] Add a status action bar, cancellation reason confirmation, activity timeline, copy/call/map operations and protected internal notes.
 - [x] Rework order analytics around real date-filtered net revenue, completed orders, queue risk counts, Flower Circle values and truthful loading/empty/error states.
 - [x] Add Admin Orders API/data/UI regression coverage, accessibility and 375–1920px responsive QA; run TypeScript, full tests, build and publish.
+- [x] Replace mobile Admin tab strip and Products filter geometry that currently require horizontal scrolling, while preserving desktop navigation and filters.
+- [x] Render protected Admin product management data as touch-friendly cards below 768px while preserving the desktop inline-edit table at 768px and above.
+- [x] Extend the strict mobile overflow audit to /admin and add responsive Admin product regression coverage for mobile cards, filter stacking and desktop table boundary.
+- [x] Validate 375–1440px Admin Products layouts, authenticated manager read-only flows, TypeScript, full tests and production build; publish the fix.

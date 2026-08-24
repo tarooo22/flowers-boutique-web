@@ -1,7 +1,7 @@
 import { chromium } from "playwright";
 
 const baseUrl = process.env.BASE_URL ?? "https://3000-i2pfjamc2e6vvxjvr0sej-59b127c0.us3.manus.computer";
-const routes = ["/", "/catalog", "/builder", "/cart", "/checkout", "/account", "/about"];
+const routes = ["/", "/catalog", "/builder", "/cart", "/checkout", "/account", "/about", "/admin"];
 const browser = await chromium.launch({ headless: true, executablePath: "/usr/bin/chromium" });
 const page = await browser.newPage({ viewport: { width: 360, height: 800 }, deviceScaleFactor: 1 });
 let hasPageOverflow = false;
