@@ -8,6 +8,7 @@ import { formatDate, formatPrice } from "@/lib/format";
 import { Button } from "@/components/ui/Button";
 import { ChevronDown, SearchIcon } from "@/components/ui/Icons";
 import type { Order, OrderStatus } from "@/lib/server/store";
+import { OrdersOperations } from "@/components/admin/OrdersOperations";
 
 interface AdminMedia {
   id: string;
@@ -305,7 +306,7 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
       {feedback ? <div role="status" className="mt-4 rounded-[var(--radius)] border border-[var(--line-strong)] bg-[var(--surface)] px-4 py-3 text-[12.5px] text-[var(--muted)]">{feedback}</div> : null}
       {tab === "products" ? <ProductsWorkspace loading={loading} products={visibleProducts} query={query} setQuery={setQuery} availabilityFilter={availabilityFilter} setAvailabilityFilter={setAvailabilityFilter} categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter} categories={categorySummaries} patchProduct={patchProduct} onAdd={() => setCreatingProduct(true)} onEdit={setEditingProduct} onDelete={deleteProduct} busy={busy} /> : null}
       {tab === "categories" ? <CategoriesWorkspace categories={categorySummaries} loading={loading} onCreate={() => setCreatingCategory(true)} onEdit={setEditingCategory} onReviewProducts={reviewCategoryProducts} onDelete={deleteCategory} busy={busy} /> : null}
-      {tab === "orders" ? <><OrdersAnalytics orders={orders} /><OrdersWorkspace loading={loading} orders={visibleOrders} allOrders={orders} query={query} setQuery={setQuery} statusFilter={statusFilter} setStatusFilter={setStatusFilter} openOrder={openOrder} setOpenOrder={setOpenOrder} setStatus={setStatus} busy={busy} /></> : null}
+      {tab === "orders" ? <OrdersOperations /> : null}
       {tab === "banners" ? <BannersWorkspace banners={banners} loading={loading} busy={busy} onCreate={() => setCreatingBanner(true)} onEdit={setEditingBanner} onDelete={deleteBanner} onToggle={(banner, active) => saveBanner({ placement: "homepage", titleKa: banner.titleKa, titleEn: banner.titleEn, subtitleKa: banner.subtitleKa, subtitleEn: banner.subtitleEn, ctaLabelKa: banner.ctaLabelKa, ctaLabelEn: banner.ctaLabelEn, ctaHref: banner.ctaHref, image: banner.imageUrl ? { id: `banner-${banner.id}`, url: banner.imageUrl, key: banner.imageKey, sortOrder: 0 } : null, active, sortOrder: banner.sortOrder }, banner.id)} /> : null}
       {tab === "settings" ? <LegacyNotice title="პარამეტრები" text="მიწოდების, გადახდისა და account security-ის კონფიგურაცია დაცულია. აქ არსებული სამუშაო ინსტრუმენტები storefront-ის ყოველდღიურ მართვას ემსახურება." /> : null}
       {(editingProduct || creatingProduct) ? <ProductEditor product={editingProduct} categories={categories} media={media} busy={busy?.startsWith("editor:") || busy === "media:upload"} onUpload={uploadMedia} onClose={() => { setEditingProduct(null); setCreatingProduct(false); }} onSave={(draft) => saveProduct(draft, editingProduct?.id)} onDelete={editingProduct ? () => deleteProduct(editingProduct.id) : undefined} /> : null}

@@ -1,46 +1,34 @@
 import { NextResponse } from "next/server";
-import { isProductionAdmin } from "@/lib/production/auth";
-import { listProductionAdminOrders, updateProductionOrderStatus } from "@/lib/production/admin";
+import { getProductionSessionUser } from "@/lib/production/auth";
+import { listAdminOrderQueue } from "@/lib/production/adminOrders";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
-const STATUSES = ["new", "confirmed", "delivering", "completed", "cancelled"] as const;
+const cacheHeaders = { "Cache-Control": "private, no-store" };
 
 async function guard() {
-  if (await isProductionAdmin()) return null;
-  return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  const user = await getProductionSessionUser();
+  if (user?.role === "admin") return user;
+  return null;
 }
 
-export async function GET() {
-  const denied = await guard();
-  if (denied) return denied;
-  return NextResponse.json({ orders: await listProductionAdminOrders() });
+export async function GET(request: Request) {
+  if (!(await guard())) return NextResponse.json({ error: "unauthorized" }, { status: 401, headers: cacheHeaders });
+  const params = new URL(request.url).searchParams;
+  const queue = await listAdminOrderQueue({
+    cursor: params.get("cursor") ?? undefined, limit: Number(params.get("limit") ?? 25), q: params.get("q") ?? undefined,
+    status: (params.get("status") ?? "all") as any, dateFrom: params.get("dateFrom") ?? undefined, dateTo: params.get("dateTo") ?? undefined,
+    deliveryWindow: (params.get("deliveryWindow") ?? "all") as any, sort: (params.get("sort") ?? "priority") as any,
+  });
+  return NextResponse.json(queue, { headers: cacheHeaders });
 }
 
 export async function PATCH(request: Request) {
-  const denied = await guard();
-  if (denied) return denied;
-
-  const body = (await request.json().catch(() => ({}))) as {
-    id?: unknown;
-    status?: unknown;
-  };
-  const id = typeof body.id === "string" ? body.id : "";
-  const status = body.status as typeof STATUSES[number];
-
-  if (!id || !STATUSES.includes(status)) {
-    return NextResponse.json({ error: "invalid_input" }, { status: 400 });
-  }
-
-  await updateProductionOrderStatus(id, status);
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({ error: "use_order_detail_endpoint" }, { status: 405, headers: cacheHeaders });
 }
 
 export async function DELETE(request: Request) {
-  const denied = await guard();
-  if (denied) return denied;
-
-  const id = new URL(request.url).searchParams.get("id");
-  if (!id) return NextResponse.json({ error: "invalid_input" }, { status: 400 });
-  return NextResponse.json({ error: "order_deletion_disabled" }, { status: 405 });
+  if (!(await guard())) return NextResponse.json({ error: "unauthorized" }, { status: 401, headers: cacheHeaders });
+  return NextResponse.json({ error: "order_deletion_disabled" }, { status: 405, headers: cacheHeaders });
 }

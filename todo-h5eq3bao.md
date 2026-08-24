@@ -255,3 +255,10 @@
 - [x] Identify the Account/Profile mobile element(s) that exceed the viewport, including tab navigation, data panels and footer boundaries.
 - [x] Correct Account workspace mobile geometry so tabs remain usable without widening the document and profile/order cards wrap safely at 360px/430px.
 - [x] Add Account mobile overflow regression coverage, run signed-out/authenticated route QA, build validation and publish the correction.
+- [x] Audit the existing order schema/session identity and document the safe transition and audit-event boundaries for Admin Orders operations.
+- [x] Add immutable operational order events, a revision-aware metadata record and a server-enforced order transition matrix without changing customer order ownership or Flower Circle accounting.
+- [x] Replace all-orders Admin fetching with protected server-side paginated queue, detail, summary and internal-note endpoints with validated filters and private cache policy.
+- [x] Rebuild the Admin Orders workspace into a date-aware priority queue with URL-restored filters, responsive list/table treatment and accessible detail drawer/sheet.
+- [x] Add a status action bar, cancellation reason confirmation, activity timeline, copy/call/map operations and protected internal notes.
+- [x] Rework order analytics around real date-filtered net revenue, completed orders, queue risk counts, Flower Circle values and truthful loading/empty/error states.
+- [x] Add Admin Orders API/data/UI regression coverage, accessibility and 375–1920px responsive QA; run TypeScript, full tests, build and publish.

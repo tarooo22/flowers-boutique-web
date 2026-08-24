@@ -67,6 +67,11 @@ describe("Operational Admin panel contract", () => {
     expect(source).toContain("ბოლო შეკვეთები");
   });
 
+  it("mounts the protected priority queue workspace from the Orders tab", () => {
+    expect(source).toContain('import { OrdersOperations }');
+    expect(source).toContain('{tab === "orders" ? <OrdersOperations /> : null}');
+  });
+
   it("keeps the expanded manager workspace usable from a phone through desktop breakpoints", () => {
     expect(source).toContain('type="file"');
     expect(source).toContain("multiple");

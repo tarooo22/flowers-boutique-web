@@ -154,6 +154,33 @@ export const customerNotificationPreferences = mysqlTable("customerNotificationP
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 }, (table) => [uniqueIndex("customerNotificationPreferences_user_unique").on(table.userId)]);
 
+/** Immutable manager-visible events. This is distinct from the financial Flower Circle ledger. */
+export const orderOperationalEvents = mysqlTable("orderOperationalEvents", {
+  id: int("id").autoincrement().primaryKey(),
+  orderId: int("orderId").notNull(),
+  eventType: varchar("eventType", { length: 32 }).notNull(),
+  fromStatus: varchar("fromStatus", { length: 32 }),
+  toStatus: varchar("toStatus", { length: 32 }),
+  reason: varchar("reason", { length: 255 }),
+  note: text("note"),
+  actorUserId: int("actorUserId"),
+  idempotencyKey: varchar("idempotencyKey", { length: 128 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => [
+  uniqueIndex("orderOperationalEvents_idempotency_unique").on(table.idempotencyKey),
+  index("orderOperationalEvents_order_created_index").on(table.orderId, table.createdAt),
+]);
+
+/** Mutable operational assignment/priority state with an explicit revision for safe concurrent manager updates. */
+export const orderOperationalMeta = mysqlTable("orderOperationalMeta", {
+  orderId: int("orderId").primaryKey(),
+  assigneeUserId: int("assigneeUserId"),
+  priority: varchar("priority", { length: 24 }).notNull().default("standard"),
+  internalFlags: json("internalFlags").$type<string[]>().default([]),
+  revision: int("revision").notNull().default(0),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
 function createProductionDb(url: string) {
   return drizzle({ client: createPool(url) });
 }
