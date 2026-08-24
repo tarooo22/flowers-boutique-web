@@ -11,6 +11,8 @@ type Dict = Record<string, string>;
 const en: Dict = {
   // common
   "common.viewAll": "View all",
+  "common.viewAllSection": "View all in {section}",
+  "common.skipToContent": "Skip to main content",
   "common.shopCatalog": "Shop the catalog",
   "common.browseBouquets": "Browse bouquets",
   "common.addToCart": "Add to cart",
@@ -25,6 +27,14 @@ const en: Dict = {
   "common.free": "Free",
   "common.tbilisi": "Tbilisi",
   "common.minShort": "{n} min",
+
+  "notFound.eyebrow": "Error 404",
+  "notFound.title": "This page has wilted",
+  "notFound.copy": "The page you are looking for does not exist or has moved. Let’s get you back to something in bloom.",
+  "notFound.home": "Back home",
+  "notFound.catalog": "Browse bouquets",
+  "about.mapSummary": "Interactive map for our studio at {address}. Use the directions link to open the location in Google Maps.",
+  "about.mapFallback": "The map needs JavaScript. Use the directions button to open the studio location.",
 
   // checkout
   "checkout.intro": "A few details and we will take care of the flowers, delivery and confirmation.",
@@ -45,6 +55,11 @@ const en: Dict = {
   "checkout.city": "City",
   "checkout.recipient": "Recipient name",
   "checkout.recipientHint": "Optional — if different from yours",
+  "checkout.savedAddress": "Saved address",
+  "checkout.useNewAddress": "Use a new address",
+  "checkout.saveAddress": "Save this address for future orders",
+  "checkout.addressLabel": "Address label",
+  "checkout.addressLabelHint": "For example: Home or office",
   "checkout.date": "Delivery date",
   "checkout.time": "Delivery time",
   "checkout.asap": "As soon as possible",
@@ -473,6 +488,8 @@ const en: Dict = {
 
 const ka: Dict = {
   "common.viewAll": "ყველას ნახვა",
+  "common.viewAllSection": "ყველას ნახვა — {section}",
+  "common.skipToContent": "მთავარ კონტენტზე გადასვლა",
   "common.shopCatalog": "კატალოგის ნახვა",
   "common.browseBouquets": "თაიგულების ნახვა",
   "common.addToCart": "კალათაში დამატება",
@@ -487,6 +504,14 @@ const ka: Dict = {
   "common.free": "უფასო",
   "common.tbilisi": "თბილისი",
   "common.minShort": "{n} წთ",
+
+  "notFound.eyebrow": "შეცდომა 404",
+  "notFound.title": "ეს გვერდი უკვე აყვავდა",
+  "notFound.copy": "გვერდი, რომელსაც ეძებ, აღარ არსებობს ან სხვა მისამართზეა. მოდი, ისევ ყვავილებთან დაგაბრუნოთ.",
+  "notFound.home": "მთავარ გვერდზე დაბრუნება",
+  "notFound.catalog": "თაიგულების ნახვა",
+  "about.mapSummary": "ჩვენი სტუდიის ინტერაქტიული რუკა მისამართზე: {address}. ლოკაციის Google Maps-ში გასახსნელად გამოიყენე მიმართულებების ღილაკი.",
+  "about.mapFallback": "რუკისთვის საჭიროა JavaScript. სტუდიის ლოკაციის გასახსნელად გამოიყენე მიმართულებების ღილაკი.",
 
   // checkout
   "checkout.intro": "რამდენიმე დეტალი და ყვავილებს, მიწოდებასა და დადასტურებას ჩვენ მივხედავთ.",
@@ -507,6 +532,11 @@ const ka: Dict = {
   "checkout.city": "ქალაქი",
   "checkout.recipient": "მიმღების სახელი",
   "checkout.recipientHint": "არასავალდებულო — თუ შენგან განსხვავდება",
+  "checkout.savedAddress": "შენახული მისამართი",
+  "checkout.useNewAddress": "ახალი მისამართის გამოყენება",
+  "checkout.saveAddress": "ეს მისამართი შევინახო მომავალ შეკვეთებისთვის",
+  "checkout.addressLabel": "მისამართის სახელწოდება",
+  "checkout.addressLabelHint": "მაგალითად: სახლი ან ოფისი",
   "checkout.date": "მიწოდების თარიღი",
   "checkout.time": "მიწოდების დრო",
   "checkout.asap": "რაც შეიძლება მალე",
@@ -918,6 +948,8 @@ const ka: Dict = {
 
 const ru: Dict = {
   "common.viewAll": "Смотреть все",
+  "common.viewAllSection": "Смотреть все в разделе «{section}»",
+  "common.skipToContent": "Перейти к основному содержимому",
   "common.shopCatalog": "Открыть каталог",
   "common.browseBouquets": "Смотреть букеты",
   "common.addToCart": "В корзину",
@@ -932,6 +964,14 @@ const ru: Dict = {
   "common.free": "Бесплатно",
   "common.tbilisi": "Тбилиси",
   "common.minShort": "{n} мин",
+
+  "notFound.eyebrow": "Ошибка 404",
+  "notFound.title": "Эта страница уже отцвела",
+  "notFound.copy": "Страница, которую вы ищете, не существует или была перемещена. Давайте вернёмся к цветам.",
+  "notFound.home": "На главную",
+  "notFound.catalog": "Смотреть букеты",
+  "about.mapSummary": "Интерактивная карта нашей студии по адресу {address}. Откройте маршрут в Google Maps по кнопке направлений.",
+  "about.mapFallback": "Для карты нужен JavaScript. Откройте местоположение студии по кнопке направлений.",
 
   // checkout
   "checkout.intro": "Несколько деталей — а цветы, доставку и подтверждение мы возьмём на себя.",
@@ -952,6 +992,11 @@ const ru: Dict = {
   "checkout.city": "Город",
   "checkout.recipient": "Имя получателя",
   "checkout.recipientHint": "Необязательно — если отличается от вашего",
+  "checkout.savedAddress": "Сохранённый адрес",
+  "checkout.useNewAddress": "Использовать новый адрес",
+  "checkout.saveAddress": "Сохранить этот адрес для будущих заказов",
+  "checkout.addressLabel": "Название адреса",
+  "checkout.addressLabelHint": "Например: дом или офис",
   "checkout.date": "Дата доставки",
   "checkout.time": "Время доставки",
   "checkout.asap": "Как можно скорее",

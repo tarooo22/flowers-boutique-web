@@ -10,6 +10,9 @@ describe("About contact map contract", () => {
     expect(source).toContain("title={`${brand.name} map`}");
     expect(source).toContain("src={brand.mapEmbedUrl}");
     expect(source).toContain("aria-label={`${brand.name} · ${brand.addressFull}`}");
+    expect(source).toContain('aria-describedby="studio-map-summary"');
+    expect(source).toContain('t("about.mapSummary", { address: brand.addressFull })');
+    expect(source).toContain('t("about.mapFallback")');
     expect(source).toContain("{brand.address}");
     expect(source).toContain('loading="eager"');
     expect(source).toContain("allowFullScreen");

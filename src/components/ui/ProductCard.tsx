@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import type { Product } from "@/types";
 import { useStore } from "@/lib/store";
 import { useI18n } from "@/lib/i18n";
@@ -27,14 +28,18 @@ export function ProductCard({
   const { t } = useI18n();
   const product = withOverrides(base);
   const onSale = product.compareAt && product.compareAt > product.price;
+  const [imageReady, setImageReady] = useState(false);
+  const [imageFailed, setImageFailed] = useState(false);
 
   return (
     <Link
       href={`/product/${product.slug}`}
       className="group flex min-w-0 flex-col transition-transform duration-300 hover:-translate-y-1"
       aria-label={product.name}
-    >
-      <div className="card-media relative aspect-[3/4] overflow-hidden rounded-[10px] bg-[var(--surface-warm)] transition-shadow duration-300 group-hover:shadow-[var(--shadow-float)]">
+      >
+        <div className="card-media relative aspect-[3/4] overflow-hidden rounded-[10px] bg-[var(--surface-warm)] transition-shadow duration-300 group-hover:shadow-[var(--shadow-float)]">
+        {!imageReady && !imageFailed ? <span aria-hidden="true" className="absolute inset-0 animate-pulse bg-[linear-gradient(120deg,rgba(255,255,255,0.12),rgba(255,255,255,0.55),rgba(255,255,255,0.12))]" /> : null}
+        {imageFailed ? <span className="absolute inset-0 grid place-items-center px-4 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--muted)]">{product.name}</span> : null}
         <Image
           src={product.images[0]}
           alt={product.name}
@@ -42,7 +47,9 @@ export function ProductCard({
           sizes={sizes}
           priority={priority}
           unoptimized
-          className="object-cover"
+          onLoad={() => setImageReady(true)}
+          onError={() => setImageFailed(true)}
+          className="object-cover transition-opacity duration-300"
           style={{ objectPosition: focusFor(product.images[0]) }}
         />
 

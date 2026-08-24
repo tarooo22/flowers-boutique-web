@@ -10,6 +10,7 @@ import { Footer } from "@/components/layout/Footer";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { SearchOverlay } from "@/components/layout/Search";
 import { MessengerChat } from "@/components/layout/MessengerChat";
+import { useI18n } from "@/lib/i18n";
 
 /**
  * Wraps pages in the storefront chrome. The admin panel is a separate surface,
@@ -17,6 +18,7 @@ import { MessengerChat } from "@/components/layout/MessengerChat";
  */
 export function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const { t } = useI18n();
 
   if (pathname.startsWith("/admin")) {
     return <main id="main">{children}</main>;
@@ -24,6 +26,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
 
   return (
     <>
+      <a href="#main" className="skip-link">{t("common.skipToContent")}</a>
       <AnnouncementBar />
       <Header />
       <MobileNav />

@@ -202,8 +202,11 @@ export function AboutView() {
                 referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen
                 aria-label={`${brand.name} · ${brand.addressFull}`}
+                aria-describedby="studio-map-summary"
                 className="absolute inset-0 h-full w-full border-0"
               />
+              <p id="studio-map-summary" className="sr-only">{t("about.mapSummary", { address: brand.addressFull })}</p>
+              <noscript><p className="absolute inset-x-4 bottom-16 z-10 rounded-[var(--radius-sm)] bg-white/95 px-3 py-2 text-[12px] text-[var(--ink)] shadow-[var(--shadow-card)]">{t("about.mapFallback")}</p></noscript>
               <div className="pointer-events-none absolute top-4 left-4 z-10 inline-flex max-w-[calc(100%-2rem)] items-center gap-2 rounded-full bg-white/95 px-3 py-2 text-[12px] font-semibold text-[var(--ink)] shadow-[var(--shadow-card)] backdrop-blur">
                 <PinIcon className="h-4 w-4 shrink-0 text-[var(--action)]" />
                 <span className="truncate">{brand.address}</span>

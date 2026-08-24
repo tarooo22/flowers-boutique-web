@@ -140,6 +140,24 @@ body {
   border-radius: 2px;
 }
 
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  transform: translateY(-180%);
+  border-radius: var(--radius-sm);
+  background: var(--ink);
+  color: #fff;
+  padding: 0.7rem 1rem;
+  font-weight: 700;
+  transition: transform 160ms var(--ease-out, ease-out);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
 /* ---------- Utilities ---------- */
 .eyebrow {
   font-family: var(--font-mono), ui-monospace, monospace;

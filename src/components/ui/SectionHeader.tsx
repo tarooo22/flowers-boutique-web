@@ -32,6 +32,7 @@ export function SectionHeader({
       {viewAllHref ? (
         <Link
           href={viewAllHref}
+          aria-label={t("common.viewAllSection", { section: title })}
           className="group inline-flex shrink-0 items-center gap-1.5 text-[13px] font-semibold text-[var(--muted)] transition-colors hover:text-[var(--action)]"
         >
           {viewAllLabel ?? t("common.viewAll")}

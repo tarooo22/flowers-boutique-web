@@ -45,6 +45,12 @@ describe("Checkout staged presentation contract", () => {
       expect(translations.ka[key]).toBeTruthy();
       expect(translations.ru[key]).toBeTruthy();
     }
+    for (const key of ["checkout.savedAddress", "checkout.useNewAddress", "checkout.saveAddress", "checkout.addressLabel", "checkout.addressLabelHint"]) {
+      expect(translations.en[key]).toBeTruthy();
+      expect(translations.ka[key]).toBeTruthy();
+      expect(translations.ru[key]).toBeTruthy();
+      expect(source).toContain(`t("${key}")`);
+    }
   });
 
   it("uses the existing private profile and address-book contracts only as editable checkout defaults", () => {

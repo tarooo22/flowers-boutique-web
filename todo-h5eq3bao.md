@@ -288,3 +288,7 @@
 - [x] Add shared bounded abuse protection for public authentication, order, and AI bouquet generation endpoints.
 - [x] Add compatible public trust/security headers and a default Open Graph social image without breaking Maps, storage or checkout.
 - [x] Document the unresolved versioned checkout-consent requirement pending approved legal terms copy.
+- [x] Add skip-to-content navigation and destination-specific accessible names for repeated storefront CTAs.
+- [x] Complete EN/KA/RU localization for checkout saved-address controls and shared 404 recovery.
+- [x] Add a resilient, accessible contact-map fallback and verify mobile contact behavior.
+- [x] Improve catalog/product image loading and empty-state resilience using confirmed live-data behavior.
