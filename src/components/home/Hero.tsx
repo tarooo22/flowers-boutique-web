@@ -7,17 +7,16 @@ import { Tilt } from "@/components/ui/Tilt";
 import { ArrowRight, LeafIcon, TruckIcon } from "@/components/ui/Icons";
 import { useI18n } from "@/lib/i18n";
 import { brand } from "@/config/brand";
-import { useStore } from "@/lib/store";
 import { formatPrice } from "@/lib/format";
+import type { Product } from "@/types";
 
 /**
  * Split editorial hero with a 3D card stack.
  * Deliberately different from a full-bleed photo band: warm canvas on the left
  * for the headline, layered depth on the right.
  */
-export function Hero() {
+export function Hero({ products }: { products: Product[] }) {
   const { t } = useI18n();
-  const { catalogProducts } = useStore();
   const [offset, setOffset] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -43,7 +42,7 @@ export function Hero() {
   }, []);
 
   // The hero card displays a real, currently available production product.
-  const featured = catalogProducts.find((product) => product.available && product.images[0]) ?? catalogProducts[0];
+  const featured = products.find((product) => product.available && product.images[0]) ?? products[0];
 
   const stats = [
     { value: t("common.minShort", { n: brand.delivery.windowMinutes }), label: t("hero.statDelivery") },

@@ -37,6 +37,7 @@ function readLS<T>(key: string, fallback: T): T {
 /* ------------------------------------------------------------------ */
 interface StoreValue {
   hydrated: boolean;
+  catalogLoading: boolean;
   catalogProducts: Product[];
   // cart
   lines: CartLine[];
@@ -79,8 +80,10 @@ function priceFor(product: Product, variantId: string) {
   return product.price + (product.variants.find((variant) => variant.id === variantId)?.priceDelta ?? 0);
 }
 
-export function StoreProvider({ children, products }: { children: ReactNode; products: Product[] }) {
+export function StoreProvider({ children }: { children: ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [catalogLoading, setCatalogLoading] = useState(false);
   const [lines, setLines] = useState<CartLine[]>([]);
   const [customLines, setCustomLines] = useState<CustomBouquetLine[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -101,6 +104,32 @@ export function StoreProvider({ children, products }: { children: ReactNode; pro
     setHydrated(true);
     /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
+
+  // Shared cart and favourites remain available on every public route without
+  // serialising every live product through the root client provider.
+  useEffect(() => {
+    if (!hydrated) return;
+    const ids = [...new Set([...lines.map((line) => line.productId), ...favorites])].filter(Boolean);
+    if (!ids.length) {
+      setProducts([]);
+      setCatalogLoading(false);
+      return;
+    }
+    const controller = new AbortController();
+    setCatalogLoading(true);
+    fetch(`/api/catalog/products?ids=${encodeURIComponent(ids.join(","))}`, { signal: controller.signal, cache: "no-store" })
+      .then((response) => (response.ok ? response.json() : { products: [] }))
+      .then((payload: { products?: Product[] }) => {
+        if (!controller.signal.aborted) setProducts(payload.products ?? []);
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) setProducts([]);
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setCatalogLoading(false);
+      });
+    return () => controller.abort();
+  }, [favorites, hydrated, lines]);
 
   // pull any admin price / stock edits so the storefront reflects them
   useEffect(() => {
@@ -249,8 +278,8 @@ export function StoreProvider({ children, products }: { children: ReactNode; pro
     let sum = 0;
     for (const l of lines) {
       const p = productsById.get(l.productId);
-      if (!p) continue;
       count += l.quantity;
+      if (!p) continue;
       sum += priceFor(p, l.variantId) * l.quantity;
     }
     for (const c of customLines) {
@@ -262,6 +291,7 @@ export function StoreProvider({ children, products }: { children: ReactNode; pro
 
   const value: StoreValue = {
     hydrated,
+    catalogLoading,
     catalogProducts: products,
     lines,
     customLines,

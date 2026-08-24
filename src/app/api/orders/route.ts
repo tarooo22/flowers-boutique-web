@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     return NextResponse.json(order, { status: 201 });
   } catch (error) {
     const code = error instanceof Error ? error.message : "order_creation_failed";
-    const clientError = ["missing_fields", "empty_order", "invalid_product", "invalid_custom_composition"].includes(code);
+    const clientError = ["missing_fields", "empty_order", "invalid_product", "invalid_custom_composition", "invalid_delivery_schedule"].includes(code);
     return NextResponse.json({ error: code }, { status: clientError ? 400 : 500 });
   }
 }

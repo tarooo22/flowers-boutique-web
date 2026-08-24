@@ -24,11 +24,11 @@ describe("AI Bouquet live catalog and preview contract", () => {
     expect(aiSource).toContain('aria-busy="true"');
   });
 
-  it("feeds the AI picker from the live catalog while preserving the legacy Visual Builder list", () => {
+  it("feeds both builders from canonical live catalog flowers", () => {
     expect(pageSource).toContain("listLiveProducts()");
     expect(pageSource).toContain("catalogFlowersForAIBouquet(products)");
-    expect(tabsSource).toContain("const aiPickerFlowers = aiFlowers.length ? aiFlowers : legacyBuilderFlowers");
-    expect(tabsSource).toContain("<AIBouquet flowers={aiPickerFlowers} />");
-    expect(tabsSource).toContain("<VisualBuilder flowers={legacyBuilderFlowers} />");
+    expect(tabsSource).toContain("<AIBouquet flowers={aiFlowers} />");
+    expect(tabsSource).toContain("<VisualBuilder flowers={aiFlowers} />");
+    expect(tabsSource).not.toContain("legacyBuilderFlowers");
   });
 });

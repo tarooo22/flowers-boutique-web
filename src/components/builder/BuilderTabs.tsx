@@ -4,7 +4,6 @@
 import { useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import type { CatalogBuilderFlower } from "@/lib/builderCatalog";
-import { builderFlowers } from "@/data/builder";
 import { VisualBuilder } from "./VisualBuilder";
 import { AIBouquet } from "./AIBouquet";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
@@ -14,13 +13,6 @@ type Tab = "visual" | "ai";
 export function BuilderTabs({ aiFlowers }: { aiFlowers: CatalogBuilderFlower[] }) {
   const { t } = useI18n();
   const [tab, setTab] = useState<Tab>("visual");
-  const legacyBuilderFlowers = builderFlowers.map((flower) => ({
-    key: flower.key,
-    name: t(`builder.flower.${flower.key}`),
-    price: flower.price,
-    asset: flower.asset,
-  }));
-  const aiPickerFlowers = aiFlowers.length ? aiFlowers : legacyBuilderFlowers;
 
   return (
     <div className="container-fb pt-6 pb-20 sm:pb-28">
@@ -67,11 +59,11 @@ export function BuilderTabs({ aiFlowers }: { aiFlowers: CatalogBuilderFlower[] }
       <div className="mt-8">
         {tab === "visual" ? (
           <div role="tabpanel" id="builder-panel-visual" aria-labelledby="builder-tab-visual">
-            <VisualBuilder flowers={legacyBuilderFlowers} />
+            <VisualBuilder flowers={aiFlowers} />
           </div>
         ) : (
           <div role="tabpanel" id="builder-panel-ai" aria-labelledby="builder-tab-ai">
-            <AIBouquet flowers={aiPickerFlowers} />
+            <AIBouquet flowers={aiFlowers} />
           </div>
         )}
       </div>

@@ -60,6 +60,13 @@ describe("Checkout staged presentation contract", () => {
     expect(source).toContain("selectSavedAddress");
     expect(source).toContain("saveDeliveryAddress");
     expect(source).toContain("customer.recipient || customer.name");
+    expect(source).toContain("setOrderTotal(Number(data.total ?? total))");
+    expect(source).toContain('t("checkout.scheduleUnavailable")');
+    for (const key of ["checkout.scheduleUnavailable", "checkout.finalTotal"]) {
+      expect(translations.en[key]).toBeTruthy();
+      expect(translations.ka[key]).toBeTruthy();
+      expect(translations.ru[key]).toBeTruthy();
+    }
   });
 
   it("uses public manager-controlled delivery copy without moving fee calculations to the client", () => {

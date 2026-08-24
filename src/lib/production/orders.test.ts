@@ -29,5 +29,7 @@ describe("Checkout fulfillment persistence contract", () => {
     expect(source).toContain("attempt < 3");
     expect(orderRoute).toContain("takePublicRequest");
     expect(orderRoute).toContain('error: "rate_limited"');
+    expect(source).toContain("getDeliveryPolicy");
+    expect(source).toContain("isDeliveryScheduleAllowed");
   });
 });
