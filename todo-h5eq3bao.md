@@ -275,3 +275,4 @@
 - [x] Audit and improve public SEO, structured data, multilingual metadata and social sharing while keeping private routes non-indexable.
 - [x] Complete end-to-end security, accessibility, responsive and build validation for the roadmap release; publish with checkpoints.
 - [x] Install and verify the requested Kelpi AI Meta Ads skills package.
+- [x] Verify the Facebook business contact/location details and update the centralized storefront brand configuration safely.

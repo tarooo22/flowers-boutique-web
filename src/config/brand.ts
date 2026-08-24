@@ -11,27 +11,27 @@ export const brand = {
   legalName: "Flower's Boutique LLC",
   taxId: "ID 404512067",
 
-  phone: "+995 555 123 456",
-  phoneHref: "tel:+995555123456",
-  email: "hello@flowersboutique.co",
-  emailHref: "mailto:hello@flowersboutique.co",
-  whatsapp: "+995555123456",
-  whatsappHref: "https://wa.me/995555123456",
+  phone: "+995 511 55 56 50",
+  phoneHref: "tel:+995511555650",
+  email: "info.flowersboutique@gmail.com",
+  emailHref: "mailto:info.flowersboutique@gmail.com",
+  whatsapp: "+995511555650",
+  whatsappHref: "https://wa.me/995511555650",
 
-  address: "12 Chavchavadze Ave, Tbilisi",
-  addressFull: "12 Chavchavadze Avenue, Tbilisi 0179, Georgia",
+  address: "შანდორ პეტეფის ქ. N1, ვაზისუბანი, თბილისი",
+  addressFull: "შანდორ პეტეფის ქ. N1, ვაზისუბანი, თბილისი, საქართველო",
   mapEmbedUrl:
-    "https://maps.google.com/maps?q=12%20Chavchavadze%20Avenue%2C%20Tbilisi%2C%20Georgia&z=15&output=embed",
+    "https://maps.google.com/maps?q=Shandor%20Petefi%20Street%201%2C%20Vazisubani%2C%20Tbilisi%2C%20Georgia&z=15&output=embed",
   directionsUrl:
-    "https://www.google.com/maps/dir/?api=1&destination=12%20Chavchavadze%20Avenue%2C%20Tbilisi%2C%20Georgia",
+    "https://www.google.com/maps/dir/?api=1&destination=Shandor%20Petefi%20Street%201%2C%20Vazisubani%2C%20Tbilisi%2C%20Georgia",
   hours: "Every day 09:00–21:00",
   hoursShort: "09:00–21:00",
 
   social: {
-    instagram: "https://instagram.com/flowersboutique",
-    instagramHandle: "@flowersboutique",
-    facebook: "https://facebook.com/flowersboutique",
-    whatsapp: "https://wa.me/995555123456",
+    instagram: "https://instagram.com/myflowersboutique",
+    instagramHandle: "@myflowersboutique",
+    facebook: "https://www.facebook.com/flowersboutiques",
+    whatsapp: "https://wa.me/995511555650",
   },
 
   delivery: {

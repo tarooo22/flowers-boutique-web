@@ -22,12 +22,12 @@ describe("About contact map contract", () => {
   it("keeps the address and map destinations centralized in brand configuration", () => {
     expect(brand).toContain("mapEmbedUrl");
     expect(brand).toContain("directionsUrl");
-    expect(brand).toContain("12 Chavchavadze Avenue, Tbilisi 0179, Georgia");
+    expect(brand).toContain("შანდორ პეტეფის ქ. N1, ვაზისუბანი, თბილისი, საქართველო");
   });
 
   it("uses the new studio-location message for the location-value card", () => {
-    expect(translations).toContain('"about.value3Title": "გვიპოვე ვაკეში"');
-    expect(translations).toContain("ჩავლჩავაძის გამზირზე");
-    expect(translations).toContain('"about.value3Title": "Find us in Vake"');
+    expect(translations).toContain('"about.value3Title": "გვიპოვე ვაზისუბანში"');
+    expect(translations).toContain("შანდორ პეტეფის ქ. N1-ში");
+    expect(translations).toContain('"about.value3Title": "Find us in Vazisubani"');
   });
 });
