@@ -13,6 +13,9 @@ import { LeafIcon } from "@/components/ui/Icons";
 const timeWindows = ["09:00 – 12:00", "12:00 – 15:00", "15:00 – 18:00", "18:00 – 21:00"];
 type Fulfillment = "delivery" | "studio_pickup";
 type FlowerCircleCheckoutSummary = { availableBenefit: number; redemptionCapPercent: number };
+type CheckoutProfile = { name: string; email: string; phone: string };
+type SavedAddress = { id: number; label: string; recipientName: string; phone: string | null; city: string; address: string; instructions: string | null; isDefault: boolean };
+type ContactDraft = { name: string; email: string; phone: string; recipient: string; address: string; city: string };
 
 const isoDate = (date: Date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 const tomorrow = () => { const date = new Date(); date.setHours(0, 0, 0, 0); date.setDate(date.getDate() + 1); return date; };
@@ -30,6 +33,11 @@ export function CheckoutView() {
   const [month, setMonth] = useState(() => { const date = tomorrow(); return new Date(date.getFullYear(), date.getMonth(), 1); });
   const [flowerCircle, setFlowerCircle] = useState<FlowerCircleCheckoutSummary | null>(null);
   const [useFlowerCircleBenefit, setUseFlowerCircleBenefit] = useState(false);
+  const [contact, setContact] = useState<ContactDraft>({ name: "", email: "", phone: "", recipient: "", address: "", city: "თბილისი" });
+  const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([]);
+  const [selectedAddressId, setSelectedAddressId] = useState("");
+  const [saveDeliveryAddress, setSaveDeliveryAddress] = useState(false);
+  const [addressLabel, setAddressLabel] = useState("");
 
   const hasCartItems = lines.length > 0 || customLines.length > 0;
   const items = lines.map((line) => { const product = getProduct(line.productId); return product ? { line, product, unit: getUnitPrice(product, line.variantId) } : null; }).filter((entry): entry is NonNullable<typeof entry> => Boolean(entry));
@@ -45,6 +53,33 @@ export function CheckoutView() {
       .catch(() => { if (active) setFlowerCircle(null); });
     return () => { active = false; };
   }, []);
+
+  useEffect(() => {
+    let active = true;
+    Promise.all([fetch("/api/account/profile", { cache: "no-store" }), fetch("/api/account/addresses", { cache: "no-store" })])
+      .then(async ([profileResponse, addressesResponse]) => ({ profile: profileResponse.ok ? await profileResponse.json() : null, addresses: addressesResponse.ok ? await addressesResponse.json() : null }))
+      .then((payload) => {
+        if (!active) return;
+        const profile = payload.profile?.profile as CheckoutProfile | undefined;
+        const addresses = (payload.addresses?.addresses ?? []) as SavedAddress[];
+        setSavedAddresses(addresses);
+        setContact((current) => ({ ...current, name: current.name || profile?.name || "", email: current.email || profile?.email || "", phone: current.phone || profile?.phone || "" }));
+        const primary = addresses.find((address) => address.isDefault) ?? addresses[0];
+        if (primary) {
+          setSelectedAddressId(String(primary.id));
+          setContact((current) => ({ ...current, address: current.address || primary.address, city: current.city === "თბილისი" ? primary.city : current.city, recipient: current.recipient || primary.recipientName, phone: current.phone || primary.phone || "" }));
+        }
+      }).catch(() => null);
+    return () => { active = false; };
+  }, []);
+
+  const updateContact = <K extends keyof ContactDraft>(key: K, value: ContactDraft[K]) => setContact((current) => ({ ...current, [key]: value }));
+  const selectSavedAddress = (id: string) => {
+    setSelectedAddressId(id);
+    const address = savedAddresses.find((item) => String(item.id) === id);
+    if (!address) return;
+    setContact((current) => ({ ...current, address: address.address, city: address.city, recipient: address.recipientName, phone: current.phone || address.phone || "" }));
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -62,6 +97,9 @@ export function CheckoutView() {
       const response = await fetch("/api/orders", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       const data = (await response.json()) as { id?: string; error?: string };
       if (!response.ok || !data.id) { setSubmitError(t("checkout.submitError")); return; }
+      if (saveDeliveryAddress && fulfillment === "delivery" && !selectedAddressId) {
+        void fetch("/api/account/addresses", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ label: addressLabel.trim() || "ახალი მისამართი", recipientName: customer.recipient || customer.name, phone: customer.phone, city: customer.city, address: customer.address, instructions: deliveryInstructions, isDefault: savedAddresses.length === 0 }) });
+      }
       setOrderId(data.id); setSubmitted(true); clearCart(); window.scrollTo({ top: 0, behavior: "smooth" });
     } catch { setSubmitError(t("checkout.connectionError")); } finally { setSending(false); }
   };
@@ -75,13 +113,13 @@ export function CheckoutView() {
 
     <form onSubmit={handleSubmit} className="mt-5 grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
       <div className="grid gap-4">
-        <CheckoutStep number="1" title={t("checkout.stepContact")} description={t("checkout.contactHint")}><Field label={t("checkout.name")} name="name" autoComplete="name" required /><div className="grid gap-3 sm:grid-cols-2"><Field label={t("checkout.email")} name="email" type="email" autoComplete="email" required /><Field label={t("checkout.phone")} name="phone" type="tel" autoComplete="tel" required /></div></CheckoutStep>
+        <CheckoutStep number="1" title={t("checkout.stepContact")} description={t("checkout.contactHint")}><Field label={t("checkout.name")} name="name" autoComplete="name" value={contact.name} onChange={(value) => updateContact("name", value)} required /><div className="grid gap-3 sm:grid-cols-2"><Field label={t("checkout.email")} name="email" type="email" autoComplete="email" value={contact.email} onChange={(value) => updateContact("email", value)} required /><Field label={t("checkout.phone")} name="phone" type="tel" autoComplete="tel" value={contact.phone} onChange={(value) => updateContact("phone", value)} required /></div></CheckoutStep>
 
         <CheckoutStep number="2" title={t("checkout.stepMethod")} description={t("checkout.deliveryHint")}><input type="hidden" name="fulfillment" value={fulfillment} /><div className="grid gap-3 sm:grid-cols-2"><ChoiceCard active={fulfillment === "delivery"} onClick={() => setFulfillment("delivery")} title={t("checkout.deliveryChoice")} text={t("checkout.deliveryChoiceCopy")} badge={delivery ? formatPrice(delivery) : t("checkout.free")} /><ChoiceCard active={fulfillment === "studio_pickup"} onClick={() => setFulfillment("studio_pickup")} title={t("checkout.pickupChoice")} text={t("checkout.pickupChoiceCopy")} badge={t("checkout.free")} /></div></CheckoutStep>
 
         <CheckoutStep number="3" title={t("checkout.stepDate")} description={t("checkout.dateHint")}><input type="hidden" name="date" value={deliveryDate} /><DeliveryCalendar month={month} setMonth={setMonth} selected={deliveryDate} setSelected={setDeliveryDate} lang={lang} previousLabel={t("checkout.calendarPrevious")} nextLabel={t("checkout.calendarNext")} /><div className="grid gap-3 sm:grid-cols-2"><div className="grid gap-1.5"><label htmlFor="time" className={labelClass}>{t("checkout.time")}<span className="text-[var(--action)]"> *</span></label><select id="time" name="time" required className={inputClass}>{timeWindows.map((window) => <option key={window}>{window}</option>)}<option>{t("checkout.asap")}</option></select></div><p className="self-end rounded-[var(--radius)] bg-[var(--surface-sand)] px-3 py-3 text-[12px] leading-relaxed text-[var(--muted)]">{fulfillment === "studio_pickup" ? t("checkout.pickupChoiceCopy") : t("checkout.deliveryMethodCopy")}</p></div></CheckoutStep>
 
-        <CheckoutStep number="4" title={t("checkout.stepRecipient")} description={t("checkout.recipientIntro")}><div className="grid gap-3 sm:grid-cols-2"><ChoiceCard compact active={recipientMode === "self"} onClick={() => setRecipientMode("self")} title={t("checkout.recipientSame")} /><ChoiceCard compact active={recipientMode === "other"} onClick={() => setRecipientMode("other")} title={t("checkout.recipientOther")} /></div>{recipientMode === "other" ? <Field label={t("checkout.recipient")} name="recipient" hint={t("checkout.recipientHint")} /> : <input type="hidden" name="recipient" value="" />}{fulfillment === "delivery" ? <><Field label={t("checkout.address")} name="address" autoComplete="street-address" required /><div className="grid gap-3 sm:grid-cols-2"><Field label={t("checkout.city")} name="city" defaultValue="თბილისი" required /><p className="self-end rounded-[var(--radius)] bg-[var(--surface-sand)] px-3 py-3 text-[12px] text-[var(--muted)]">{t("checkout.deliveryMethod")}</p></div></> : <><input type="hidden" name="address" value="" /><input type="hidden" name="city" value="თბილისი" /><p className="rounded-[var(--radius)] border border-[var(--green)]/20 bg-[var(--green-soft)] px-4 py-3 text-[13px] text-[var(--green)]">{brand.addressFull}</p></>}</CheckoutStep>
+        <CheckoutStep number="4" title={t("checkout.stepRecipient")} description={t("checkout.recipientIntro")}><div className="grid gap-3 sm:grid-cols-2"><ChoiceCard compact active={recipientMode === "self"} onClick={() => setRecipientMode("self")} title={t("checkout.recipientSame")} /><ChoiceCard compact active={recipientMode === "other"} onClick={() => setRecipientMode("other")} title={t("checkout.recipientOther")} /></div>{recipientMode === "other" ? <Field label={t("checkout.recipient")} name="recipient" value={contact.recipient} onChange={(value) => updateContact("recipient", value)} hint={t("checkout.recipientHint")} /> : <input type="hidden" name="recipient" value="" />}{fulfillment === "delivery" ? <>{savedAddresses.length ? <label className="grid gap-1.5 text-[12px] font-semibold">შენახული მისამართი<select value={selectedAddressId} onChange={(event) => selectSavedAddress(event.target.value)} className={inputClass}><option value="">ახალი მისამართის გამოყენება</option>{savedAddresses.map((address) => <option key={address.id} value={address.id}>{address.label} · {address.city}</option>)}</select></label> : null}<Field label={t("checkout.address")} name="address" autoComplete="street-address" value={contact.address} onChange={(value) => { setSelectedAddressId(""); updateContact("address", value); }} required /><div className="grid gap-3 sm:grid-cols-2"><Field label={t("checkout.city")} name="city" value={contact.city} onChange={(value) => { setSelectedAddressId(""); updateContact("city", value); }} required /><p className="self-end rounded-[var(--radius)] bg-[var(--surface-sand)] px-3 py-3 text-[12px] text-[var(--muted)]">{t("checkout.deliveryMethod")}</p></div>{!selectedAddressId ? <div className="rounded-[var(--radius)] border border-[var(--line)] bg-[var(--surface-warm)] p-3"><label className="flex min-h-11 items-center gap-3 text-[12px] font-semibold"><input type="checkbox" checked={saveDeliveryAddress} onChange={(event) => setSaveDeliveryAddress(event.target.checked)} className="h-4 w-4 accent-[var(--green)]" />ეს მისამართი შევინახო მომავალ შეკვეთებისთვის</label>{saveDeliveryAddress ? <Field label="მისამართის სახელწოდება" name="addressLabel" value={addressLabel} onChange={setAddressLabel} hint="მაგალითად: სახლი ან ოფისი" /> : null}</div> : null}</> : <><input type="hidden" name="address" value="" /><input type="hidden" name="city" value="თბილისი" /><p className="rounded-[var(--radius)] border border-[var(--green)]/20 bg-[var(--green-soft)] px-4 py-3 text-[13px] text-[var(--green)]">{brand.addressFull}</p></>}</CheckoutStep>
 
         <CheckoutStep number="5" title={t("checkout.stepPersonalize")} description={t("checkout.notesHint")}><div className="grid gap-3 sm:grid-cols-2"><TextArea label={t("checkout.cardMessage")} name="cardMessage" placeholder={t("checkout.cardMessagePlaceholder")} /><TextArea label={t("checkout.deliveryInstructions")} name="notes" placeholder={t("checkout.deliveryInstructionsPlaceholder")} /></div></CheckoutStep>
 
@@ -111,7 +149,7 @@ function DeliveryCalendar({ month, setMonth, selected, setSelected, lang, previo
 
 function CheckoutStep({ number, title, description, children }: { number: string; title: string; description?: string; children: React.ReactNode }) { return <fieldset className="rounded-[18px] border border-black/5 bg-[var(--surface)] p-5 shadow-[0_10px_28px_rgba(34,33,30,0.045)] sm:p-6"><legend className="sr-only">{title}</legend><div className="mb-5 flex gap-3"><span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[var(--green)] text-[10px] font-bold text-white">{number}</span><div><h2 className="font-display text-[20px] leading-none">{title}</h2>{description ? <p className="mt-1 text-[12px] leading-relaxed text-[var(--muted)]">{description}</p> : null}</div></div><div className="grid gap-4">{children}</div></fieldset>; }
 function ChoiceCard({ active, onClick, title, text, badge, compact }: { active: boolean; onClick: () => void; title: string; text?: string; badge?: string; compact?: boolean }) { return <button type="button" aria-pressed={active} onClick={onClick} className={`relative min-h-20 rounded-[var(--radius)] border p-4 text-left transition ${active ? "border-[var(--green)] bg-[var(--green-soft)] shadow-[0_0_0_1px_var(--green)]" : "border-[var(--line)] bg-white hover:border-[var(--line-strong)]"}`}><span className={`absolute right-3 top-3 grid h-4 w-4 place-items-center rounded-full border ${active ? "border-[var(--green)] bg-[var(--green)]" : "border-[var(--line-strong)]"}`}>{active ? <span className="h-1.5 w-1.5 rounded-full bg-white" /> : null}</span><p className="pr-7 text-[13px] font-semibold">{title}</p>{text ? <p className="mt-1 pr-2 text-[11.5px] leading-relaxed text-[var(--muted)]">{text}</p> : null}{badge && !compact ? <span className="mt-3 inline-block rounded-full bg-white/80 px-2 py-1 text-[10px] font-bold text-[var(--green)]">{badge}</span> : null}</button>; }
-function Field({ label, name, type = "text", required, defaultValue, autoComplete, hint }: { label: string; name: string; type?: string; required?: boolean; defaultValue?: string; autoComplete?: string; hint?: string }) { return <div className="grid gap-1.5"><label htmlFor={name} className={labelClass}>{label}{required ? <span className="text-[var(--action)]"> *</span> : null}</label><input id={name} name={name} type={type} required={required} defaultValue={defaultValue} autoComplete={autoComplete} className={inputClass} />{hint ? <p className="text-[11px] text-[var(--muted-2)]">{hint}</p> : null}</div>; }
+function Field({ label, name, type = "text", required, defaultValue, value, onChange, autoComplete, hint }: { label: string; name: string; type?: string; required?: boolean; defaultValue?: string; value?: string; onChange?: (value: string) => void; autoComplete?: string; hint?: string }) { return <div className="grid gap-1.5"><label htmlFor={name} className={labelClass}>{label}{required ? <span className="text-[var(--action)]"> *</span> : null}</label><input id={name} name={name} type={type} required={required} defaultValue={value === undefined ? defaultValue : undefined} value={value} onChange={onChange ? (event) => onChange(event.target.value) : undefined} autoComplete={autoComplete} className={inputClass} />{hint ? <p className="text-[11px] text-[var(--muted-2)]">{hint}</p> : null}</div>; }
 function TextArea({ label, name, placeholder }: { label: string; name: string; placeholder: string }) { return <div className="grid gap-1.5"><label htmlFor={name} className={labelClass}>{label}</label><textarea id={name} name={name} rows={4} placeholder={placeholder} className="min-h-28 rounded-[var(--radius)] border border-[var(--line-strong)] bg-white px-3 py-2.5 text-[14px] outline-none transition placeholder:text-[var(--muted-2)] focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/15" /></div>; }
 function SummaryItem({ image, quantity, name, price }: { image?: string; quantity: number; name: string; price: string }) { return <li className="flex items-center gap-3"><div className="relative h-14 w-12 shrink-0 overflow-hidden rounded-[var(--radius)] bg-[var(--surface-warm)]">{image ? <Image src={image} alt="" fill sizes="48px" className="object-cover" unoptimized /> : null}<span className="mono absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--ink)] px-1 text-[10px] font-bold text-white">{quantity}</span></div><p className="min-w-0 flex-1 truncate text-[12.5px] font-semibold uppercase tracking-[0.02em]">{name}</p><span className="text-[13px] font-semibold tabular-nums">{price}</span></li>; }
 function SummaryLine({ label, value, strong }: { label: string; value: string; strong?: boolean }) { return <div className={`flex justify-between gap-4 ${strong ? "mt-1 border-t border-black/5 pt-3 text-[15px] font-semibold" : ""}`}><dt className={strong ? "" : "text-[var(--muted)]"}>{label}</dt><dd className="tabular-nums">{value}</dd></div>; }

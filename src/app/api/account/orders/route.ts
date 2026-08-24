@@ -20,7 +20,7 @@ export async function GET() {
   ]);
   return NextResponse.json({
     summary,
-    orders: recentOrders.map((order) => ({ ...order, id: `FLR-${order.orderNumber ?? order.id}`, total: Number(order.total), flowerCircleDiscount: Number(order.flowerCircleDiscount ?? 0), flowerCircleEarned: Number(order.flowerCircleEarned ?? 0), createdAt: order.createdAt.toISOString() })),
+    orders: recentOrders.map((order) => ({ ...order, internalId: order.id, id: `FLR-${order.orderNumber ?? order.id}`, total: Number(order.total), flowerCircleDiscount: Number(order.flowerCircleDiscount ?? 0), flowerCircleEarned: Number(order.flowerCircleEarned ?? 0), createdAt: order.createdAt.toISOString() })),
     ledger: ledger.map((event) => ({ ...event, amount: Number(event.amount), createdAt: event.createdAt.toISOString() })),
   }, { headers: { "Cache-Control": "private, no-store" } });
 }

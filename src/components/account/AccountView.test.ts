@@ -34,4 +34,11 @@ describe("Account dashboard", () => {
     expect(source).not.toContain('flex gap-1 overflow-x-auto pb-1 lg:block');
     expect(source).toContain('className="min-w-0 break-words font-semibold"');
   });
+
+  it("keeps customer order detail private and exposes a timeline drawer from owned order cards", () => {
+    expect(source).toContain("/api/account/orders/${order.internalId}");
+    expect(source).toContain("function OrderDetail");
+    expect(source).toContain("შეკვეთის დეტალი");
+    expect(source).toContain("დეტალების ნახვა");
+  });
 });

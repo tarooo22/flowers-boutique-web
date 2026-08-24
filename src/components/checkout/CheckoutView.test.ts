@@ -46,4 +46,13 @@ describe("Checkout staged presentation contract", () => {
       expect(translations.ru[key]).toBeTruthy();
     }
   });
+
+  it("uses the existing private profile and address-book contracts only as editable checkout defaults", () => {
+    expect(source).toContain('fetch("/api/account/profile"');
+    expect(source).toContain('fetch("/api/account/addresses"');
+    expect(source).toContain("savedAddresses");
+    expect(source).toContain("selectSavedAddress");
+    expect(source).toContain("saveDeliveryAddress");
+    expect(source).toContain("customer.recipient || customer.name");
+  });
 });
