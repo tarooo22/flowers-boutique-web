@@ -113,6 +113,8 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
   const [media, setMedia] = useState<AdminMedia[]>([]);
   const [banners, setBanners] = useState<AdminBanner[]>([]);
   const [stats, setStats] = useState<Stats | null>(null);
+  const [productPage, setProductPage] = useState(1);
+  const [productPageMeta, setProductPageMeta] = useState({ total: 0, totalPages: 1 });
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [availabilityFilter, setAvailabilityFilter] = useState<"all" | "available" | "unavailable">("all");
@@ -131,7 +133,7 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
   const refresh = useCallback(async () => {
     setLoading(true);
     try {
-      const [ordersResponse, productsResponse, bannersResponse] = await Promise.all([fetch("/api/admin/orders"), fetch("/api/admin/products"), fetch("/api/admin/banners")]);
+      const [ordersResponse, productsResponse, bannersResponse] = await Promise.all([fetch("/api/admin/orders"), fetch(`/api/admin/products?page=${productPage}&pageSize=24`), fetch("/api/admin/banners")]);
       if (!ordersResponse.ok || !productsResponse.ok || !bannersResponse.ok) throw new Error("refresh_failed");
       const [ordersPayload, productsPayload, bannersPayload] = await Promise.all([ordersResponse.json(), productsResponse.json(), bannersResponse.json()]);
       setOrders(ordersPayload.orders ?? []);
@@ -139,13 +141,14 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
       setCategories(productsPayload.categories ?? []);
       setMedia(productsPayload.media ?? []);
       setStats(productsPayload.stats ?? null);
+      setProductPageMeta({ total: Number(productsPayload.total ?? 0), totalPages: Math.max(1, Number(productsPayload.totalPages ?? 1)) });
       setBanners(bannersPayload.banners ?? []);
     } catch {
       setFeedback("მონაცემების განახლება ვერ მოხერხდა. სცადეთ ხელახლა.");
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [productPage]);
 
   useEffect(() => { void refresh(); }, [refresh]);
 
@@ -154,9 +157,21 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
     try {
       const response = await fetch("/api/admin/products", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, ...patch }) });
       const payload = await response.json();
-      if (!response.ok || !payload.products) throw new Error("save_failed");
-      setProducts(payload.products); setFeedback("პროდუქტის ცვლილებები შენახულია storefront-ზე.");
+      if (!response.ok) throw new Error("save_failed");
+      await refresh(); setFeedback("პროდუქტის ცვლილებები შენახულია storefront-ზე.");
     } catch { setFeedback("პროდუქტის ცვლილებების შენახვა ვერ მოხერხდა."); }
+    finally { setBusy(null); }
+  };
+
+  const bulkPatchProducts = async (patch: Record<string, unknown>) => {
+    if (!products.length) return;
+    setBusy("products:bulk"); setFeedback(null);
+    try {
+      const response = await fetch("/api/admin/products", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ operation: "bulk", ids: products.map((product) => product.id), ...patch }) });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error ?? "bulk_failed");
+      await refresh(); setFeedback(`${payload.updated} პროდუქტი განახლდა ამ გვერდზე.`);
+    } catch { setFeedback("მასობრივი ცვლილება ვერ მოხერხდა."); }
     finally { setBusy(null); }
   };
 
@@ -305,7 +320,7 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
       <div role="tablist" className="mt-5 rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] p-1.5 shadow-[var(--shadow-card)]"><div className="grid grid-cols-2 gap-1.5 sm:flex sm:flex-wrap">{(["products", "categories", "orders", "banners", "settings"] as Tab[]).map((id) => <button key={id} type="button" role="tab" aria-selected={tab === id} onClick={() => { setTab(id); setQuery(""); setFeedback(null); }} className={`min-h-11 min-w-0 rounded-[var(--radius)] px-3 text-left text-[12.5px] font-semibold transition sm:min-h-10 sm:w-auto sm:px-4 ${id === "settings" ? "col-span-2 sm:col-span-1" : ""} ${tab === id ? "bg-[var(--ink)] text-white shadow-sm" : "text-[var(--muted)] hover:bg-[var(--surface-sand)] hover:text-[var(--ink)]"}`}>{id === "products" ? "პროდუქტები" : id === "categories" ? "კატეგორიები" : id === "orders" ? `შეკვეთები${stats?.newCount ? ` · ${stats.newCount}` : ""}` : id === "banners" ? "ბანერები" : "პარამეტრები"}</button>)}</div></div>
       {demoCredentials ? <p className="mt-4 rounded-[var(--radius)] border border-[var(--action)]/30 bg-[var(--action)]/8 px-4 py-3 text-[12.5px] text-[var(--action-deep)]"><strong>Demo credentials are active.</strong> რეალური მენეჯერის წვდომისთვის გამოიყენეთ production administrator account.</p> : null}
       {feedback ? <div role="status" className="mt-4 rounded-[var(--radius)] border border-[var(--line-strong)] bg-[var(--surface)] px-4 py-3 text-[12.5px] text-[var(--muted)]">{feedback}</div> : null}
-      {tab === "products" ? <ProductsWorkspace loading={loading} products={visibleProducts} query={query} setQuery={setQuery} availabilityFilter={availabilityFilter} setAvailabilityFilter={setAvailabilityFilter} categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter} categories={categorySummaries} patchProduct={patchProduct} onAdd={() => setCreatingProduct(true)} onEdit={setEditingProduct} onDelete={deleteProduct} busy={busy} /> : null}
+      {tab === "products" ? <ProductsWorkspace loading={loading} products={visibleProducts} query={query} setQuery={setQuery} availabilityFilter={availabilityFilter} setAvailabilityFilter={setAvailabilityFilter} categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter} categories={categorySummaries} patchProduct={patchProduct} onBulk={bulkPatchProducts} page={productPage} pageMeta={productPageMeta} setPage={setProductPage} onAdd={() => setCreatingProduct(true)} onEdit={setEditingProduct} onDelete={deleteProduct} busy={busy} /> : null}
       {tab === "categories" ? <CategoriesWorkspace categories={categorySummaries} loading={loading} onCreate={() => setCreatingCategory(true)} onEdit={setEditingCategory} onReviewProducts={reviewCategoryProducts} onDelete={deleteCategory} busy={busy} /> : null}
       {tab === "orders" ? <OrdersOperations /> : null}
       {tab === "banners" ? <BannersWorkspace banners={banners} loading={loading} busy={busy} onCreate={() => setCreatingBanner(true)} onEdit={setEditingBanner} onDelete={deleteBanner} onToggle={(banner, active) => saveBanner({ placement: "homepage", titleKa: banner.titleKa, titleEn: banner.titleEn, subtitleKa: banner.subtitleKa, subtitleEn: banner.subtitleEn, ctaLabelKa: banner.ctaLabelKa, ctaLabelEn: banner.ctaLabelEn, ctaHref: banner.ctaHref, image: banner.imageUrl ? { id: `banner-${banner.id}`, url: banner.imageUrl, key: banner.imageKey, sortOrder: 0 } : null, active, sortOrder: banner.sortOrder }, banner.id)} /> : null}
@@ -317,10 +332,11 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
   </div>;
 }
 
-function ProductsWorkspace({ loading, products, query, setQuery, availabilityFilter, setAvailabilityFilter, categoryFilter, setCategoryFilter, categories, patchProduct, onAdd, onEdit, onDelete, busy }: { loading: boolean; products: AdminProduct[]; query: string; setQuery: (value: string) => void; availabilityFilter: "all" | "available" | "unavailable"; setAvailabilityFilter: (value: "all" | "available" | "unavailable") => void; categoryFilter: string; setCategoryFilter: (value: string) => void; categories: Array<{ category: AdminCategory; count: number }>; patchProduct: (id: string, patch: Record<string, unknown>) => void; onAdd: () => void; onEdit: (product: AdminProduct) => void; onDelete: (id: string) => void; busy: string | null }) {
+function ProductsWorkspace({ loading, products, query, setQuery, availabilityFilter, setAvailabilityFilter, categoryFilter, setCategoryFilter, categories, patchProduct, onBulk, page, pageMeta, setPage, onAdd, onEdit, onDelete, busy }: { loading: boolean; products: AdminProduct[]; query: string; setQuery: (value: string) => void; availabilityFilter: "all" | "available" | "unavailable"; setAvailabilityFilter: (value: "all" | "available" | "unavailable") => void; categoryFilter: string; setCategoryFilter: (value: string) => void; categories: Array<{ category: AdminCategory; count: number }>; patchProduct: (id: string, patch: Record<string, unknown>) => void; onBulk: (patch: Record<string, unknown>) => void; page: number; pageMeta: { total: number; totalPages: number }; setPage: (page: number) => void; onAdd: () => void; onEdit: (product: AdminProduct) => void; onDelete: (id: string) => void; busy: string | null }) {
   return <div className="pt-7"><div className="mb-5 flex flex-wrap items-end justify-between gap-4"><div><p className="mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--muted)]">Catalog operations</p><h2 className="mt-2 font-display text-[30px] leading-none">პროდუქტების მართვა</h2><p className="mt-2 text-sm text-[var(--muted)]">პროდუქტი, გალერეა, ფასი, მარაგი და storefront visibility.</p></div><Button type="button" variant="dark" size="sm" onClick={onAdd}>+ ახალი პროდუქტი</Button></div>
     <div className="grid gap-3 rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] p-3 shadow-[var(--shadow-card)] md:grid-cols-[1.25fr_0.9fr_0.9fr]"><Toolbar query={query} setQuery={setQuery} placeholder="სახელი ან კატეგორია…" /><select aria-label="Filter product availability" value={availabilityFilter} onChange={(event) => setAvailabilityFilter(event.target.value as "all" | "available" | "unavailable")} className={selectClass}><option value="all">ყველა სტატუსი</option><option value="available">მხოლოდ მარაგში</option><option value="unavailable">არ არის მარაგში</option></select><select aria-label="Filter product category" value={categoryFilter} onChange={(event) => setCategoryFilter(event.target.value)} className={selectClass}><option value="all">ყველა კატეგორია</option>{categories.map(({ category }) => <option key={category.id} value={category.nameKa}>{category.nameKa}</option>)}</select></div>
-    <p className="mt-4 text-[12px] text-[var(--muted)]">{products.length} პროდუქტი ამ ფილტრებით</p>
+    <div className="mt-4 flex flex-wrap items-center justify-between gap-3"><p className="text-[12px] text-[var(--muted)]">გვერდი {page} / {pageMeta.totalPages} · {pageMeta.total} პროდუქტი</p><div className="flex flex-wrap gap-2"><button type="button" disabled={busy === "products:bulk" || !products.length} onClick={() => onBulk({ available: true })} className={minorButton}>ამ გვერდის მარაგში მონიშვნა</button><button type="button" disabled={busy === "products:bulk" || !products.length} onClick={() => onBulk({ published: false })} className={minorButton}>ამ გვერდის დამალვა</button></div></div>
+    <nav aria-label="პროდუქტების გვერდები" className="mt-3 flex items-center justify-between gap-3"><button type="button" className={minorButton} disabled={page <= 1} onClick={() => setPage(page - 1)}>წინა</button><span className="mono text-[11px] text-[var(--muted)]">{page} / {pageMeta.totalPages}</span><button type="button" className={minorButton} disabled={page >= pageMeta.totalPages} onClick={() => setPage(page + 1)}>შემდეგი</button></nav>
     {loading ? <LoadingRows /> : products.length === 0 ? <EmptyState title="პროდუქტი ვერ მოიძებნა" text="შეცვალეთ ფილტრი ან დაამატეთ ახალი პროდუქტი." /> : <><div className="mt-3 grid gap-3 md:hidden">{products.map((product) => <ProductManagementCard key={product.id} product={product} patchProduct={patchProduct} onEdit={onEdit} onDelete={onDelete} busy={busy} />)}</div><div className="mt-3 hidden overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] shadow-[var(--shadow-card)] md:block"><table className="w-full min-w-[970px] text-left"><thead><tr className="border-b border-[var(--line)] bg-[var(--surface-sand)] text-[11px] font-semibold uppercase tracking-wide text-[var(--muted)]"><th className="px-4 py-3">მედია</th><th className="px-4 py-3">სახელი</th><th className="px-4 py-3">კატეგორია</th><th className="px-4 py-3">ფასი</th><th className="px-4 py-3">მარაგი</th><th className="px-4 py-3">მოქმედებები</th></tr></thead><tbody>{products.map((product) => <tr key={product.id} className="border-b border-[var(--line)] last:border-b-0"><td className="px-4 py-3"><div className="flex items-center gap-2"><MediaThumb media={product.images[0]} fallback={product.image} /><span className="rounded-full bg-[var(--surface-sand)] px-2 py-1 text-[10px] font-bold text-[var(--muted)]">{product.images.length || 0} ფოტო</span></div></td><td className="px-4 py-3"><p className="text-[13px] font-semibold">{product.name}</p><p className="mt-0.5 text-[12px] text-[var(--muted)]">{product.nameEn}</p></td><td className="px-4 py-3 text-[12px] text-[var(--muted)]">{product.category}</td><td className="px-4 py-3"><input aria-label={`Price for ${product.name}`} type="number" min={0} defaultValue={product.price} disabled={busy === `product:${product.id}`} onBlur={(event) => { const value = Number(event.target.value); if (value !== product.price) void patchProduct(product.id, { price: value }); }} className="h-9 w-24 rounded-md border border-[var(--line)] bg-white px-2.5 text-[13px] tabular-nums outline-none focus:ring-2 focus:ring-[var(--action)] disabled:opacity-50" /></td><td className="px-4 py-3"><div className="flex items-center gap-2"><Toggle checked={product.available} disabled={busy === `product:${product.id}`} onChange={(value) => patchProduct(product.id, { available: value })} /><span className="text-[11px] text-[var(--muted)]">{product.available ? "მარაგშია" : "არაა მარაგში"}</span></div></td><td className="px-4 py-3"><div className="flex items-center gap-2"><button type="button" onClick={() => onEdit(product)} className={minorButton}>რედაქტირება</button><button type="button" disabled={busy === `delete:${product.id}`} onClick={() => onDelete(product.id)} className={`${minorButton} border-[var(--action)]/35 text-[var(--action-deep)] hover:bg-[var(--action)]/10`}>წაშლა</button></div></td></tr>)}</tbody></table></div></>}
   </div>;
 }

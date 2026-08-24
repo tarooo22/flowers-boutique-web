@@ -200,6 +200,32 @@ export const storefrontSettingEvents = mysqlTable("storefrontSettingEvents", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 }, (table) => [index("storefrontSettingEvents_key_created_index").on(table.settingKey, table.createdAt)]);
 
+/** Customer-managed occasion reminders. Delivery remains disabled until a consented channel is configured. */
+export const customerGiftReminders = mysqlTable("customerGiftReminders", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  occasion: varchar("occasion", { length: 80 }).notNull(),
+  reminderMonthDay: varchar("reminderMonthDay", { length: 5 }).notNull(),
+  recipientName: varchar("recipientName", { length: 120 }),
+  note: varchar("note", { length: 400 }),
+  active: boolean("active").notNull().default(true),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => [index("customerGiftReminders_user_active_index").on(table.userId, table.active)]);
+
+/** Immutable delivery queue for a future consented notification provider; no worker is activated by this schema. */
+export const customerNotificationOutbox = mysqlTable("customerNotificationOutbox", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  channel: varchar("channel", { length: 24 }).notNull(),
+  type: varchar("type", { length: 64 }).notNull(),
+  payload: json("payload").notNull(),
+  status: varchar("status", { length: 24 }).notNull().default("queued"),
+  dedupeKey: varchar("dedupeKey", { length: 160 }).notNull(),
+  scheduledAt: timestamp("scheduledAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => [uniqueIndex("customerNotificationOutbox_dedupe_unique").on(table.dedupeKey), index("customerNotificationOutbox_status_scheduled_index").on(table.status, table.scheduledAt)]);
+
 function createProductionDb(url: string) {
   return drizzle({ client: createPool(url) });
 }

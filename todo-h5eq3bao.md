@@ -270,7 +270,7 @@
 - [x] Implement account-aware checkout defaults plus an owner-scoped order detail/timeline without altering historic order snapshots or Flower Circle rules.
 - [x] Localize shared Search, authentication/recovery and customer order-status microcopy across Georgian, English and Russian.
 - [x] Implement audited Admin Settings delivery-policy source-of-truth and wire approved storefront delivery copy to it.
-- [ ] Add protected Admin products pagination/bulk inventory actions and CRM-light order context without exposing customer data outside authorized operations.
-- [ ] Add a consent-aware notification outbox and private gift-reminder foundation without activating an external delivery provider.
-- [ ] Audit and improve public SEO, structured data, multilingual metadata and social sharing while keeping private routes non-indexable.
-- [ ] Complete end-to-end security, accessibility, responsive and build validation for the roadmap release; publish with checkpoints.
+- [x] Add protected Admin products pagination/bulk inventory actions and CRM-light order context without exposing customer data outside authorized operations.
+- [x] Add a consent-aware notification outbox and private gift-reminder foundation without activating an external delivery provider.
+- [x] Audit and improve public SEO, structured data, multilingual metadata and social sharing while keeping private routes non-indexable.
+- [x] Complete end-to-end security, accessibility, responsive and build validation for the roadmap release; publish with checkpoints.

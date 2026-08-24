@@ -130,6 +130,14 @@ export async function listProductionAdminProducts() {
   }));
 }
 
+export async function listProductionAdminProductsPage(page: number, pageSize: number) {
+  const products = await listProductionAdminProducts();
+  const total = products.length;
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const safePage = Math.min(Math.max(1, page), totalPages);
+  return { products: products.slice((safePage - 1) * pageSize, safePage * pageSize), total, page: safePage, pageSize, totalPages };
+}
+
 export async function listProductionAdminCategories() {
   const rows = await getProductionDb().select().from(categories);
   return rows.map((category) => ({

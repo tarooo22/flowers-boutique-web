@@ -101,4 +101,13 @@ describe("Operational Admin panel contract", () => {
     expect(source).toContain("DeliverySettingsWorkspace");
     expect(source).toContain('{tab === "settings" ? <DeliverySettingsWorkspace /> : null}');
   });
+
+  it("keeps products pagination and only current-page bounded bulk controls visible to managers", () => {
+    expect(source).toContain("productPageMeta");
+    expect(source).toContain('pageSize=24');
+    expect(source).toContain("bulkPatchProducts");
+    expect(source).toContain("ამ გვერდის მარაგში მონიშვნა");
+    expect(source).toContain("ამ გვერდის დამალვა");
+    expect(source).toContain("გვერდი {page} / {pageMeta.totalPages}");
+  });
 });
