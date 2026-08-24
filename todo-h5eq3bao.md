@@ -292,3 +292,4 @@
 - [x] Complete EN/KA/RU localization for checkout saved-address controls and shared 404 recovery.
 - [x] Add a resilient, accessible contact-map fallback and verify mobile contact behavior.
 - [x] Improve catalog/product image loading and empty-state resilience using confirmed live-data behavior.
+- [x] Restore the Manus Preview development-service connection after rollback and verify the restored storefront renders in Preview.
