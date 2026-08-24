@@ -334,7 +334,6 @@ export function AIBouquet({ flowers }: { flowers: LiveBuilderFlower[] }) {
             );
           })}
         </ul>
-        {flowers.length === 0 ? <p role="status" className="mt-3 rounded-[var(--radius)] border border-dashed border-[var(--line-strong)] bg-[var(--surface-sand)] px-4 py-3 text-[13px] text-[var(--muted)]">{t("builder.catalogUnavailable")}</p> : null}
 
         {/* style note */}
         <div className="mt-6">

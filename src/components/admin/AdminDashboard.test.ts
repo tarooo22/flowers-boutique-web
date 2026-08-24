@@ -110,15 +110,4 @@ describe("Operational Admin panel contract", () => {
     expect(source).toContain("ამ გვერდის დამალვა");
     expect(source).toContain("გვერდი {page} / {pageMeta.totalPages}");
   });
-
-  it("uses resource-scoped refreshes so catalog pagination does not refetch independent manager resources", () => {
-    expect(source).toContain("const refreshProducts");
-    expect(source).toContain("const refreshOrders");
-    expect(source).toContain("const refreshBanners");
-    expect(source).toContain("useEffect(() => { void refreshProducts(); }, [refreshProducts])");
-    expect(source).toContain("useEffect(() => { void refreshOrders(); }, [refreshOrders])");
-    expect(source).toContain("useEffect(() => { void refreshBanners(); }, [refreshBanners])");
-    expect(source).toContain("await refreshProducts(); setFeedback(\"პროდუქტის ცვლილებები შენახულია storefront-ზე.\")");
-    expect(source).toContain("await refreshOrders(); setFeedback(`შეკვეთა ${id}");
-  });
 });

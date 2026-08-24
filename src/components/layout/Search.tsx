@@ -1,21 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { useStore } from "@/lib/store";
+import { searchProducts } from "@/lib/productSearch";
 import { formatPrice } from "@/lib/format";
-import type { Product } from "@/types";
 import { SearchIcon, CloseIcon } from "@/components/ui/Icons";
 import { useI18n } from "@/lib/i18n";
 
 export function SearchOverlay() {
-  const { searchOpen, setSearchOpen } = useStore();
+  const { searchOpen, setSearchOpen, catalogProducts } = useStore();
   const { t } = useI18n();
   const [q, setQ] = useState("");
-  const [results, setResults] = useState<Product[]>([]);
-  const [searching, setSearching] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -36,20 +34,10 @@ export function SearchOverlay() {
     return () => window.removeEventListener("keydown", onKey);
   }, [searchOpen, setSearchOpen]);
 
-  useEffect(() => {
-    const query = q.trim();
-    if (query.length < 2) { setResults([]); setSearching(false); return; }
-    const controller = new AbortController();
-    const timer = window.setTimeout(() => {
-      setSearching(true);
-      fetch(`/api/catalog/search?q=${encodeURIComponent(query)}`, { signal: controller.signal, cache: "no-store" })
-        .then((response) => (response.ok ? response.json() : { products: [] }))
-        .then((payload: { products?: Product[] }) => { if (!controller.signal.aborted) setResults(payload.products ?? []); })
-        .catch(() => { if (!controller.signal.aborted) setResults([]); })
-        .finally(() => { if (!controller.signal.aborted) setSearching(false); });
-    }, 180);
-    return () => { controller.abort(); window.clearTimeout(timer); };
-  }, [q]);
+  const results = useMemo(
+    () => searchProducts(catalogProducts, q).slice(0, 6),
+    [catalogProducts, q],
+  );
 
   if (!searchOpen) return null;
 
@@ -87,7 +75,7 @@ export function SearchOverlay() {
           </div>
 
           {q.trim() ? (
-            searching ? <p className="mt-5 pb-2 text-[13px] text-[var(--muted)]">{t("search.hint")}</p> : results.length ? (
+            results.length ? (
               <ul className="mt-4 grid gap-1 pb-2">
                 {results.map((p) => (
                   <li key={p.id}>

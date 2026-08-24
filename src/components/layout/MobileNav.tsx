@@ -11,13 +11,16 @@ import { Logo } from "./Logo";
 import { CloseIcon, ChevronRight, HeartIcon, PhoneIcon, UserIcon, WhatsappIcon } from "@/components/ui/Icons";
 
 export function MobileNav() {
-  const { mobileNavOpen, setMobileNavOpen } = useStore();
+  const { mobileNavOpen, setMobileNavOpen, catalogProducts } = useStore();
   const { t } = useI18n();
   const pathname = usePathname();
   const catalogCategories = [
     { id: "bouquet", href: "/catalog?category=bouquet", key: "category.bouquet" },
     { id: "single-stems", href: "/catalog?category=single-stems", key: "category.single-stems" },
-  ];
+  ].map((category) => ({
+    ...category,
+    count: catalogProducts.filter((product) => product.category === category.id).length,
+  })).filter((category) => category.count > 0);
 
   // close on route change
   useEffect(() => {
@@ -75,7 +78,7 @@ export function MobileNav() {
                   className="flex items-center justify-between rounded-lg py-2 text-[14px] text-[var(--ink)]/85"
                 >
                   {t(category.key)}
-                  <ChevronRight className="h-4 w-4 text-[var(--muted-2)]" />
+                  <span className="mono text-[12px] text-[var(--muted-2)]">{category.count}</span>
                 </Link>
               </li>
             ))}

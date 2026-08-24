@@ -292,7 +292,3 @@
 - [x] Complete EN/KA/RU localization for checkout saved-address controls and shared 404 recovery.
 - [x] Add a resilient, accessible contact-map fallback and verify mobile contact behavior.
 - [x] Improve catalog/product image loading and empty-state resilience using confirmed live-data behavior.
-- [x] Enforce manager-controlled delivery date/time availability server-side and reconcile checkout feedback with final order totals.
-- [ ] Add a minimal immutable terms-consent record only after defining a controlled current policy version within existing legal copy.
-- [x] Reduce unnecessary Admin workspace reloads when changing product pages while preserving protected order operations.
-- [x] Design and implement a safe route-scoped catalog hydration strategy that preserves cart/builder behavior without sending the full live catalog to every public route.

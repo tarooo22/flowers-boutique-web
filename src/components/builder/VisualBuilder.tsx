@@ -101,7 +101,7 @@ export function VisualBuilder({ flowers }: { flowers: LiveBuilderFlower[] }) {
       <div>
         {/* flowers */}
         <h2 className="font-display text-[20px]">{t("builder.flowers")}</h2>
-        {flowers.length === 0 ? <p role="status" className="mt-3 rounded-[var(--radius)] border border-dashed border-[var(--line-strong)] bg-[var(--surface-sand)] px-4 py-3 text-[13px] text-[var(--muted)]">{t("builder.catalogUnavailable")}</p> : <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+        <ul className="mt-3 grid gap-2 sm:grid-cols-2">
           {flowers.map((f) => {
             const count = counts[f.key] ?? 0;
             const active = count > 0;
@@ -157,7 +157,7 @@ export function VisualBuilder({ flowers }: { flowers: LiveBuilderFlower[] }) {
               </li>
             );
           })}
-        </ul>}
+        </ul>
 
         {/* wrap mode */}
         <div className="mt-7 flex items-center gap-2">

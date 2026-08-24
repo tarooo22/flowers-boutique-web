@@ -4,8 +4,6 @@ import { and, eq, inArray, sql } from "drizzle-orm";
 import { categories, flowerCircleLedger, getProductionDb, orders, products } from "@/lib/production/db";
 import { calculateFlowerCircleRedemption, getFlowerCircleBalance } from "@/lib/production/flowerCircle";
 import { MAX_PER_FLOWER, MAX_STEMS, wrappers } from "@/data/builder";
-import { getDeliveryPolicy } from "@/lib/production/storefrontSettings";
-import { isDeliveryScheduleAllowed } from "@/lib/production/deliverySchedule";
 
 type CustomerInput = {
   name: string;
@@ -130,8 +128,6 @@ export async function createProductionOrder(input: NextOrderInput) {
     fulfillment: input.customer?.fulfillment === "studio_pickup" ? "studio_pickup" : "delivery",
   };
   if (!customer.name || !customer.phone || (customer.fulfillment === "delivery" && !customer.address)) throw new Error("missing_fields");
-  const { policy: deliveryPolicy } = await getDeliveryPolicy();
-  if (!isDeliveryScheduleAllowed(customer.date, customer.time, deliveryPolicy)) throw new Error("invalid_delivery_schedule");
 
   const productLines = input.items.filter((item): item is ProductLine => "productId" in item);
   const customLines = input.items.filter((item): item is CustomLine => "kind" in item && item.kind === "custom");

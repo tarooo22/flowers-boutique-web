@@ -115,8 +115,7 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
   const [stats, setStats] = useState<Stats | null>(null);
   const [productPage, setProductPage] = useState(1);
   const [productPageMeta, setProductPageMeta] = useState({ total: 0, totalPages: 1 });
-  const [productsLoading, setProductsLoading] = useState(true);
-  const [bannersLoading, setBannersLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [availabilityFilter, setAvailabilityFilter] = useState<"all" | "available" | "unavailable">("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
@@ -131,52 +130,27 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
   const [editingBanner, setEditingBanner] = useState<AdminBanner | null>(null);
   const [creatingBanner, setCreatingBanner] = useState(false);
 
-  const refreshProducts = useCallback(async () => {
-    setProductsLoading(true);
+  const refresh = useCallback(async () => {
+    setLoading(true);
     try {
-      const productsResponse = await fetch(`/api/admin/products?page=${productPage}&pageSize=24`);
-      if (!productsResponse.ok) throw new Error("products_refresh_failed");
-      const productsPayload = await productsResponse.json();
+      const [ordersResponse, productsResponse, bannersResponse] = await Promise.all([fetch("/api/admin/orders"), fetch(`/api/admin/products?page=${productPage}&pageSize=24`), fetch("/api/admin/banners")]);
+      if (!ordersResponse.ok || !productsResponse.ok || !bannersResponse.ok) throw new Error("refresh_failed");
+      const [ordersPayload, productsPayload, bannersPayload] = await Promise.all([ordersResponse.json(), productsResponse.json(), bannersResponse.json()]);
+      setOrders(ordersPayload.orders ?? []);
       setProducts(productsPayload.products ?? []);
       setCategories(productsPayload.categories ?? []);
       setMedia(productsPayload.media ?? []);
       setStats(productsPayload.stats ?? null);
       setProductPageMeta({ total: Number(productsPayload.total ?? 0), totalPages: Math.max(1, Number(productsPayload.totalPages ?? 1)) });
+      setBanners(bannersPayload.banners ?? []);
     } catch {
       setFeedback("მონაცემების განახლება ვერ მოხერხდა. სცადეთ ხელახლა.");
     } finally {
-      setProductsLoading(false);
+      setLoading(false);
     }
   }, [productPage]);
 
-  const refreshOrders = useCallback(async () => {
-    try {
-      const response = await fetch("/api/admin/orders");
-      if (!response.ok) throw new Error("orders_refresh_failed");
-      const payload = await response.json();
-      setOrders(payload.orders ?? []);
-    } catch {
-      setFeedback("შეკვეთების განახლება ვერ მოხერხდა. სცადეთ ხელახლა.");
-    }
-  }, []);
-
-  const refreshBanners = useCallback(async () => {
-    setBannersLoading(true);
-    try {
-      const response = await fetch("/api/admin/banners");
-      if (!response.ok) throw new Error("banners_refresh_failed");
-      const payload = await response.json();
-      setBanners(payload.banners ?? []);
-    } catch {
-      setFeedback("ბანერების განახლება ვერ მოხერხდა. სცადეთ ხელახლა.");
-    } finally {
-      setBannersLoading(false);
-    }
-  }, []);
-
-  useEffect(() => { void refreshProducts(); }, [refreshProducts]);
-  useEffect(() => { void refreshOrders(); }, [refreshOrders]);
-  useEffect(() => { void refreshBanners(); }, [refreshBanners]);
+  useEffect(() => { void refresh(); }, [refresh]);
 
   const patchProduct = async (id: string, patch: Record<string, unknown>) => {
     setBusy(`product:${id}`); setFeedback(null);
@@ -184,7 +158,7 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
       const response = await fetch("/api/admin/products", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, ...patch }) });
       const payload = await response.json();
       if (!response.ok) throw new Error("save_failed");
-      await refreshProducts(); setFeedback("პროდუქტის ცვლილებები შენახულია storefront-ზე.");
+      await refresh(); setFeedback("პროდუქტის ცვლილებები შენახულია storefront-ზე.");
     } catch { setFeedback("პროდუქტის ცვლილებების შენახვა ვერ მოხერხდა."); }
     finally { setBusy(null); }
   };
@@ -196,7 +170,7 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
       const response = await fetch("/api/admin/products", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ operation: "bulk", ids: products.map((product) => product.id), ...patch }) });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error ?? "bulk_failed");
-      await refreshProducts(); setFeedback(`${payload.updated} პროდუქტი განახლდა ამ გვერდზე.`);
+      await refresh(); setFeedback(`${payload.updated} პროდუქტი განახლდა ამ გვერდზე.`);
     } catch { setFeedback("მასობრივი ცვლილება ვერ მოხერხდა."); }
     finally { setBusy(null); }
   };
@@ -316,7 +290,7 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
     try {
       const response = await fetch("/api/admin/orders", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, status }) });
       if (!response.ok) throw new Error("status_failed");
-      await refreshOrders(); setFeedback(`შეკვეთა ${id} — ${STATUS_LABEL[status]}.`);
+      await refresh(); setFeedback(`შეკვეთა ${id} — ${STATUS_LABEL[status]}.`);
     } catch { setFeedback("შეკვეთის სტატუსის განახლება ვერ მოხერხდა."); }
     finally { setBusy(null); }
   };
@@ -346,10 +320,10 @@ export function AdminDashboard({ demoCredentials }: { demoCredentials: boolean }
       <div role="tablist" className="mt-5 rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] p-1.5 shadow-[var(--shadow-card)]"><div className="grid grid-cols-2 gap-1.5 sm:flex sm:flex-wrap">{(["products", "categories", "orders", "banners", "settings"] as Tab[]).map((id) => <button key={id} type="button" role="tab" aria-selected={tab === id} onClick={() => { setTab(id); setQuery(""); setFeedback(null); }} className={`min-h-11 min-w-0 rounded-[var(--radius)] px-3 text-left text-[12.5px] font-semibold transition sm:min-h-10 sm:w-auto sm:px-4 ${id === "settings" ? "col-span-2 sm:col-span-1" : ""} ${tab === id ? "bg-[var(--ink)] text-white shadow-sm" : "text-[var(--muted)] hover:bg-[var(--surface-sand)] hover:text-[var(--ink)]"}`}>{id === "products" ? "პროდუქტები" : id === "categories" ? "კატეგორიები" : id === "orders" ? `შეკვეთები${stats?.newCount ? ` · ${stats.newCount}` : ""}` : id === "banners" ? "ბანერები" : "პარამეტრები"}</button>)}</div></div>
       {demoCredentials ? <p className="mt-4 rounded-[var(--radius)] border border-[var(--action)]/30 bg-[var(--action)]/8 px-4 py-3 text-[12.5px] text-[var(--action-deep)]"><strong>Demo credentials are active.</strong> რეალური მენეჯერის წვდომისთვის გამოიყენეთ production administrator account.</p> : null}
       {feedback ? <div role="status" className="mt-4 rounded-[var(--radius)] border border-[var(--line-strong)] bg-[var(--surface)] px-4 py-3 text-[12.5px] text-[var(--muted)]">{feedback}</div> : null}
-      {tab === "products" ? <ProductsWorkspace loading={productsLoading} products={visibleProducts} query={query} setQuery={setQuery} availabilityFilter={availabilityFilter} setAvailabilityFilter={setAvailabilityFilter} categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter} categories={categorySummaries} patchProduct={patchProduct} onBulk={bulkPatchProducts} page={productPage} pageMeta={productPageMeta} setPage={setProductPage} onAdd={() => setCreatingProduct(true)} onEdit={setEditingProduct} onDelete={deleteProduct} busy={busy} /> : null}
-      {tab === "categories" ? <CategoriesWorkspace categories={categorySummaries} loading={productsLoading} onCreate={() => setCreatingCategory(true)} onEdit={setEditingCategory} onReviewProducts={reviewCategoryProducts} onDelete={deleteCategory} busy={busy} /> : null}
+      {tab === "products" ? <ProductsWorkspace loading={loading} products={visibleProducts} query={query} setQuery={setQuery} availabilityFilter={availabilityFilter} setAvailabilityFilter={setAvailabilityFilter} categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter} categories={categorySummaries} patchProduct={patchProduct} onBulk={bulkPatchProducts} page={productPage} pageMeta={productPageMeta} setPage={setProductPage} onAdd={() => setCreatingProduct(true)} onEdit={setEditingProduct} onDelete={deleteProduct} busy={busy} /> : null}
+      {tab === "categories" ? <CategoriesWorkspace categories={categorySummaries} loading={loading} onCreate={() => setCreatingCategory(true)} onEdit={setEditingCategory} onReviewProducts={reviewCategoryProducts} onDelete={deleteCategory} busy={busy} /> : null}
       {tab === "orders" ? <OrdersOperations /> : null}
-      {tab === "banners" ? <BannersWorkspace banners={banners} loading={bannersLoading} busy={busy} onCreate={() => setCreatingBanner(true)} onEdit={setEditingBanner} onDelete={deleteBanner} onToggle={(banner, active) => saveBanner({ placement: "homepage", titleKa: banner.titleKa, titleEn: banner.titleEn, subtitleKa: banner.subtitleKa, subtitleEn: banner.subtitleEn, ctaLabelKa: banner.ctaLabelKa, ctaLabelEn: banner.ctaLabelEn, ctaHref: banner.ctaHref, image: banner.imageUrl ? { id: `banner-${banner.id}`, url: banner.imageUrl, key: banner.imageKey, sortOrder: 0 } : null, active, sortOrder: banner.sortOrder }, banner.id)} /> : null}
+      {tab === "banners" ? <BannersWorkspace banners={banners} loading={loading} busy={busy} onCreate={() => setCreatingBanner(true)} onEdit={setEditingBanner} onDelete={deleteBanner} onToggle={(banner, active) => saveBanner({ placement: "homepage", titleKa: banner.titleKa, titleEn: banner.titleEn, subtitleKa: banner.subtitleKa, subtitleEn: banner.subtitleEn, ctaLabelKa: banner.ctaLabelKa, ctaLabelEn: banner.ctaLabelEn, ctaHref: banner.ctaHref, image: banner.imageUrl ? { id: `banner-${banner.id}`, url: banner.imageUrl, key: banner.imageKey, sortOrder: 0 } : null, active, sortOrder: banner.sortOrder }, banner.id)} /> : null}
       {tab === "settings" ? <DeliverySettingsWorkspace /> : null}
       {(editingProduct || creatingProduct) ? <ProductEditor product={editingProduct} categories={categories} media={media} busy={busy?.startsWith("editor:") || busy === "media:upload"} onUpload={uploadMedia} onClose={() => { setEditingProduct(null); setCreatingProduct(false); }} onSave={(draft) => saveProduct(draft, editingProduct?.id)} onDelete={editingProduct ? () => deleteProduct(editingProduct.id) : undefined} /> : null}
       {(editingCategory || creatingCategory) ? <CategoryEditor category={editingCategory} busy={busy?.startsWith("category:") ?? false} onClose={() => { setEditingCategory(null); setCreatingCategory(false); }} onSave={(draft) => saveCategory(draft, editingCategory?.id)} /> : null}

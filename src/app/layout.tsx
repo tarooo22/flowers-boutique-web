@@ -3,6 +3,7 @@ import { Noto_Sans_Georgian, Playfair_Display, Space_Mono } from "next/font/goog
 import "./globals.css";
 import { brand } from "@/config/brand";
 import { ClientProviders } from "@/components/ClientProviders";
+import { listLiveProducts } from "@/lib/production/catalog";
 
 export const dynamic = "force-dynamic";
 const siteUrl = "https://flower-shop-jx9auvvz.manus.space";
@@ -52,6 +53,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const products = await listLiveProducts();
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Florist",
@@ -67,7 +69,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en" className={`${body.variable} ${display.variable} ${mono.variable}`}>
       <body className="min-h-dvh bg-[var(--page)] antialiased">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
-        <ClientProviders>{children}</ClientProviders>
+        <ClientProviders products={products}>{children}</ClientProviders>
       </body>
     </html>
   );

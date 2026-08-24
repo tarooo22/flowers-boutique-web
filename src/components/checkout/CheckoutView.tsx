@@ -22,11 +22,10 @@ const isoDate = (date: Date) => `${date.getFullYear()}-${String(date.getMonth() 
 const tomorrow = () => { const date = new Date(); date.setHours(0, 0, 0, 0); date.setDate(date.getDate() + 1); return date; };
 
 export function CheckoutView() {
-  const { lines, customLines, subtotal, clearCart, hydrated, catalogLoading, getProduct, getUnitPrice } = useStore();
+  const { lines, customLines, subtotal, clearCart, hydrated, getProduct, getUnitPrice } = useStore();
   const { t, lang } = useI18n();
   const [submitted, setSubmitted] = useState(false);
   const [orderId, setOrderId] = useState("");
-  const [orderTotal, setOrderTotal] = useState(0);
   const [sending, setSending] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [fulfillment, setFulfillment] = useState<Fulfillment>("delivery");
@@ -101,17 +100,17 @@ export function CheckoutView() {
     const payload = { customer, useFlowerCircleBenefit: useFlowerCircleBenefit && flowerCircleDiscount > 0, items: [...items.map(({ line, product, unit }) => ({ productId: product.id, variantId: line.variantId, name: product.name, quantity: line.quantity, price: unit, image: product.images[0], kind: "product" as const })), ...customLines.map((line) => ({ customKind: line.kind, quantity: line.quantity, stems: line.stems, wrapperId: line.wrapperId, ribbonId: line.ribbonId, image: line.image, kind: "custom" as const }))] };
     try {
       const response = await fetch("/api/orders", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
-      const data = (await response.json()) as { id?: string; total?: number; error?: string };
-      if (!response.ok || !data.id) { setSubmitError(data.error === "invalid_delivery_schedule" ? t("checkout.scheduleUnavailable") : t("checkout.submitError")); return; }
+      const data = (await response.json()) as { id?: string; error?: string };
+      if (!response.ok || !data.id) { setSubmitError(t("checkout.submitError")); return; }
       if (saveDeliveryAddress && fulfillment === "delivery" && !selectedAddressId) {
         void fetch("/api/account/addresses", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ label: addressLabel.trim() || "ახალი მისამართი", recipientName: customer.recipient || customer.name, phone: customer.phone, city: customer.city, address: customer.address, instructions: deliveryInstructions, isDefault: savedAddresses.length === 0 }) });
       }
-      setOrderId(data.id); setOrderTotal(Number(data.total ?? total)); setSubmitted(true); clearCart(); window.scrollTo({ top: 0, behavior: "smooth" });
+      setOrderId(data.id); setSubmitted(true); clearCart(); window.scrollTo({ top: 0, behavior: "smooth" });
     } catch { setSubmitError(t("checkout.connectionError")); } finally { setSending(false); }
   };
 
-  if (submitted) return <CheckoutSuccess id={orderId} total={orderTotal} />;
-  if (!hydrated || (catalogLoading && lines.length > 0)) return <CheckoutLoading />;
+  if (submitted) return <CheckoutSuccess id={orderId} />;
+  if (!hydrated) return <CheckoutLoading />;
   if (!hasCartItems) return <CheckoutEmpty />;
 
   return <div className="bg-[var(--surface-warm)] pb-24 pt-4 sm:pt-7"><div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6">
@@ -136,7 +135,7 @@ export function CheckoutView() {
   </div></div>;
 }
 
-function CheckoutSuccess({ id, total }: { id: string; total: number }) { const { t } = useI18n(); return <div className="container-fb pb-28 pt-10"><div className="mx-auto max-w-xl rounded-[20px] border border-black/5 bg-[var(--surface)] p-8 text-center shadow-[0_18px_48px_rgba(34,33,30,0.07)]"><div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-[var(--green-soft)]"><LeafIcon className="h-8 w-8 text-[var(--green)]" /></div><h1 className="font-display mt-4 text-[26px]">{t("checkout.successTitle")}</h1><p className="mt-2 text-[14px] text-[var(--muted)]">{t("checkout.successCopy", { id })}</p><p className="mt-3 text-[14px] font-semibold text-[var(--ink)]">{t("checkout.finalTotal", { total: formatPrice(total) })}</p><p className="mt-4 rounded-[var(--radius)] bg-[var(--surface-warm)] px-4 py-3 text-[12.5px] text-[var(--muted)]">{t("checkout.successNote")}</p><Button href="/catalog" variant="dark" className="mt-6">{t("checkout.continue")}</Button></div></div>; }
+function CheckoutSuccess({ id }: { id: string }) { const { t } = useI18n(); return <div className="container-fb pb-28 pt-10"><div className="mx-auto max-w-xl rounded-[20px] border border-black/5 bg-[var(--surface)] p-8 text-center shadow-[0_18px_48px_rgba(34,33,30,0.07)]"><div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-[var(--green-soft)]"><LeafIcon className="h-8 w-8 text-[var(--green)]" /></div><h1 className="font-display mt-4 text-[26px]">{t("checkout.successTitle")}</h1><p className="mt-2 text-[14px] text-[var(--muted)]">{t("checkout.successCopy", { id })}</p><p className="mt-4 rounded-[var(--radius)] bg-[var(--surface-warm)] px-4 py-3 text-[12.5px] text-[var(--muted)]">{t("checkout.successNote")}</p><Button href="/catalog" variant="dark" className="mt-6">{t("checkout.continue")}</Button></div></div>; }
 function CheckoutLoading() { return <div className="container-fb pb-28 pt-10" aria-busy="true"><div className="h-28 animate-pulse rounded-[20px] bg-[var(--surface-warm)]" /><div className="mt-6 h-80 animate-pulse rounded-[20px] bg-[var(--surface-warm)]" /></div>; }
 function CheckoutEmpty() { const { t } = useI18n(); return <div className="container-fb pb-28 pt-10 text-center"><h1 className="font-display text-[30px]">{t("common.checkout")}</h1><p className="mt-3 text-[14px] text-[var(--muted)]">{t("checkout.empty")}</p><Button href="/catalog" variant="dark" className="mt-6">{t("checkout.browse")}</Button></div>; }
 
