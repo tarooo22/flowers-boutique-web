@@ -21,6 +21,15 @@ describe("Inquiry handoff contact entry point", () => {
     expect(source).toContain('setFeedback(t("chat.messengerCopied"))');
   });
 
+  it("uses the canonical Tbilisi store clock and supplies after-hours plus sending feedback", () => {
+    expect(source).toContain('getTbilisiStoreStatus(now)');
+    expect(source).toContain('t("chat.afterHoursOutgoing")');
+    expect(source).toContain('t("chat.hoursLabel")');
+    expect(source).toContain('t("chat.sending")');
+    expect(source).toContain('t("chat.thankYou")');
+    expect(source).toContain('disabled={handoffState !== "idle"}');
+  });
+
   it("is composed by the public shell and therefore excluded from Admin", () => {
     expect(shell).toContain("<MessengerChat />");
     expect(shell).toContain('pathname.startsWith("/admin")');

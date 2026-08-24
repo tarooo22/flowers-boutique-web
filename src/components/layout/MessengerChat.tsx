@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { brand } from "@/config/brand";
 import { useI18n } from "@/lib/i18n";
+import { getTbilisiStoreStatus } from "@/lib/storeHours";
 import { CloseIcon, MessengerIcon, WhatsappIcon } from "@/components/ui/Icons";
 
 /**
@@ -17,6 +18,8 @@ export function MessengerChat() {
   const [phone, setPhone] = useState("");
   const [question, setQuestion] = useState("");
   const [feedback, setFeedback] = useState("");
+  const [handoffState, setHandoffState] = useState<"idle" | "sending" | "sent">("idle");
+  const [now, setNow] = useState<Date | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -25,11 +28,21 @@ export function MessengerChat() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
+  useEffect(() => {
+    const syncClock = () => setNow(new Date());
+    syncClock();
+    const timer = window.setInterval(syncClock, 60_000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const storeStatus = now ? getTbilisiStoreStatus(now) : { isOpen: true };
+
   const message = () => [
     `${t("chat.inquiryGreeting")}`,
     `${t("chat.name")}: ${name.trim()}`,
     `${t("chat.phone")}: ${phone.trim()}`,
     `${t("chat.question")}: ${question.trim()}`,
+    ...(storeStatus.isOpen ? [] : ["", t("chat.afterHoursOutgoing")]),
   ].join("\n");
 
   const copyToClipboard = async (value: string) => {
@@ -50,19 +63,24 @@ export function MessengerChat() {
   const handoff = (channel: "whatsapp" | "messenger") => {
     if (!formRef.current?.reportValidity()) return;
     const inquiry = message();
+    setHandoffState("sending");
     if (channel === "whatsapp") {
       window.open(`${brand.whatsappHref}?text=${encodeURIComponent(inquiry)}`, "_blank", "noopener,noreferrer");
+      window.setTimeout(() => setHandoffState("sent"), 280);
       return;
     }
     window.open(brand.social.messenger, "_blank", "noopener,noreferrer");
-    void copyToClipboard(inquiry).finally(() => setFeedback(t("chat.messengerCopied")));
+    void copyToClipboard(inquiry).finally(() => {
+      setFeedback(t("chat.messengerCopied"));
+      window.setTimeout(() => setHandoffState("sent"), 280);
+    });
   };
 
   return (
     <>
       <button
         type="button"
-        onClick={() => { setFeedback(""); setOpen(true); }}
+        onClick={() => { setFeedback(""); setHandoffState("idle"); setOpen(true); }}
         aria-label={t("chat.messengerAria")}
         aria-haspopup="dialog"
         aria-expanded={open}
@@ -94,6 +112,13 @@ export function MessengerChat() {
             </div>
 
             <form ref={formRef} className="mt-5 grid gap-3" onSubmit={(event) => event.preventDefault()}>
+              <div className={`flex items-start gap-3 rounded-[var(--radius-sm)] border px-3 py-2.5 ${storeStatus.isOpen ? "border-emerald-200 bg-emerald-50/70" : "border-amber-200 bg-amber-50/70"}`}>
+                <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${storeStatus.isOpen ? "bg-emerald-500" : "bg-amber-500"}`} aria-hidden="true" />
+                <div className="min-w-0">
+                  <p className="text-[12.5px] font-semibold text-[var(--ink)]">{t("chat.hoursLabel")} · {brand.hours}</p>
+                  <p className="mt-0.5 text-[12px] leading-relaxed text-[var(--muted)]">{storeStatus.isOpen ? t("chat.openNow") : t("chat.afterHours")}</p>
+                </div>
+              </div>
               <label className="grid gap-1.5 text-[13px] font-semibold text-[var(--ink)]">
                 {t("chat.name")}
                 <input required value={name} onChange={(event) => setName(event.target.value)} autoComplete="name" className="h-11 rounded-[var(--radius-sm)] border bg-white px-3 text-[16px] font-normal outline-none transition focus:border-[var(--action)] focus:ring-2 focus:ring-[var(--action)]/15" />
@@ -108,12 +133,18 @@ export function MessengerChat() {
               </label>
               <p className="text-[12px] leading-relaxed text-[var(--muted-2)]">{t("chat.privacy")}</p>
               {feedback ? <p aria-live="polite" className="rounded-[var(--radius-sm)] bg-[var(--surface-warm)] px-3 py-2 text-[12.5px] text-[var(--ink)]">{feedback}</p> : null}
+              {handoffState !== "idle" ? (
+                <div aria-live="polite" className="flex items-center gap-3 rounded-[var(--radius-sm)] border border-[var(--action)]/20 bg-[var(--action)]/5 px-3 py-3 text-[var(--ink)] motion-safe:animate-pulse">
+                  <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[var(--action)] text-[17px] font-bold text-white transition-transform duration-300 ${handoffState === "sent" ? "scale-100" : "scale-90"}`} aria-hidden="true">{handoffState === "sent" ? "✓" : "…"}</span>
+                  <p className="text-[12.5px] font-semibold leading-relaxed">{handoffState === "sent" ? t("chat.thankYou") : t("chat.sending")}</p>
+                </div>
+              ) : null}
               <div className="grid gap-2 sm:grid-cols-2">
-                <button type="button" onClick={() => handoff("whatsapp")} className="inline-flex h-11 items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-[#25D366] px-4 text-[13px] font-semibold text-white transition hover:bg-[#1eb85a] active:scale-[0.97]">
+                <button type="button" disabled={handoffState !== "idle"} onClick={() => handoff("whatsapp")} className="inline-flex h-11 items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-[#25D366] px-4 text-[13px] font-semibold text-white transition hover:bg-[#1eb85a] active:scale-[0.97] disabled:cursor-wait disabled:opacity-60">
                   <WhatsappIcon className="h-4 w-4" />
                   {t("chat.whatsapp")}
                 </button>
-                <button type="button" onClick={() => handoff("messenger")} className="inline-flex h-11 items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-[#0084FF] px-4 text-[13px] font-semibold text-white transition hover:bg-[#0074e8] active:scale-[0.97]">
+                <button type="button" disabled={handoffState !== "idle"} onClick={() => handoff("messenger")} className="inline-flex h-11 items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-[#0084FF] px-4 text-[13px] font-semibold text-white transition hover:bg-[#0074e8] active:scale-[0.97] disabled:cursor-wait disabled:opacity-60">
                   <MessengerIcon className="h-4 w-4" />
                   {t("chat.messenger")}
                 </button>
