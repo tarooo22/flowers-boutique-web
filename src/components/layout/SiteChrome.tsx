@@ -9,6 +9,7 @@ import { ContactStrip } from "@/components/layout/ContactStrip";
 import { Footer } from "@/components/layout/Footer";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { SearchOverlay } from "@/components/layout/Search";
+import { MessengerChat } from "@/components/layout/MessengerChat";
 
 /**
  * Wraps pages in the storefront chrome. The admin panel is a separate surface,
@@ -31,6 +32,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
       <Footer />
       <CartDrawer />
       <SearchOverlay />
+      <MessengerChat />
     </>
   );
 }

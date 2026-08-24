@@ -102,6 +102,13 @@ export const WhatsappIcon = (p: P) => (
   </svg>
 );
 
+export const MessengerIcon = (p: P) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" {...p}>
+    <path d="M20 11.2c0 4.1-3.5 7.4-8 7.4-1 0-2-.2-2.9-.5L5 20l1.1-3.3A7 7 0 0 1 4 11.2C4 7.1 7.5 3.8 12 3.8s8 3.3 8 7.4Z" />
+    <path d="m8.2 12.7 2.5-2.6 1.8 1.8 3.2-3.2" />
+  </svg>
+);
+
 export const StarIcon = (p: P) => (
   <svg {...base} {...p} fill="currentColor" strokeWidth={0}>
     <path d="M12 3.5l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 9.2l5.4-.8L12 3.5Z" />

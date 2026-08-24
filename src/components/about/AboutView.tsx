@@ -201,13 +201,18 @@ export function AboutView() {
                 loading="eager"
                 referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen
+                aria-label={`${brand.name} · ${brand.addressFull}`}
                 className="absolute inset-0 h-full w-full border-0"
               />
+              <div className="pointer-events-none absolute top-4 left-4 z-10 inline-flex max-w-[calc(100%-2rem)] items-center gap-2 rounded-full bg-white/95 px-3 py-2 text-[12px] font-semibold text-[var(--ink)] shadow-[var(--shadow-card)] backdrop-blur">
+                <PinIcon className="h-4 w-4 shrink-0 text-[var(--action)]" />
+                <span className="truncate">{brand.address}</span>
+              </div>
               <a
                 href={brand.directionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute bottom-4 left-4 inline-flex h-10 items-center gap-2 rounded-[var(--radius-sm)] bg-[var(--ink)] px-4 text-[13px] font-semibold text-white shadow-[var(--shadow-float)] transition hover:bg-[var(--ink-2)]"
+                className="absolute bottom-4 left-4 z-10 inline-flex h-10 items-center gap-2 rounded-[var(--radius-sm)] bg-[var(--ink)] px-4 text-[13px] font-semibold text-white shadow-[var(--shadow-float)] transition hover:bg-[var(--ink-2)]"
               >
                 <PinIcon className="h-4 w-4" />
                 {t("about.getDirections")}
@@ -240,6 +245,9 @@ export function AboutView() {
                     </a>
                     <a href={brand.social.facebook} className="text-[var(--action-deep)]">
                       Facebook
+                    </a>
+                    <a href={brand.social.messenger} target="_blank" rel="noopener noreferrer" className="text-[var(--action-deep)]">
+                      Messenger
                     </a>
                   </span>
                 </Row>

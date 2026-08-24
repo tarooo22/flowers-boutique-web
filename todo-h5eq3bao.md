@@ -276,3 +276,5 @@
 - [x] Complete end-to-end security, accessibility, responsive and build validation for the roadmap release; publish with checkpoints.
 - [x] Install and verify the requested Kelpi AI Meta Ads skills package.
 - [x] Verify the Facebook business contact/location details and update the centralized storefront brand configuration safely.
+- [x] Add and validate an interactive Google Maps contact surface for the Vazisubani studio location.
+- [x] Add a responsive floating Messenger entry point that opens the verified Flower’s Boutique Facebook Page inbox.

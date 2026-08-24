@@ -31,6 +31,7 @@ export const brand = {
     instagram: "https://instagram.com/myflowersboutique",
     instagramHandle: "@myflowersboutique",
     facebook: "https://www.facebook.com/flowersboutiques",
+    messenger: "https://m.me/flowersboutiques",
     whatsapp: "https://wa.me/995511555650",
   },
 

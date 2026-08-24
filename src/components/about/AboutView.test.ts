@@ -9,6 +9,8 @@ describe("About contact map contract", () => {
   it("keeps an interactive embedded studio map and external directions fallback alongside contact actions", () => {
     expect(source).toContain("title={`${brand.name} map`}");
     expect(source).toContain("src={brand.mapEmbedUrl}");
+    expect(source).toContain("aria-label={`${brand.name} · ${brand.addressFull}`}");
+    expect(source).toContain("{brand.address}");
     expect(source).toContain('loading="eager"');
     expect(source).toContain("allowFullScreen");
     expect(source).not.toContain("mapImageUrl");
