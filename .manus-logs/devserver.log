@@ -5442,3 +5442,159 @@
 [2026-08-24T23:11:44.233Z] GET /?from_webdev=1 200 in 165ms (next.js: 1.6ms, application-code: 164ms)
 [2026-08-24T23:11:44.710Z] HEAD / 200 in 161ms (next.js: 1.9ms, application-code: 159ms)
 [2026-08-24T23:11:45.551Z] GET /?from_webdev=1 200 in 171ms (next.js: 1.5ms, application-code: 169ms)
+[2026-08-24T23:11:59.573Z] GET / 200 in 179ms (next.js: 1.8ms, application-code: 178ms)
+[2026-08-24T23:11:59.739Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 149ms (next.js: 10ms, application-code: 139ms)
+[2026-08-24T23:11:59.805Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 215ms (next.js: 15ms, application-code: 200ms)
+[2026-08-24T23:11:59.843Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 159ms (next.js: 2ms, application-code: 157ms)
+[2026-08-24T23:11:59.845Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 160ms (next.js: 9ms, application-code: 151ms)
+[2026-08-24T23:11:59.848Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 163ms (next.js: 5ms, application-code: 158ms)
+[2026-08-24T23:11:59.867Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 182ms (next.js: 7ms, application-code: 175ms)
+[2026-08-24T23:11:59.897Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 44ms (next.js: 1.2ms, application-code: 43ms)
+[2026-08-24T23:11:59.903Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 50ms (next.js: 3ms, application-code: 47ms)
+[2026-08-24T23:11:59.932Z] [browser] eval() is not supported in this environment. If this page was served with a `Content-Security-Policy` header, make sure that `unsafe-eval` is included. React requires eval() in development mode for various debugging features like reconstructing callstacks from a different environment.
+[2026-08-24T23:11:59.932Z] React will never use eval() in production mode
+[2026-08-24T23:12:00.091Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 55ms (next.js: 13ms, application-code: 42ms)
+[2026-08-24T23:12:00.111Z] GET /api/auth/me 200 in 10ms (next.js: 4ms, application-code: 6ms)
+[2026-08-24T23:12:00.116Z] GET /api/catalog/overrides 200 in 4ms (next.js: 1.6ms, application-code: 3ms)
+[2026-08-24T23:12:00.129Z] GET /manus-storage/editorial-collection_fd67f2f1.webp 307 in 46ms (next.js: 2ms, application-code: 44ms)
+[2026-08-24T23:12:00.131Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 52ms (next.js: 1.5ms, application-code: 51ms)
+[2026-08-24T23:12:00.146Z] [browser] Encountered two children with the same key, `/catalog`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+[2026-08-24T23:12:00.149Z] [browser] Encountered two children with the same key, `/catalog`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+[2026-08-24T23:12:00.155Z] GET /api/catalog/overrides 200 in 4ms (next.js: 1.3ms, application-code: 2ms)
+[2026-08-24T23:12:00.159Z] GET /api/auth/me 200 in 7ms (next.js: 4ms, application-code: 3ms)
+[2026-08-24T23:12:43.053Z] [browser] eval() is not supported in this environment. If this page was served with a `Content-Security-Policy` header, make sure that `unsafe-eval` is included. React requires eval() in development mode for various debugging features like reconstructing callstacks from a different environment.
+[2026-08-24T23:12:43.053Z] React will never use eval() in production mode
+[2026-08-24T23:13:07.431Z] GET /?from_webdev=1 200 in 199ms (next.js: 1.8ms, application-code: 197ms)
+[2026-08-24T23:13:07.999Z] HEAD / 200 in 163ms (next.js: 1.7ms, application-code: 161ms)
+[2026-08-24T23:13:12.546Z] GET /?from_webdev=1 200 in 163ms (next.js: 1.5ms, application-code: 161ms)
+[2026-08-24T23:13:24.618Z] HEAD / 200 in 169ms (next.js: 2ms, application-code: 166ms)
+[2026-08-24T23:13:24.843Z] HEAD / 200 in 129ms (next.js: 1.4ms, application-code: 128ms)
+[2026-08-24T23:13:32.967Z] GET / 200 in 175ms (next.js: 1.5ms, application-code: 174ms)
+[2026-08-24T23:13:33.329Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 144ms (next.js: 15ms, application-code: 130ms)
+[2026-08-24T23:13:33.373Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 189ms (next.js: 10ms, application-code: 179ms)
+[2026-08-24T23:13:35.622Z] [browser] eval() is not supported in this environment. If this page was served with a `Content-Security-Policy` header, make sure that `unsafe-eval` is included. React requires eval() in development mode for various debugging features like reconstructing callstacks from a different environment.
+[2026-08-24T23:13:35.622Z] React will never use eval() in production mode
+[2026-08-24T23:13:35.973Z] GET /api/auth/me 200 in 6ms (next.js: 1.7ms, application-code: 4ms)
+[2026-08-24T23:13:35.979Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.1ms, application-code: 2ms)
+[2026-08-24T23:13:36.175Z] GET /api/auth/me 200 in 5ms (next.js: 1.5ms, application-code: 3ms)
+[2026-08-24T23:13:36.178Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.0ms, application-code: 1.7ms)
+[2026-08-24T23:13:36.468Z] [browser] Encountered two children with the same key, `/catalog`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+[2026-08-24T23:13:36.468Z] [browser] Encountered two children with the same key, `/catalog`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+[2026-08-24T23:13:36.506Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 52ms (next.js: 10ms, application-code: 42ms)
+[2026-08-24T23:13:36.518Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 42ms (next.js: 4ms, application-code: 38ms)
+[2026-08-24T23:13:36.543Z] GET /manus-storage/editorial-collection_fd67f2f1.webp 307 in 41ms (next.js: 5ms, application-code: 36ms)
+[2026-08-24T23:13:36.615Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 137ms (next.js: 6ms, application-code: 132ms)
+[2026-08-24T23:13:36.632Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 151ms (next.js: 6ms, application-code: 145ms)
+[2026-08-24T23:13:36.642Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 151ms (next.js: 5ms, application-code: 146ms)
+[2026-08-24T23:13:36.660Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 174ms (next.js: 7ms, application-code: 167ms)
+[2026-08-24T23:13:36.664Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 166ms (next.js: 4ms, application-code: 162ms)
+[2026-08-24T23:13:36.681Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 186ms (next.js: 5ms, application-code: 182ms)
+[2026-08-24T23:13:55.692Z] GET /?from_webdev=1 200 in 183ms (next.js: 1.9ms, application-code: 181ms)
+[2026-08-24T23:13:56.198Z] HEAD / 200 in 171ms (next.js: 1.5ms, application-code: 169ms)
+[2026-08-24T23:13:57.219Z] GET /?from_webdev=1 200 in 175ms (next.js: 2ms, application-code: 173ms)
+[2026-08-24T23:14:12.477Z] HEAD / 200 in 165ms (next.js: 2.0ms, application-code: 163ms)
+[2026-08-24T23:14:12.639Z] GET / 200 in 123ms (next.js: 1.3ms, application-code: 121ms)
+[2026-08-24T23:14:56.099Z] GET /?from_webdev=1 200 in 925ms (next.js: 1.9ms, application-code: 924ms)
+[2026-08-24T23:14:59.087Z] HEAD / 200 in 154ms (next.js: 1.4ms, application-code: 153ms)
+[2026-08-24T23:15:00.540Z] GET /?from_webdev=1 200 in 164ms (next.js: 1.5ms, application-code: 163ms)
+[2026-08-24T23:15:21.209Z] ⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+[2026-08-24T23:15:21.406Z] ▲ Next.js 16.3.1 (Turbopack)
+[2026-08-24T23:15:21.406Z] - Local:         http://localhost:3000
+[2026-08-24T23:15:21.406Z] - Network:       http://169.254.0.21:3000
+[2026-08-24T23:15:21.406Z] ✓ Ready in 155ms
+[2026-08-24T23:15:21.424Z] ✓ Running next.config.ts took 17ms
+[2026-08-24T23:15:23.324Z] GET /?from_webdev=1 200 in 1602ms (next.js: 824ms, application-code: 777ms)
+[2026-08-24T23:15:24.218Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 614ms (next.js: 410ms, application-code: 204ms)
+[2026-08-24T23:15:24.220Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 673ms (next.js: 466ms, application-code: 207ms)
+[2026-08-24T23:15:24.267Z] GET / 200 in 184ms (next.js: 3ms, application-code: 181ms)
+[2026-08-24T23:15:24.549Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 65ms (next.js: 18ms, application-code: 47ms)
+[2026-08-24T23:15:24.555Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 50ms (next.js: 3ms, application-code: 47ms)
+[2026-08-24T23:15:26.116Z] [browser] eval() is not supported in this environment. If this page was served with a `Content-Security-Policy` header, make sure that `unsafe-eval` is included. React requires eval() in development mode for various debugging features like reconstructing callstacks from a different environment.
+[2026-08-24T23:15:26.116Z] React will never use eval() in production mode
+[2026-08-24T23:15:26.505Z] GET /api/auth/me 200 in 66ms (next.js: 38ms, application-code: 28ms)
+[2026-08-24T23:15:26.529Z] GET /api/catalog/overrides 200 in 20ms (next.js: 15ms, application-code: 5ms)
+[2026-08-24T23:15:26.697Z] GET /api/auth/me 200 in 5ms (next.js: 1.7ms, application-code: 3ms)
+[2026-08-24T23:15:26.717Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.2ms, application-code: 1.7ms)
+[2026-08-24T23:15:27.169Z] [browser] eval() is not supported in this environment. If this page was served with a `Content-Security-Policy` header, make sure that `unsafe-eval` is included. React requires eval() in development mode for various debugging features like reconstructing callstacks from a different environment.
+[2026-08-24T23:15:27.169Z] React will never use eval() in production mode
+[2026-08-24T23:15:27.461Z] HEAD / 200 in 136ms (next.js: 1.7ms, application-code: 135ms)
+[2026-08-24T23:15:27.474Z] [ELIFECYCLE] Command failed.
+[2026-08-24T23:15:27.523Z] [?25h
+[2026-08-24T23:15:27.527Z] Dev server exited with code -1
+[2026-08-24T23:15:28.574Z] Starting dev server with command: pnpm run dev
+[2026-08-24T23:15:28.828Z] $ next dev
+[2026-08-24T23:15:29.107Z] ▲ Next.js 16.3.1 (Turbopack)
+[2026-08-24T23:15:29.107Z] - Local:         http://localhost:3000
+[2026-08-24T23:15:29.107Z] - Network:       http://169.254.0.21:3000
+[2026-08-24T23:15:29.107Z] ✓ Ready in 209ms
+[2026-08-24T23:15:29.128Z] ✓ Running next.config.ts took 20ms
+[2026-08-24T23:15:30.066Z] [browser] Encountered two children with the same key, `/catalog`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+[2026-08-24T23:15:30.066Z] [browser] Encountered two children with the same key, `/catalog`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+[2026-08-24T23:15:30.602Z] [browser] Encountered two children with the same key, `/catalog`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+[2026-08-24T23:15:30.603Z] [browser] Encountered two children with the same key, `/catalog`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+[2026-08-24T23:15:31.008Z] GET / 200 in 1054ms (next.js: 251ms, application-code: 803ms)
+[2026-08-24T23:15:31.345Z] GET / 200 in 738ms (next.js: 4ms, application-code: 734ms)
+[2026-08-24T23:15:31.401Z] GET /?from_webdev=1 200 in 771ms (next.js: 1.7ms, application-code: 769ms)
+[2026-08-24T23:15:31.652Z] [browser] eval() is not supported in this environment. If this page was served with a `Content-Security-Policy` header, make sure that `unsafe-eval` is included. React requires eval() in development mode for various debugging features like reconstructing callstacks from a different environment.
+[2026-08-24T23:15:31.652Z] React will never use eval() in production mode
+[2026-08-24T23:15:31.795Z] HEAD / 200 in 225ms (next.js: 2ms, application-code: 223ms)
+[2026-08-24T23:15:31.900Z] [browser] Encountered two children with the same key, `/catalog`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+[2026-08-24T23:15:31.901Z] [browser] Encountered two children with the same key, `/catalog`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+[2026-08-24T23:15:31.937Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 697ms (next.js: 518ms, application-code: 179ms)
+[2026-08-24T23:15:31.957Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 716ms (next.js: 518ms, application-code: 198ms)
+[2026-08-24T23:15:31.958Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 560ms (next.js: 360ms, application-code: 200ms)
+[2026-08-24T23:15:32.038Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 641ms (next.js: 361ms, application-code: 280ms)
+[2026-08-24T23:15:32.039Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 568ms (next.js: 287ms, application-code: 281ms)
+[2026-08-24T23:15:32.041Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 571ms (next.js: 288ms, application-code: 283ms)
+[2026-08-24T23:15:32.044Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 392ms (next.js: 106ms, application-code: 286ms)
+[2026-08-24T23:15:32.046Z] GET /api/auth/me 200 in 80ms (next.js: 45ms, application-code: 34ms)
+[2026-08-24T23:15:32.080Z] GET /api/catalog/overrides 200 in 28ms (next.js: 22ms, application-code: 7ms)
+[2026-08-24T23:15:32.081Z] GET /api/auth/me 200 in 29ms (next.js: 25ms, application-code: 3ms)
+[2026-08-24T23:15:32.083Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 612ms (next.js: 287ms, application-code: 325ms)
+[2026-08-24T23:15:32.084Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 428ms (next.js: 102ms, application-code: 326ms)
+[2026-08-24T23:15:32.086Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 616ms (next.js: 288ms, application-code: 328ms)
+[2026-08-24T23:15:32.089Z] GET /api/catalog/overrides 200 in 4ms (next.js: 3ms, application-code: 1.4ms)
+[2026-08-24T23:15:32.156Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 64ms (next.js: 18ms, application-code: 46ms)
+[2026-08-24T23:15:32.159Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 66ms (next.js: 20ms, application-code: 46ms)
+[2026-08-24T23:15:32.160Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 68ms (next.js: 22ms, application-code: 46ms)
+[2026-08-24T23:15:32.165Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 48ms (next.js: 1.1ms, application-code: 47ms)
+[2026-08-24T23:15:32.179Z] GET /manus-storage/editorial-collection_fd67f2f1.webp 307 in 54ms (next.js: 1.4ms, application-code: 53ms)
+[2026-08-24T23:15:32.559Z] GET /?from_webdev=1 200 in 177ms (next.js: 3ms, application-code: 174ms)
+[2026-08-24T23:15:32.809Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 55ms (next.js: 12ms, application-code: 43ms)
+[2026-08-24T23:15:32.814Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 44ms (next.js: 1.4ms, application-code: 43ms)
+[2026-08-24T23:15:33.655Z] [browser] eval() is not supported in this environment. If this page was served with a `Content-Security-Policy` header, make sure that `unsafe-eval` is included. React requires eval() in development mode for various debugging features like reconstructing callstacks from a different environment.
+[2026-08-24T23:15:33.655Z] React will never use eval() in production mode
+[2026-08-24T23:15:33.967Z] GET /api/catalog/overrides 200 in 4ms (next.js: 2ms, application-code: 1.7ms)
+[2026-08-24T23:15:33.968Z] GET /api/auth/me 200 in 8ms (next.js: 5ms, application-code: 4ms)
+[2026-08-24T23:15:33.997Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 60ms (next.js: 16ms, application-code: 44ms)
+[2026-08-24T23:15:34.004Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 46ms (next.js: 2ms, application-code: 43ms)
+[2026-08-24T23:15:34.156Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.3ms, application-code: 2ms)
+[2026-08-24T23:15:34.160Z] GET /api/auth/me 200 in 6ms (next.js: 4ms, application-code: 3ms)
+[2026-08-24T23:15:34.766Z] [browser] eval() is not supported in this environment. If this page was served with a `Content-Security-Policy` header, make sure that `unsafe-eval` is included. React requires eval() in development mode for various debugging features like reconstructing callstacks from a different environment.
+[2026-08-24T23:15:34.766Z] React will never use eval() in production mode
+[2026-08-24T23:15:35.122Z] GET /api/auth/me 200 in 5ms (next.js: 1.4ms, application-code: 4ms)
+[2026-08-24T23:15:35.125Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.3ms, application-code: 1.5ms)
+[2026-08-24T23:15:35.190Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 68ms (next.js: 24ms, application-code: 44ms)
+[2026-08-24T23:15:35.192Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 69ms (next.js: 27ms, application-code: 42ms)
+[2026-08-24T23:15:35.320Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.3ms, application-code: 2ms)
+[2026-08-24T23:15:35.323Z] GET /api/auth/me 200 in 6ms (next.js: 4ms, application-code: 3ms)
+[2026-08-24T23:15:41.799Z] HEAD / 200 in 172ms (next.js: 1.7ms, application-code: 171ms)
+[2026-08-24T23:16:07.909Z] GET /?from_webdev=1 200 in 179ms (next.js: 1.8ms, application-code: 177ms)
+[2026-08-24T23:16:08.275Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 161ms (next.js: 15ms, application-code: 146ms)
+[2026-08-24T23:16:08.297Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 163ms (next.js: 1.2ms, application-code: 162ms)
+[2026-08-24T23:16:10.238Z] [browser] eval() is not supported in this environment. If this page was served with a `Content-Security-Policy` header, make sure that `unsafe-eval` is included. React requires eval() in development mode for various debugging features like reconstructing callstacks from a different environment.
+[2026-08-24T23:16:10.238Z] React will never use eval() in production mode
+[2026-08-24T23:16:10.546Z] GET /api/auth/me 200 in 6ms (next.js: 1.4ms, application-code: 4ms)
+[2026-08-24T23:16:10.550Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.0ms, application-code: 1.7ms)
+[2026-08-24T23:16:10.650Z] HEAD / 200 in 190ms (next.js: 1.6ms, application-code: 188ms)
+[2026-08-24T23:16:10.739Z] GET /api/auth/me 200 in 5ms (next.js: 1.4ms, application-code: 3ms)
+[2026-08-24T23:16:10.742Z] GET /api/catalog/overrides 200 in 2ms (next.js: 0.8ms, application-code: 1.4ms)
+[2026-08-24T23:16:11.570Z] GET /?from_webdev=1 200 in 175ms (next.js: 1.8ms, application-code: 173ms)
+[2026-08-24T23:16:11.845Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 63ms (next.js: 18ms, application-code: 46ms)
+[2026-08-24T23:16:11.853Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 50ms (next.js: 1.9ms, application-code: 48ms)
+[2026-08-24T23:16:13.680Z] [browser] eval() is not supported in this environment. If this page was served with a `Content-Security-Policy` header, make sure that `unsafe-eval` is included. React requires eval() in development mode for various debugging features like reconstructing callstacks from a different environment.
+[2026-08-24T23:16:13.680Z] React will never use eval() in production mode
+[2026-08-24T23:16:13.994Z] GET /api/auth/me 200 in 4ms (next.js: 1.3ms, application-code: 2ms)
+[2026-08-24T23:16:13.997Z] GET /api/catalog/overrides 200 in 2ms (next.js: 0.8ms, application-code: 1.3ms)
+[2026-08-24T23:16:14.186Z] GET /api/auth/me 200 in 4ms (next.js: 1.3ms, application-code: 3ms)
+[2026-08-24T23:16:14.189Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.0ms, application-code: 1.7ms)

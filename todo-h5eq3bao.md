@@ -294,3 +294,5 @@
 - [x] Improve catalog/product image loading and empty-state resilience using confirmed live-data behavior.
 - [x] Restore the Manus Preview development-service connection after rollback and verify the restored storefront renders in Preview.
 - [x] Diagnose and eliminate the recurring Manus Preview local URL connection refusal reported after service restart.
+- [x] Resolve the still-recurring Preview URL connection refusal by verifying network binding and Preview proxy routing beyond the origin allowlist.
+- [x] Diagnose the persistent gray Management Preview iframe despite direct Preview URL availability, including security headers and Preview integration behavior.
