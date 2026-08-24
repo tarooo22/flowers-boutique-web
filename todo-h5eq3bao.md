@@ -278,3 +278,5 @@
 - [x] Verify the Facebook business contact/location details and update the centralized storefront brand configuration safely.
 - [x] Add and validate an interactive Google Maps contact surface for the Vazisubani studio location.
 - [x] Add a responsive floating Messenger entry point that opens the verified Flower’s Boutique Facebook Page inbox.
+- [x] Verify Meta’s current embedded Messenger web-chat support and implement it only with the required page/domain configuration; the legacy widget is retired and the user declined Meta App setup.
+- [x] Add an accessible inquiry form that composes name, phone and question details for WhatsApp and Messenger handoffs.

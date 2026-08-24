@@ -4,13 +4,21 @@ import { describe, expect, it } from "vitest";
 const source = readFileSync(new URL("./MessengerChat.tsx", import.meta.url), "utf8");
 const shell = readFileSync(new URL("./SiteChrome.tsx", import.meta.url), "utf8");
 
-describe("Messenger contact entry point", () => {
-  it("opens only the configured business inbox with an accessible, touch-sized trigger", () => {
+describe("Inquiry handoff contact entry point", () => {
+  it("provides a touch-sized, accessible form trigger and asks for the required contact details", () => {
     expect(source).toContain("brand.social.messenger");
-    expect(source).toContain('target="_blank"');
-    expect(source).toContain('rel="noopener noreferrer"');
     expect(source).toContain('aria-label={t("chat.messengerAria")}');
     expect(source).toContain("h-12 min-w-12");
+    expect(source).toContain('autoComplete="name"');
+    expect(source).toContain('autoComplete="tel"');
+    expect(source).toContain("<textarea required");
+  });
+
+  it("prefills WhatsApp and copies the prepared message before opening Messenger", () => {
+    expect(source).toContain("brand.whatsappHref}?text=${encodeURIComponent(inquiry)");
+    expect(source).toContain("navigator.clipboard.writeText(value)");
+    expect(source).toContain('handoff("messenger")');
+    expect(source).toContain('setFeedback(t("chat.messengerCopied"))');
   });
 
   it("is composed by the public shell and therefore excluded from Admin", () => {
