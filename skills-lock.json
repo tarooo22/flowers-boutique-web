@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "skills": {
+    "angle-writer": {
+      "source": "kelpi-ai/meta-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/angle-writer/SKILL.md",
+      "computedHash": "d92055641dd8e1b50296810ed9c7b4309bd8d19deb3ed76f84a33d8e1fc883d4"
+    },
+    "audience-builder": {
+      "source": "kelpi-ai/meta-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/audience-builder/SKILL.md",
+      "computedHash": "9816978efde296f863f3cefd85c7531594b6bf88022eeeaa6044034b8efeee94"
+    },
+    "brand-reader": {
+      "source": "kelpi-ai/meta-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/brand-reader/SKILL.md",
+      "computedHash": "66a8430f6de7e9a349906d5599a8d75b545648b1c5c959231bab2cb71b412f9a"
+    },
+    "budget-pacer": {
+      "source": "kelpi-ai/meta-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/budget-pacer/SKILL.md",
+      "computedHash": "3e464d5812d0ebce44dd31f8bb5d4abb2ca0e623ff2ab626696a60770758ab54"
+    },
+    "buyer-language-miner": {
+      "source": "kelpi-ai/meta-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/buyer-language-miner/SKILL.md",
+      "computedHash": "ec7967acc53206acbe69ebb0785ac25fba70e9cd93a66781cec1db7cdc0dd8e0"
+    },
+    "catalog-commerce": {
+      "source": "kelpi-ai/meta-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/catalog-commerce/SKILL.md",
+      "computedHash": "f946fea173919800246e95e4b3b9b5d9f22a5f6a20fbee35d9baca9d492fa7e5"
+    },
+    "competitor-ad-teardown": {
+      "source": "kelpi-ai/meta-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/competitor-ad-teardown/SKILL.md",
+      "computedHash": "706813fbcad542d4e5751f6ef73d386df7b954e228ccb155b4601d5bc93c2dbf"
+    },
+    "copy-formulas": {
+      "source": "kelpi-ai/meta-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/copy-formulas/SKILL.md",
+      "computedHash": "2a69a703bf065b7677de8889464ae56a922d3c6a2f5b7834b83b6e7bbe1ae798"
+    },
+    "creative-director": {
+      "source": "kelpi-ai/meta-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/creative-director/SKILL.md",
+      "computedHash": "f3970f7c0146e0830ce599d06d84f46b19d469d0406ec923f5d3da6cadffb231"
+    },
+    "daily-auditor": {
+      "source": "kelpi-ai/meta-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/daily-auditor/SKILL.md",
+      "computedHash": "3df0cb8c49a278055f0bf003f8779d80514071bf7dae1160ee79ab7fe7a396af"
+    },
+    "fatigue-detector": {
+      "source": "kelpi-ai/meta-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/fatigue-detector/SKILL.md",
+      "computedHash": "1ce4ff626eb9040ef15c1598b3b77af6944bad33cced44b224ed86a7c055d0c6"
+    },
+    "lead-gen-builder": {
+      "source": "kelpi-ai/meta-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/lead-gen-builder/SKILL.md",
+      "computedHash": "2ad74f94c131415539555fc6f1b77b4b87e811a972258c221658f35f7c06478c"
+    },
+    "media-buyer": {
+      "source": "kelpi-ai/meta-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/media-buyer/SKILL.md",
+      "computedHash": "51e6e2efe4831b01a188d8574c2cbf167afe6348831dc9bbfd0fd04e137d5c73"
+    },
+    "pain-to-promise": {
+      "source": "kelpi-ai/meta-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/pain-to-promise/SKILL.md",
+      "computedHash": "6209db82b89200e4dccdbef26bc556bb02100fb29f232536273341fc1a588538"
+    },
+    "performance-analyst": {
+      "source": "kelpi-ai/meta-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/performance-analyst/SKILL.md",
+      "computedHash": "e985a66479219afd90ab280ac4457732b9b7bb73c4b7e24bccac1936d2a2fa43"
+    },
+    "pixel-conversions": {
+      "source": "kelpi-ai/meta-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/pixel-conversions/SKILL.md",
+      "computedHash": "7c92febfbbceba6ef7c2c42f95ba86ec219c8d42063068a90a2615d022403a22"
+    }
+  }
+}
