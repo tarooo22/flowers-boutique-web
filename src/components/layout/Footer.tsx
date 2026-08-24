@@ -28,7 +28,7 @@ export function Footer() {
               </h3>
               <ul className="grid gap-2">
                 {group.links.map((l) => (
-                  <li key={l.href}>
+                  <li key={`${group.title}:${l.href}:${l.key ?? l.label}`}>
                     {l.available === false ? (
                       <span
                         aria-disabled="true"
