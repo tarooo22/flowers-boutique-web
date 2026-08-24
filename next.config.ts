@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["3000-i2pfjamc2e6vvxjvr0sej-59b127c0.us3.manus.computer", "127.0.0.1"],
   async headers() {
     return [{
       source: "/:path*",
