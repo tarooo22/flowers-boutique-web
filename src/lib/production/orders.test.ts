@@ -18,4 +18,16 @@ describe("Checkout fulfillment persistence contract", () => {
     expect(orderRoute).toContain("getProductionSessionUser");
     expect(orderRoute).toContain("userId: sessionUser?.id ?? null");
   });
+
+  it("recomputes custom bouquet composition from canonical stem data and retries a guarded order number", () => {
+    expect(source).toContain("canonicalCustomOrderItems(customLines)");
+    expect(source).toContain("catalog-(\\d+)");
+    expect(source).toContain('eq(categories.slug, "single-stems")');
+    expect(source).toContain("AI_STYLING_FEE");
+    expect(source).toContain("invalid_custom_composition");
+    expect(source).toContain("isDuplicateOrderNumberError");
+    expect(source).toContain("attempt < 3");
+    expect(orderRoute).toContain("takePublicRequest");
+    expect(orderRoute).toContain('error: "rate_limited"');
+  });
 });

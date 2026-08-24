@@ -97,7 +97,7 @@ export function CheckoutView() {
     const notes = [cardMessage ? `Card message: ${cardMessage}` : "", deliveryInstructions ? `Delivery instructions: ${deliveryInstructions}` : ""].filter(Boolean).join("\n");
     const customer = Object.fromEntries(["name", "email", "phone", "recipient", "address", "city", "date", "time", "fulfillment"].map((key) => [key, String(form.get(key) ?? "")]));
     Object.assign(customer, { notes });
-    const payload = { customer, useFlowerCircleBenefit: useFlowerCircleBenefit && flowerCircleDiscount > 0, items: [...items.map(({ line, product, unit }) => ({ productId: product.id, variantId: line.variantId, name: product.name, quantity: line.quantity, price: unit, image: product.images[0], kind: "product" as const })), ...customLines.map((line) => ({ name: line.kind === "ai" ? "AI bouquet" : "Custom bouquet", quantity: line.quantity, price: line.price, image: line.image, kind: "custom" as const }))] };
+    const payload = { customer, useFlowerCircleBenefit: useFlowerCircleBenefit && flowerCircleDiscount > 0, items: [...items.map(({ line, product, unit }) => ({ productId: product.id, variantId: line.variantId, name: product.name, quantity: line.quantity, price: unit, image: product.images[0], kind: "product" as const })), ...customLines.map((line) => ({ customKind: line.kind, quantity: line.quantity, stems: line.stems, wrapperId: line.wrapperId, ribbonId: line.ribbonId, image: line.image, kind: "custom" as const }))] };
     try {
       const response = await fetch("/api/orders", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       const data = (await response.json()) as { id?: string; error?: string };

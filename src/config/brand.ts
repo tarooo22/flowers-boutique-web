@@ -8,6 +8,7 @@ export const brand = {
   name: "Flower's Boutique",
   shortName: "Flower's",
   tagline: "Fresh bouquets, delivered across the city in 90 minutes.",
+  socialImage: "/opengraph-image",
   legalName: "Flower's Boutique LLC",
   taxId: "ID 404512067",
 

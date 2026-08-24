@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import { checkPassword, startSession, endSession } from "@/lib/server/auth";
+import { takePublicRequest } from "@/lib/server/publicRequestGuard";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
+  const allowance = takePublicRequest(request, "admin-login", { limit: 6, windowMs: 15 * 60_000 });
+  if (!allowance.allowed) return NextResponse.json({ error: "rate_limited" }, { status: 429, headers: { "Cache-Control": "no-store", "Retry-After": String(allowance.retryAfterSeconds) } });
   let password = "";
   try {
     const body = (await request.json()) as { password?: unknown };

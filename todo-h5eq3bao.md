@@ -282,3 +282,9 @@
 - [x] Add an accessible inquiry form that composes name, phone and question details for WhatsApp and Messenger handoffs.
 - [x] Add Georgian-time-aware studio hours, an after-hours response note, and sending/thank-you feedback to the inquiry form.
 - [x] Refine the floating Message us control into a compact expandable Messenger/WhatsApp channel launcher.
+- [x] Complete the approved Phase 0 read-only full-project audit and evidence register before changing code, data, integrations, or production settings.
+- [x] Make custom bouquet order pricing server-authoritative and reject unverified client prices.
+- [x] Add a database-enforced, collision-safe order number strategy while preserving existing order identifiers.
+- [x] Add shared bounded abuse protection for public authentication, order, and AI bouquet generation endpoints.
+- [x] Add compatible public trust/security headers and a default Open Graph social image without breaking Maps, storage or checkout.
+- [x] Document the unresolved versioned checkout-consent requirement pending approved legal terms copy.

@@ -17,4 +17,9 @@ describe("Public storefront SEO contract", () => {
     expect(source).toContain("organizationSchema");
     expect(source).toContain("brand.social.instagram");
   });
+
+  it("publishes a controlled Open Graph image and large social card", () => {
+    expect(source).toContain("brand.socialImage");
+    expect(source).toContain('card: "summary_large_image"');
+  });
 });

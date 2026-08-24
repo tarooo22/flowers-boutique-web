@@ -91,7 +91,10 @@ export const orders = mysqlTable("orders", {
   fulfillmentType: varchar("fulfillmentType", { length: 32 }),
   deliveryFee: decimal("deliveryFee", { precision: 10, scale: 2 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
-}, (table) => [index("orders_user_delivery_status_index").on(table.userId, table.deliveryStatus)]);
+}, (table) => [
+  uniqueIndex("orders_order_number_unique").on(table.orderNumber),
+  index("orders_user_delivery_status_index").on(table.userId, table.deliveryStatus),
+]);
 
 /** Immutable audit events for earned, redeemed, reversed and manager-adjusted Flower Circle benefits. */
 export const flowerCircleLedger = mysqlTable("flowerCircleLedger", {

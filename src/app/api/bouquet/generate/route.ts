@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { takePublicRequest } from "@/lib/server/publicRequestGuard";
 
 export const runtime = "nodejs";
 
@@ -64,6 +65,8 @@ function describe(flowers: FlowerSelection[], note: string): string {
 }
 
 export async function POST(request: Request) {
+  const allowance = takePublicRequest(request, "bouquet-generation", { limit: 2, windowMs: 15 * 60_000 });
+  if (!allowance.allowed) return NextResponse.json({ error: "rate_limited" }, { status: 429, headers: { "Cache-Control": "no-store", "Retry-After": String(allowance.retryAfterSeconds) } });
   let prompt = "";
   try {
     const body = (await request.json()) as {

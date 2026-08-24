@@ -46,8 +46,9 @@ export const metadata: Metadata = {
     description: brand.tagline,
     siteName: brand.name,
     locale: "ka_GE",
+    images: [{ url: brand.socialImage, width: 1200, height: 630, alt: `${brand.name} — florist studio in Tbilisi` }],
   },
-  twitter: { card: "summary", title: `${brand.name} — Fresh bouquets delivered in Tbilisi`, description: brand.tagline },
+  twitter: { card: "summary_large_image", title: `${brand.name} — Fresh bouquets delivered in Tbilisi`, description: brand.tagline, images: [brand.socialImage] },
   icons: { icon: "/favicon.ico" },
 };
 
