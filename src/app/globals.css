@@ -287,6 +287,22 @@ body {
   animation: fb-slide-in 0.32s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 
+/* Compact contact launcher: channel choices emerge upward from the trigger. */
+@keyframes fb-channel-pop {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.fb-channel-menu {
+  transform-origin: bottom right;
+  animation: fb-channel-pop 0.18s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

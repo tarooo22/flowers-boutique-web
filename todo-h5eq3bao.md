@@ -281,3 +281,4 @@
 - [x] Verify Meta’s current embedded Messenger web-chat support and implement it only with the required page/domain configuration; the legacy widget is retired and the user declined Meta App setup.
 - [x] Add an accessible inquiry form that composes name, phone and question details for WhatsApp and Messenger handoffs.
 - [x] Add Georgian-time-aware studio hours, an after-hours response note, and sending/thank-you feedback to the inquiry form.
+- [x] Refine the floating Message us control into a compact expandable Messenger/WhatsApp channel launcher.

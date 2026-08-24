@@ -14,6 +14,8 @@ import { CloseIcon, MessengerIcon, WhatsappIcon } from "@/components/ui/Icons";
 export function MessengerChat() {
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
+  const [launcherOpen, setLauncherOpen] = useState(false);
+  const [selectedChannel, setSelectedChannel] = useState<"whatsapp" | "messenger">("messenger");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [question, setQuestion] = useState("");
@@ -23,10 +25,14 @@ export function MessengerChat() {
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => event.key === "Escape" && setOpen(false);
-    if (open) window.addEventListener("keydown", onKeyDown);
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      setLauncherOpen(false);
+    };
+    if (open || launcherOpen) window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open]);
+  }, [open, launcherOpen]);
 
   useEffect(() => {
     const syncClock = () => setNow(new Date());
@@ -76,20 +82,41 @@ export function MessengerChat() {
     });
   };
 
+  const openInquiry = (channel: "whatsapp" | "messenger") => {
+    setFeedback("");
+    setHandoffState("idle");
+    setSelectedChannel(channel);
+    setLauncherOpen(false);
+    setOpen(true);
+  };
+
   return (
     <>
-      <button
-        type="button"
-        onClick={() => { setFeedback(""); setHandoffState("idle"); setOpen(true); }}
-        aria-label={t("chat.messengerAria")}
-        aria-haspopup="dialog"
-        aria-expanded={open}
-        className="fixed bottom-5 right-4 z-[70] inline-flex h-12 min-w-12 items-center justify-center gap-2 rounded-full bg-[#0084FF] px-3 text-white shadow-[var(--shadow-float)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#0074e8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0084FF] active:scale-[0.97] sm:bottom-6 sm:right-6 sm:px-4"
-      >
-        <MessengerIcon className="h-5 w-5" aria-hidden="true" />
-        <span className="hidden text-[13px] font-semibold sm:inline">{t("chat.messageUs")}</span>
-        <span className="sr-only sm:hidden">{t("chat.messageUs")}</span>
-      </button>
+      <div className="fixed bottom-5 right-4 z-[70] flex flex-col items-end gap-2 sm:bottom-6 sm:right-6">
+        {launcherOpen ? (
+          <div id="contact-channel-menu" role="menu" aria-label={t("chat.messageUs")} className="fb-channel-menu flex flex-col items-end gap-2">
+            <button type="button" role="menuitem" onClick={() => openInquiry("messenger")} className="inline-flex h-11 items-center gap-2 rounded-full bg-[#0084FF] px-4 text-[13px] font-semibold text-white shadow-[var(--shadow-float)] transition hover:-translate-x-0.5 hover:bg-[#0074e8] active:scale-[0.97]">
+              <MessengerIcon className="h-4 w-4" />
+              {t("chat.messenger")}
+            </button>
+            <button type="button" role="menuitem" onClick={() => openInquiry("whatsapp")} className="inline-flex h-11 items-center gap-2 rounded-full bg-[#25D366] px-4 text-[13px] font-semibold text-white shadow-[var(--shadow-float)] transition hover:-translate-x-0.5 hover:bg-[#1eb85a] active:scale-[0.97]">
+              <WhatsappIcon className="h-4 w-4" />
+              {t("chat.whatsapp")}
+            </button>
+          </div>
+        ) : null}
+        <button
+          type="button"
+          onClick={() => setLauncherOpen((value) => !value)}
+          aria-label={t("chat.messageUs")}
+          aria-haspopup="menu"
+          aria-controls="contact-channel-menu"
+          aria-expanded={launcherOpen}
+          className="grid h-11 w-11 place-items-center rounded-full bg-[#0084FF] text-white shadow-[var(--shadow-float)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#0074e8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0084FF] active:scale-[0.97]"
+        >
+          <MessengerIcon className="h-5 w-5" aria-hidden="true" />
+        </button>
+      </div>
 
       {open ? (
         <div className="fixed inset-0 z-[90] flex items-end bg-black/35 p-3 sm:items-center sm:justify-center sm:p-6" role="presentation" onMouseDown={() => setOpen(false)}>
@@ -139,16 +166,10 @@ export function MessengerChat() {
                   <p className="text-[12.5px] font-semibold leading-relaxed">{handoffState === "sent" ? t("chat.thankYou") : t("chat.sending")}</p>
                 </div>
               ) : null}
-              <div className="grid gap-2 sm:grid-cols-2">
-                <button type="button" disabled={handoffState !== "idle"} onClick={() => handoff("whatsapp")} className="inline-flex h-11 items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-[#25D366] px-4 text-[13px] font-semibold text-white transition hover:bg-[#1eb85a] active:scale-[0.97] disabled:cursor-wait disabled:opacity-60">
-                  <WhatsappIcon className="h-4 w-4" />
-                  {t("chat.whatsapp")}
-                </button>
-                <button type="button" disabled={handoffState !== "idle"} onClick={() => handoff("messenger")} className="inline-flex h-11 items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-[#0084FF] px-4 text-[13px] font-semibold text-white transition hover:bg-[#0074e8] active:scale-[0.97] disabled:cursor-wait disabled:opacity-60">
-                  <MessengerIcon className="h-4 w-4" />
-                  {t("chat.messenger")}
-                </button>
-              </div>
+              <button type="button" disabled={handoffState !== "idle"} onClick={() => handoff(selectedChannel)} className={`inline-flex h-11 items-center justify-center gap-2 rounded-[var(--radius-sm)] px-4 text-[13px] font-semibold text-white transition active:scale-[0.97] disabled:cursor-wait disabled:opacity-60 ${selectedChannel === "whatsapp" ? "bg-[#25D366] hover:bg-[#1eb85a]" : "bg-[#0084FF] hover:bg-[#0074e8]"}`}>
+                {selectedChannel === "whatsapp" ? <WhatsappIcon className="h-4 w-4" /> : <MessengerIcon className="h-4 w-4" />}
+                {selectedChannel === "whatsapp" ? t("chat.whatsapp") : t("chat.messenger")}
+              </button>
             </form>
           </section>
         </div>
