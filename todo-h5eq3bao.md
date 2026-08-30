@@ -297,3 +297,6 @@
 - [x] Resolve the still-recurring Preview URL connection refusal by verifying network binding and Preview proxy routing beyond the origin allowlist.
 - [x] Diagnose the persistent gray Management Preview iframe despite direct Preview URL availability, including security headers and Preview integration behavior.
 - [x] Fix duplicate Footer link keys and allow React development callstack eval only in development CSP, without weakening production CSP.
+- [x] Verify Footer links have no duplicate rendered identities and no duplicate-key console warnings.
+- [x] Verify Catalog product filtering works through category, search, and price controls without changing product data.
+- [x] Inspect Checkout payment-form design and document any visual or interaction issues without submitting a real order.

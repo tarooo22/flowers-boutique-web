@@ -5765,3 +5765,741 @@
 [2026-08-24T23:19:49.251Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.7ms, application-code: 1.3ms)
 [2026-08-24T23:19:49.443Z] GET /api/auth/me 200 in 4ms (next.js: 1.6ms, application-code: 3ms)
 [2026-08-24T23:19:49.445Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.5ms, application-code: 1.2ms)
+[2026-08-24T23:19:55.542Z] GET / 200 in 171ms (next.js: 1.9ms, application-code: 169ms)
+[2026-08-24T23:19:55.725Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 161ms (next.js: 24ms, application-code: 137ms)
+[2026-08-24T23:19:55.741Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 176ms (next.js: 27ms, application-code: 149ms)
+[2026-08-24T23:19:55.818Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 139ms (next.js: 3ms, application-code: 136ms)
+[2026-08-24T23:19:55.832Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 145ms (next.js: 1.5ms, application-code: 143ms)
+[2026-08-24T23:19:55.855Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 46ms (next.js: 1.3ms, application-code: 44ms)
+[2026-08-24T23:19:55.862Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 52ms (next.js: 3ms, application-code: 49ms)
+[2026-08-24T23:19:55.870Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 181ms (next.js: 6ms, application-code: 175ms)
+[2026-08-24T23:19:55.877Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 189ms (next.js: 4ms, application-code: 184ms)
+[2026-08-24T23:19:55.957Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 38ms (next.js: 1.3ms, application-code: 37ms)
+[2026-08-24T23:19:55.969Z] GET /manus-storage/editorial-collection_fd67f2f1.webp 307 in 43ms (next.js: 2ms, application-code: 41ms)
+[2026-08-24T23:19:55.973Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 54ms (next.js: 3ms, application-code: 51ms)
+[2026-08-24T23:19:56.160Z] GET /api/catalog/overrides 200 in 4ms (next.js: 1.7ms, application-code: 2ms)
+[2026-08-24T23:19:56.160Z] GET /api/auth/me 200 in 8ms (next.js: 1.5ms, application-code: 7ms)
+[2026-08-24T23:19:56.166Z] GET /api/auth/me 200 in 4ms (next.js: 1.0ms, application-code: 3ms)
+[2026-08-24T23:19:56.172Z] GET /api/catalog/overrides 200 in 2ms (next.js: 1.0ms, application-code: 1.4ms)
+[2026-08-24T23:20:52.742Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 157ms (next.js: 11ms, application-code: 145ms)
+[2026-08-24T23:20:52.756Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 170ms (next.js: 7ms, application-code: 163ms)
+[2026-08-24T23:20:53.103Z] [browser] Image with src "/manus-storage/img_7360_fdece5d6_53a4ba52.webp" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+[2026-08-24T23:20:53.103Z] Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[2026-08-24T23:20:54.945Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 57ms (next.js: 10ms, application-code: 47ms)
+[2026-08-24T23:20:54.946Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 58ms (next.js: 8ms, application-code: 51ms)
+[2026-08-24T23:20:55.008Z] GET /manus-storage/editorial-collection_fd67f2f1.webp 307 in 50ms (next.js: 1.2ms, application-code: 48ms)
+[2026-08-24T23:20:55.033Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 133ms (next.js: 6ms, application-code: 128ms)
+[2026-08-24T23:20:55.039Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 131ms (next.js: 4ms, application-code: 128ms)
+[2026-08-24T23:20:55.077Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 162ms (next.js: 1.4ms, application-code: 161ms)
+[2026-08-24T23:20:55.083Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 164ms (next.js: 1.1ms, application-code: 163ms)
+[2026-08-24T23:21:09.116Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 161ms (next.js: 3ms, application-code: 157ms)
+[2026-08-24T23:21:09.118Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 179ms (next.js: 6ms, application-code: 173ms)
+[2026-08-24T23:21:09.121Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 170ms (next.js: 1.9ms, application-code: 168ms)
+[2026-08-24T23:21:09.127Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 172ms (next.js: 1.0ms, application-code: 171ms)
+[2026-08-24T23:21:21.369Z] GET /product/product-90001 200 in 1594ms (next.js: 636ms, application-code: 958ms)
+[2026-08-24T23:21:21.988Z] [browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[2026-08-24T23:21:22.123Z] GET /manus-storage/img_7357_c9c21a13_ee62784a.webp 307 in 177ms (next.js: 12ms, application-code: 165ms)
+[2026-08-24T23:21:56.263Z] GET / 200 in 144ms (next.js: 3ms, application-code: 140ms)
+[2026-08-24T23:21:58.545Z] GET / 200 in 6ms (next.js: 1.9ms, application-code: 4ms)
+[2026-08-24T23:21:58.869Z] GET / 200 in 141ms (next.js: 1.9ms, application-code: 140ms)
+[2026-08-24T23:21:59.629Z] GET /catalog 200 in 356ms (next.js: 211ms, application-code: 146ms)
+[2026-08-24T23:21:59.984Z] GET /builder 200 in 149ms (next.js: 9ms, application-code: 141ms)
+[2026-08-24T23:22:00.549Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 168ms (next.js: 12ms, application-code: 156ms)
+[2026-08-24T23:22:00.556Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 148ms (next.js: 5ms, application-code: 144ms)
+[2026-08-24T23:22:00.560Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 157ms (next.js: 6ms, application-code: 151ms)
+[2026-08-24T23:22:00.589Z] GET /manus-storage/builder-ribbon-ivory-photo_6accd292.png 307 in 188ms (next.js: 3ms, application-code: 184ms)
+[2026-08-24T23:22:00.608Z] GET /manus-storage/builder-wrap-cream-front_de90fdc3.png 307 in 192ms (next.js: 7ms, application-code: 186ms)
+[2026-08-24T23:22:00.609Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 188ms (next.js: 5ms, application-code: 183ms)
+[2026-08-24T23:22:00.628Z] GET /manus-storage/builder-alstroemeria-white-long_f9b4e42c.png 307 in 191ms (next.js: 5ms, application-code: 186ms)
+[2026-08-24T23:22:00.635Z] GET /manus-storage/builder-sunflower-yellow-photo_413e779f.png 307 in 199ms (next.js: 2ms, application-code: 197ms)
+[2026-08-24T23:22:00.647Z] GET /manus-storage/builder-moluccella-green-photo_617bdfd3.png 307 in 206ms (next.js: 5ms, application-code: 201ms)
+[2026-08-24T23:22:00.654Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 229ms (next.js: 4ms, application-code: 225ms)
+[2026-08-24T23:22:00.658Z] GET /manus-storage/builder-wrap-cream-back_de8e41ea.png 307 in 247ms (next.js: 8ms, application-code: 239ms)
+[2026-08-24T23:22:00.665Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 237ms (next.js: 5ms, application-code: 232ms)
+[2026-08-24T23:22:05.670Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 189ms (next.js: 11ms, application-code: 178ms)
+[2026-08-24T23:22:13.344Z] GET / 200 in 149ms (next.js: 3ms, application-code: 147ms)
+[2026-08-24T23:22:13.780Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 161ms (next.js: 1.0ms, application-code: 160ms)
+[2026-08-24T23:22:13.781Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 152ms (next.js: 0.8ms, application-code: 152ms)
+[2026-08-24T23:22:13.794Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 163ms (next.js: 0.8ms, application-code: 162ms)
+[2026-08-24T23:22:13.842Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 245ms (next.js: 16ms, application-code: 230ms)
+[2026-08-24T23:26:09.085Z] [browser] Encountered two children with the same key, `/catalog`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+[2026-08-24T23:26:09.085Z] [browser] Encountered two children with the same key, `/catalog`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+[2026-08-24T23:26:10.496Z] GET / 200 in 1028ms (next.js: 2ms, application-code: 1025ms)
+[2026-08-24T23:26:10.877Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 165ms (next.js: 10ms, application-code: 155ms)
+[2026-08-24T23:26:10.933Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 221ms (next.js: 13ms, application-code: 208ms)
+[2026-08-24T23:26:13.088Z] GET /api/auth/me 200 in 6ms (next.js: 1.9ms, application-code: 4ms)
+[2026-08-24T23:26:13.091Z] GET /api/catalog/overrides 200 in 2ms (next.js: 1.1ms, application-code: 1.3ms)
+[2026-08-24T23:26:13.294Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.5ms, application-code: 2.0ms)
+[2026-08-24T23:26:13.301Z] GET /api/auth/me 200 in 4ms (next.js: 1.0ms, application-code: 3ms)
+[2026-08-30T00:26:51.692Z] HEAD / 200 in 1526ms (next.js: 160ms, application-code: 1367ms)
+[2026-08-30T00:26:53.073Z] GET /?from_webdev=1 200 in 188ms (next.js: 1.8ms, application-code: 186ms)
+[2026-08-30T00:26:54.394Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 185ms (next.js: 1.1ms, application-code: 184ms)
+[2026-08-30T00:26:54.422Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 237ms (next.js: 17ms, application-code: 220ms)
+[2026-08-30T00:26:58.181Z] GET /api/auth/me 200 in 7ms (next.js: 3ms, application-code: 4ms)
+[2026-08-30T00:26:58.185Z] GET /api/catalog/overrides 200 in 4ms (next.js: 1.8ms, application-code: 1.9ms)
+[2026-08-30T00:26:58.404Z] GET /?from_webdev=1 200 in 172ms (next.js: 1.7ms, application-code: 171ms)
+[2026-08-30T00:26:58.758Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 138ms (next.js: 1.1ms, application-code: 137ms)
+[2026-08-30T00:26:58.785Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 186ms (next.js: 16ms, application-code: 170ms)
+[2026-08-30T00:27:00.906Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.1ms, application-code: 1.7ms)
+[2026-08-30T00:27:00.907Z] GET /api/auth/me 200 in 7ms (next.js: 1.9ms, application-code: 5ms)
+[2026-08-30T00:27:01.093Z] GET /api/catalog/overrides 200 in 4ms (next.js: 1.5ms, application-code: 2ms)
+[2026-08-30T00:27:01.096Z] GET /api/auth/me 200 in 6ms (next.js: 4ms, application-code: 2ms)
+[2026-08-30T00:27:01.588Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 54ms (next.js: 15ms, application-code: 39ms)
+[2026-08-30T00:27:01.591Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 58ms (next.js: 11ms, application-code: 47ms)
+[2026-08-30T00:27:01.718Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 151ms (next.js: 1.7ms, application-code: 149ms)
+[2026-08-30T00:27:01.723Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 175ms (next.js: 6ms, application-code: 168ms)
+[2026-08-30T00:27:01.724Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 170ms (next.js: 5ms, application-code: 166ms)
+[2026-08-30T00:27:01.726Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 164ms (next.js: 3ms, application-code: 162ms)
+[2026-08-30T00:27:01.785Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 213ms (next.js: 3ms, application-code: 211ms)
+[2026-08-30T00:27:01.793Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 225ms (next.js: 4ms, application-code: 221ms)
+[2026-08-30T00:27:02.968Z] GET /manus-storage/editorial-collection_fd67f2f1.webp 307 in 59ms (next.js: 11ms, application-code: 48ms)
+[2026-08-30T00:27:02.988Z] GET /manus-storage/img_7354_8dec9ac4_76712fd9.webp 307 in 40ms (next.js: 2ms, application-code: 38ms)
+[2026-08-30T00:27:02.991Z] GET /manus-storage/img_7357_c9c21a13_ee62784a.webp 307 in 41ms (next.js: 4ms, application-code: 38ms)
+[2026-08-30T00:27:02.992Z] GET /manus-storage/img_7356_d8c86f08_198aa88a.webp 307 in 38ms (next.js: 1.4ms, application-code: 37ms)
+[2026-08-30T00:27:03.000Z] GET /manus-storage/img_7348_642de59f_da46e323.webp 307 in 45ms (next.js: 3ms, application-code: 42ms)
+[2026-08-30T00:27:03.696Z] GET /manus-storage/img_7345_21d3ef2d_592744ea.webp 307 in 38ms (next.js: 1.4ms, application-code: 36ms)
+[2026-08-30T00:27:03.701Z] GET /manus-storage/img_7344_05295024_7ecf3054.webp 307 in 38ms (next.js: 1.1ms, application-code: 37ms)
+[2026-08-30T00:27:03.702Z] GET /manus-storage/img_7346_6dc1e00a_caa980d5.webp 307 in 39ms (next.js: 2ms, application-code: 37ms)
+[2026-08-30T00:27:03.703Z] GET /manus-storage/img_7347_8b70b6a5_904b94c3.webp 307 in 61ms (next.js: 14ms, application-code: 47ms)
+[2026-08-30T00:27:03.755Z] GET /manus-storage/fb-floristry-school-v2_4cc3b90e.jpg 307 in 44ms (next.js: 4ms, application-code: 41ms)
+[2026-08-30T00:27:03.757Z] GET /manus-storage/fb-event-florals-v2_506c3067.jpg 307 in 47ms (next.js: 1.7ms, application-code: 45ms)
+[2026-08-30T00:27:41.831Z] GET /manus-storage/fb-journal-care-v2_236c8f7f.jpg 307 in 139ms (next.js: 17ms, application-code: 122ms)
+[2026-08-30T00:27:41.832Z] GET /manus-storage/fb-journal-colour-v2_bbae4f4e.jpg 307 in 140ms (next.js: 14ms, application-code: 126ms)
+[2026-08-30T00:27:41.865Z] GET /manus-storage/fb-journal-peony-v2_3af4ce7f.jpg 307 in 153ms (next.js: 3ms, application-code: 150ms)
+[2026-08-30T00:27:48.849Z] GET /builder 200 in 1611ms (next.js: 3ms, application-code: 1608ms)
+[2026-08-30T00:27:48.985Z] GET /catalog 200 in 2.4s (next.js: 2ms, application-code: 2.4s)
+[2026-08-30T00:27:49.382Z] [browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[2026-08-30T00:27:49.498Z] GET /manus-storage/builder-ribbon-ivory-photo_6accd292.png 307 in 128ms (next.js: 1.8ms, application-code: 126ms)
+[2026-08-30T00:27:49.522Z] GET /manus-storage/builder-wrap-cream-front_de90fdc3.png 307 in 150ms (next.js: 5ms, application-code: 145ms)
+[2026-08-30T00:27:49.555Z] GET /manus-storage/builder-moluccella-green-photo_617bdfd3.png 307 in 170ms (next.js: 1.1ms, application-code: 169ms)
+[2026-08-30T00:27:49.570Z] GET /manus-storage/builder-wrap-cream-back_de8e41ea.png 307 in 214ms (next.js: 11ms, application-code: 203ms)
+[2026-08-30T00:27:49.570Z] GET /manus-storage/builder-alstroemeria-white-long_f9b4e42c.png 307 in 182ms (next.js: 1.2ms, application-code: 181ms)
+[2026-08-30T00:27:49.575Z] GET /manus-storage/builder-sunflower-yellow-photo_413e779f.png 307 in 186ms (next.js: 3ms, application-code: 183ms)
+[2026-08-30T00:27:52.535Z] GET /manus-storage/img_7428_fabb84ca_31a85105.webp 307 in 76ms (next.js: 13ms, application-code: 64ms)
+[2026-08-30T00:27:52.536Z] GET /manus-storage/img_7429_10c193a3_8a796f89.webp 307 in 56ms (next.js: 4ms, application-code: 53ms)
+[2026-08-30T00:27:52.537Z] GET /manus-storage/bf40aa7d-33a0-4ab7-a3e1-17bb9e869573_a9a14b42_8cf01144.webp 307 in 56ms (next.js: 7ms, application-code: 49ms)
+[2026-08-30T00:27:52.545Z] GET /manus-storage/53d0ed0d-051b-4459-bece-9962973e7b6f_b17ca3b7_4e14283f.webp 307 in 60ms (next.js: 6ms, application-code: 53ms)
+[2026-08-30T00:27:52.571Z] GET /manus-storage/img_7357_c9c21a13_ee62784a.webp 307 in 81ms (next.js: 6ms, application-code: 76ms)
+[2026-08-30T00:27:52.577Z] GET /manus-storage/7850e2ee-8689-4ca9-8c29-0794763b80bd_dbb994f6_dec2b144.webp 307 in 84ms (next.js: 8ms, application-code: 76ms)
+[2026-08-30T00:27:52.588Z] GET /manus-storage/4fdc3931-1a04-41de-8341-e0a41e25631e_d7a5f44f_e0f12448.webp 307 in 63ms (next.js: 16ms, application-code: 47ms)
+[2026-08-30T00:27:52.598Z] GET /manus-storage/img_7356_d8c86f08_198aa88a.webp 307 in 60ms (next.js: 15ms, application-code: 46ms)
+[2026-08-30T00:27:52.624Z] GET /manus-storage/img_7722_31673563_ca89b450.webp 307 in 77ms (next.js: 28ms, application-code: 49ms)
+[2026-08-30T00:27:52.636Z] GET /manus-storage/img_7348_642de59f_da46e323.webp 307 in 63ms (next.js: 8ms, application-code: 55ms)
+[2026-08-30T00:27:52.640Z] GET /manus-storage/img_7344_05295024_7ecf3054.webp 307 in 62ms (next.js: 7ms, application-code: 55ms)
+[2026-08-30T00:27:52.641Z] GET /manus-storage/img_8463_87204441_900c4d23.webp 307 in 58ms (next.js: 8ms, application-code: 49ms)
+[2026-08-30T00:27:52.646Z] GET /manus-storage/img_0309_e0bd04d0_b9ac613b.webp 307 in 51ms (next.js: 7ms, application-code: 45ms)
+[2026-08-30T00:27:52.646Z] GET /manus-storage/53d0ed0d-051b-4459-bece-9962973e7b6f_25843c5b_0a5d236a.webp 307 in 58ms (next.js: 7ms, application-code: 50ms)
+[2026-08-30T00:27:52.669Z] GET /manus-storage/8803c743-465a-491a-83bd-3740f6664899_89271a12_cae59ee5.webp 307 in 51ms (next.js: 8ms, application-code: 42ms)
+[2026-08-30T00:27:52.682Z] GET /manus-storage/46af9b4c-1ff0-48f0-bc5a-a802feb80cd7_1abb3665_c5385ee5.webp 307 in 53ms (next.js: 9ms, application-code: 44ms)
+[2026-08-30T00:27:52.684Z] GET /manus-storage/img_7346_6dc1e00a_caa980d5.webp 307 in 48ms (next.js: 7ms, application-code: 41ms)
+[2026-08-30T00:27:52.687Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 45ms (next.js: 9ms, application-code: 37ms)
+[2026-08-30T00:27:52.689Z] GET /manus-storage/img_7345_21d3ef2d_592744ea.webp 307 in 177ms (next.js: 5ms, application-code: 172ms)
+[2026-08-30T00:27:52.693Z] GET /manus-storage/img_7723_9c276fac_f465303f.webp 307 in 190ms (next.js: 6ms, application-code: 183ms)
+[2026-08-30T00:27:52.695Z] GET /manus-storage/e4a60415-181b-47ab-82ec-9ccc81342eb6_326370c6_24b354a7.webp 307 in 196ms (next.js: 5ms, application-code: 190ms)
+[2026-08-30T00:27:52.699Z] GET /manus-storage/7a89f1ee-7ee1-475c-9b46-c5e3206b555c_62c96cdc_ba6af7a6.webp 307 in 44ms (next.js: 4ms, application-code: 41ms)
+[2026-08-30T00:27:52.702Z] GET /manus-storage/49c9f45c-ccd0-4960-bc22-ace00aa0a7ae_49c574e7_67942a25.webp 307 in 54ms (next.js: 7ms, application-code: 47ms)
+[2026-08-30T00:27:52.722Z] GET /manus-storage/1e054e43-29e7-463b-99a1-b81a5214cb1f_6bcfe6a4_9ea57f4e.webp 307 in 214ms (next.js: 6ms, application-code: 208ms)
+[2026-08-30T00:27:52.735Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 136ms (next.js: 5ms, application-code: 131ms)
+[2026-08-30T00:27:52.749Z] GET /manus-storage/img_7415_e41ae53c_16abe500.webp 307 in 234ms (next.js: 6ms, application-code: 227ms)
+[2026-08-30T00:27:52.756Z] GET /manus-storage/59343c47-e561-4ba7-987c-b7ac8e7315a5_0b605922_83033c08.webp 307 in 235ms (next.js: 9ms, application-code: 226ms)
+[2026-08-30T00:27:52.766Z] GET /manus-storage/img_8463_f015d035_35e1415e.webp 307 in 154ms (next.js: 8ms, application-code: 146ms)
+[2026-08-30T00:27:52.775Z] GET /manus-storage/img_7374_1f173ef8_a0923b55.webp 307 in 150ms (next.js: 6ms, application-code: 145ms)
+[2026-08-30T00:27:52.778Z] GET /manus-storage/3280ae4c-446d-4e34-9020-6d93d445f588_f9db2c3c_f1459ae0.webp 307 in 171ms (next.js: 7ms, application-code: 163ms)
+[2026-08-30T00:27:52.779Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 176ms (next.js: 6ms, application-code: 169ms)
+[2026-08-30T00:27:52.799Z] GET /manus-storage/8e487039-2588-4135-aa03-8db399809d26_c2b2ffad_33011126.webp 307 in 142ms (next.js: 3ms, application-code: 138ms)
+[2026-08-30T00:27:52.839Z] GET /manus-storage/f62960ad-8bc8-4d01-99a5-0c05f6924083_da680cc1_b7fbc220.webp 307 in 180ms (next.js: 4ms, application-code: 176ms)
+[2026-08-30T00:27:52.840Z] GET /manus-storage/img_7347_8b70b6a5_904b94c3.webp 307 in 178ms (next.js: 3ms, application-code: 174ms)
+[2026-08-30T00:27:55.044Z] GET /about 200 in 169ms (next.js: 155ms, application-code: 14ms)
+[2026-08-30T00:27:55.487Z] GET /manus-storage/fb-about-studio-reference_85c9ad71.jpg 307 in 59ms (next.js: 17ms, application-code: 43ms)
+[2026-08-30T00:27:55.509Z] GET /manus-storage/fb-floristry-school-v2_4cc3b90e.jpg 307 in 44ms (next.js: 2ms, application-code: 42ms)
+[2026-08-30T00:27:55.523Z] GET /manus-storage/fb-event-florals-v2_506c3067.jpg 307 in 44ms (next.js: 1.7ms, application-code: 42ms)
+[2026-08-30T00:27:59.400Z] GET /rewards 200 in 301ms (next.js: 289ms, application-code: 12ms)
+[2026-08-30T00:27:59.933Z] GET /api/flower-circle 200 in 145ms (next.js: 139ms, application-code: 6ms)
+[2026-08-30T00:27:59.933Z] GET /api/flower-circle 200 in 147ms (next.js: 144ms, application-code: 3ms)
+[2026-08-30T00:28:02.344Z] GET / 200 in 91ms (next.js: 2ms, application-code: 88ms)
+[2026-08-30T00:28:02.779Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 152ms (next.js: 26ms, application-code: 126ms)
+[2026-08-30T00:28:02.780Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 153ms (next.js: 21ms, application-code: 132ms)
+[2026-08-30T00:28:02.832Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 140ms (next.js: 1.8ms, application-code: 138ms)
+[2026-08-30T00:28:02.833Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 161ms (next.js: 1.1ms, application-code: 160ms)
+[2026-08-30T00:28:02.840Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 146ms (next.js: 3ms, application-code: 143ms)
+[2026-08-30T00:28:02.841Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 158ms (next.js: 1.5ms, application-code: 157ms)
+[2026-08-30T00:28:02.850Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 164ms (next.js: 1.8ms, application-code: 162ms)
+[2026-08-30T00:28:02.863Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 167ms (next.js: 3ms, application-code: 163ms)
+[2026-08-30T00:28:02.885Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 182ms (next.js: 1.0ms, application-code: 181ms)
+[2026-08-30T00:28:02.903Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 204ms (next.js: 3ms, application-code: 201ms)
+[2026-08-30T00:28:07.574Z] GET /manus-storage/img_7357_c9c21a13_ee62784a.webp 307 in 130ms (next.js: 1.9ms, application-code: 128ms)
+[2026-08-30T00:28:07.587Z] GET /manus-storage/img_7356_d8c86f08_198aa88a.webp 307 in 133ms (next.js: 0.8ms, application-code: 132ms)
+[2026-08-30T00:28:07.599Z] GET /manus-storage/editorial-collection_fd67f2f1.webp 307 in 184ms (next.js: 21ms, application-code: 164ms)
+[2026-08-30T00:28:07.623Z] GET /manus-storage/img_7348_642de59f_da46e323.webp 307 in 173ms (next.js: 1.2ms, application-code: 172ms)
+[2026-08-30T00:28:07.624Z] GET /manus-storage/img_7354_8dec9ac4_76712fd9.webp 307 in 166ms (next.js: 1.4ms, application-code: 165ms)
+[2026-08-30T00:28:09.227Z] GET /manus-storage/img_7345_21d3ef2d_592744ea.webp 307 in 72ms (next.js: 24ms, application-code: 48ms)
+[2026-08-30T00:28:09.228Z] GET /manus-storage/img_7346_6dc1e00a_caa980d5.webp 307 in 37ms (next.js: 3ms, application-code: 35ms)
+[2026-08-30T00:28:09.229Z] GET /manus-storage/img_7347_8b70b6a5_904b94c3.webp 307 in 43ms (next.js: 1.5ms, application-code: 41ms)
+[2026-08-30T00:28:09.239Z] GET /manus-storage/img_7344_05295024_7ecf3054.webp 307 in 52ms (next.js: 5ms, application-code: 47ms)
+[2026-08-30T00:28:09.701Z] GET /manus-storage/fb-journal-care-v2_236c8f7f.jpg 307 in 60ms (next.js: 24ms, application-code: 36ms)
+[2026-08-30T00:28:09.708Z] GET /manus-storage/fb-journal-peony-v2_3af4ce7f.jpg 307 in 69ms (next.js: 23ms, application-code: 46ms)
+[2026-08-30T00:28:09.714Z] GET /manus-storage/fb-journal-colour-v2_bbae4f4e.jpg 307 in 49ms (next.js: 3ms, application-code: 46ms)
+[2026-08-30T00:28:12.219Z] GET /journal/how-to-keep-cut-flowers-fresh 200 in 509ms (next.js: 197ms, generate-params: 290ms, application-code: 22ms)
+[2026-08-30T00:28:14.150Z] GET /catalog 200 in 95ms (next.js: 3ms, application-code: 93ms)
+[2026-08-30T00:28:14.603Z] GET /manus-storage/img_8328_4e1b223b_875f0a71.webp 307 in 133ms (next.js: 2ms, application-code: 130ms)
+[2026-08-30T00:28:14.614Z] GET /manus-storage/img_8344_a19ff2ea_ae18a9b0.webp 307 in 138ms (next.js: 1.2ms, application-code: 136ms)
+[2026-08-30T00:28:14.638Z] GET /manus-storage/img_8300_93518ec7_68025000.webp 307 in 196ms (next.js: 23ms, application-code: 173ms)
+[2026-08-30T00:28:14.661Z] GET /manus-storage/img_8348_de251992_84266fc6.webp 307 in 184ms (next.js: 3ms, application-code: 181ms)
+[2026-08-30T00:28:19.822Z] GET /?from_webdev=1 200 in 128ms (next.js: 1.8ms, application-code: 126ms)
+[2026-08-30T00:28:20.233Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 149ms (next.js: 2ms, application-code: 147ms)
+[2026-08-30T00:28:20.237Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 185ms (next.js: 25ms, application-code: 160ms)
+[2026-08-30T00:28:21.213Z] GET /api/catalog/overrides 200 in 5ms (next.js: 3ms, application-code: 1.9ms)
+[2026-08-30T00:28:21.213Z] GET /api/auth/me 200 in 7ms (next.js: 1.7ms, application-code: 5ms)
+[2026-08-30T00:28:21.414Z] HEAD / 200 in 126ms (next.js: 1.5ms, application-code: 125ms)
+[2026-08-30T00:28:21.419Z] GET /api/catalog/overrides 200 in 4ms (next.js: 1.5ms, application-code: 2ms)
+[2026-08-30T00:28:21.422Z] GET /api/auth/me 200 in 6ms (next.js: 4ms, application-code: 1.9ms)
+[2026-08-30T00:28:22.057Z] GET /?from_webdev=1 200 in 119ms (next.js: 1.9ms, application-code: 117ms)
+[2026-08-30T00:28:22.318Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 63ms (next.js: 19ms, application-code: 43ms)
+[2026-08-30T00:28:22.325Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 43ms (next.js: 2ms, application-code: 41ms)
+[2026-08-30T00:28:23.451Z] GET /api/auth/me 200 in 5ms (next.js: 1.4ms, application-code: 3ms)
+[2026-08-30T00:28:23.454Z] GET /api/catalog/overrides 200 in 2ms (next.js: 1.0ms, application-code: 1.4ms)
+[2026-08-30T00:28:23.637Z] GET /api/auth/me 200 in 4ms (next.js: 1.4ms, application-code: 2ms)
+[2026-08-30T00:28:23.640Z] GET /api/catalog/overrides 200 in 2ms (next.js: 0.9ms, application-code: 1.4ms)
+[2026-08-30T00:28:32.037Z] GET /catalog 200 in 125ms (next.js: 1.9ms, application-code: 123ms)
+[2026-08-30T00:28:32.910Z] GET /manus-storage/img_8328_4e1b223b_875f0a71.webp 307 in 152ms (next.js: 19ms, application-code: 133ms)
+[2026-08-30T00:28:32.911Z] GET /manus-storage/img_8300_93518ec7_68025000.webp 307 in 130ms (next.js: 1.3ms, application-code: 129ms)
+[2026-08-30T00:28:33.173Z] GET /manus-storage/img_8344_a19ff2ea_ae18a9b0.webp 307 in 47ms (next.js: 1.7ms, application-code: 45ms)
+[2026-08-30T00:28:33.295Z] GET /manus-storage/img_8348_de251992_84266fc6.webp 307 in 82ms (next.js: 23ms, application-code: 59ms)
+[2026-08-30T00:28:33.326Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 51ms (next.js: 7ms, application-code: 44ms)
+[2026-08-30T00:28:33.345Z] GET /manus-storage/img_7348_642de59f_da46e323.webp 307 in 46ms (next.js: 3ms, application-code: 43ms)
+[2026-08-30T00:28:33.443Z] GET /manus-storage/img_7354_8dec9ac4_76712fd9.webp 307 in 136ms (next.js: 5ms, application-code: 130ms)
+[2026-08-30T00:28:33.448Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 142ms (next.js: 3ms, application-code: 139ms)
+[2026-08-30T00:28:33.470Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 156ms (next.js: 4ms, application-code: 152ms)
+[2026-08-30T00:28:33.482Z] GET /manus-storage/img_7357_c9c21a13_ee62784a.webp 307 in 165ms (next.js: 4ms, application-code: 161ms)
+[2026-08-30T00:28:33.483Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 172ms (next.js: 5ms, application-code: 168ms)
+[2026-08-30T00:28:33.519Z] GET /manus-storage/img_7356_d8c86f08_198aa88a.webp 307 in 199ms (next.js: 3ms, application-code: 196ms)
+[2026-08-30T00:28:34.900Z] GET /api/auth/me 200 in 4ms (next.js: 1.3ms, application-code: 3ms)
+[2026-08-30T00:28:34.903Z] GET /api/catalog/overrides 200 in 2ms (next.js: 1.0ms, application-code: 1.3ms)
+[2026-08-30T00:28:35.034Z] GET /manus-storage/img_8328_4e1b223b_875f0a71.webp 307 in 62ms (next.js: 20ms, application-code: 42ms)
+[2026-08-30T00:28:35.034Z] GET /manus-storage/img_8300_93518ec7_68025000.webp 307 in 62ms (next.js: 22ms, application-code: 40ms)
+[2026-08-30T00:28:35.038Z] GET /manus-storage/img_8344_a19ff2ea_ae18a9b0.webp 307 in 40ms (next.js: 1.3ms, application-code: 39ms)
+[2026-08-30T00:28:35.081Z] GET /api/auth/me 200 in 4ms (next.js: 1.2ms, application-code: 3ms)
+[2026-08-30T00:28:35.084Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.0ms, application-code: 1.5ms)
+[2026-08-30T00:28:35.342Z] GET /manus-storage/img_8348_de251992_84266fc6.webp 307 in 46ms (next.js: 1.8ms, application-code: 44ms)
+[2026-08-30T00:28:35.783Z] [browser] Image with src "/manus-storage/img_7368_beb2dc8c_d6dd3357.webp" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+[2026-08-30T00:28:35.783Z] Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[2026-08-30T00:28:45.709Z] GET /catalog?category=bouquet 200 in 155ms (next.js: 2ms, application-code: 152ms)
+[2026-08-30T00:28:47.106Z] GET /manus-storage/a21897f7-a29c-4f2f-99b8-8bf99ae1e2a5_6dc4efa4_fd734fd7.webp 307 in 150ms (next.js: 21ms, application-code: 129ms)
+[2026-08-30T00:28:47.146Z] GET /manus-storage/img_7902_85c5990a_8bdb1281.webp 307 in 188ms (next.js: 28ms, application-code: 160ms)
+[2026-08-30T00:28:47.168Z] GET /manus-storage/c57d492e-23de-447c-b930-d57e5f30326b_27519c38_166105e8.webp 307 in 184ms (next.js: 6ms, application-code: 178ms)
+[2026-08-30T00:28:47.173Z] GET /manus-storage/2a9a4172-cbc2-46ae-b65d-0f311da8f727_af374751_2f878547.webp 307 in 216ms (next.js: 26ms, application-code: 190ms)
+[2026-08-30T00:28:47.180Z] GET /manus-storage/67a6031d-2f8f-48c8-bfc0-073be550624e_57780b43_6036708c.webp 307 in 185ms (next.js: 3ms, application-code: 182ms)
+[2026-08-30T00:28:47.190Z] GET /manus-storage/img_7245_757f35e9_328c78f6.webp 307 in 202ms (next.js: 4ms, application-code: 198ms)
+[2026-08-30T00:28:47.191Z] GET /manus-storage/939c450b-480a-4700-bb8d-326c50576432_f506599d_d643da66.webp 307 in 200ms (next.js: 5ms, application-code: 195ms)
+[2026-08-30T00:28:47.260Z] GET /manus-storage/img_7692_a7701270_dd63985c.webp 307 in 262ms (next.js: 3ms, application-code: 259ms)
+[2026-08-30T00:28:56.778Z] GET / 200 in 175ms (next.js: 2.0ms, application-code: 173ms)
+[2026-08-30T00:28:57.129Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 141ms (next.js: 18ms, application-code: 123ms)
+[2026-08-30T00:28:57.147Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 136ms (next.js: 1.3ms, application-code: 135ms)
+[2026-08-30T00:28:58.904Z] GET /api/auth/me 200 in 5ms (next.js: 1.4ms, application-code: 3ms)
+[2026-08-30T00:28:58.928Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.1ms, application-code: 1.7ms)
+[2026-08-30T00:28:59.088Z] GET /api/auth/me 200 in 5ms (next.js: 1.4ms, application-code: 3ms)
+[2026-08-30T00:28:59.113Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.4ms, application-code: 2.0ms)
+[2026-08-30T00:29:00.227Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 72ms (next.js: 25ms, application-code: 47ms)
+[2026-08-30T00:29:00.227Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 75ms (next.js: 24ms, application-code: 51ms)
+[2026-08-30T00:29:00.270Z] GET /manus-storage/builder-spray-rose-white-long_3c1d1e45.png 307 in 49ms (next.js: 8ms, application-code: 41ms)
+[2026-08-30T00:29:00.271Z] GET /manus-storage/builder-peony-pink-long_b13d00f5.png 307 in 43ms (next.js: 4ms, application-code: 39ms)
+[2026-08-30T00:29:00.328Z] GET /manus-storage/editorial-collection_fd67f2f1.webp 307 in 141ms (next.js: 3ms, application-code: 138ms)
+[2026-08-30T00:29:00.358Z] GET /manus-storage/builder-hydrangea-blue-long_e5c5f9ea.png 307 in 157ms (next.js: 3ms, application-code: 155ms)
+[2026-08-30T00:29:00.359Z] GET /manus-storage/builder-lily-pink-long_115f27dc.png 307 in 157ms (next.js: 6ms, application-code: 151ms)
+[2026-08-30T00:29:00.360Z] GET /manus-storage/builder-rose-red-long_27f9586b.png 307 in 129ms (next.js: 3ms, application-code: 126ms)
+[2026-08-30T00:29:00.406Z] GET /manus-storage/builder-eustoma-white-long_c7c7aacd.png 307 in 196ms (next.js: 12ms, application-code: 184ms)
+[2026-08-30T00:29:10.676Z] GET /manus-storage/img_7348_642de59f_da46e323.webp 307 in 180ms (next.js: 20ms, application-code: 160ms)
+[2026-08-30T00:29:10.679Z] GET /manus-storage/img_7357_c9c21a13_ee62784a.webp 307 in 183ms (next.js: 23ms, application-code: 160ms)
+[2026-08-30T00:29:10.700Z] GET /manus-storage/img_7356_d8c86f08_198aa88a.webp 307 in 175ms (next.js: 1.3ms, application-code: 173ms)
+[2026-08-30T00:29:10.701Z] GET /manus-storage/img_7354_8dec9ac4_76712fd9.webp 307 in 175ms (next.js: 4ms, application-code: 172ms)
+[2026-08-30T00:29:25.381Z] GET /checkout 200 in 329ms (next.js: 147ms, application-code: 182ms)
+[2026-08-30T00:29:27.267Z] GET /api/auth/me 200 in 9ms (next.js: 3ms, application-code: 6ms)
+[2026-08-30T00:29:27.268Z] GET /api/flower-circle 200 in 6ms (next.js: 1.3ms, application-code: 4ms)
+[2026-08-30T00:29:27.275Z] GET /api/catalog/overrides 200 in 4ms (next.js: 1.8ms, application-code: 2ms)
+[2026-08-30T00:29:27.283Z] GET /api/flower-circle 200 in 6ms (next.js: 2ms, application-code: 4ms)
+[2026-08-30T00:29:27.508Z] GET /api/account/profile 401 in 230ms (next.js: 121ms, application-code: 109ms)
+[2026-08-30T00:29:27.509Z] GET /api/account/addresses 401 in 234ms (next.js: 188ms, application-code: 46ms)
+[2026-08-30T00:29:27.510Z] GET /api/account/profile 401 in 241ms (next.js: 199ms, application-code: 42ms)
+[2026-08-30T00:29:27.527Z] GET /api/account/addresses 401 in 243ms (next.js: 228ms, application-code: 15ms)
+[2026-08-30T00:29:27.534Z] GET /api/catalog/overrides 200 in 5ms (next.js: 3ms, application-code: 1.5ms)
+[2026-08-30T00:29:27.535Z] GET /api/auth/me 200 in 6ms (next.js: 1.6ms, application-code: 4ms)
+[2026-08-30T00:29:28.010Z] GET /api/storefront/delivery-policy 200 in 741ms (next.js: 226ms, application-code: 515ms)
+[2026-08-30T00:29:36.921Z] GET /product/lily 404 in 200ms (next.js: 19ms, application-code: 181ms)
+[2026-08-30T00:29:38.723Z] GET /api/auth/me 200 in 6ms (next.js: 2ms, application-code: 3ms)
+[2026-08-30T00:29:38.753Z] GET /api/catalog/overrides 200 in 4ms (next.js: 2ms, application-code: 2.0ms)
+[2026-08-30T00:29:48.812Z] GET /catalog 200 in 173ms (next.js: 5ms, application-code: 169ms)
+[2026-08-30T00:29:49.232Z] GET /manus-storage/img_8300_93518ec7_68025000.webp 307 in 201ms (next.js: 10ms, application-code: 191ms)
+[2026-08-30T00:29:49.258Z] GET /manus-storage/img_8328_4e1b223b_875f0a71.webp 307 in 211ms (next.js: 1.3ms, application-code: 210ms)
+[2026-08-30T00:29:49.378Z] GET /manus-storage/img_8344_a19ff2ea_ae18a9b0.webp 307 in 176ms (next.js: 3ms, application-code: 173ms)
+[2026-08-30T00:29:49.529Z] GET /manus-storage/img_8348_de251992_84266fc6.webp 307 in 58ms (next.js: 12ms, application-code: 45ms)
+[2026-08-30T00:29:51.091Z] GET /api/catalog/overrides 200 in 4ms (next.js: 1.3ms, application-code: 2ms)
+[2026-08-30T00:29:51.097Z] GET /api/auth/me 200 in 4ms (next.js: 1.0ms, application-code: 3ms)
+[2026-08-30T00:29:51.273Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.5ms, application-code: 1.9ms)
+[2026-08-30T00:29:51.277Z] GET /api/auth/me 200 in 3ms (next.js: 0.9ms, application-code: 3ms)
+[2026-08-30T00:29:52.158Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 62ms (next.js: 13ms, application-code: 49ms)
+[2026-08-30T00:29:52.161Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 48ms (next.js: 4ms, application-code: 44ms)
+[2026-08-30T00:29:52.162Z] GET /manus-storage/img_7356_d8c86f08_198aa88a.webp 307 in 50ms (next.js: 2ms, application-code: 47ms)
+[2026-08-30T00:29:52.261Z] GET /manus-storage/img_7354_8dec9ac4_76712fd9.webp 307 in 147ms (next.js: 7ms, application-code: 140ms)
+[2026-08-30T00:29:52.290Z] GET /manus-storage/img_7348_642de59f_da46e323.webp 307 in 167ms (next.js: 6ms, application-code: 160ms)
+[2026-08-30T00:29:52.298Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 178ms (next.js: 4ms, application-code: 174ms)
+[2026-08-30T00:29:52.304Z] GET /manus-storage/img_7357_c9c21a13_ee62784a.webp 307 in 177ms (next.js: 7ms, application-code: 170ms)
+[2026-08-30T00:29:52.339Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 202ms (next.js: 1.3ms, application-code: 201ms)
+[2026-08-30T00:29:58.627Z] GET /product/product-420001 200 in 252ms (next.js: 14ms, application-code: 239ms)
+[2026-08-30T00:29:59.183Z] GET /manus-storage/img_8300_93518ec7_68025000.webp 307 in 173ms (next.js: 12ms, application-code: 161ms)
+[2026-08-30T00:29:59.596Z] [browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[2026-08-30T00:29:59.663Z] GET /manus-storage/2a9a4172-cbc2-46ae-b65d-0f311da8f727_af374751_2f878547.webp 307 in 61ms (next.js: 13ms, application-code: 48ms)
+[2026-08-30T00:29:59.761Z] GET /manus-storage/a21897f7-a29c-4f2f-99b8-8bf99ae1e2a5_6dc4efa4_fd734fd7.webp 307 in 143ms (next.js: 1.3ms, application-code: 142ms)
+[2026-08-30T00:29:59.784Z] GET /manus-storage/img_7902_85c5990a_8bdb1281.webp 307 in 162ms (next.js: 1.2ms, application-code: 161ms)
+[2026-08-30T00:29:59.785Z] GET /manus-storage/img_7245_757f35e9_328c78f6.webp 307 in 158ms (next.js: 0.8ms, application-code: 157ms)
+[2026-08-30T00:30:10.798Z] GET /manus-storage/img_8300_93518ec7_68025000.webp 307 in 145ms (next.js: 12ms, application-code: 133ms)
+[2026-08-30T00:30:19.551Z] GET /checkout 200 in 15ms (next.js: 5ms, application-code: 10ms)
+[2026-08-30T00:30:20.007Z] GET /api/flower-circle 200 in 9ms (next.js: 3ms, application-code: 7ms)
+[2026-08-30T00:30:20.008Z] GET /api/account/addresses 401 in 9ms (next.js: 4ms, application-code: 5ms)
+[2026-08-30T00:30:20.014Z] GET /api/flower-circle 200 in 5ms (next.js: 1.0ms, application-code: 4ms)
+[2026-08-30T00:30:20.015Z] GET /api/account/profile 401 in 7ms (next.js: 4ms, application-code: 3ms)
+[2026-08-30T00:30:20.024Z] GET /api/account/addresses 401 in 5ms (next.js: 1.3ms, application-code: 4ms)
+[2026-08-30T00:30:20.025Z] GET /api/account/profile 401 in 5ms (next.js: 3ms, application-code: 2ms)
+[2026-08-30T00:30:20.991Z] GET /manus-storage/img_8300_93518ec7_68025000.webp 307 in 177ms (next.js: 10ms, application-code: 166ms)
+[2026-08-30T00:30:33.187Z] GET /catalog 200 in 170ms (next.js: 1.8ms, application-code: 168ms)
+[2026-08-30T00:30:33.546Z] GET /manus-storage/img_8328_4e1b223b_875f0a71.webp 307 in 120ms (next.js: 1.1ms, application-code: 119ms)
+[2026-08-30T00:30:33.554Z] GET /manus-storage/img_8300_93518ec7_68025000.webp 307 in 145ms (next.js: 12ms, application-code: 134ms)
+[2026-08-30T00:30:33.619Z] GET /manus-storage/img_8344_a19ff2ea_ae18a9b0.webp 307 in 36ms (next.js: 1.1ms, application-code: 35ms)
+[2026-08-30T00:30:33.832Z] GET /manus-storage/img_8348_de251992_84266fc6.webp 307 in 40ms (next.js: 2.0ms, application-code: 38ms)
+[2026-08-30T00:30:36.390Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 48ms (next.js: 12ms, application-code: 37ms)
+[2026-08-30T00:30:36.399Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 38ms (next.js: 2.0ms, application-code: 36ms)
+[2026-08-30T00:30:36.422Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.5ms, application-code: 1.9ms)
+[2026-08-30T00:30:36.429Z] GET /api/auth/me 200 in 4ms (next.js: 1.8ms, application-code: 2ms)
+[2026-08-30T00:30:36.503Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 142ms (next.js: 3ms, application-code: 139ms)
+[2026-08-30T00:30:36.508Z] GET /manus-storage/img_7354_8dec9ac4_76712fd9.webp 307 in 142ms (next.js: 6ms, application-code: 137ms)
+[2026-08-30T00:30:36.510Z] GET /manus-storage/img_7348_642de59f_da46e323.webp 307 in 143ms (next.js: 3ms, application-code: 140ms)
+[2026-08-30T00:30:36.520Z] GET /manus-storage/img_8300_93518ec7_68025000.webp 307 in 44ms (next.js: 1.3ms, application-code: 42ms)
+[2026-08-30T00:30:36.521Z] GET /manus-storage/img_8328_4e1b223b_875f0a71.webp 307 in 40ms (next.js: 1.2ms, application-code: 39ms)
+[2026-08-30T00:30:36.560Z] GET /manus-storage/img_7360_fdece5d6_53a4ba52.webp 307 in 188ms (next.js: 1.5ms, application-code: 186ms)
+[2026-08-30T00:30:36.564Z] GET /manus-storage/img_7356_d8c86f08_198aa88a.webp 307 in 190ms (next.js: 3ms, application-code: 187ms)
+[2026-08-30T00:30:36.565Z] GET /manus-storage/img_7357_c9c21a13_ee62784a.webp 307 in 189ms (next.js: 3ms, application-code: 186ms)
+[2026-08-30T00:30:36.621Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.5ms, application-code: 1.8ms)
+[2026-08-30T00:30:36.625Z] GET /api/auth/me 200 in 3ms (next.js: 1.0ms, application-code: 2ms)
+[2026-08-30T00:30:36.646Z] GET /manus-storage/img_8344_a19ff2ea_ae18a9b0.webp 307 in 162ms (next.js: 0.9ms, application-code: 161ms)
+[2026-08-30T00:30:36.674Z] GET /manus-storage/img_8348_de251992_84266fc6.webp 307 in 187ms (next.js: 2ms, application-code: 185ms)
+[2026-08-30T00:30:46.274Z] [browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[2026-08-30T00:30:46.274Z] - A server/client branch `if (typeof window !== 'undefined')`.
+[2026-08-30T00:30:46.274Z] - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+[2026-08-30T00:30:46.274Z] - Date formatting in a user's locale which doesn't match the server.
+[2026-08-30T00:30:46.274Z] - External changing data without sending a snapshot of it along with the HTML.
+[2026-08-30T00:30:46.274Z] - Invalid HTML tag nesting.
+[2026-08-30T00:30:46.274Z] It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+[2026-08-30T00:30:46.274Z] https://react.dev/link/hydration-mismatch
+[2026-08-30T00:30:46.274Z] ...
+[2026-08-30T00:30:46.274Z] <RedirectBoundary>
+[2026-08-30T00:30:46.274Z] <RedirectErrorBoundary router={{...}}>
+[2026-08-30T00:30:46.274Z] <Head>
+[2026-08-30T00:30:46.274Z] <__next_root_layout_boundary__>
+[2026-08-30T00:30:46.274Z] <SegmentViewNode type="layout" pagePath="layout.tsx">
+[2026-08-30T00:30:46.274Z] <SegmentTrieNode>
+[2026-08-30T00:30:46.274Z] <link>
+[2026-08-30T00:30:46.274Z] <script>
+[2026-08-30T00:30:46.274Z] <script>
+[2026-08-30T00:30:46.274Z] <RootLayout>
+[2026-08-30T00:30:46.274Z] <html lang="en" className="noto_sans_...">
+[2026-08-30T00:30:46.274Z] <body className="min-h-dvh ...">
+[2026-08-30T00:30:46.274Z] <script>
+[2026-08-30T00:30:46.274Z] <ClientProviders products={[...]}>
+[2026-08-30T00:30:46.274Z] <I18nProvider>
+[2026-08-30T00:30:46.274Z] <StoreProvider products={[...]}>
+[2026-08-30T00:30:46.274Z] <SiteChrome>
+[2026-08-30T00:30:46.274Z] <a>
+[2026-08-30T00:30:46.274Z] <AnnouncementBar>
+[2026-08-30T00:30:46.274Z] ...
+[2026-08-30T00:30:46.274Z] <div className="container-...">
+[2026-08-30T00:30:46.274Z] <div className="flex items...">
+[2026-08-30T00:30:46.274Z] <button>
+[2026-08-30T00:30:46.274Z] <Logo>
+[2026-08-30T00:30:46.274Z] <LinkComponent href="/" onClick={undefined} aria-label={"Flower's..."} ...>
+[2026-08-30T00:30:46.274Z] <a
+[2026-08-30T00:30:46.274Z] aria-label={"Flower's Boutique — home"}
+[2026-08-30T00:30:46.274Z] className={"group inline-flex flex-col leading-none "}
+[2026-08-30T00:30:46.274Z] ref={function}
+[2026-08-30T00:30:46.274Z] onClick={function onClick}
+[2026-08-30T00:30:46.274Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.274Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.274Z] href="/"
+[2026-08-30T00:30:46.274Z] -                                     data-manus_clickable="true"
+[2026-08-30T00:30:46.274Z] -                                     data-manus_click_id="1"
+[2026-08-30T00:30:46.274Z] >
+[2026-08-30T00:30:46.274Z] <DesktopNav>
+[2026-08-30T00:30:46.274Z] <nav aria-label="Primary" className="hidden ite...">
+[2026-08-30T00:30:46.274Z] <LinkComponent href="/catalog" className="relative p...">
+[2026-08-30T00:30:46.274Z] <a
+[2026-08-30T00:30:46.274Z] className="relative py-1 text-[13px] font-semibold transition-colors hover:tex..."
+[2026-08-30T00:30:46.274Z] ref={function}
+[2026-08-30T00:30:46.274Z] onClick={function onClick}
+[2026-08-30T00:30:46.274Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.274Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.274Z] href="/catalog"
+[2026-08-30T00:30:46.274Z] -                                       data-manus_clickable="true"
+[2026-08-30T00:30:46.274Z] -                                       data-manus_click_id="2"
+[2026-08-30T00:30:46.274Z] >
+[2026-08-30T00:30:46.274Z] <LinkComponent href="/builder" className="relative p...">
+[2026-08-30T00:30:46.274Z] <a
+[2026-08-30T00:30:46.274Z] className="relative py-1 text-[13px] font-semibold transition-colors hover:tex..."
+[2026-08-30T00:30:46.274Z] ref={function}
+[2026-08-30T00:30:46.274Z] onClick={function onClick}
+[2026-08-30T00:30:46.274Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.274Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.274Z] href="/builder"
+[2026-08-30T00:30:46.274Z] -                                       data-manus_clickable="true"
+[2026-08-30T00:30:46.274Z] -                                       data-manus_click_id="3"
+[2026-08-30T00:30:46.274Z] >
+[2026-08-30T00:30:46.274Z] <LinkComponent href="/about" className="relative p...">
+[2026-08-30T00:30:46.274Z] <a
+[2026-08-30T00:30:46.274Z] className="relative py-1 text-[13px] font-semibold transition-colors hover:tex..."
+[2026-08-30T00:30:46.274Z] ref={function}
+[2026-08-30T00:30:46.274Z] onClick={function onClick}
+[2026-08-30T00:30:46.274Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.274Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.274Z] href="/about"
+[2026-08-30T00:30:46.274Z] -                                       data-manus_clickable="true"
+[2026-08-30T00:30:46.274Z] -                                       data-manus_click_id="4"
+[2026-08-30T00:30:46.274Z] >
+[2026-08-30T00:30:46.274Z] <LinkComponent href="/rewards" className="relative p...">
+[2026-08-30T00:30:46.274Z] <a
+[2026-08-30T00:30:46.274Z] className="relative py-1 text-[13px] font-semibold transition-colors hover:tex..."
+[2026-08-30T00:30:46.274Z] ref={function}
+[2026-08-30T00:30:46.274Z] onClick={function onClick}
+[2026-08-30T00:30:46.274Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.274Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.274Z] href="/rewards"
+[2026-08-30T00:30:46.274Z] -                                       data-manus_clickable="true"
+[2026-08-30T00:30:46.274Z] -                                       data-manus_click_id="5"
+[2026-08-30T00:30:46.274Z] >
+[2026-08-30T00:30:46.274Z] <HeaderActions>
+[2026-08-30T00:30:46.274Z] <div className="flex items...">
+[2026-08-30T00:30:46.274Z] <IconButton label="Search" onClick={function onClick} className="h-11 w-11">
+[2026-08-30T00:30:46.274Z] <button
+[2026-08-30T00:30:46.274Z] type="button"
+[2026-08-30T00:30:46.274Z] aria-label="Search"
+[2026-08-30T00:30:46.274Z] className="relative grid h-9 w-9 place-items-center rounded-full text-[var(--ink..."
+[2026-08-30T00:30:46.274Z] onClick={function onClick}
+[2026-08-30T00:30:46.274Z] -                                     data-manus_clickable="true"
+[2026-08-30T00:30:46.274Z] -                                     data-manus_click_id="6"
+[2026-08-30T00:30:46.274Z] >
+[2026-08-30T00:30:46.274Z] <LanguageSelector>
+[2026-08-30T00:30:46.274Z] <div ref={{current:null}} className="relative">
+[2026-08-30T00:30:46.274Z] <button
+[2026-08-30T00:30:46.274Z] type="button"
+[2026-08-30T00:30:46.274Z] aria-haspopup="listbox"
+[2026-08-30T00:30:46.274Z] aria-expanded={false}
+[2026-08-30T00:30:46.274Z] aria-label="Change language"
+[2026-08-30T00:30:46.274Z] onClick={function onClick}
+[2026-08-30T00:30:46.274Z] className="mono flex h-11 min-w-11 items-center justify-center gap-1 rounded-f..."
+[2026-08-30T00:30:46.274Z] -                                       data-manus_clickable="true"
+[2026-08-30T00:30:46.274Z] -                                       data-manus_click_id="7"
+[2026-08-30T00:30:46.274Z] >
+[2026-08-30T00:30:46.274Z] <IconLink href="/account/l..." label="Account" className="h-11 w-11">
+[2026-08-30T00:30:46.275Z] <LinkComponent href="/account/l..." aria-label="Account" className="relative g...">
+[2026-08-30T00:30:46.275Z] <a
+[2026-08-30T00:30:46.275Z] aria-label="Account"
+[2026-08-30T00:30:46.275Z] className="relative grid h-9 w-9 place-items-center rounded-full text-[var(--i..."
+[2026-08-30T00:30:46.275Z] ref={function}
+[2026-08-30T00:30:46.275Z] onClick={function onClick}
+[2026-08-30T00:30:46.275Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.275Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.275Z] href="/account/login"
+[2026-08-30T00:30:46.275Z] -                                       data-manus_clickable="true"
+[2026-08-30T00:30:46.275Z] -                                       data-manus_click_id="8"
+[2026-08-30T00:30:46.275Z] >
+[2026-08-30T00:30:46.275Z] <IconLink href="/favorites" label="Wishlist" badge={0} className="hidden sm:...">
+[2026-08-30T00:30:46.275Z] <LinkComponent href="/favorites" aria-label="Wishlist" className="relative g...">
+[2026-08-30T00:30:46.275Z] <a
+[2026-08-30T00:30:46.275Z] aria-label="Wishlist"
+[2026-08-30T00:30:46.275Z] className="relative grid h-9 w-9 place-items-center rounded-full text-[var(--i..."
+[2026-08-30T00:30:46.275Z] ref={function}
+[2026-08-30T00:30:46.275Z] onClick={function onClick}
+[2026-08-30T00:30:46.275Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.275Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.275Z] href="/favorites"
+[2026-08-30T00:30:46.275Z] -                                       data-manus_clickable="true"
+[2026-08-30T00:30:46.275Z] -                                       data-manus_click_id="9"
+[2026-08-30T00:30:46.275Z] >
+[2026-08-30T00:30:46.275Z] <IconButton label="Cart" badge={0} onClick={function openCart} className="h-11 w-11">
+[2026-08-30T00:30:46.275Z] <button
+[2026-08-30T00:30:46.275Z] type="button"
+[2026-08-30T00:30:46.275Z] aria-label="Cart"
+[2026-08-30T00:30:46.275Z] className="relative grid h-9 w-9 place-items-center rounded-full text-[var(--ink..."
+[2026-08-30T00:30:46.275Z] onClick={function openCart}
+[2026-08-30T00:30:46.275Z] -                                     data-manus_clickable="true"
+[2026-08-30T00:30:46.275Z] -                                     data-manus_click_id="10"
+[2026-08-30T00:30:46.275Z] >
+[2026-08-30T00:30:46.275Z] <MobileNav>
+[2026-08-30T00:30:46.275Z] <main>
+[2026-08-30T00:30:46.275Z] ...
+[2026-08-30T00:30:46.275Z] <div className="grid lg:gr...">
+[2026-08-30T00:30:46.275Z] <div>
+[2026-08-30T00:30:46.275Z] <div className="flex flex-...">
+[2026-08-30T00:30:46.275Z] <div>
+[2026-08-30T00:30:46.275Z] <div className="grid gap-2...">
+[2026-08-30T00:30:46.275Z] <Button href="tel:+99551..." variant="dark" className="w-full" aria-label="Call">
+[2026-08-30T00:30:46.275Z] <LinkComponent href="tel:+99551..." className="inline-fle..." aria-label="Call">
+[2026-08-30T00:30:46.275Z] <a
+[2026-08-30T00:30:46.275Z] className="inline-flex items-center justify-center gap-2 rounded-[var(--radius..."
+[2026-08-30T00:30:46.275Z] aria-label="Call"
+[2026-08-30T00:30:46.275Z] ref={function}
+[2026-08-30T00:30:46.275Z] onClick={function onClick}
+[2026-08-30T00:30:46.275Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.275Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.275Z] href="tel:+995511555650"
+[2026-08-30T00:30:46.275Z] -                                       data-manus_clickable="true"
+[2026-08-30T00:30:46.275Z] -                                       data-manus_click_id="11"
+[2026-08-30T00:30:46.275Z] >
+[2026-08-30T00:30:46.275Z] <a
+[2026-08-30T00:30:46.275Z] href="https://wa.me/995511555650"
+[2026-08-30T00:30:46.275Z] target="_blank"
+[2026-08-30T00:30:46.275Z] rel="noopener noreferrer"
+[2026-08-30T00:30:46.275Z] className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-[var(..."
+[2026-08-30T00:30:46.275Z] -                                   data-manus_clickable="true"
+[2026-08-30T00:30:46.275Z] -                                   data-manus_click_id="12"
+[2026-08-30T00:30:46.275Z] >
+[2026-08-30T00:30:46.275Z] ...
+[2026-08-30T00:30:46.275Z] <div className="grid grid-...">
+[2026-08-30T00:30:46.275Z] <div className="col-span-2...">
+[2026-08-30T00:30:46.275Z] <Logo tone="light">
+[2026-08-30T00:30:46.275Z] <LinkComponent href="/" onClick={undefined} aria-label={"Flower's..."} ...>
+[2026-08-30T00:30:46.275Z] <a
+[2026-08-30T00:30:46.275Z] aria-label={"Flower's Boutique — home"}
+[2026-08-30T00:30:46.275Z] className={"group inline-flex flex-col leading-none "}
+[2026-08-30T00:30:46.275Z] ref={function}
+[2026-08-30T00:30:46.275Z] onClick={function onClick}
+[2026-08-30T00:30:46.275Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.275Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.275Z] href="/"
+[2026-08-30T00:30:46.275Z] -                                     data-manus_clickable="true"
+[2026-08-30T00:30:46.275Z] -                                     data-manus_click_id="13"
+[2026-08-30T00:30:46.275Z] >
+[2026-08-30T00:30:46.275Z] ...
+[2026-08-30T00:30:46.275Z] <nav aria-label="Shop">
+[2026-08-30T00:30:46.275Z] <h3>
+[2026-08-30T00:30:46.275Z] <ul className="grid gap-2">
+[2026-08-30T00:30:46.275Z] <li>
+[2026-08-30T00:30:46.275Z] <LinkComponent href="/catalog" className="text-[13px...">
+[2026-08-30T00:30:46.275Z] <a
+[2026-08-30T00:30:46.275Z] className="text-[13px] text-[var(--footer-ink)] transition hover:text-white"
+[2026-08-30T00:30:46.275Z] ref={function}
+[2026-08-30T00:30:46.275Z] onClick={function onClick}
+[2026-08-30T00:30:46.275Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.275Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.275Z] href="/catalog"
+[2026-08-30T00:30:46.275Z] -                                       data-manus_clickable="true"
+[2026-08-30T00:30:46.275Z] -                                       data-manus_click_id="14"
+[2026-08-30T00:30:46.275Z] >
+[2026-08-30T00:30:46.275Z] +                                       Catalog
+[2026-08-30T00:30:46.275Z] <li>
+[2026-08-30T00:30:46.275Z] <LinkComponent href="/builder" className="text-[13px...">
+[2026-08-30T00:30:46.275Z] <a
+[2026-08-30T00:30:46.275Z] className="text-[13px] text-[var(--footer-ink)] transition hover:text-white"
+[2026-08-30T00:30:46.275Z] ref={function}
+[2026-08-30T00:30:46.275Z] onClick={function onClick}
+[2026-08-30T00:30:46.275Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.275Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.275Z] href="/builder"
+[2026-08-30T00:30:46.275Z] -                                       data-manus_clickable="true"
+[2026-08-30T00:30:46.275Z] -                                       data-manus_click_id="15"
+[2026-08-30T00:30:46.275Z] >
+[2026-08-30T00:30:46.275Z] +                                       Build a bouquet
+[2026-08-30T00:30:46.275Z] <li>
+[2026-08-30T00:30:46.275Z] <LinkComponent href="/catalog?o..." className="text-[13px...">
+[2026-08-30T00:30:46.275Z] <a
+[2026-08-30T00:30:46.275Z] className="text-[13px] text-[var(--footer-ink)] transition hover:text-white"
+[2026-08-30T00:30:46.275Z] ref={function}
+[2026-08-30T00:30:46.275Z] onClick={function onClick}
+[2026-08-30T00:30:46.275Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.275Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.275Z] href="/catalog?occasion=featured"
+[2026-08-30T00:30:46.275Z] -                                       data-manus_clickable="true"
+[2026-08-30T00:30:46.275Z] -                                       data-manus_click_id="16"
+[2026-08-30T00:30:46.275Z] >
+[2026-08-30T00:30:46.275Z] +                                       Bestsellers
+[2026-08-30T00:30:46.276Z] ...
+[2026-08-30T00:30:46.276Z] <nav aria-label="Company">
+[2026-08-30T00:30:46.276Z] <h3>
+[2026-08-30T00:30:46.276Z] <ul className="grid gap-2">
+[2026-08-30T00:30:46.276Z] <li>
+[2026-08-30T00:30:46.276Z] <LinkComponent href="/about" className="text-[13px...">
+[2026-08-30T00:30:46.276Z] <a
+[2026-08-30T00:30:46.276Z] className="text-[13px] text-[var(--footer-ink)] transition hover:text-white"
+[2026-08-30T00:30:46.276Z] ref={function}
+[2026-08-30T00:30:46.276Z] onClick={function onClick}
+[2026-08-30T00:30:46.276Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.276Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.276Z] href="/about"
+[2026-08-30T00:30:46.276Z] -                                       data-manus_clickable="true"
+[2026-08-30T00:30:46.276Z] -                                       data-manus_click_id="17"
+[2026-08-30T00:30:46.276Z] >
+[2026-08-30T00:30:46.276Z] +                                       About us
+[2026-08-30T00:30:46.276Z] <li>
+[2026-08-30T00:30:46.276Z] <LinkComponent href="/journal" className="text-[13px...">
+[2026-08-30T00:30:46.276Z] <a
+[2026-08-30T00:30:46.276Z] className="text-[13px] text-[var(--footer-ink)] transition hover:text-white"
+[2026-08-30T00:30:46.276Z] ref={function}
+[2026-08-30T00:30:46.276Z] onClick={function onClick}
+[2026-08-30T00:30:46.276Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.276Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.276Z] href="/journal"
+[2026-08-30T00:30:46.276Z] -                                       data-manus_clickable="true"
+[2026-08-30T00:30:46.276Z] -                                       data-manus_click_id="18"
+[2026-08-30T00:30:46.276Z] >
+[2026-08-30T00:30:46.276Z] +                                       Journal
+[2026-08-30T00:30:46.276Z] <li>
+[2026-08-30T00:30:46.276Z] <LinkComponent href="/rewards" className="text-[13px...">
+[2026-08-30T00:30:46.276Z] <a
+[2026-08-30T00:30:46.276Z] className="text-[13px] text-[var(--footer-ink)] transition hover:text-white"
+[2026-08-30T00:30:46.276Z] ref={function}
+[2026-08-30T00:30:46.276Z] onClick={function onClick}
+[2026-08-30T00:30:46.276Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.276Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.276Z] href="/rewards"
+[2026-08-30T00:30:46.276Z] -                                       data-manus_clickable="true"
+[2026-08-30T00:30:46.276Z] -                                       data-manus_click_id="19"
+[2026-08-30T00:30:46.276Z] >
+[2026-08-30T00:30:46.276Z] +                                       Flower Circle
+[2026-08-30T00:30:46.276Z] ...
+[2026-08-30T00:30:46.276Z] <nav aria-label="Info">
+[2026-08-30T00:30:46.276Z] <h3>
+[2026-08-30T00:30:46.276Z] <ul className="grid gap-2">
+[2026-08-30T00:30:46.276Z] <li>
+[2026-08-30T00:30:46.276Z] <LinkComponent href="/about#del..." className="text-[13px...">
+[2026-08-30T00:30:46.276Z] <a
+[2026-08-30T00:30:46.276Z] className="text-[13px] text-[var(--footer-ink)] transition hover:text-white"
+[2026-08-30T00:30:46.276Z] ref={function}
+[2026-08-30T00:30:46.276Z] onClick={function onClick}
+[2026-08-30T00:30:46.276Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.276Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.276Z] href="/about#delivery"
+[2026-08-30T00:30:46.276Z] -                                       data-manus_clickable="true"
+[2026-08-30T00:30:46.276Z] -                                       data-manus_click_id="20"
+[2026-08-30T00:30:46.276Z] >
+[2026-08-30T00:30:46.276Z] +                                       {"Delivery & payment"}
+[2026-08-30T00:30:46.276Z] <li>
+[2026-08-30T00:30:46.276Z] <LinkComponent href="/about#con..." className="text-[13px...">
+[2026-08-30T00:30:46.276Z] <a
+[2026-08-30T00:30:46.276Z] className="text-[13px] text-[var(--footer-ink)] transition hover:text-white"
+[2026-08-30T00:30:46.276Z] ref={function}
+[2026-08-30T00:30:46.276Z] onClick={function onClick}
+[2026-08-30T00:30:46.276Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.276Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.276Z] href="/about#contact"
+[2026-08-30T00:30:46.276Z] -                                       data-manus_clickable="true"
+[2026-08-30T00:30:46.276Z] -                                       data-manus_click_id="21"
+[2026-08-30T00:30:46.276Z] >
+[2026-08-30T00:30:46.276Z] +                                       Contact
+[2026-08-30T00:30:46.276Z] <li>
+[2026-08-30T00:30:46.276Z] <LinkComponent href="/favorites" className="text-[13px...">
+[2026-08-30T00:30:46.276Z] <a
+[2026-08-30T00:30:46.276Z] className="text-[13px] text-[var(--footer-ink)] transition hover:text-white"
+[2026-08-30T00:30:46.276Z] ref={function}
+[2026-08-30T00:30:46.276Z] onClick={function onClick}
+[2026-08-30T00:30:46.276Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.276Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.276Z] href="/favorites"
+[2026-08-30T00:30:46.276Z] -                                       data-manus_clickable="true"
+[2026-08-30T00:30:46.276Z] -                                       data-manus_click_id="22"
+[2026-08-30T00:30:46.276Z] >
+[2026-08-30T00:30:46.276Z] +                                       Wishlist
+[2026-08-30T00:30:46.276Z] <li>
+[2026-08-30T00:30:46.277Z] <LinkComponent href="/account/l..." className="text-[13px...">
+[2026-08-30T00:30:46.277Z] <a
+[2026-08-30T00:30:46.277Z] className="text-[13px] text-[var(--footer-ink)] transition hover:text-white"
+[2026-08-30T00:30:46.277Z] ref={function}
+[2026-08-30T00:30:46.277Z] onClick={function onClick}
+[2026-08-30T00:30:46.277Z] onMouseEnter={function onMouseEnter}
+[2026-08-30T00:30:46.277Z] onTouchStart={function onTouchStart}
+[2026-08-30T00:30:46.277Z] href="/account/login"
+[2026-08-30T00:30:46.277Z] -                                       data-manus_clickable="true"
+[2026-08-30T00:30:46.277Z] -                                       data-manus_click_id="23"
+[2026-08-30T00:30:46.277Z] >
+[2026-08-30T00:30:46.277Z] +                                       My account
+[2026-08-30T00:30:46.277Z] <div className="col-span-2...">
+[2026-08-30T00:30:46.277Z] <h3>
+[2026-08-30T00:30:46.277Z] <ul className="grid gap-2...">
+[2026-08-30T00:30:46.277Z] <li>
+[2026-08-30T00:30:46.277Z] <a
+[2026-08-30T00:30:46.277Z] href="tel:+995511555650"
+[2026-08-30T00:30:46.277Z] className="font-semibold text-white hover:text-[var(--action)]"
+[2026-08-30T00:30:46.277Z] -                                     data-manus_clickable="true"
+[2026-08-30T00:30:46.277Z] -                                     data-manus_click_id="24"
+[2026-08-30T00:30:46.277Z] >
+[2026-08-30T00:30:46.277Z] +                                     +995 511 55 56 50
+[2026-08-30T00:30:46.277Z] <li>
+[2026-08-30T00:30:46.277Z] <a
+[2026-08-30T00:30:46.277Z] href="mailto:info.flowersboutique@gmail.com"
+[2026-08-30T00:30:46.277Z] className="text-[var(--footer-ink)] hover:text-white"
+[2026-08-30T00:30:46.277Z] -                                     data-manus_clickable="true"
+[2026-08-30T00:30:46.277Z] -                                     data-manus_click_id="25"
+[2026-08-30T00:30:46.277Z] >
+[2026-08-30T00:30:46.277Z] +                                     info.flowersboutique@gmail.com
+[2026-08-30T00:30:46.277Z] ...
+[2026-08-30T00:30:46.277Z] <div className="mt-4 flex ...">
+[2026-08-30T00:30:46.277Z] <a
+[2026-08-30T00:30:46.277Z] href="https://instagram.com/myflowersboutique"
+[2026-08-30T00:30:46.277Z] target="_blank"
+[2026-08-30T00:30:46.277Z] rel="noopener noreferrer"
+[2026-08-30T00:30:46.277Z] className="text-[var(--footer-ink)] hover:text-white"
+[2026-08-30T00:30:46.277Z] -                                   data-manus_clickable="true"
+[2026-08-30T00:30:46.277Z] -                                   data-manus_click_id="26"
+[2026-08-30T00:30:46.277Z] >
+[2026-08-30T00:30:46.277Z] +                                   Instagram
+[2026-08-30T00:30:46.277Z] <a
+[2026-08-30T00:30:46.277Z] href="https://www.facebook.com/flowersboutiques"
+[2026-08-30T00:30:46.277Z] target="_blank"
+[2026-08-30T00:30:46.277Z] rel="noopener noreferrer"
+[2026-08-30T00:30:46.277Z] className="text-[var(--footer-ink)] hover:text-white"
+[2026-08-30T00:30:46.277Z] -                                   data-manus_clickable="true"
+[2026-08-30T00:30:46.277Z] -                                   data-manus_click_id="27"
+[2026-08-30T00:30:46.277Z] >
+[2026-08-30T00:30:46.277Z] +                                   Facebook
+[2026-08-30T00:30:46.277Z] <a
+[2026-08-30T00:30:46.277Z] href="https://wa.me/995511555650"
+[2026-08-30T00:30:46.277Z] target="_blank"
+[2026-08-30T00:30:46.277Z] rel="noopener noreferrer"
+[2026-08-30T00:30:46.277Z] className="text-[var(--footer-ink)] hover:text-white"
+[2026-08-30T00:30:46.277Z] -                                   data-manus_clickable="true"
+[2026-08-30T00:30:46.277Z] -                                   data-manus_click_id="28"
+[2026-08-30T00:30:46.277Z] >
+[2026-08-30T00:30:46.277Z] +                                   WhatsApp
+[2026-08-30T00:30:46.277Z] <CartDrawer>
+[2026-08-30T00:30:46.277Z] <SearchOverlay>
+[2026-08-30T00:30:46.277Z] <MessengerChat>
+[2026-08-30T00:30:46.277Z] <div className="fixed bott...">
+[2026-08-30T00:30:46.277Z] <button
+[2026-08-30T00:30:46.277Z] type="button"
+[2026-08-30T00:30:46.277Z] onClick={function onClick}
+[2026-08-30T00:30:46.277Z] aria-label="Message us"
+[2026-08-30T00:30:46.277Z] aria-haspopup="menu"
+[2026-08-30T00:30:46.277Z] aria-controls="contact-channel-menu"
+[2026-08-30T00:30:46.277Z] aria-expanded={false}
+[2026-08-30T00:30:46.277Z] className="grid h-11 w-11 place-items-center rounded-full bg-[#0084FF] text-white shad..."
+[2026-08-30T00:30:46.277Z] -                               data-manus_clickable="true"
+[2026-08-30T00:30:46.277Z] -                               data-manus_click_id="29"
+[2026-08-30T00:30:46.277Z] >
+[2026-08-30T00:30:46.277Z] ...
+[2026-08-30T00:30:56.457Z] GET /catalog?max=180 200 in 152ms (next.js: 3ms, application-code: 148ms)
+[2026-08-30T00:30:56.842Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 125ms (next.js: 1.2ms, application-code: 124ms)
+[2026-08-30T00:30:56.869Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 174ms (next.js: 16ms, application-code: 158ms)
+[2026-08-30T00:30:56.984Z] GET /manus-storage/img_7361_694dd6c5_2bc32d08.webp 307 in 263ms (next.js: 0.8ms, application-code: 262ms)
+[2026-08-30T00:30:57.624Z] GET /manus-storage/img_7347_8b70b6a5_904b94c3.webp 307 in 48ms (next.js: 10ms, application-code: 38ms)
+[2026-08-30T00:30:57.624Z] GET /manus-storage/img_7346_6dc1e00a_caa980d5.webp 307 in 48ms (next.js: 12ms, application-code: 36ms)
+[2026-08-30T00:30:57.630Z] GET /manus-storage/img_7345_21d3ef2d_592744ea.webp 307 in 53ms (next.js: 14ms, application-code: 39ms)
+[2026-08-30T00:31:50.826Z] GET /?from_webdev=1 200 in 229ms (next.js: 4ms, application-code: 225ms)
+[2026-08-30T00:31:51.202Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 158ms (next.js: 1.2ms, application-code: 157ms)
+[2026-08-30T00:31:51.206Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 178ms (next.js: 12ms, application-code: 167ms)
+[2026-08-30T00:31:53.553Z] GET /api/catalog/overrides 200 in 4ms (next.js: 1.5ms, application-code: 2.0ms)
+[2026-08-30T00:31:53.556Z] GET /api/auth/me 200 in 7ms (next.js: 5ms, application-code: 1.7ms)
+[2026-08-30T00:31:53.598Z] HEAD / 200 in 166ms (next.js: 1.5ms, application-code: 165ms)
+[2026-08-30T00:31:53.737Z] GET /api/catalog/overrides 200 in 3ms (next.js: 1.5ms, application-code: 1.9ms)
+[2026-08-30T00:31:53.741Z] GET /api/auth/me 200 in 7ms (next.js: 4ms, application-code: 3ms)
+[2026-08-30T00:31:54.458Z] GET /?from_webdev=1 200 in 178ms (next.js: 1.9ms, application-code: 176ms)
+[2026-08-30T00:31:54.847Z] GET /manus-storage/img_7368_beb2dc8c_d6dd3357.webp 307 in 41ms (next.js: 1.2ms, application-code: 40ms)
+[2026-08-30T00:31:54.855Z] GET /manus-storage/img_7363_c02e777c_8ec0ff7b.webp 307 in 62ms (next.js: 9ms, application-code: 53ms)
+[2026-08-30T00:31:56.883Z] GET /api/auth/me 200 in 6ms (next.js: 3ms, application-code: 3ms)
+[2026-08-30T00:31:56.891Z] GET /api/catalog/overrides 200 in 2ms (next.js: 0.9ms, application-code: 1.3ms)
+[2026-08-30T00:31:57.065Z] GET /api/auth/me 200 in 5ms (next.js: 1.3ms, application-code: 3ms)
+[2026-08-30T00:31:57.071Z] GET /api/catalog/overrides 200 in 2ms (next.js: 0.9ms, application-code: 1.4ms)
